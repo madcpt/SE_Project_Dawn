@@ -3,13 +3,13 @@
   - [x] Presupposition 曹  
   - [x] Excising System Analysis 曹
   - [x] proposed system 徐+况
-  - [ ] alternative solution 蓝
-  - [ ]  Cost/Benefit Analysis 杨 
-  - [ ] Other Social Factor 蓝
-  - [ ] Conclusion 蓝
-- [ ] **项目开发计划（时间\花费计划+甘特图）徐**
-- [ ] **风险列表 ：曹**
-- [ ] **词汇表:  蓝**
+  - [x] alternative solution 蓝
+  - [ ]  Cost/Benefit Analysis 杨
+  - [x] Other Social Factor 蓝
+  - [x] Conclusion 蓝
+- [x] **项目开发计划（时间\花费计划+甘特图）徐**
+- [x] **风险列表 ：曹**
+- [x] **词汇表:  蓝**
 
 - [ ] 软件需求规约
   - [ ] **introduction(编写目的等) 况**
@@ -17,8 +17,8 @@
   - [ ] proposed system
     - [ ] **概述 功能需求 非功能需求 徐**
     - [ ] 系统模型
-      - [ ] **场景 曹**
-      - [x] 用例信息
+      - [x] **场景 曹**
+      - [ ] 用例信息
       - [ ] 用例图
       - [ ] **对象模型,（一个实体类图+总类图） 徐**
       - [ ] 动态模型
