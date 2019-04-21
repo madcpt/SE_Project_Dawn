@@ -8,5 +8,5 @@ Final project for EI333 \<\<Software Engineering\>\>.
   + [x] 词汇表:  蓝
   + [x] 软件需求规约：合作完成
 + Plan 02 - April 20, 2019
-  + [ ] 软件架构文档
-  + [ ] 软件设计模型
+  + [x] 软件架构文档
+  + [x] 软件设计模型
