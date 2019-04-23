@@ -121,14 +121,15 @@
         android:rotation="0"
         android:rotationY="0"
         android:text="QAQQQ"
-        android:textColor="@color/design_default_color_primary_dark"
+        android:textColor="@color/colorPrimaryDark"
+        android:textColorLink="@android:color/darker_gray"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.7"
+        app:layout_constraintHorizontal_bias="0.878"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.351"
+        app:layout_constraintVertical_bias="0.165"
         tools:text="WWW" />
 
 </android.support.constraint.ConstraintLayout>
