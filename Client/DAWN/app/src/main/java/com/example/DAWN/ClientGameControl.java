@@ -162,22 +162,22 @@ public class ClientGameControl extends AppCompatActivity {
             }
         });
 
-        handler.postDelayed(runnable, 1000 * 5);
+        handler.postDelayed(runnable, 1000 * 5);//等5s后开始刷新显示
 
     }
 
     //上下左右按键的监听函数
     public void Lmove(){
-        location[1]=location[1]-3;
+        location[0]=location[0]-3;
     }
     public void Rmove(){
-        location[1]=location[1]+3;
-    }
-    public void Umove(){
         location[0]=location[0]+3;
     }
+    public void Umove(){
+        location[1]=location[1]-3;
+    }
     public void Dmove(){
-        location[0]=location[0]-3;
+        location[1]=location[1]+3;
     }
 
 

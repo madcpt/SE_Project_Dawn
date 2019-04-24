@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.DAWN.ClientGameControl"></activity>
+        <activity android:name="com.example.DAWN.ClientGameControl" android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>
