@@ -10,23 +10,26 @@ import android.widget.*;
 public class ClientGameControl extends AppCompatActivity {
     Intent intent = getIntent();
 
-    int vision=20;
-    int[] location={0,0};
-
-
-
     private Button Lbutton,Rbutton,Ubutton,Dbutton ;
-    private ImageView star ;
-    private TextView testtxt ;
+    private ImageView star;
+    //private TextView testtxt ;
+
+    int vision=20;
+    float[] location={0,0};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_process);
 
-        testtxt= (TextView) findViewById(R.id.Fortest) ;
-        testtxt.setText("123");
+
+
+        //testtxt= (TextView) findViewById(R.id.Fortest) ;
+       // testtxt.setText("123");
         star= findViewById(R.id.imageView) ;
 
+        location[0]=star.getX();
+        location[1]=star.getY();
 
         Lbutton= (Button) findViewById(R.id.Lbutton);
         Lbutton.setOnTouchListener(new View.OnTouchListener(){
@@ -156,29 +159,20 @@ public class ClientGameControl extends AppCompatActivity {
                 return true;
             }
         });
-
     }
 
-    public void Lmove() {
-        ImageView star= findViewById(R.id.imageView);
-        star.setY(star.getY()-3);
-        testtxt.setText("Left");
+    public void Lmove(){
+        location[1]=location[1]-3;
     }
 
-    public void Rmove() {
-        ImageView star= findViewById(R.id.imageView);
-        star.setY(star.getY()+3);
-        testtxt.setText("Right");
+    public void Rmove(){
+        location[1]=location[1]+3;
     }
-    public void Umove() {
-        ImageView star= findViewById(R.id.imageView);
-        star.setX(star.getX()+3);
-        testtxt.setText("Under");
+    public void Umove(){
+        location[0]=location[0]+3;
     }
-    public void Dmove() {
-        ImageView star= findViewById(R.id.imageView);
-        star.setX(star.getX()-3);
-        testtxt.setText("Down");
+    public void Dmove(){
+        location[0]=location[0]-3;
     }
 
 
