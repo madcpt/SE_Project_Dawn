@@ -17,7 +17,7 @@ public class ClientGameControl extends AppCompatActivity {
     private Button Lbutton,Rbutton,Ubutton,Dbutton ;
     private ImageView map;
     private TextView testtxt ;
-
+    private ImageView myrole ;
     int vision=20;//视野范围
 
     //屏幕左上角为{0,0}，我的角色的绝对位置为{860,0}，相对（地图）位置为{x,y}
@@ -33,10 +33,11 @@ public class ClientGameControl extends AppCompatActivity {
         setContentView(R.layout.game_process);
 
         testtxt= (TextView) findViewById(R.id.Fortest) ;
-        testtxt.setText("loading...");
+        testtxt.setText("loading... ");
         map= findViewById(R.id.map) ;
-
         testtxt.setText(Arrays.toString(location));
+        myrole = findViewById(R.id.Myrole);
+
 
         //对上下左右进行监听
         Lbutton= (Button) findViewById(R.id.Lbutton);
@@ -175,15 +176,19 @@ public class ClientGameControl extends AppCompatActivity {
     //上下左右按键的监听函数
     public void Lmove(){
         location[0]=location[0]-3;
+        myrole.setImageResource(R.drawable.left);
     }
     public void Rmove(){
         location[0]=location[0]+3;
+        myrole.setImageResource(R.drawable.right);
     }
     public void Umove(){
         location[1]=location[1]-3;
+        myrole.setImageResource(R.drawable.back);
     }
     public void Dmove(){
         location[1]=location[1]+3;
+        myrole.setImageResource(R.drawable.front);
     }
 
 
