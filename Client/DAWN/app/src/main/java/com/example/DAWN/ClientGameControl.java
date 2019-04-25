@@ -8,15 +8,23 @@ import android.view.*;
 import android.widget.*;
 
 import java.lang.*;
+import java.util.Arrays;
+
 
 public class ClientGameControl extends AppCompatActivity {
     Intent intent = getIntent();
 
     private Button Lbutton,Rbutton,Ubutton,Dbutton ;
-    private ImageView star;
+    private ImageView map;
     private TextView testtxt ;
 
     int vision=20;//视野范围
+
+    //屏幕左上角为{0,0}，我的角色的绝对位置为{860,0}，相对（地图）位置为{x,y}
+    //则地图相对位置为{-x,-y}，绝对位置{860-x,0-y}
+    //其他角色绝对位置为{840-x+m,430-y+n}
+    //(所有图片的左上角为判定点）
+
     float[] location={0,0}; //当前位置
 
     @Override
@@ -24,13 +32,11 @@ public class ClientGameControl extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_process);
 
-
         testtxt= (TextView) findViewById(R.id.Fortest) ;
-        testtxt.setText("MoveTest");
-        star= findViewById(R.id.imageView) ;
+        testtxt.setText("loading...");
+        map= findViewById(R.id.map) ;
 
-        location[0]=star.getX();
-        location[1]=star.getY();
+        testtxt.setText(Arrays.toString(location));
 
         //对上下左右进行监听
         Lbutton= (Button) findViewById(R.id.Lbutton);
@@ -162,7 +168,7 @@ public class ClientGameControl extends AppCompatActivity {
             }
         });
 
-        handler.postDelayed(runnable, 1000 * 5);//等5s后开始刷新显示
+        handler.postDelayed(runnable, 1000 * 1);//等1s后开始刷新显示
 
     }
 
@@ -189,10 +195,10 @@ public class ClientGameControl extends AppCompatActivity {
             handler.postDelayed(this, 20);// 刷新间隔(ms)
         }
         void update() {
-            star.setX(location[0]);
-            star.setY(location[1]);
+            map.setX(860-location[0]);
+            map.setY(340-location[1]);
+            testtxt.setText(Arrays.toString(location));
         }
-
     };
 
 
