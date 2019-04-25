@@ -120,7 +120,7 @@
         android:layout_marginBottom="8dp"
         android:rotation="0"
         android:rotationY="0"
-        android:text="QAQQQ"
+        android:text="MoveTest"
         android:textColor="@color/colorPrimaryDark"
         android:textColorLink="@android:color/darker_gray"
         android:visibility="visible"

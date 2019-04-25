@@ -26,7 +26,7 @@ public class ClientGameControl extends AppCompatActivity {
 
 
         testtxt= (TextView) findViewById(R.id.Fortest) ;
-        testtxt.setText("123");
+        testtxt.setText("MoveTest");
         star= findViewById(R.id.imageView) ;
 
         location[0]=star.getX();
