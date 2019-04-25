@@ -45,7 +45,7 @@
         tools:text="WWW" />
 
     <ImageView
-        android:id="@+id/star"
+        android:id="@+id/Myrole"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginStart="8dp"
