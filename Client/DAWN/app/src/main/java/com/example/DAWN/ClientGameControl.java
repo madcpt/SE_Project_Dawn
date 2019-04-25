@@ -13,11 +13,11 @@ import java.util.Arrays;
 
 public class ClientGameControl extends AppCompatActivity {
     Intent intent = getIntent();
-
+    private int direction;
     private Button Lbutton,Rbutton,Ubutton,Dbutton ;
     private ImageView map;
     private TextView testtxt ;
-    private ImageView myrole ;
+    private ImageView myroleview ;
     int vision=20;//视野范围
 
     //屏幕左上角为{0,0}，我的角色的绝对位置为{860,0}，相对（地图）位置为{x,y}
@@ -36,7 +36,7 @@ public class ClientGameControl extends AppCompatActivity {
         testtxt.setText("loading... ");
         map= findViewById(R.id.map) ;
         testtxt.setText(Arrays.toString(location));
-        myrole = findViewById(R.id.Myrole);
+        myroleview = findViewById(R.id.Myrole);
 
 
         //对上下左右进行监听
@@ -176,19 +176,19 @@ public class ClientGameControl extends AppCompatActivity {
     //上下左右按键的监听函数
     public void Lmove(){
         location[0]=location[0]-3;
-        myrole.setImageResource(R.drawable.left);
+        direction = 0;
     }
     public void Rmove(){
         location[0]=location[0]+3;
-        myrole.setImageResource(R.drawable.right);
+        direction = 1;
     }
     public void Umove(){
         location[1]=location[1]-3;
-        myrole.setImageResource(R.drawable.back);
+        direction = 2;
     }
     public void Dmove(){
         location[1]=location[1]+3;
-        myrole.setImageResource(R.drawable.front);
+        direction = 3;
     }
 
 
@@ -203,6 +203,20 @@ public class ClientGameControl extends AppCompatActivity {
             map.setX(860-location[0]);
             map.setY(340-location[1]);
             testtxt.setText(Arrays.toString(location));
+            switch(direction){
+                case 0 :
+                    myroleview.setImageResource(R.drawable.left);
+                    break;
+                case 1 :
+                    myroleview.setImageResource(R.drawable.right);
+                    break;
+                case 2 :
+                    myroleview.setImageResource(R.drawable.back);
+                    break;
+                case 3 :
+                    myroleview.setImageResource(R.drawable.front);
+                    break;
+            }
         }
     };
 
