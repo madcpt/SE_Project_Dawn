@@ -1,9 +1,14 @@
 package com.example.DAWN;
 
 public class Data {
-    private static Long delay;
+    public static Long delay;
+    public static String Server;
+    public static int port;
     Data(){
         delay = 0L;
+        Server = "39.105.27.108";
+//        Server = "192.168.137.1";
+        port = 1080;
     }
 
     public static Long getDelay() {
