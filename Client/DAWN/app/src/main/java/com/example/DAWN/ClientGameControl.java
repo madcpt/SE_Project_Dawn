@@ -1,14 +1,19 @@
 package com.example.DAWN;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.*;
 import android.widget.*;
 
 import java.lang.*;
+import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Locale;
 
 
 public class ClientGameControl extends AppCompatActivity {
@@ -26,6 +31,24 @@ public class ClientGameControl extends AppCompatActivity {
     //(所有图片的左上角为判定点）
 
     float[] location={0,0}; //当前位置
+
+    //AsyncTask for TCP-client.
+    private class AsyncCon extends AsyncTask<String ,Void, Void>{
+        @Override
+        protected Void doInBackground(String... s2) {
+            RunnableTCP R1 = new RunnableTCP( "Test-Thread");
+            R1.start(Arrays.toString (location));
+            return null;
+        }
+
+//        @Override
+//        protected void onProgressUpdate(String... values) { super.onProgressUpdate (values);}
+//
+//        @Override
+//        protected void onPostExecute(Void aVoid) {
+//            super.onPostExecute (aVoid);
+//        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +69,7 @@ public class ClientGameControl extends AppCompatActivity {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
                 // TODO Auto-generated method stub
+//                handler.postDelayed(task, 1000);
                 switch (event.getAction()){
                     case MotionEvent.ACTION_DOWN:
                         longclicked=true;
@@ -177,18 +201,22 @@ public class ClientGameControl extends AppCompatActivity {
     public void Lmove(){
         location[0]=location[0]-3;
         direction = 0;
+        new AsyncCon ().execute ();
     }
     public void Rmove(){
         location[0]=location[0]+3;
         direction = 1;
+        new AsyncCon ().execute ();
     }
     public void Umove(){
         location[1]=location[1]-3;
         direction = 2;
+        new AsyncCon ().execute ();
     }
     public void Dmove(){
         location[1]=location[1]+3;
         direction = 3;
+        new AsyncCon ().execute ();
     }
 
 
@@ -219,8 +247,6 @@ public class ClientGameControl extends AppCompatActivity {
             }
         }
     };
-
-
 
     //析构
     protected void onDestroy() {
