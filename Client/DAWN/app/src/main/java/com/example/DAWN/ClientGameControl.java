@@ -14,10 +14,12 @@ import java.lang.*;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Locale;
+import android.graphics.*;
 
 
 public class ClientGameControl extends AppCompatActivity {
     Intent intent = getIntent();
+
     private int direction = 3;
     private Button Lbutton,Rbutton,Ubutton,Dbutton ;
     private ImageView map;
@@ -247,6 +249,12 @@ public class ClientGameControl extends AppCompatActivity {
             }
         }
     };
+
+    //绘制（暂时没想好，勿管）
+    public Bitmap bitmap = BitmapFactory.decodeFile ("@drawable/map");
+    Canvas src=new Canvas(bitmap);
+    public void paint(Canvas scr){
+    }
 
     //析构
     protected void onDestroy() {
