@@ -15,6 +15,8 @@ public class Client
         this.serverName = serverName;
         this.port = port;
         this.dataclass = new Data ();
+        this.dataclass.Server = serverName;
+        this.dataclass.port = port;
         // try
         // {
         //  this.client = new Socket(serverName, port);
@@ -28,8 +30,7 @@ public class Client
     {
         try
         {
-            Socket client = new Socket(serverName, port);
-            // String meg = "hhhhhhhhhhh";
+            Socket client = new Socket(this.dataclass.Server, this.dataclass.port);
             System.out.println("Connecting to server: " + serverName + " , port: " + port);
             System.out.println("Remote IP: " + client.getRemoteSocketAddress());
 

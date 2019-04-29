@@ -5,12 +5,15 @@ class RunnableTCP implements Runnable {
     private String threadName;
     private Client client;
     private String location;
+    Data dataclass;
 
     RunnableTCP(String name) {
         threadName = name;
         System.out.println("Creating " +  threadName );
-        String serverName = "192.168.137.1";
-        client = new Client(serverName, 66);
+        dataclass = new Data ();
+        String serverName = dataclass.Server;
+        int port = dataclass.port;
+        client = new Client(serverName, port);
     }
     public void run() {
         System.out.println("Running " +  threadName );
