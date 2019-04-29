@@ -41,6 +41,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginTop="52dp"
             android:background="@drawable/r_1_3"
+            android:onClick="finish_login"
             android:text="登录"
             android:textColor="#ffffff"
             android:textSize="20dp" />

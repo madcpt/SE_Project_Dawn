@@ -17,10 +17,7 @@ import android.graphics.*;
 public class ClientGameControl extends AppCompatActivity {
     Intent intent = getIntent();
 
-    private int direction = 3;
-
     private Button Lbutton,Rbutton,Ubutton,Dbutton ;
-    private ImageView scr;
     private TextView testtxt ;
     private ImageView myroleview ;
 
@@ -29,6 +26,7 @@ public class ClientGameControl extends AppCompatActivity {
     //其他角色绝对位置为{840-x+m,430-y+n}
     //(所有图片的左上角为判定点）
 
+    private int direction = 3;
     float[] location={0,0}; //当前位置
     private Map map;
     private Role myrole;
@@ -59,11 +57,9 @@ public class ClientGameControl extends AppCompatActivity {
 
         testtxt= (TextView) findViewById(R.id.Fortest) ;
         testtxt.setText("loading... ");
-        scr = findViewById(R.id.background) ;
         testtxt.setText(Arrays.toString(location));
-        myroleview = findViewById(R.id.Myrole);
 
-        background = BitmapFactory.decodeResource(this.getResources(),R.drawable.map).copy(Bitmap.Config.ARGB_8888, true);
+        myroleview = findViewById(R.id.Myrole);
 
         //对上下左右进行监听
         Lbutton= (Button) findViewById(R.id.Lbutton);
@@ -198,6 +194,11 @@ public class ClientGameControl extends AppCompatActivity {
 
         handler.postDelayed(runnable, 1000 * 1);//等1s后开始刷新显示
 
+        background = BitmapFactory.decodeResource(this.getResources(),R.drawable.map).copy(Bitmap.Config.ARGB_8888, true);
+        scr = findViewById(R.id.background) ;
+        sfh = scr.getHolder();
+        sfh.addCallback(new MyCallBack());
+        draw = new Draw(sfh);
     }
 
     //上下左右按键的监听函数
@@ -251,7 +252,49 @@ public class ClientGameControl extends AppCompatActivity {
         }
     };
 
-    //绘制（施工中）
+
+    //SurfaceView（自带双缓冲） 施工中...
+    private SurfaceView scr;
+    private SurfaceHolder sfh;
+    private Draw draw;
+    private Bitmap background;
+    private Canvas c;
+    class MyCallBack implements SurfaceHolder.Callback {
+        @Override
+        //当SurfaceView的视图发生改变，比如横竖屏切换时，这个方法被调用
+        public void surfaceChanged(SurfaceHolder holder, int format, int width,int height) {
+        }
+        //当SurfaceView被创建的时候被调用
+        public void surfaceCreated(SurfaceHolder holder) {
+            draw.isRun = true;
+            draw.start();
+
+        }
+        //当SurfaceView被销毁的时候，比如不可见了，会被调用
+        public void surfaceDestroyed(SurfaceHolder holder) {
+            draw.isRun = false;
+            sfh.removeCallback(this);
+        }
+
+
+    }
+    class Draw extends Thread {
+        private SurfaceHolder holder;
+        public boolean isRun ;
+        public Draw(SurfaceHolder holder){
+            this.holder =holder;
+            isRun = true;
+        }
+        @Override
+        public void run(){
+            while(isRun){
+
+            }
+        }
+    }
+
+
+    /*绘制（施工中）
     private Bitmap background;
     private Canvas c;
     public void paint(Canvas cv){
@@ -263,7 +306,7 @@ public class ClientGameControl extends AppCompatActivity {
 
 
         }
-    }
+    }*/
 
     //析构
     protected void onDestroy() {
