@@ -6,9 +6,9 @@ public class Data {
     public static int port;
     Data(){
         delay = 0L;
-        Server = "39.105.27.108";
-//        Server = "192.168.137.1";
-        port = 1080;
+//        Server = "39.105.27.108";
+        Server = "192.168.137.1";
+        port = 66;
     }
 
     public static Long getDelay() {

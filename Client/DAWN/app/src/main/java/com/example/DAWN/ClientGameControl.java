@@ -39,7 +39,8 @@ public class ClientGameControl extends AppCompatActivity {
         @Override
         protected Void doInBackground(String... s2) {
             RunnableTCP R1 = new RunnableTCP( "Test-Thread");
-            R1.start(Arrays.toString (location));
+//            R1.start(Arrays.toString (location));
+            R1.start(location[0] + "," + location[1]);
             return null;
         }
 
@@ -57,7 +58,7 @@ public class ClientGameControl extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_process);
 
-        testtxt= (TextView) findViewById(R.id.Fortest) ;
+        testtxt= findViewById(R.id.Fortest);
         testtxt.setText("loading... ");
         map= findViewById(R.id.map) ;
         testtxt.setText(Arrays.toString(location));
@@ -65,7 +66,7 @@ public class ClientGameControl extends AppCompatActivity {
 
 
         //对上下左右进行监听
-        Lbutton= (Button) findViewById(R.id.Lbutton);
+        Lbutton= findViewById(R.id.Lbutton);
         Lbutton.setOnTouchListener(new View.OnTouchListener(){
             private Boolean longclicked=false;
             @Override
@@ -98,7 +99,7 @@ public class ClientGameControl extends AppCompatActivity {
                 return true;
             }
         });
-        Rbutton= (Button) findViewById(R.id.Rbutton);
+        Rbutton= findViewById(R.id.Rbutton);
         Rbutton.setOnTouchListener(new View.OnTouchListener(){
             private Boolean longclicked=false;
             @Override
@@ -130,7 +131,7 @@ public class ClientGameControl extends AppCompatActivity {
                 return true;
             }
         });
-        Ubutton= (Button) findViewById(R.id.Ubutton);
+        Ubutton= findViewById(R.id.Ubutton);
         Ubutton.setOnTouchListener(new View.OnTouchListener(){
             private Boolean longclicked=false;
             @Override
@@ -162,7 +163,7 @@ public class ClientGameControl extends AppCompatActivity {
                 return true;
             }
         });
-        Dbutton= (Button) findViewById(R.id.Dbutton);
+        Dbutton= findViewById(R.id.Dbutton);
         Dbutton.setOnTouchListener(new View.OnTouchListener(){
             private Boolean longclicked=false;
             @Override
@@ -251,10 +252,10 @@ public class ClientGameControl extends AppCompatActivity {
     };
 
     //绘制（暂时没想好，勿管）
-    public Bitmap bitmap = BitmapFactory.decodeFile ("@drawable/map");
-    Canvas src=new Canvas(bitmap);
-    public void paint(Canvas scr){
-    }
+    //public Bitmap bitmap = BitmapFactory.decodeFile ("@drawable/map");
+//    Canvas src=new Canvas(bitmap);
+//    public void paint(Canvas scr){
+//    }
 
     //析构
     protected void onDestroy() {
