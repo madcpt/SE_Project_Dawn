@@ -7,7 +7,7 @@
     tools:context=".ClientGameControl">
 
     <ImageView
-        android:id="@+id/map"
+        android:id="@+id/background"
         android:layout_width="3000px"
         android:layout_height="3000px"
         android:layout_marginStart="16dp"
@@ -59,7 +59,7 @@
         app:layout_constraintHorizontal_bias="0.499"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/front" />
+        app:srcCompat="@drawable/r_1_3" />
 
     <Button
         android:id="@+id/Rbutton"
