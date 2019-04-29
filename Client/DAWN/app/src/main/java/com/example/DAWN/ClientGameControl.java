@@ -254,7 +254,8 @@ public class ClientGameControl extends AppCompatActivity {
 
     //绘制（施工中）
     private Bitmap background;
-    public void paint(Canvas scr){
+    private Canvas c;
+    public void paint(Canvas cv){
         Role_simple r;
         for (int i=0;i<map.livingrole.size();i++){
             r=map.livingrole.get(i);
