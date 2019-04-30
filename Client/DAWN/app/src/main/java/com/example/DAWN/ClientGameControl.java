@@ -33,10 +33,10 @@ public class ClientGameControl extends AppCompatActivity {
     int vision=20;//视野范围
 
     //AsyncTask for TCP-client.
-    private class AsyncCon extends AsyncTask<String ,Void, Void>{
+    private class AsyncConTCP extends AsyncTask<String ,Void, Void>{
         @Override
         protected Void doInBackground(String... s2) {
-            RunnableTCP R1 = new RunnableTCP( "Test-Thread");
+            RunnableTCP R1 = new RunnableTCP( "Thread-TCP");
 //            R1.start(Arrays.toString (location));
             R1.start(location[0] + "," + location[1]);
             return null;
@@ -44,6 +44,24 @@ public class ClientGameControl extends AppCompatActivity {
 
 //        @Override
 //        protected void onProgressUpdate(String... values) { super.onProgressUpdate (values);}
+//
+//        @Override
+//        protected void onPostExecute(Void aVoid) {
+//            super.onPostExecute (aVoid);
+//        }
+    }
+
+    // AsyncTask for UDP-Client
+    private class AsyncConUDP extends AsyncTask<String, String, Void> {
+        @Override
+        protected Void doInBackground(String... s2) {
+            RunnableUDP R1 = new RunnableUDP ("Thread-UDP");
+            R1.start ();
+            return null;
+        }
+
+//        @Override
+//        protected void onProgressUpdate(String... values) { super.onProgressUpdate (values);        }
 //
 //        @Override
 //        protected void onPostExecute(Void aVoid) {
@@ -210,22 +228,22 @@ public class ClientGameControl extends AppCompatActivity {
     public void Lmove(){
         location[0]=location[0]-3;
         direction = 0;
-        new AsyncCon ().execute ();
+        new AsyncConTCP ().execute ();
     }
     public void Rmove(){
         location[0]=location[0]+3;
         direction = 1;
-        new AsyncCon ().execute ();
+        new AsyncConTCP ().execute ();
     }
     public void Umove(){
         location[1]=location[1]-3;
         direction = 2;
-        new AsyncCon ().execute ();
+        new AsyncConTCP ().execute ();
     }
     public void Dmove(){
         location[1]=location[1]+3;
         direction = 3;
-        new AsyncCon ().execute ();
+        new AsyncConTCP ().execute ();
     }
 
 
