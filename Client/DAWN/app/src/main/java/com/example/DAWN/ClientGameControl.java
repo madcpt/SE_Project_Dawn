@@ -5,9 +5,11 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.*;
 import android.widget.*;
 
+import java.io.ByteArrayOutputStream;
 import java.lang.*;
 import java.util.Arrays;
 
@@ -198,7 +200,6 @@ public class ClientGameControl extends AppCompatActivity {
         background = BitmapFactory.decodeResource(this.getResources(),R.drawable.map).copy(Bitmap.Config.ARGB_8888, true);
         //Rolepic load
 
-
         scr = findViewById(R.id.background) ;
         sfh = scr.getHolder();
         sfh.addCallback(new MyCallBack());
@@ -236,8 +237,7 @@ public class ClientGameControl extends AppCompatActivity {
             handler.postDelayed(this, 20);// 刷新间隔(ms)
         }
         void update() {
-            scr.setX(860-location[0]);
-            scr.setY(340-location[1]);
+
             testtxt.setText(Arrays.toString(location));
             switch(direction){
                 case 0 :
@@ -263,7 +263,6 @@ public class ClientGameControl extends AppCompatActivity {
     private Draw draw;
     private Bitmap background;
     private Bitmap[][] role_pic;//所有角色图的Bitmap点阵
-    private Canvas c;
     class MyCallBack implements SurfaceHolder.Callback {
         @Override
         //当SurfaceView的视图发生改变，比如横竖屏切换时，这个方法被调用
@@ -272,7 +271,7 @@ public class ClientGameControl extends AppCompatActivity {
         //当SurfaceView被创建的时候被调用
         public void surfaceCreated(SurfaceHolder holder) {
             draw.isRun = true;
-            c=new Canvas(background);
+  //          c=new Canvas(background);
             draw.start();
 
         }
@@ -287,6 +286,7 @@ public class ClientGameControl extends AppCompatActivity {
     class Draw extends Thread {
         private SurfaceHolder holder;
         public boolean isRun ;
+        private Canvas c;
         public Draw(SurfaceHolder holder){
             this.holder =holder;
             isRun = true;
@@ -294,19 +294,23 @@ public class ClientGameControl extends AppCompatActivity {
         @Override
         public void run(){
             Role_simple r;
+            Paint p = new Paint();
+            c=new Canvas(background);
             while(isRun){
                 try {
                     c = holder.lockCanvas();
                     //执行具体的绘制操作
-                    Paint p = new Paint();
-                    for (int i=0;i<map.livingrole.size();i++) {
-                        r = map.livingrole.get(i);
-                        if (Math.abs(r.location[0] - location[0]) < vision * 10 && Math.abs(r.location[1] - location[1]) < vision * 10) {
-                            continue;
-                        }
-                        c.drawBitmap(role_pic[r.id%100][r.direction],r.location[0],r.location[1],p);
-
-                    }
+                    c.drawColor(Color.WHITE);
+                    c.drawBitmap(background,1740-(int)location[0],1270-(int)location[1],p);
+//                        for (int i=0;i<map.livingrole.size();i++) {
+//                            r = map.livingrole.get(i);
+//                            if (Math.abs(r.location[0] - location[0]) < vision * 10 && Math.abs(r.location[1] - location[1]) < vision * 10) {
+//                                continue;
+//                            }
+//                            c.drawBitmap(role_pic[r.id%100][r.direction],r.location[0],r.location[1],p);
+//
+//                        }
+                         Thread.sleep(10);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }finally {
