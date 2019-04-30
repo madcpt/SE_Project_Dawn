@@ -195,7 +195,11 @@ public class ClientGameControl extends AppCompatActivity {
 
         handler.postDelayed(runnable, 1000 * 1);//等1s后开始刷新显示
 
+        //for drawing
         background = BitmapFactory.decodeResource(this.getResources(),R.drawable.map).copy(Bitmap.Config.ARGB_8888, true);
+        //Rolepic load
+
+
         scr = findViewById(R.id.background) ;
         sfh = scr.getHolder();
         sfh.addCallback(new MyCallBack());
@@ -238,16 +242,16 @@ public class ClientGameControl extends AppCompatActivity {
             testtxt.setText(Arrays.toString(location));
             switch(direction){
                 case 0 :
-                    myroleview.setImageResource(R.drawable.r_1_0);
+                    myroleview.setImageResource(R.drawable.r_0_0);
                     break;
                 case 1 :
-                    myroleview.setImageResource(R.drawable.r_1_1);
+                    myroleview.setImageResource(R.drawable.r_0_1);
                     break;
                 case 2 :
-                    myroleview.setImageResource(R.drawable.r_1_2);
+                    myroleview.setImageResource(R.drawable.r_0_2);
                     break;
                 case 3 :
-                    myroleview.setImageResource(R.drawable.r_1_3);
+                    myroleview.setImageResource(R.drawable.r_0_3);
                     break;
             }
         }
@@ -259,6 +263,7 @@ public class ClientGameControl extends AppCompatActivity {
     private SurfaceHolder sfh;
     private Draw draw;
     private Bitmap background;
+    private Bitmap[][] role_pic;//所有角色图的Bitmap点阵
     private Canvas c;
     class MyCallBack implements SurfaceHolder.Callback {
         @Override
@@ -268,6 +273,7 @@ public class ClientGameControl extends AppCompatActivity {
         //当SurfaceView被创建的时候被调用
         public void surfaceCreated(SurfaceHolder holder) {
             draw.isRun = true;
+            c=new Canvas(background);
             draw.start();
 
         }
@@ -288,7 +294,28 @@ public class ClientGameControl extends AppCompatActivity {
         }
         @Override
         public void run(){
+            Role_simple r;
             while(isRun){
+                try {
+                    c = holder.lockCanvas();
+                    //执行具体的绘制操作
+                    Paint p = new Paint();
+                    for (int i=0;i<map.livingrole.size();i++) {
+                        r = map.livingrole.get(i);
+                        if (Math.abs(r.location[0] - location[0]) < vision * 10 && Math.abs(r.location[1] - location[1]) < vision * 10) {
+                            continue;
+                        }
+                        c.drawBitmap(role_pic[r.id%100][r.direction],r.location[0],r.location[1],p);
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }finally {
+                    if (c != null) {
+                        holder.unlockCanvasAndPost(c);
+                    }
+
+                }
 
             }
         }
@@ -299,11 +326,7 @@ public class ClientGameControl extends AppCompatActivity {
     private Bitmap background;
     private Canvas c;
     public void paint(Canvas cv){
-        Role_simple r;
-        for (int i=0;i<map.livingrole.size();i++){
-            r=map.livingrole.get(i);
-            if (Math.abs(r.location[0]-location[0])<vision*10 && Math.abs(r.location[1]-location[1])<vision*10 )
-            { continue; }
+
 
 
         }
