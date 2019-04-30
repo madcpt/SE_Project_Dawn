@@ -58,7 +58,7 @@
         app:layout_constraintHorizontal_bias="0.499"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/r_1_3" />
+        app:srcCompat="@drawable/r_0_3" />
 
     <Button
         android:id="@+id/Rbutton"
