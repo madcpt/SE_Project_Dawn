@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".ClientGameControl">
 
-    <ImageView
-        android:id="@+id/map"
+    <SurfaceView
+        android:id="@+id/background"
         android:layout_width="3000px"
         android:layout_height="3000px"
         android:layout_marginStart="16dp"
@@ -17,8 +17,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.459"
-        app:srcCompat="@drawable/map" />
+        app:layout_constraintVertical_bias="0.459" />
 
     <TextView
         android:id="@+id/Fortest"
@@ -59,7 +58,7 @@
         app:layout_constraintHorizontal_bias="0.499"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/front" />
+        app:srcCompat="@drawable/r_1_3" />
 
     <Button
         android:id="@+id/Rbutton"

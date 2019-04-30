@@ -1,7 +1,7 @@
-<resources>
-    <string name="app_name">DAWN_beta</string>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">>
     <string name="hint_operator_name">你好</string>
     <string name="hello">Hello World, Date!</string>
+    <string name="app_name">PM2.5_V1.2</string>
     <string name="strInputAccHint">输入帐号</string>
     <string name="strAccInputLabel">帐号</string>
     <string name="strPswInputLabel">密码</string>
@@ -22,8 +22,7 @@
     <string name="cancel_success">注销成功！</string>
     <string name="login_fail">登录失败！请输入正确的用户名与密码！</string>
     <string name="cancel_fail">注销失败！请输入正确的用户名与密码！</string>
-    <string name="name_already_exist">已存在，请重新输入！</string>
-    <string name="name_not_exist">不存在，请重新输入！</string>
-    <string name="user_login_success">登录，欢迎光临！</string>
-
+    <string name="name_already_exist">用户名【<xliff:g example="tom" id="id1">%1$s</xliff:g>】已存在，请重新输入！</string>
+    <string name="name_not_exist">用户名【<xliff:g example="tom" id="id1">%1$s</xliff:g>】不存在，请重新输入！</string>
+    <string name="user_login_success">用户：<xliff:g example="tom" id="id2">%1$s</xliff:g>登录，欢迎光临！</string>
 </resources>
