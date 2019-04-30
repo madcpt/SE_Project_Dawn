@@ -62,9 +62,10 @@ public class Register extends AppCompatActivity {
             String userPwdCheck = mPwdCheck.getText().toString().trim();
             //检查用户是否存在
             int count=mUserDataManager.findUserByName(userName);
+            System.out.println("count"+count);
             //用户已经存在时返回，给出提示文字
             if(count>0){
-                Toast.makeText(this, getString(R.string.name_already_exist, userName),Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.name_already_exist),Toast.LENGTH_SHORT).show();
                 return ;
             }
             if(userPwd.equals(userPwdCheck)==false){     //两次密码输入不一样
@@ -72,6 +73,7 @@ public class Register extends AppCompatActivity {
                 return ;
             } else {
                 UserData mUser = new UserData(userName, userPwd);
+                System.out.println(mUser);
                 mUserDataManager.openDataBase();
                 long flag = mUserDataManager.insertUserData(mUser); //新建用户信息
                 if (flag == -1) {
@@ -99,6 +101,7 @@ public class Register extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
             return false;
         }
+
         return true;
     }
 }
