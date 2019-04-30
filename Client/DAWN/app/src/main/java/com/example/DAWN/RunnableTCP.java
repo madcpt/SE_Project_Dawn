@@ -4,7 +4,7 @@ class RunnableTCP implements Runnable {
     private Thread t;
     private String threadName;
     private Client client;
-    private String location;
+    private String location;    
     Data dataclass;
 
     RunnableTCP(String name) {

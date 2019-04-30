@@ -20,6 +20,7 @@ public class ClientGameControl extends AppCompatActivity {
     private Button Lbutton,Rbutton,Ubutton,Dbutton ;
     private TextView testtxt ;
     private ImageView myroleview ;
+    private Data dataclass;
 
     //屏幕左上角为{0,0}，我的角色的绝对位置为{860,0}，相对（地图）位置为{x,y}
     //则地图相对位置为{-x,-y}，绝对位置{860-x,0-y}
@@ -28,6 +29,7 @@ public class ClientGameControl extends AppCompatActivity {
 
     private int direction = 3;
     float[] location={0,0}; //当前位置
+
     private Map map;
     private Role myrole;
     int vision=20;//视野范围
@@ -79,6 +81,7 @@ public class ClientGameControl extends AppCompatActivity {
         testtxt.setText(Arrays.toString(location));
 
         myroleview = findViewById(R.id.Myrole);
+        dataclass = new Data ();
 
         //对上下左右进行监听
         Lbutton= findViewById(R.id.Lbutton);
@@ -227,21 +230,25 @@ public class ClientGameControl extends AppCompatActivity {
     //上下左右按键的监听函数
     public void Lmove(){
         location[0]=location[0]-3;
+        dataclass.location = location;
         direction = 0;
         new AsyncConTCP ().execute ();
     }
     public void Rmove(){
         location[0]=location[0]+3;
+        dataclass.location = location;
         direction = 1;
         new AsyncConTCP ().execute ();
     }
     public void Umove(){
         location[1]=location[1]-3;
+        dataclass.location = location;
         direction = 2;
         new AsyncConTCP ().execute ();
     }
     public void Dmove(){
         location[1]=location[1]+3;
+        dataclass.location = location;
         direction = 3;
         new AsyncConTCP ().execute ();
     }
@@ -251,10 +258,12 @@ public class ClientGameControl extends AppCompatActivity {
     private Handler handler = new Handler();
     private Runnable runnable = new Runnable() {
         public void run() {
+            new AsyncConUDP ().execute ();
             this.update();
             handler.postDelayed(this, 20);// 刷新间隔(ms)
         }
         void update() {
+            location = dataclass.location;
             scr.setX(860-location[0]);
             scr.setY(340-location[1]);
             testtxt.setText(Arrays.toString(location));
