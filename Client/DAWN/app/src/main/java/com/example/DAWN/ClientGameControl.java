@@ -278,6 +278,7 @@ public class ClientGameControl extends AppCompatActivity {
         //当SurfaceView被销毁的时候，比如不可见了，会被调用
         public void surfaceDestroyed(SurfaceHolder holder) {
             draw.isRun = false;
+            testtxt.setText("end");
             sfh.removeCallback(this);
         }
 
@@ -295,30 +296,33 @@ public class ClientGameControl extends AppCompatActivity {
         public void run(){
             Role_simple r;
             Paint p = new Paint();
-            c=new Canvas(background);
             while(isRun){
+                c=null;
                 try {
-                    c = holder.lockCanvas();
-                    //执行具体的绘制操作
-                    c.drawColor(Color.WHITE);
-                    c.drawBitmap(background,1740-(int)location[0],1270-(int)location[1],p);
-//                        for (int i=0;i<map.livingrole.size();i++) {
-//                            r = map.livingrole.get(i);
-//                            if (Math.abs(r.location[0] - location[0]) < vision * 10 && Math.abs(r.location[1] - location[1]) < vision * 10) {
-//                                continue;
-//                            }
-//                            c.drawBitmap(role_pic[r.id%100][r.direction],r.location[0],r.location[1],p);
-//
-//                        }
-                         Thread.sleep(10);
+                    synchronized (holder) {
+                        c = holder.lockCanvas();
+                        //执行具体的绘制操作
+                        c.drawColor(Color.WHITE);
+                        c.drawBitmap(background, 930 - (int) location[0], 390 - (int) location[1], p);
+                        for (int i=0;i<map.livingrole.size();i++) {
+                            r = map.livingrole.get(i);
+                            if (Math.abs(r.location[0] - location[0]) < vision * 10 && Math.abs(r.location[1] - location[1]) < vision * 10) {
+                                continue;
+                            }
+                            c.drawBitmap(role_pic[r.id%100][r.direction],r.location[0],r.location[1],p);
+
+                        }
+                    }
+                    Thread.sleep(10);
+
                 } catch (Exception e) {
                     e.printStackTrace();
-                }finally {
+                }finally{
                     if (c != null) {
                         holder.unlockCanvasAndPost(c);
                     }
-
                 }
+
 
             }
         }
