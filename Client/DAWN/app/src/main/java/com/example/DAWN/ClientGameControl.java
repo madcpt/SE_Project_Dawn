@@ -215,6 +215,7 @@ public class ClientGameControl extends AppCompatActivity {
         });
 
         handler.postDelayed(runnable, 1000 * 1);//等1s后开始刷新显示
+        handlerUDP.postDelayed(runnableUDP, 1000 * 1);//等1s后开始刷新位置UDP
 
         //for drawing
         background = BitmapFactory.decodeResource(this.getResources(),R.drawable.map).copy(Bitmap.Config.ARGB_8888, true);
@@ -254,6 +255,18 @@ public class ClientGameControl extends AppCompatActivity {
     }
 
 
+    //位置刷新UDP
+    private Handler handlerUDP = new Handler();
+    private Runnable runnableUDP = new Runnable() {
+        public void run() {
+            new AsyncConUDP ().execute ();
+            handlerUDP.postDelayed(this, 500);// 刷新间隔(ms)
+        }
+//        void update() {
+//            location = dataclass.location;
+//        }
+    };
+
     //界面刷新
     private Handler handler = new Handler();
     private Runnable runnable = new Runnable() {
@@ -263,8 +276,6 @@ public class ClientGameControl extends AppCompatActivity {
             handler.postDelayed(this, 20);// 刷新间隔(ms)
         }
         void update() {
-//            location = dataclass.location;
-            
             scr.setX(860-location[0]);
             scr.setY(340-location[1]);
             testtxt.setText(Arrays.toString(location));

@@ -45,8 +45,9 @@ public class ClientUDP {
             objectStream.close();
             byteArraySteam.close();
 
-            System.out.println(inData[0] + "," + inData[1]);
             dataclass.location = inData;
+            System.out.println(dataclass.location[0] + "," + dataclass.location[1] + " SENDING");
+
 
             client.close();
         } catch (IOException e) {
