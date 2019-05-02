@@ -233,25 +233,37 @@ public class ClientGameControl extends AppCompatActivity {
     public void Lmove(){
         location[0]=location[0]-3;
         dataclass.location = location;
-        direction = 0;
+        if(direction == 0)
+            direction = 4;
+        else
+            direction = 0;
         new AsyncConTCP ().execute ();
     }
     public void Rmove(){
         location[0]=location[0]+3;
         dataclass.location = location;
-        direction = 1;
+        if(direction == 1)
+            direction = 5;
+        else
+            direction = 1;
         new AsyncConTCP ().execute ();
     }
     public void Umove(){
         location[1]=location[1]-3;
         dataclass.location = location;
-        direction = 2;
+        if(direction == 2)
+            direction = 6;
+        else
+            direction = 2;
         new AsyncConTCP ().execute ();
     }
     public void Dmove(){
         location[1]=location[1]+3;
         dataclass.location = location;
-        direction = 3;
+        if(direction == 3)
+            direction = 7;
+        else
+            direction = 3;
         new AsyncConTCP ().execute ();
     }
 
@@ -291,6 +303,18 @@ public class ClientGameControl extends AppCompatActivity {
                     break;
                 case 3 :
                     myroleview.setImageResource(R.drawable.r_0_3);
+                    break;
+                case 4 :
+                    myroleview.setImageResource(R.drawable.r_0_0_1);
+                    break;
+                case 5 :
+                    myroleview.setImageResource(R.drawable.r_0_1_1);
+                    break;
+                case 6 :
+                    myroleview.setImageResource(R.drawable.r_0_2_1);
+                    break;
+                case 7 :
+                    myroleview.setImageResource(R.drawable.r_0_3_1);
                     break;
             }
         }
