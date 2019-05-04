@@ -19,7 +19,7 @@ public class serverForMultiClientTCP extends ServerSocket {
                 System.out.println("waiting");
                 Socket socket = accept();
                 new CreateServerThread(socket);
-                Thread.sleep(50);
+                Thread.sleep(1);
             }
         }catch (IOException e) {
         } catch (InterruptedException e) {
@@ -51,9 +51,28 @@ public class serverForMultiClientTCP extends ServerSocket {
 
                 String inputString = in.readUTF();
                 List<String> myList = new ArrayList<String>(Arrays.asList(inputString.split(",")));
-                System.out.println(myList);
-                dataclass.location[0] = Float.parseFloat(myList.get(1));
-                dataclass.location[1] = Float.parseFloat(myList.get(2));
+//                System.out.println(myList);
+                System.out.println(dataclass.location[0] + "," + dataclass.location[1]);
+//                dataclass.location[0] = Float.parseFloat(myList.get(1));
+//                dataclass.location[1] = Float.parseFloat(myList.get(2));
+                switch (String.valueOf(myList.get(1))){
+                    case "move":
+                        switch (myList.get(2)){
+                            case "0":
+                                dataclass.Lmove();
+                                break;
+                            case "1":
+                                dataclass.Rmove();
+                                break;
+                            case "2":
+                                dataclass.Umove();
+                                break;
+                            case "3":
+                                dataclass.Dmove();
+                                break;
+                        }
+                        break;
+                }
 
 
 
