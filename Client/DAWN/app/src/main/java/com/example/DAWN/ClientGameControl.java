@@ -84,6 +84,7 @@ public class ClientGameControl extends AppCompatActivity {
 
         myroleview = findViewById(R.id.Myrole);
         dataclass = new Data ();
+        map=MapInit();
 
         //对上下左右进行监听
         Lbutton= findViewById(R.id.Lbutton);
@@ -267,6 +268,12 @@ public class ClientGameControl extends AppCompatActivity {
         new AsyncConTCP ().execute ();
     }
 
+    //Map初始化
+    private Map MapInit(){
+        //发送请求并将服务器传递过来的所有数据转化为Map对象
+        return new Map();
+    }
+
 
     //位置刷新UDP
     private Handler handlerUDP = new Handler();
@@ -327,7 +334,7 @@ public class ClientGameControl extends AppCompatActivity {
     private SurfaceHolder sfh;
     private Draw draw;
     private Bitmap background;
-    private Bitmap[][] role_pic;//所有角色图的Bitmap点阵
+    private Bitmap[][][] role_pic;//所有角色图的Bitmap点阵,第一层为角色，第二层为方向，第三层为动作
     class MyCallBack implements SurfaceHolder.Callback {
         @Override
         //当SurfaceView的视图发生改变，比如横竖屏切换时，这个方法被调用
@@ -374,7 +381,7 @@ public class ClientGameControl extends AppCompatActivity {
                             if (Math.abs(r.location[0] - location[0]) < vision * 10 && Math.abs(r.location[1] - location[1]) < vision * 10) {
                                 continue;
                             }
-                            c.drawBitmap(role_pic[r.id%100][r.direction],r.location[0],r.location[1],p);
+                            c.drawBitmap(role_pic[r.id%100][r.direction][r.walk_mov],r.location[0],r.location[1],p);
 
                         }
                     }
