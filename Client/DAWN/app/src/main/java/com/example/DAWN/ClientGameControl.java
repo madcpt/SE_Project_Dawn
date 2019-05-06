@@ -42,7 +42,7 @@ public class ClientGameControl extends AppCompatActivity {
         protected Void doInBackground(String... s2) {
             RunnableTCP R1 = new RunnableTCP( "Thread-TCP");
 //            R1.start(Arrays.toString (location));
-            R1.start(location[0] + "," + location[1]);
+            R1.start(s2[0]);
             return null;
         }
 
@@ -231,7 +231,7 @@ public class ClientGameControl extends AppCompatActivity {
 
     //上下左右按键的监听函数
     public void Lmove(){
-        location[0]=location[0]-3;
+//        location[0]=location[0]-3;
         dataclass.location = location;
         if(direction == 0)
             direction = 4;
@@ -240,7 +240,7 @@ public class ClientGameControl extends AppCompatActivity {
         new AsyncConTCP ().execute ();
     }
     public void Rmove(){
-        location[0]=location[0]+3;
+//        location[0]=location[0]+3;
         dataclass.location = location;
         if(direction == 1)
             direction = 5;
@@ -249,7 +249,7 @@ public class ClientGameControl extends AppCompatActivity {
         new AsyncConTCP ().execute ();
     }
     public void Umove(){
-        location[1]=location[1]-3;
+//        location[1]=location[1]-3;
         dataclass.location = location;
         if(direction == 2)
             direction = 6;
@@ -258,7 +258,7 @@ public class ClientGameControl extends AppCompatActivity {
         new AsyncConTCP ().execute ();
     }
     public void Dmove(){
-        location[1]=location[1]+3;
+//        location[1]=location[1]+3;
         dataclass.location = location;
         if(direction == 3)
             direction = 7;
@@ -273,7 +273,8 @@ public class ClientGameControl extends AppCompatActivity {
     private Runnable runnableUDP = new Runnable() {
         public void run() {
             new AsyncConUDP ().execute ();
-            handlerUDP.postDelayed(this, 500);// 刷新间隔(ms)
+            location = dataclass.location;
+            handlerUDP.postDelayed(this, 20);// 刷新间隔(ms)
         }
 //        void update() {
 //            location = dataclass.location;
@@ -284,7 +285,7 @@ public class ClientGameControl extends AppCompatActivity {
     private Handler handler = new Handler();
     private Runnable runnable = new Runnable() {
         public void run() {
-            new AsyncConUDP ().execute ();
+//            new AsyncConUDP ().execute ();
             this.update();
             handler.postDelayed(this, 20);// 刷新间隔(ms)
         }

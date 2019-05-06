@@ -6,6 +6,7 @@ import java.io.ObjectInputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 
 public class ClientUDP {
     static Data dataclass;
@@ -20,8 +21,14 @@ public class ClientUDP {
             byte[] ReceiveBytes = new byte[1024];
             DatagramPacket requestPacket = new DatagramPacket(requestBytes, requestBytes.length);
             DatagramPacket receivePacket = new DatagramPacket(ReceiveBytes,ReceiveBytes.length);
-            DatagramSocket client = new DatagramSocket(5062);
 
+//            DatagramSocket client = new DatagramSocket(5062);
+            DatagramSocket client = null;
+            if(client == null){
+                client = new DatagramSocket(null);
+                client.setReuseAddress(true);
+                client.bind(new InetSocketAddress (5062));
+            }
             // Request
             requestPacket.setPort(5063);
             requestPacket.setAddress(InetAddress.getByName (dataclass.Server));
