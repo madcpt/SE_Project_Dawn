@@ -19,7 +19,7 @@ class RunnableTCP implements Runnable {
         System.out.println("Running " +  threadName );
         try {
             System.out.println("Location: "  + this.location);
-            client.testCon("Location: " + this.location);
+            client.testCon(this.location);
             Thread.sleep(1);
         }catch (InterruptedException e) {
             System.out.println("Thread " +  threadName + " interrupted.");
