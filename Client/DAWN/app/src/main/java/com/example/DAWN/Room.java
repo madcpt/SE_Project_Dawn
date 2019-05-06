@@ -1,13 +1,11 @@
 package com.example.DAWN;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import java.util.Vector;
+public class Room{
 
-public class Room extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.roompage);
-    }
+    int id;
+    int RoomContain;
+    public Vector<Map> map;
+    public Vector<Role> Roles;
 }
+
