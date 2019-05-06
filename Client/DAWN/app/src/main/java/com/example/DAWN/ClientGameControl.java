@@ -22,6 +22,7 @@ public class ClientGameControl extends AppCompatActivity {
     private Button Lbutton,Rbutton,Ubutton,Dbutton ;
     private TextView testtxt ;
     private ImageView myroleview ;
+    private Data dataclass;
 
     //屏幕左上角为{0,0}，我的角色的绝对位置为{860,0}，相对（地图）位置为{x,y}
     //则地图相对位置为{-x,-y}，绝对位置{860-x,0-y}
@@ -30,16 +31,18 @@ public class ClientGameControl extends AppCompatActivity {
 
     private int direction = 3;
     float[] location={0,0}; //当前位置
+
     private Map map;
     private Role myrole;
     int vision=20;//视野范围
 
     //AsyncTask for TCP-client.
-    private class AsyncCon extends AsyncTask<String ,Void, Void>{
+    private class AsyncConTCP extends AsyncTask<String ,Void, Void>{
         @Override
         protected Void doInBackground(String... s2) {
-            RunnableTCP R1 = new RunnableTCP( "Test-Thread");
-            R1.start(Arrays.toString (location));
+            RunnableTCP R1 = new RunnableTCP( "Thread-TCP");
+//            R1.start(Arrays.toString (location));
+            R1.start(s2[0]);
             return null;
         }
 
@@ -52,19 +55,38 @@ public class ClientGameControl extends AppCompatActivity {
 //        }
     }
 
+    // AsyncTask for UDP-Client
+    private class AsyncConUDP extends AsyncTask<String, String, Void> {
+        @Override
+        protected Void doInBackground(String... s2) {
+            RunnableUDP R1 = new RunnableUDP ("Thread-UDP");
+            R1.start ();
+            return null;
+        }
+
+//        @Override
+//        protected void onProgressUpdate(String... values) { super.onProgressUpdate (values);        }
+//
+//        @Override
+//        protected void onPostExecute(Void aVoid) {
+//            super.onPostExecute (aVoid);
+//        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_process);
 
-        testtxt= (TextView) findViewById(R.id.Fortest) ;
+        testtxt= findViewById(R.id.Fortest);
         testtxt.setText("loading... ");
         testtxt.setText(Arrays.toString(location));
 
         myroleview = findViewById(R.id.Myrole);
+        dataclass = new Data ();
 
         //对上下左右进行监听
-        Lbutton= (Button) findViewById(R.id.Lbutton);
+        Lbutton= findViewById(R.id.Lbutton);
         Lbutton.setOnTouchListener(new View.OnTouchListener(){
             private Boolean longclicked=false;
             @Override
@@ -97,7 +119,7 @@ public class ClientGameControl extends AppCompatActivity {
                 return true;
             }
         });
-        Rbutton= (Button) findViewById(R.id.Rbutton);
+        Rbutton= findViewById(R.id.Rbutton);
         Rbutton.setOnTouchListener(new View.OnTouchListener(){
             private Boolean longclicked=false;
             @Override
@@ -129,7 +151,7 @@ public class ClientGameControl extends AppCompatActivity {
                 return true;
             }
         });
-        Ubutton= (Button) findViewById(R.id.Ubutton);
+        Ubutton= findViewById(R.id.Ubutton);
         Ubutton.setOnTouchListener(new View.OnTouchListener(){
             private Boolean longclicked=false;
             @Override
@@ -161,7 +183,7 @@ public class ClientGameControl extends AppCompatActivity {
                 return true;
             }
         });
-        Dbutton= (Button) findViewById(R.id.Dbutton);
+        Dbutton= findViewById(R.id.Dbutton);
         Dbutton.setOnTouchListener(new View.OnTouchListener(){
             private Boolean longclicked=false;
             @Override
@@ -195,6 +217,7 @@ public class ClientGameControl extends AppCompatActivity {
         });
 
         handler.postDelayed(runnable, 1000 * 1);//等1s后开始刷新显示
+        handlerUDP.postDelayed(runnableUDP, 1000 * 1);//等1s后开始刷新位置UDP
 
         //for drawing
         background = BitmapFactory.decodeResource(this.getResources(),R.drawable.map).copy(Bitmap.Config.ARGB_8888, true);
@@ -208,31 +231,61 @@ public class ClientGameControl extends AppCompatActivity {
 
     //上下左右按键的监听函数
     public void Lmove(){
-        location[0]=location[0]-3;
-        direction = 0;
-        new AsyncCon ().execute ();
+//        location[0]=location[0]-3;
+        dataclass.location = location;
+        if(direction == 0)
+            direction = 4;
+        else
+            direction = 0;
+        new AsyncConTCP ().execute ();
     }
     public void Rmove(){
-        location[0]=location[0]+3;
-        direction = 1;
-        new AsyncCon ().execute ();
+//        location[0]=location[0]+3;
+        dataclass.location = location;
+        if(direction == 1)
+            direction = 5;
+        else
+            direction = 1;
+        new AsyncConTCP ().execute ();
     }
     public void Umove(){
-        location[1]=location[1]-3;
-        direction = 2;
-        new AsyncCon ().execute ();
+//        location[1]=location[1]-3;
+        dataclass.location = location;
+        if(direction == 2)
+            direction = 6;
+        else
+            direction = 2;
+        new AsyncConTCP ().execute ();
     }
     public void Dmove(){
-        location[1]=location[1]+3;
-        direction = 3;
-        new AsyncCon ().execute ();
+//        location[1]=location[1]+3;
+        dataclass.location = location;
+        if(direction == 3)
+            direction = 7;
+        else
+            direction = 3;
+        new AsyncConTCP ().execute ();
     }
 
+
+    //位置刷新UDP
+    private Handler handlerUDP = new Handler();
+    private Runnable runnableUDP = new Runnable() {
+        public void run() {
+            new AsyncConUDP ().execute ();
+            location = dataclass.location;
+            handlerUDP.postDelayed(this, 20);// 刷新间隔(ms)
+        }
+//        void update() {
+//            location = dataclass.location;
+//        }
+    };
 
     //界面刷新
     private Handler handler = new Handler();
     private Runnable runnable = new Runnable() {
         public void run() {
+//            new AsyncConUDP ().execute ();
             this.update();
             handler.postDelayed(this, 20);// 刷新间隔(ms)
         }
@@ -251,6 +304,18 @@ public class ClientGameControl extends AppCompatActivity {
                     break;
                 case 3 :
                     myroleview.setImageResource(R.drawable.r_0_3);
+                    break;
+                case 4 :
+                    myroleview.setImageResource(R.drawable.r_0_0_1);
+                    break;
+                case 5 :
+                    myroleview.setImageResource(R.drawable.r_0_1_1);
+                    break;
+                case 6 :
+                    myroleview.setImageResource(R.drawable.r_0_2_1);
+                    break;
+                case 7 :
+                    myroleview.setImageResource(R.drawable.r_0_3_1);
                     break;
             }
         }

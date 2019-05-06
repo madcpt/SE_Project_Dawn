@@ -37,12 +37,13 @@ public class Client
             long startTime = System.currentTimeMillis();
             OutputStream outToServer = client.getOutputStream();
             DataOutputStream out = new DataOutputStream(outToServer);
-            out.writeUTF("Hello from " + client.getLocalSocketAddress() + meg);
+            out.writeUTF(client.getLocalSocketAddress() + "," + meg);
 
-            InputStream inFromServer = client.getInputStream();
-            DataInputStream in = new DataInputStream(inFromServer);
-            System.out.println("Respond: " + in.readUTF());
-            long delay = (long)System.currentTimeMillis() - startTime;
+//            InputStream inFromServer = client.getInputStream();
+//            DataInputStream in = new DataInputStream(inFromServer);
+//            System.out.println("Respond: " + in.readUTF());
+
+            long delay = System.currentTimeMillis() - startTime;
 
             dataclass.setDelay (delay);
 

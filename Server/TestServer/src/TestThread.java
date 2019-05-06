@@ -1,38 +1,42 @@
-package com.example.DAWN;
-
-class RunnableTCP implements Runnable {
+class RunnableDemo implements Runnable {
     private Thread t;
     private String threadName;
-    private Client client;
-    private String location;    
-    Data dataclass;
 
-    RunnableTCP(String name) {
+    RunnableDemo( String name) {
         threadName = name;
         System.out.println("Creating " +  threadName );
-        dataclass = new Data ();
-        String serverName = dataclass.Server;
-        int port = dataclass.port;
-        client = new Client(serverName, port);
     }
+
     public void run() {
         System.out.println("Running " +  threadName );
         try {
-            System.out.println("Location: "  + this.location);
-            client.testCon(this.location);
-            Thread.sleep(50);
+            for(int i = 4; i > 0; i--) {
+                System.out.println("Thread: " + threadName + ", " + i);
+                // 让线程睡眠一会
+                Thread.sleep(50);
+            }
         }catch (InterruptedException e) {
             System.out.println("Thread " +  threadName + " interrupted.");
         }
         System.out.println("Thread " +  threadName + " exiting.");
     }
 
-    public void start (String meg) {
-        location = meg;
+    public void start () {
         System.out.println("Starting " +  threadName );
         if (t == null) {
             t = new Thread (this, threadName);
             t.start ();
         }
+    }
+}
+
+public class TestThread {
+
+    public static void main(String args[]) {
+        RunnableDemo R1 = new RunnableDemo( "Thread-1");
+        R1.start();
+
+        RunnableDemo R2 = new RunnableDemo( "Thread-2");
+        R2.start();
     }
 }
