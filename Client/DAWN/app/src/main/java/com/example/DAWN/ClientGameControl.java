@@ -1,15 +1,14 @@
 package com.example.DAWN;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.*;
 import android.widget.*;
 
-import java.io.ByteArrayOutputStream;
 import java.lang.*;
 import java.util.Arrays;
 
@@ -220,9 +219,6 @@ public class ClientGameControl extends AppCompatActivity {
         handler.postDelayed(runnable, 1000 * 1);//等1s后开始刷新显示
         handlerUDP.postDelayed(runnableUDP, 1000 * 1);//等1s后开始刷新位置UDP
 
-        //for drawing
-        background = BitmapFactory.decodeResource(this.getResources(),R.drawable.map).copy(Bitmap.Config.ARGB_8888, true);
-        //Rolepic load
 
         scr = findViewById(R.id.background) ;
         sfh = scr.getHolder();
@@ -271,6 +267,22 @@ public class ClientGameControl extends AppCompatActivity {
     //Map初始化
     private Map MapInit(){
         //发送请求并将服务器传递过来的所有数据转化为Map对象
+
+        //for drawing
+        background = BitmapFactory.decodeResource(this.getResources(),R.drawable.map).copy(Bitmap.Config.ARGB_8888, true);
+        //Rolepic load
+        role_pic = new Bitmap[2][4][4];//人物数，方向数，每个方向动作帧数
+        Resources res=getResources();
+        String fname;
+        for (int i=0;i<1;i++){
+            for (int j=0;j<4;j++){
+                for (int k=0;k<2;k++){
+                    fname="r_"+Integer.toString(i)+"_"+Integer.toString(j)+"_"+Integer.toString(k);
+                    role_pic[i][j][k]=BitmapFactory.decodeResource(this.getResources(),res.getIdentifier(fname,"drawable",getPackageName())).copy(Bitmap.Config.ARGB_8888, true);
+                }
+            }
+        }
+
         return new Map();
     }
 
@@ -301,16 +313,16 @@ public class ClientGameControl extends AppCompatActivity {
             testtxt.setText(Arrays.toString(location));
             switch(direction){
                 case 0 :
-                    myroleview.setImageResource(R.drawable.r_0_0);
+                    myroleview.setImageResource(R.drawable.r_0_0_0);
                     break;
                 case 1 :
-                    myroleview.setImageResource(R.drawable.r_0_1);
+                    myroleview.setImageResource(R.drawable.r_0_1_0);
                     break;
                 case 2 :
-                    myroleview.setImageResource(R.drawable.r_0_2);
+                    myroleview.setImageResource(R.drawable.r_0_2_0);
                     break;
                 case 3 :
-                    myroleview.setImageResource(R.drawable.r_0_3);
+                    myroleview.setImageResource(R.drawable.r_0_3_0);
                     break;
                 case 4 :
                     myroleview.setImageResource(R.drawable.r_0_0_1);
@@ -401,15 +413,7 @@ public class ClientGameControl extends AppCompatActivity {
     }
 
 
-    /*绘制（施工中）
-    private Bitmap background;
-    private Canvas c;
-    public void paint(Canvas cv){
 
-
-
-        }
-    }*/
 
     //析构
     protected void onDestroy() {

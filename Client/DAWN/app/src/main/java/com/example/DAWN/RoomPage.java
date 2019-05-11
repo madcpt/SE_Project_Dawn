@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Switch;
 
 
 //简陋版
@@ -23,7 +22,7 @@ public class RoomPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.room_page);
         ImageView image=findViewById(R.id.RoleView);
-        image.setImageResource(R.drawable.r_0_0);
+        image.setImageResource(R.drawable.r_0_0_0);
         //通过id找到相应的控件 并且设置监听
         roomPrepare=findViewById(R.id.Prepare);
         roomPrepare.setOnClickListener(RoomListener);
@@ -58,10 +57,10 @@ public class RoomPage extends AppCompatActivity {
                     ImageView image=findViewById(R.id.RoleView);
                     switch(count%2) {
                         case 0:
-                            image.setImageResource(R.drawable.r_0_1);
+                            image.setImageResource(R.drawable.r_0_1_0);
                             break;
                         case 1:
-                            image.setImageResource(R.drawable.r_0_0);
+                            image.setImageResource(R.drawable.r_0_0_0);
                             break;
 
                     }
