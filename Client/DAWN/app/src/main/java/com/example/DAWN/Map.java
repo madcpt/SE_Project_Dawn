@@ -14,7 +14,7 @@ public class Map {
     public Vector<Prop> proplist;
     public int[][] m;
 
-    Map (){
+    public Map(){
         //Client表示并不需要
     }
 

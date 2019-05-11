@@ -1,11 +1,11 @@
-package com.example.DAWN;
+package com.example.DAWN.DialogManagement;
 
 public class RunnableUDP implements Runnable {
     private Thread t;
     private String threadName;
     private ClientUDP client;
 
-    RunnableUDP(String name) {
+    public RunnableUDP(String name) {
         threadName = name;
 //        System.out.println("Creating " +  threadName );
         client = new ClientUDP ();

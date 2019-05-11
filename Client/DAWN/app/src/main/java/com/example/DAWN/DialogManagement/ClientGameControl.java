@@ -1,4 +1,4 @@
-package com.example.DAWN;
+package com.example.DAWN.DialogManagement;
 
 import android.content.Intent;
 import android.content.res.Resources;
@@ -13,6 +13,12 @@ import java.lang.*;
 import java.util.Arrays;
 
 import android.graphics.*;
+
+import com.example.DAWN.Data;
+import com.example.DAWN.Map;
+import com.example.DAWN.R;
+import com.example.DAWN.Role;
+import com.example.DAWN.Role_simple;
 
 
 public class ClientGameControl extends AppCompatActivity {

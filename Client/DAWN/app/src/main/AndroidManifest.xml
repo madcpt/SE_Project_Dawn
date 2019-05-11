@@ -30,7 +30,7 @@
             android:name=".MainActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".ClientGameControl"
+            android:name=".DialogManagement.ClientGameControl"
             android:screenOrientation="landscape" />
     </application>
 

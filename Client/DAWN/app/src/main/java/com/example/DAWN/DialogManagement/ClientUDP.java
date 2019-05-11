@@ -1,4 +1,6 @@
-package com.example.DAWN;
+package com.example.DAWN.DialogManagement;
+
+import com.example.DAWN.Data;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
