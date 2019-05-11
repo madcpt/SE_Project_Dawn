@@ -1,15 +1,14 @@
 package com.example.DAWN;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.*;
 import android.widget.*;
 
-import java.io.ByteArrayOutputStream;
 import java.lang.*;
 import java.util.Arrays;
 
@@ -84,6 +83,7 @@ public class ClientGameControl extends AppCompatActivity {
 
         myroleview = findViewById(R.id.Myrole);
         dataclass = new Data ();
+        map=MapInit();
 
         //对上下左右进行监听
         Lbutton= findViewById(R.id.Lbutton);
@@ -219,9 +219,6 @@ public class ClientGameControl extends AppCompatActivity {
         handler.postDelayed(runnable, 1000 * 1);//等1s后开始刷新显示
         handlerUDP.postDelayed(runnableUDP, 1000 * 1);//等1s后开始刷新位置UDP
 
-        //for drawing
-        background = BitmapFactory.decodeResource(this.getResources(),R.drawable.map).copy(Bitmap.Config.ARGB_8888, true);
-        //Rolepic load
 
         scr = findViewById(R.id.background) ;
         sfh = scr.getHolder();
@@ -233,26 +230,60 @@ public class ClientGameControl extends AppCompatActivity {
     public void Lmove(){
 //        location[0]=location[0]-3;
         dataclass.location = location;
-        direction = 0;
-        new AsyncConTCP ().execute ("move," + direction);
+        if(direction == 0)
+            direction = 4;
+        else
+            direction = 0;
+        new AsyncConTCP ().execute ();
     }
     public void Rmove(){
 //        location[0]=location[0]+3;
         dataclass.location = location;
-        direction = 1;
-        new AsyncConTCP ().execute ("move," + direction);
+        if(direction == 1)
+            direction = 5;
+        else
+            direction = 1;
+        new AsyncConTCP ().execute ();
     }
     public void Umove(){
 //        location[1]=location[1]-3;
         dataclass.location = location;
-        direction = 2;
-        new AsyncConTCP ().execute ("move," + direction);
+        if(direction == 2)
+            direction = 6;
+        else
+            direction = 2;
+        new AsyncConTCP ().execute ();
     }
     public void Dmove(){
 //        location[1]=location[1]+3;
         dataclass.location = location;
-        direction = 3;
-        new AsyncConTCP ().execute ("move," + direction);
+        if(direction == 3)
+            direction = 7;
+        else
+            direction = 3;
+        new AsyncConTCP ().execute ();
+    }
+
+    //Map初始化
+    private Map MapInit(){
+        //发送请求并将服务器传递过来的所有数据转化为Map对象
+
+        //for drawing
+        background = BitmapFactory.decodeResource(this.getResources(),R.drawable.map).copy(Bitmap.Config.ARGB_8888, true);
+        //Rolepic load
+        role_pic = new Bitmap[2][4][4];//人物数，方向数，每个方向动作帧数
+        Resources res=getResources();
+        String fname;
+        for (int i=0;i<1;i++){
+            for (int j=0;j<4;j++){
+                for (int k=0;k<2;k++){
+                    fname="r_"+Integer.toString(i)+"_"+Integer.toString(j)+"_"+Integer.toString(k);
+                    role_pic[i][j][k]=BitmapFactory.decodeResource(this.getResources(),res.getIdentifier(fname,"drawable",getPackageName())).copy(Bitmap.Config.ARGB_8888, true);
+                }
+            }
+        }
+
+        return new Map();
     }
 
 
@@ -282,16 +313,28 @@ public class ClientGameControl extends AppCompatActivity {
             testtxt.setText(Arrays.toString(location));
             switch(direction){
                 case 0 :
-                    myroleview.setImageResource(R.drawable.r_0_0);
+                    myroleview.setImageResource(R.drawable.r_0_0_0);
                     break;
                 case 1 :
-                    myroleview.setImageResource(R.drawable.r_0_1);
+                    myroleview.setImageResource(R.drawable.r_0_1_0);
                     break;
                 case 2 :
-                    myroleview.setImageResource(R.drawable.r_0_2);
+                    myroleview.setImageResource(R.drawable.r_0_2_0);
                     break;
                 case 3 :
-                    myroleview.setImageResource(R.drawable.r_0_3);
+                    myroleview.setImageResource(R.drawable.r_0_3_0);
+                    break;
+                case 4 :
+                    myroleview.setImageResource(R.drawable.r_0_0_1);
+                    break;
+                case 5 :
+                    myroleview.setImageResource(R.drawable.r_0_1_1);
+                    break;
+                case 6 :
+                    myroleview.setImageResource(R.drawable.r_0_2_1);
+                    break;
+                case 7 :
+                    myroleview.setImageResource(R.drawable.r_0_3_1);
                     break;
             }
         }
@@ -303,7 +346,7 @@ public class ClientGameControl extends AppCompatActivity {
     private SurfaceHolder sfh;
     private Draw draw;
     private Bitmap background;
-    private Bitmap[][] role_pic;//所有角色图的Bitmap点阵
+    private Bitmap[][][] role_pic;//所有角色图的Bitmap点阵,第一层为角色，第二层为方向，第三层为动作
     class MyCallBack implements SurfaceHolder.Callback {
         @Override
         //当SurfaceView的视图发生改变，比如横竖屏切换时，这个方法被调用
@@ -350,7 +393,7 @@ public class ClientGameControl extends AppCompatActivity {
                             if (Math.abs(r.location[0] - location[0]) < vision * 10 && Math.abs(r.location[1] - location[1]) < vision * 10) {
                                 continue;
                             }
-                            c.drawBitmap(role_pic[r.id%100][r.direction],r.location[0],r.location[1],p);
+                            c.drawBitmap(role_pic[r.id%100][r.direction][r.walk_mov],r.location[0],r.location[1],p);
 
                         }
                     }
@@ -370,15 +413,7 @@ public class ClientGameControl extends AppCompatActivity {
     }
 
 
-    /*绘制（施工中）
-    private Bitmap background;
-    private Canvas c;
-    public void paint(Canvas cv){
 
-
-
-        }
-    }*/
 
     //析构
     protected void onDestroy() {
