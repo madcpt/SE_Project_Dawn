@@ -18,6 +18,11 @@ public class Map {
         //Client表示并不需要
     }
 
+    public Boolean update(){
+        //根据传回内容更新各角色数值以及道具情况
+        return true;
+    }
+
 
 
 }

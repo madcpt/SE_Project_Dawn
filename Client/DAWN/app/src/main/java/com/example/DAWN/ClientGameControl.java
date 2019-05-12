@@ -217,7 +217,7 @@ public class ClientGameControl extends AppCompatActivity {
         });
 
         handler.postDelayed(runnable, 1000 * 1);//等1s后开始刷新显示
-        handlerUDP.postDelayed(runnableUDP, 1000 * 1);//等1s后开始刷新位置UDP
+//        handlerUDP.postDelayed(runnableUDP, 1000 * 1);//等1s后开始刷新位置UDP
 
 
         scr = findViewById(R.id.background) ;
@@ -228,40 +228,40 @@ public class ClientGameControl extends AppCompatActivity {
 
     //上下左右按键的监听函数
     public void Lmove(){
-//        location[0]=location[0]-3;
+        location[0]=location[0]-3;
         dataclass.location = location;
         if(direction == 0)
             direction = 4;
         else
             direction = 0;
-        new AsyncConTCP ().execute ();
+    //    new AsyncConTCP ().execute ();
     }
     public void Rmove(){
-//        location[0]=location[0]+3;
+      location[0]=location[0]+3;
         dataclass.location = location;
         if(direction == 1)
             direction = 5;
         else
             direction = 1;
-        new AsyncConTCP ().execute ();
+  //      new AsyncConTCP ().execute ();
     }
     public void Umove(){
-//        location[1]=location[1]-3;
+        location[1]=location[1]-3;
         dataclass.location = location;
         if(direction == 2)
             direction = 6;
         else
             direction = 2;
-        new AsyncConTCP ().execute ();
+//        new AsyncConTCP ().execute ();
     }
     public void Dmove(){
-//        location[1]=location[1]+3;
+        location[1]=location[1]+3;
         dataclass.location = location;
         if(direction == 3)
             direction = 7;
         else
             direction = 3;
-        new AsyncConTCP ().execute ();
+  //      new AsyncConTCP ().execute ();
     }
 
     //Map初始化
@@ -380,6 +380,7 @@ public class ClientGameControl extends AppCompatActivity {
         public void run(){
             Role_simple r;
             Paint p = new Paint();
+            //RadialGradient radialGradient = new RadialGradient(location[0],location[1],vision*10, Color.TRANSPARENT,Color.BLACK,Shader.TileMode.CLAMP);
             while(isRun){
                 c=null;
                 try {
@@ -387,6 +388,8 @@ public class ClientGameControl extends AppCompatActivity {
                         c = holder.lockCanvas();
                         //执行具体的绘制操作
                         c.drawColor(Color.WHITE);
+
+
                         c.drawBitmap(background, 930 - (int) location[0], 390 - (int) location[1], p);
                         for (int i=0;i<map.livingrole.size();i++) {
                             r = map.livingrole.get(i);
@@ -394,8 +397,18 @@ public class ClientGameControl extends AppCompatActivity {
                                 continue;
                             }
                             c.drawBitmap(role_pic[r.id%100][r.direction][r.walk_mov],r.location[0],r.location[1],p);
-
+                            if (r.walk_mov!=0){
+                                r.walk_mov=(r.walk_mov+1)/3;//每个动作循环的帧数
+                            }
                         }
+                        //画黑雾
+                        //int layerId = canvas.saveLayer(0, 0, canvasWidth, canvasHeight, null, Canvas.ALL_SAVE_FLAG);
+                        c.save();
+//                        c.drawColor(Color.BLACK);
+//                       // p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+//                        p.setColor(Color.TRANSPARENT);
+//                        c.drawCircle(930-location[0],930-location[1],vision*10,p);
+                        c.restore();
                     }
                     Thread.sleep(10);
 
