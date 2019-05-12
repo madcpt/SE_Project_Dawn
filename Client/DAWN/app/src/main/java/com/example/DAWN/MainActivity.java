@@ -5,8 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.DAWN.DialogManagement.ClientGameControl;
-
 public class MainActivity extends AppCompatActivity {
     Intent intent = getIntent();
     @Override

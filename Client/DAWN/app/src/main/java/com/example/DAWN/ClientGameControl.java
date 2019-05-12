@@ -1,4 +1,4 @@
-package com.example.DAWN.DialogManagement;
+package com.example.DAWN;
 
 import android.content.Intent;
 import android.content.res.Resources;
@@ -15,6 +15,8 @@ import java.util.Arrays;
 import android.graphics.*;
 
 import com.example.DAWN.Data;
+import com.example.DAWN.DialogManagement.RunnableTCP;
+import com.example.DAWN.DialogManagement.RunnableUDP;
 import com.example.DAWN.Map;
 import com.example.DAWN.R;
 import com.example.DAWN.Role;
@@ -42,12 +44,12 @@ public class ClientGameControl extends AppCompatActivity {
     int vision=20;//视野范围
 
     //AsyncTask for TCP-client.
-    private class AsyncConTCP extends AsyncTask<String ,Void, Void>{
+    private class AsyncConTCP extends AsyncTask<Void ,Void, Void>{
         @Override
-        protected Void doInBackground(String... s2) {
+        protected Void doInBackground(Void... voids) {
             RunnableTCP R1 = new RunnableTCP( "Thread-TCP");
 //            R1.start(Arrays.toString (location));
-            R1.start(s2[0]);
+            R1.start("location");
             return null;
         }
 
@@ -61,9 +63,9 @@ public class ClientGameControl extends AppCompatActivity {
     }
 
     // AsyncTask for UDP-Client
-    private class AsyncConUDP extends AsyncTask<String, String, Void> {
+    private class AsyncConUDP extends AsyncTask<Void, Void, Void> {
         @Override
-        protected Void doInBackground(String... s2) {
+        protected Void doInBackground(Void... voids) {
             RunnableUDP R1 = new RunnableUDP ("Thread-UDP");
             R1.start ();
             return null;
