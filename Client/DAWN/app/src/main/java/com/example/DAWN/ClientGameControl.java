@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.*;
 import android.widget.*;
 
@@ -381,6 +382,12 @@ public class ClientGameControl extends AppCompatActivity {
             Role_simple r;
             Paint p = new Paint();
             //RadialGradient radialGradient = new RadialGradient(location[0],location[1],vision*10, Color.TRANSPARENT,Color.BLACK,Shader.TileMode.CLAMP);
+            DisplayMetrics dm = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(dm);
+            int[] center_location=new int[2];
+            center_location[0] = dm.widthPixels/2;
+            center_location[1] = dm.heightPixels/2;
+
             while(isRun){
                 c=null;
                 try {
@@ -389,25 +396,25 @@ public class ClientGameControl extends AppCompatActivity {
                         //执行具体的绘制操作
                         c.drawColor(Color.WHITE);
 
-
-                        c.drawBitmap(background, 930 - (int) location[0], 390 - (int) location[1], p);
-                        for (int i=0;i<map.livingrole.size();i++) {
-                            r = map.livingrole.get(i);
-                            if (Math.abs(r.location[0] - location[0]) < vision * 10 && Math.abs(r.location[1] - location[1]) < vision * 10) {
-                                continue;
-                            }
-                            c.drawBitmap(role_pic[r.id%100][r.direction][r.walk_mov],r.location[0],r.location[1],p);
-                            if (r.walk_mov!=0){
-                                r.walk_mov=(r.walk_mov+1)/3;//每个动作循环的帧数
-                            }
-                        }
+                        c.drawBitmap(background, center_location[0] - location[0], center_location[1] - location[1], p);
+                        //0,0 屏幕左上
+//                        for (int i=0;i<map.livingrole.size();i++) {
+//                            r = map.livingrole.get(i);
+//                            if (Math.abs(r.location[0] - location[0]) < vision * 10 && Math.abs(r.location[1] - location[1]) < vision * 10) {
+//                                continue;
+//                            }
+//                            c.drawBitmap(role_pic[r.id%100][r.direction][r.walk_mov],center_location[0] - location[0]+r.location[0],center_location[0] - location[1]+r.location[1],p);
+//                            if (r.walk_mov!=0){
+//                                r.walk_mov=(r.walk_mov+1)/3;//每个动作循环的帧数
+//                            }
+//                        }
                         //画黑雾
-                        //int layerId = canvas.saveLayer(0, 0, canvasWidth, canvasHeight, null, Canvas.ALL_SAVE_FLAG);
-                        c.save();
-//                        c.drawColor(Color.BLACK);
-//                       // p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-//                        p.setColor(Color.TRANSPARENT);
-//                        c.drawCircle(930-location[0],930-location[1],vision*10,p);
+                        c.saveLayer(0, 0, center_location[0]*2+1, center_location[1]*2+1, p, Canvas.ALL_SAVE_FLAG);//保存上一层
+                        p.setColor(Color.BLACK);
+                        c.drawRect(0,0,center_location[0]*2+1, center_location[1]*2+1,p);
+                        p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+                        c.drawCircle(center_location[0],center_location[1],vision*15,p);
+                        p.setXfermode(null);
                         c.restore();
                     }
                     Thread.sleep(10);
