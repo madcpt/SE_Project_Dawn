@@ -44,8 +44,8 @@ public class ClientUDP {
 
             // Receive
 
-            client.receive(receivePacket);
-
+//            client.receive(receivePacket);
+            
             ByteArrayInputStream byteArraySteam = new ByteArrayInputStream(ReceiveBytes);
             ObjectInputStream objectStream = new ObjectInputStream (byteArraySteam);
 
@@ -56,7 +56,6 @@ public class ClientUDP {
 
             dataclass.location = inData;
             System.out.println(dataclass.location[0] + "," + dataclass.location[1] + " SENDING");
-
 
             client.close();
         } catch (IOException e) {

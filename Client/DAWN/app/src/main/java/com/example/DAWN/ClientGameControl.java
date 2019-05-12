@@ -312,7 +312,6 @@ public class ClientGameControl extends AppCompatActivity {
     private Handler handler = new Handler();
     private Runnable runnable = new Runnable() {
         public void run() {
-//            new AsyncConUDP ().execute ();
             this.update();
             handler.postDelayed(this, 20);// 刷新间隔(ms)
         }
