@@ -1,7 +1,7 @@
 import java.util.Vector;
 import java.util.Random;
 
-public class Map {
+public class MapClass {
     Random rand=new Random();
     public static int unit =30;
     public static int size =100;
@@ -45,7 +45,7 @@ public class Map {
     public Vector<Role_simple> rankrecord;
     public int[][] m;
 
-    Map () {
+    MapClass() {
         int[][] m={{1,2},{2,3}};
         for (int i = 0; i <0; i++) { //构造prop的，暂无
         }

@@ -1,10 +1,15 @@
 package com.example.DAWN;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import com.example.DAWN.DialogManagement.RunnableTCP;
+
+import java.io.IOException;
 
 
 //简陋版
@@ -16,6 +21,21 @@ public class RoomPage extends AppCompatActivity {
     Button roomPrepare;
     Button startgame;
     Button confirm;
+
+    public RoomPage() throws IOException {
+        Data dataclass = new Data ();
+        dataclass.setValue ();
+    }
+
+    //AsyncTask for TCP-client.
+    static class AsyncConTCP extends AsyncTask<String ,Void, Void>{
+        @Override
+        protected Void doInBackground(String... meg) {
+            RunnableTCP R1 = new RunnableTCP( "Thread-TCP");
+            R1.sendInit (meg[0]);
+            return null;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +71,8 @@ public class RoomPage extends AppCompatActivity {
                     boolean flagprepare=true;
 
                     //向服务器传递flag,id
+                    new AsyncConTCP ().execute ("init");
+
                     break;
                 case R.id.SelectRole:
                     //切换人物图标，暂时使用人物的前后左右图

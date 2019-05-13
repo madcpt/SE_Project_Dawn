@@ -16,7 +16,7 @@ public class RunnableUDP implements Runnable {
             for(int i = 1; i > 0; i--) {
 //                System.out.println("Thread: " + threadName + ", " + i);
                 client.testCon();
-                Thread.sleep(10);
+                Thread.sleep(1);
             }
         }catch (InterruptedException e) {
 //            System.out.println("Thread " +  threadName + " interrupted.");

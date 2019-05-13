@@ -1,10 +1,11 @@
-
+import java.util.HashMap;
+import java.util.Map;
 
 public class Data {
     public static Long delay;
     public static String Server;
     public static int port;
-    public static float[] location;
+    private static Map<String, float[]> playerLocation;
     public int direction;
     Data(){
     }
@@ -14,23 +15,40 @@ public class Data {
 //        Server = "39.105.27.108";
         Server = "192.168.137.1";
         port = 66;
-        location = new float[]{0, 0};
+        playerLocation = new HashMap<>();
         direction = 0;
     }
-    public void Lmove(){
-        location[0]=location[0]-3;
+
+    public void addPlayer(String pureIP) {
+        playerLocation.put(pureIP, new float[]{0, 0});
+    }
+
+    public void Lmove(String pureIP){
+//        location[0]=location[0]-3;
+        float[] tmpLoc = playerLocation.get(pureIP);
+        tmpLoc[0] -= 3;
+        playerLocation.put(pureIP, tmpLoc);
         direction = 0;
     }
-    public void Rmove(){
-        location[0]=location[0]+3;
+    public void Rmove(String pureIP){
+//        location[0]=location[0]+3;
+        float[] tmpLoc = playerLocation.get(pureIP);
+        tmpLoc[0] += 3;
+        playerLocation.put(pureIP, tmpLoc);
         direction = 1;
     }
-    public void Umove(){
-        location[1]=location[1]-3;
+    public void Umove(String pureIP){
+//        location[1]=location[1]-3;
+        float[] tmpLoc = playerLocation.get(pureIP);
+        tmpLoc[1] -= 3;
+        playerLocation.put(pureIP, tmpLoc);
         direction = 2;
     }
-    public void Dmove(){
-        location[1]=location[1]+3;
+    public void Dmove(String pureIP){
+//        location[1]=location[1]+3;
+        float[] tmpLoc = playerLocation.get(pureIP);
+        tmpLoc[1] += 3;
+        playerLocation.put(pureIP, tmpLoc);
         direction = 3;
     }
     public static Long getDelay() {
@@ -44,5 +62,9 @@ public class Data {
         if(a > delay){
             delay = a;
         }
+    }
+
+    public Map<String, float[]> getUpdateList() {
+        return playerLocation;
     }
 }
