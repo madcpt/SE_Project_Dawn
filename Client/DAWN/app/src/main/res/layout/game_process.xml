@@ -30,7 +30,6 @@
         android:layout_marginBottom="8dp"
         android:rotation="0"
         android:rotationY="0"
-        android:text="QAQQQ"
         android:textColor="@color/colorPrimaryDark"
         android:textColorLink="@android:color/darker_gray"
         android:visibility="visible"
@@ -39,8 +38,23 @@
         app:layout_constraintHorizontal_bias="0.878"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:text="WWW" />
+        app:layout_constraintVertical_bias="0.0" />
+
+
+    <com.example.DAWN.RockerView
+        android:id="@+id/my_rocker"
+        android:layout_width="200dp"
+        android:layout_height="200sp"
+        android:layout_marginTop="208dp"
+        android:layout_marginBottom="8dp"
+        app:areaBackground="@mipmap/rocker_base"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:rockerBackground="@mipmap/rocker"
+        app:rockerCallBackMode="CALL_BACK_MODE_STATE_CHANGE"
+        app:rockerScale="0.5"
+        app:rockerSpeedLevel="10" />
 
     <ImageView
         android:id="@+id/Myrole"
@@ -59,88 +73,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/r_0_3_0" />
 
-    <Button
-        android:id="@+id/Rbutton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:longClickable="true"
-        android:rotation="0"
-        android:text="R"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.954"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.892"
-        tools:longClickable="true" />
-
-    <Button
-        android:id="@+id/Lbutton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:longClickable="true"
-        android:text="L"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.674"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.892" />
-
-    <Button
-        android:id="@+id/Dbutton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:longClickable="true"
-        android:text="D"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.81"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.892"
-        tools:longClickable="true" />
-
-    <Button
-        android:id="@+id/Ubutton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:longClickable="true"
-        android:text="U"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.81"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.632"
-        tools:longClickable="true" />
 
 </android.support.constraint.ConstraintLayout>
