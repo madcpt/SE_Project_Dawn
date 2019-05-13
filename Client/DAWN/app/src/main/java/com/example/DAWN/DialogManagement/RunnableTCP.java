@@ -1,13 +1,16 @@
-package com.example.DAWN;
+package com.example.DAWN.DialogManagement;
 
-class RunnableTCP implements Runnable {
+import com.example.DAWN.Data;
+import com.example.DAWN.DialogManagement.Client;
+
+public class RunnableTCP implements Runnable {
     private Thread t;
     private String threadName;
     private Client client;
     private String location;    
     Data dataclass;
 
-    RunnableTCP(String name) {
+    public RunnableTCP(String name) {
         threadName = name;
         System.out.println("Creating " +  threadName );
         dataclass = new Data ();

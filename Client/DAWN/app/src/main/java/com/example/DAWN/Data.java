@@ -5,7 +5,7 @@ public class Data {
     public static String Server;
     public static int port;
     public static float[] location;
-    Data(){
+    public Data(){
     }
     public void setValue(){
         delay = 0L;

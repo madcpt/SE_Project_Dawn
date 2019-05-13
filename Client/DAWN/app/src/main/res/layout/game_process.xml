@@ -16,6 +16,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.459" />
 
+
+
     <TextView
         android:id="@+id/Fortest"
         android:layout_width="124dp"
@@ -55,7 +57,7 @@
         app:layout_constraintHorizontal_bias="0.499"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/r_0_3" />
+        app:srcCompat="@drawable/r_0_3_0" />
 
     <Button
         android:id="@+id/Rbutton"

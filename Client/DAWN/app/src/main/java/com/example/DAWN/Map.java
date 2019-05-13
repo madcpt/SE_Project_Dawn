@@ -14,11 +14,13 @@ public class Map {
     public Vector<Prop> proplist;
     public int[][] m;
 
-    Map (){
-        //初始化m;
-        //随机地点生成道具，将m中该点值设为propid
-        //初始化人物地点
+    public Map(){
+        //Client表示并不需要
+    }
 
+    public Boolean update(){
+        //根据传回内容更新各角色数值以及道具情况
+        return true;
     }
 
 

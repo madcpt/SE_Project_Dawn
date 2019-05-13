@@ -106,7 +106,7 @@ public class Login extends Activity {                 //登录界面活动
             String userPwd = mPwd.getText().toString().trim();
             SharedPreferences.Editor editor =login_sp.edit();
             int result=mUserDataManager.findUserByNameAndPwd(userName, userPwd);
-            if(result==1){                                             //返回1说明用户名和密码均正确
+            if(result>=1){                                             //返回1说明用户名和密码均正确
                 //保存用户名和密码
                 editor.putString("USER_NAME", userName);
                 editor.putString("PASSWORD", userPwd);
@@ -119,7 +119,7 @@ public class Login extends Activity {                 //登录界面活动
                 }
                 editor.commit();
 
-                Intent intent = new Intent(Login.this,MainActivity.class) ;    //切换Login Activity至User Activity
+                Intent intent = new Intent(Login.this,RoomPage.class) ;    //切换Login Activity至User Activity
                 startActivity(intent);
                 finish();
                 Toast.makeText(this, getString(R.string.login_success),Toast.LENGTH_SHORT).show();//登录成功提示
