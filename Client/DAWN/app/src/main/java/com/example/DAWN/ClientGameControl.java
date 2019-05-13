@@ -1,4 +1,4 @@
-package com.example.DAWN;
+﻿package com.example.DAWN;
 
 import android.content.Intent;
 import android.content.res.Resources;
@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.*;
 import android.widget.*;
 
@@ -224,7 +225,7 @@ public class ClientGameControl extends AppCompatActivity {
         });
 
         handler.postDelayed(runnable, 1000 * 1);//等1s后开始刷新显示
-        handlerUDP.postDelayed(runnableUDP, 1000 * 1);//等1s后开始刷新位置UDP
+//        handlerUDP.postDelayed(runnableUDP, 1000 * 1);//等1s后开始刷新位置UDP
 
 
         scr = findViewById(R.id.background) ;
@@ -235,7 +236,7 @@ public class ClientGameControl extends AppCompatActivity {
 
     //上下左右按键的监听函数
     public void Lmove(){
-//        location[0]=location[0]-3;
+        location[0]=location[0]-3;
         dataclass.location = location;
         if(direction == 0)
             direction = 4;
@@ -244,7 +245,7 @@ public class ClientGameControl extends AppCompatActivity {
         new AsyncConTCP ().execute ("move,0");
     }
     public void Rmove(){
-//        location[0]=location[0]+3;
+      location[0]=location[0]+3;
         dataclass.location = location;
         if(direction == 1)
             direction = 5;
@@ -253,7 +254,7 @@ public class ClientGameControl extends AppCompatActivity {
         new AsyncConTCP ().execute ("move,1");
     }
     public void Umove(){
-//        location[1]=location[1]-3;
+        location[1]=location[1]-3;
         dataclass.location = location;
         if(direction == 2)
             direction = 6;
@@ -262,7 +263,7 @@ public class ClientGameControl extends AppCompatActivity {
         new AsyncConTCP ().execute ("move,2");
     }
     public void Dmove(){
-//        location[1]=location[1]+3;
+        location[1]=location[1]+3;
         dataclass.location = location;
         if(direction == 3)
             direction = 7;
@@ -394,6 +395,13 @@ public class ClientGameControl extends AppCompatActivity {
         public void run(){
             Role_simple r;
             Paint p = new Paint();
+            //RadialGradient radialGradient = new RadialGradient(location[0],location[1],vision*10, Color.TRANSPARENT,Color.BLACK,Shader.TileMode.CLAMP);
+            DisplayMetrics dm = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(dm);
+            int[] center_location=new int[2];
+            center_location[0] = dm.widthPixels/2;
+            center_location[1] = dm.heightPixels/2;
+
             while(isRun){
                 c=null;
                 try {
@@ -401,15 +409,27 @@ public class ClientGameControl extends AppCompatActivity {
                         c = holder.lockCanvas();
                         //执行具体的绘制操作
                         c.drawColor(Color.WHITE);
-                        c.drawBitmap(background, 930 - (int) location[0], 390 - (int) location[1], p);
-                        for (int i=0;i<map.livingrole.size();i++) {
-                            r = map.livingrole.get(i);
-                            if (Math.abs(r.location[0] - location[0]) < vision * 10 && Math.abs(r.location[1] - location[1]) < vision * 10) {
-                                continue;
-                            }
-                            c.drawBitmap(role_pic[r.id%100][r.direction][r.walk_mov],r.location[0],r.location[1],p);
 
-                        }
+                        c.drawBitmap(background, center_location[0] - location[0], center_location[1] - location[1], p);
+                        //0,0 屏幕左上
+//                        for (int i=0;i<map.livingrole.size();i++) {
+//                            r = map.livingrole.get(i);
+//                            if (Math.abs(r.location[0] - location[0]) < vision * 10 && Math.abs(r.location[1] - location[1]) < vision * 10) {
+//                                continue;
+//                            }
+//                            c.drawBitmap(role_pic[r.id%100][r.direction][r.walk_mov],center_location[0] - location[0]+r.location[0],center_location[0] - location[1]+r.location[1],p);
+//                            if (r.walk_mov!=0){
+//                                r.walk_mov=(r.walk_mov+1)/3;//每个动作循环的帧数
+//                            }
+//                        }
+                        //画黑雾
+                        c.saveLayer(0, 0, center_location[0]*2+1, center_location[1]*2+1, p, Canvas.ALL_SAVE_FLAG);//保存上一层
+                        p.setColor(Color.BLACK);
+                        c.drawRect(0,0,center_location[0]*2+1, center_location[1]*2+1,p);
+                        p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+                        c.drawCircle(center_location[0],center_location[1],vision*15,p);
+                        p.setXfermode(null);
+                        c.restore();
                     }
                     Thread.sleep(10);
 
