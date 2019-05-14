@@ -17,6 +17,10 @@ import java.util.Arrays;
 import android.graphics.*;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of 78b2fbc... Merge pull request #21 from Schemeer/master
 =======
 
 >>>>>>> parent of 78b2fbc... Merge pull request #21 from Schemeer/master
