@@ -70,7 +70,10 @@ public class serverForMultiClientTCP extends ServerSocket {
                                 dataclass.Dmove(pureIP);
                                 break;
                         }
-                        break;
+                    case "stop":
+                        dataclass.mov_stop(pureIP);
+                    case "attack": break;
+                    case "atk_stp": break;
                     case "init" :
                         serverGameControl.addPlayer(pureIP);
                 }
