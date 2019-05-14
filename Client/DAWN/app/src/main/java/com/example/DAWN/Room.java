@@ -8,5 +8,3 @@ public class Room{
     public Vector<Map> map;
     public Vector<Role> Roles;
 }
-
-
