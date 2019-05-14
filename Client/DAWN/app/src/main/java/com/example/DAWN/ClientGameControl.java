@@ -13,6 +13,7 @@ import android.widget.*;
 
 import java.lang.*;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 import android.graphics.*;
 
@@ -40,7 +41,7 @@ public class ClientGameControl extends AppCompatActivity {
     //(所有图片的左上角为判定点）
 
     private int direction = 3;
-    float[] location={0,0}; //当前位置
+    int[] location={0,0}; //当前位置
 
     private Map map;
     private Role myrole;
@@ -94,7 +95,11 @@ public class ClientGameControl extends AppCompatActivity {
 
         myroleview = findViewById(R.id.Myrole);
         dataclass = new Data ();
-        MapInit();
+        try {
+            MapInit();
+        } catch (InterruptedException e) {
+            e.printStackTrace ();
+        }
 
         //对摇杆位置改变进行监听
 //        当前模式：方向有改变时回调；8个方向
@@ -424,14 +429,16 @@ public class ClientGameControl extends AppCompatActivity {
     }
 
     //Map初始化
-    private Boolean MapInit(){
+    private Boolean MapInit() throws InterruptedException {
         //发送请求并将服务器传递过来的所有数据转化为Map对象
         //失败请return false
         //仅供测试
         map=new Map();
 
         while(Data.playerLocation == null){
+            System.out.println ("get111");
             new AsyncConUDP ().execute ();
+            TimeUnit.SECONDS.sleep(1);
         }
 
         for (String playerIP : Data.playerLocation.keySet ()){
@@ -475,7 +482,7 @@ public class ClientGameControl extends AppCompatActivity {
                 location[0] = dataclass.playerLocation.get (dataclass.LOCALIP)[0];
                 location[1] = dataclass.playerLocation.get (dataclass.LOCALIP)[1];
             } else {
-                location = new float[]{0, 0};
+                location = new int[]{0, 0};
             }
             handlerUDP.postDelayed (this, 20);// 刷新间隔(ms)
         }

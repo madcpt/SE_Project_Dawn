@@ -30,7 +30,7 @@ public class ClientUDP {
             if(client == null){
                 client = new DatagramSocket(null);
                 client.setReuseAddress(true);
-                client.setSoTimeout (1000);
+//                client.setSoTimeout (100);
                 client.bind(new InetSocketAddress (5062));
             }
             // Request
