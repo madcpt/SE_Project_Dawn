@@ -429,12 +429,19 @@ public class ClientGameControl extends AppCompatActivity {
         //失败请return false
         //仅供测试
         map=new Map();
-        Role_simple test_r1=new Role_simple();
-        test_r1.location=new int[2];  test_r1.location[0]=100;  test_r1.location[1]=200;
-        Role_simple test_r2=new Role_simple();
-        test_r2.location=new int[2];  test_r2.location[0]=200;  test_r2.location[1]=400;
-        map.livingrole.add(test_r1);
-        map.livingrole.add(test_r2);
+
+        while(Data.playerLocation == null){
+            new AsyncConUDP ().execute ();
+        }
+
+        for (String playerIP : Data.playerLocation.keySet ()){
+            System.out.println (playerIP);
+            Role_simple test_r1=new Role_simple(111, playerIP);
+            test_r1.location[0] =  Data.playerLocation.get (playerIP)[0];
+            test_r1.location[1] =  Data.playerLocation.get (playerIP)[1];
+            map.livingrole.add(test_r1);
+        }
+
 
 
         //for drawing

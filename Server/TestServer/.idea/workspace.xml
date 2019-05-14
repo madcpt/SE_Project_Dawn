@@ -2,10 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="52dc684f-8da2-48d7-ba17-8edfe15c0a83" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../Client/DAWN/.idea/codeStyles/Project.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/ClientGameControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/ClientGameControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/Data.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/DialogManagement/ClientUDP.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/DialogManagement/ClientUDP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/DialogManagement/RunnableUDP.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/DialogManagement/RunnableUDP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/Role_simple.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/Role_simple.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TestServer/Data.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TestServer/Data.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TestServer/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TestServer/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TestServer/MapClass$Prop.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TestServer/MapClass$Role_simple.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TestServer/MapClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TestServer/MapClass.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TestServer/serverForMultiClientTCP$CreateServerThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TestServer/serverForMultiClientTCP$CreateServerThread.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TestServer/serverForMultiClientTCP.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TestServer/serverForMultiClientTCP.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TestServer/serverGameControl.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TestServer/serverGameControl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/serverGameControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/serverGameControl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,11 +28,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="434">
-              <caret line="45" column="9" lean-forward="true" selection-start-line="45" selection-start-column="9" selection-end-line="45" selection-end-column="9" />
+            <state relative-caret-position="1029">
+              <caret line="51" column="26" selection-start-line="51" selection-start-column="26" selection-end-line="51" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -29,17 +40,27 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MapClass.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="74">
-              <caret line="11" selection-start-line="11" selection-end-line="11" />
+            <state relative-caret-position="2247">
+              <caret line="129" column="13" selection-start-line="129" selection-start-column="13" selection-end-line="129" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Data.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1756">
-              <caret line="133" column="5" selection-start-line="133" selection-start-column="5" selection-end-line="133" selection-end-column="5" />
+            <state relative-caret-position="630">
+              <caret line="32" column="34" selection-start-line="32" selection-start-column="34" selection-end-line="32" selection-end-column="34" />
+              <folding>
+                <element signature="e#708#709#0" expanded="true" />
+                <element signature="e#754#755#0" expanded="true" />
+                <element signature="e#3363#3364#0" expanded="true" />
+                <element signature="e#3391#3392#0" expanded="true" />
+                <element signature="e#3434#3435#0" expanded="true" />
+                <element signature="e#3459#3460#0" expanded="true" />
+                <element signature="e#3618#3619#0" expanded="true" />
+                <element signature="e#3655#3656#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -56,8 +77,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/serverForMultiClientTCP.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="307">
-              <caret line="87" column="17" selection-start-line="87" selection-start-column="17" selection-end-line="87" selection-end-column="17" />
+            <state relative-caret-position="466">
+              <caret line="54" column="49" selection-start-line="54" selection-start-column="49" selection-end-line="54" selection-end-column="49" />
             </state>
           </provider>
         </entry>
@@ -65,8 +86,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/serverForMultiClientUDP.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="46" column="52" selection-start-line="46" selection-start-column="52" selection-end-line="46" selection-end-column="52" />
+            <state relative-caret-position="529">
+              <caret line="46" column="49" lean-forward="true" selection-start-line="46" selection-start-column="49" selection-end-line="46" selection-end-column="49" />
               <folding>
                 <element signature="e#346#347#0" expanded="true" />
                 <element signature="e#378#379#0" expanded="true" />
@@ -80,8 +101,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/serverGameControl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
-              <caret line="13" column="10" selection-start-line="13" selection-start-column="10" selection-end-line="13" selection-end-column="10" />
+            <state relative-caret-position="336">
+              <caret line="17" column="27" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -96,7 +117,14 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/serverGameControl.java" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="273" />
     <option name="y" value="-16" />
     <option name="width" value="1440" />
@@ -124,12 +152,6 @@
               <item name="TestServer" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="TestServer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TestServer" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="TestThread.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -150,6 +172,20 @@
       </list>
     </option>
   </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="TestServer" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -158,13 +194,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <editor active="true" />
     <layout>
       <window_info id="Image Layers" />
       <window_info id="Designer" />
       <window_info id="UI Designer" />
       <window_info id="Capture Tool" />
       <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" />
       <window_info anchor="bottom" id="Terminal" />
@@ -172,7 +209,7 @@
       <window_info anchor="bottom" id="Messages" weight="0.32936078" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32936078" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32936078" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -193,17 +230,61 @@
         <state relative-caret-position="-189" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Data.java">
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1756">
-          <caret line="133" column="5" selection-start-line="133" selection-start-column="5" selection-end-line="133" selection-end-column="5" />
+        <state relative-caret-position="1029">
+          <caret line="51" column="26" selection-start-line="51" selection-start-column="26" selection-end-line="51" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/serverGameControl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="434">
-          <caret line="45" column="9" lean-forward="true" selection-start-line="45" selection-start-column="9" selection-end-line="45" selection-end-column="9" />
+        <state relative-caret-position="336">
+          <caret line="17" column="27" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/serverForMultiClientUDP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="529">
+          <caret line="46" column="49" lean-forward="true" selection-start-line="46" selection-start-column="49" selection-end-line="46" selection-end-column="49" />
+          <folding>
+            <element signature="e#346#347#0" expanded="true" />
+            <element signature="e#378#379#0" expanded="true" />
+            <element signature="e#418#419#0" expanded="true" />
+            <element signature="e#450#451#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/serverForMultiClientTCP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="466">
+          <caret line="54" column="49" selection-start-line="54" selection-start-column="49" selection-end-line="54" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MapClass.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2247">
+          <caret line="129" column="13" selection-start-line="129" selection-start-column="13" selection-end-line="129" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Data.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="32" column="34" selection-start-line="32" selection-start-column="34" selection-end-line="32" selection-end-column="34" />
+          <folding>
+            <element signature="e#708#709#0" expanded="true" />
+            <element signature="e#754#755#0" expanded="true" />
+            <element signature="e#3363#3364#0" expanded="true" />
+            <element signature="e#3391#3392#0" expanded="true" />
+            <element signature="e#3434#3435#0" expanded="true" />
+            <element signature="e#3459#3460#0" expanded="true" />
+            <element signature="e#3618#3619#0" expanded="true" />
+            <element signature="e#3655#3656#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

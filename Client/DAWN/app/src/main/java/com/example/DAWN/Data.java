@@ -10,7 +10,7 @@ public class Data {
     public static String Server;
     public static int port;
     public static float[] location;
-    public static Map<String, float[]> playerLocation;
+    public static Map<String, int[]> playerLocation;
     public Data(){
     }
     public void setValue() throws IOException {

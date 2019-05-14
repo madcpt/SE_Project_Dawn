@@ -15,7 +15,7 @@ public class serverGameControl {
             System.out.println(pureIP + " : Already prepared.");
         }else{
             playerList.add(pureIP);
-            dataclass.addPlayer(pureIP);
+            dataclass.newPlayer(pureIP);
         }
         System.out.println("Prepared: " + playerList);
     }
