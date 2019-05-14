@@ -12,10 +12,12 @@ import com.example.DAWN.DialogManagement.RunnableTCP;
 import java.io.IOException;
 
 
+
 //简陋版
 public class RoomPage extends AppCompatActivity {
-    static int count=0;
-    Room room;
+    static int RoleType=0;
+
+    Player player=new Player();
     //含有room.id用来区别room;
     Button roomSelectRole;
     Button roomPrepare;
@@ -58,7 +60,13 @@ public class RoomPage extends AppCompatActivity {
         roomconfirm=findViewById(R.id.Confirmchoice);
         startgame.setOnClickListener(RoomListener);
 
+        String Account=getIntent().getStringExtra("Account");
+        //System.out.println("Account:"+Account);
+        player.setAccount(Account);
+
+
     }
+
 
     View.OnClickListener RoomListener=new View.OnClickListener() {
         @Override
@@ -109,7 +117,7 @@ public class RoomPage extends AppCompatActivity {
                     //count=0,1,..对应角色的索引
                     System.out.println("changeRole");
                     ImageView image=findViewById(R.id.RoleView);
-                    switch(count%2) {
+                    switch(RoleType%2) {
                         case 0:
                             image.setImageResource(R.drawable.r_0_1_0);
                             break;
@@ -119,7 +127,9 @@ public class RoomPage extends AppCompatActivity {
                             //角色
 
                     }
-                    count+=1;
+                    RoleType+=1;
+                    System.out.println(RoleType%2);
+                    player.setRoleType(RoleType%2);
                     break;
 
                 case R.id.Confirmchoice:
@@ -129,6 +139,7 @@ public class RoomPage extends AppCompatActivity {
                     roomPrepare.setClickable(false);
                     roomSelectRole.setClickable(false);
                     break;
+
                 case R.id.StartGame:
                     //CheckPrepare;
                     //initial and start

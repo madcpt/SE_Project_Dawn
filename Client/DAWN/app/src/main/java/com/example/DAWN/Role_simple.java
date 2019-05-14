@@ -1,5 +1,7 @@
 package com.example.DAWN;
 
+
+
 public class Role_simple {
     public int id;
     public  String name;
