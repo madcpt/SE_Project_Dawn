@@ -10,12 +10,12 @@ public class serverGameControl {
         dataclass = new Data();
     }
 
-    void addPlayer(String pureIP){
+    void addPlayer(String pureIP,int id,String name){
         if(playerList.contains(pureIP)){
             System.out.println(pureIP + " : Already prepared.");
         }else{
             playerList.add(pureIP);
-            dataclass.addPlayer(pureIP);
+            dataclass.newPlayer(pureIP,id,name);
         }
         System.out.println("Prepared: " + playerList);
     }
