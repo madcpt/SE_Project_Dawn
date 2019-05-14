@@ -2,6 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+//要存的东西 ：ID life location[0] location[1] direction walk_mov attack_mov
 public class Data {
     public static Long delay;
     public static String Server;
@@ -27,17 +28,20 @@ public class Data {
     }
 
     public void addPlayer(String pureIP, int[] lt) {
+
         playerLocation.put(pureIP, lt);
     }
-    public void newPlayer(String pureIP) {
-        int[] location = new int[2];
+    public void newPlayer(String pureIP,int id,String name) {
+        int[] new_rl = new int[7];
+        new_rl[0]=id;
+        new_rl[1]=100;
         do {
-            location[0]=rand.nextInt(WholeMap.unit*WholeMap.size);
-            location[1]=rand.nextInt(WholeMap.unit*WholeMap.size);
+            new_rl[2]=rand.nextInt(WholeMap.unit*WholeMap.size);
+            new_rl[3]=rand.nextInt(WholeMap.unit*WholeMap.size);
 
-        }while (WholeMap.m[location[0]/WholeMap.unit][location[1]/WholeMap.unit]!=0);
-
-        addPlayer(pureIP,location);
+        }while (WholeMap.m[new_rl[2]/WholeMap.unit][new_rl[3]/WholeMap.unit]!=0);
+        new_rl[4]=3; new_rl[5]=-1; new_rl[6]=-1;
+        addPlayer(pureIP,new_rl);
     }
 
 
@@ -45,31 +49,31 @@ public class Data {
     public void Lmove(String pureIP) {
 //        location[0]=location[0]-3;
         int[] tmpLoc = playerLocation.get(pureIP);
-        tmpLoc[0] -= 3;
+        tmpLoc[2] -= 3;
         playerLocation.put(pureIP, tmpLoc);
-        direction = 0;
+        direction = 2;
     }
 
     public void Rmove(String pureIP) {
 //        location[0]=location[0]+3;
         int[] tmpLoc = playerLocation.get(pureIP);
-        tmpLoc[0] += 3;
+        tmpLoc[2] += 3;
         playerLocation.put(pureIP, tmpLoc);
-        direction = 1;
+        direction = 0;
     }
 
     public void Umove(String pureIP) {
 //        location[1]=location[1]-3;
         int[] tmpLoc = playerLocation.get(pureIP);
-        tmpLoc[1] -= 3;
+        tmpLoc[3] -= 3;
         playerLocation.put(pureIP, tmpLoc);
-        direction = 2;
+        direction = 1;
     }
 
     public void Dmove(String pureIP) {
 //        location[1]=location[1]+3;
         int[] tmpLoc = playerLocation.get(pureIP);
-        tmpLoc[1] += 3;
+        tmpLoc[3] += 3;
         playerLocation.put(pureIP, tmpLoc);
         direction = 3;
     }
@@ -137,5 +141,9 @@ public class Data {
         return playerLocation;
     }
 
-
+    public void mov_stop(String pureIP) {
+        int[] tmpLoc = playerLocation.get(pureIP);
+        tmpLoc[5]=0;
+        playerLocation.put(pureIP,tmpLoc);
+    }
 }
