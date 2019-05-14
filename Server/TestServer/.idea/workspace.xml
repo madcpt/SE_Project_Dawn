@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-<<<<<<< HEAD
-    <list default="true" id="4d39ba0e-d592-4b57-b9cb-2592323bec05" name="Default Changelist" comment="" />
-=======
     <list default="true" id="4d39ba0e-d592-4b57-b9cb-2592323bec05" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Map.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Player.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/serverGameControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/ClientGameControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/ClientGameControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/DialogManagement/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/DialogManagement/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/DialogManagement/ClientUDP.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/DialogManagement/ClientUDP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/DialogManagement/RunnableTCP.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/DialogManagement/RunnableTCP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/DialogManagement/RunnableUDP.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/DialogManagement/RunnableUDP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/RoomPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/RoomPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TestServer/Data.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TestServer/Data.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TestServer/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TestServer/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TestServer/serverForMultiClientTCP$CreateServerThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TestServer/serverForMultiClientTCP$CreateServerThread.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TestServer/serverForMultiClientTCP.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TestServer/serverForMultiClientTCP.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TestServer/serverForMultiClientUDP.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TestServer/serverForMultiClientUDP.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Data.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MapClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/serverForMultiClientTCP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/serverForMultiClientTCP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/serverForMultiClientUDP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/serverForMultiClientUDP.java" afterDir="false" />
     </list>
->>>>>>> 1fc510f51b7b6a9f69ceb3d4bdadc19abc820761
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,62 +34,22 @@
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
-  <component name="FUSProjectUsageTrigger">
-    <session id="377307960">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="1" />
-          <entry key="project.open.time.3" value="1" />
-          <entry key="project.opened" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="java" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="JAVA" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="java" value="516" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="JAVA" value="516" />
-        </counts>
-      </usages-collector>
-    </session>
-  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1081">
-              <caret line="49" column="21" selection-start-line="49" selection-start-column="21" selection-end-line="49" selection-end-column="21" />
+            <state relative-caret-position="1029">
+              <caret line="51" column="30" selection-start-line="51" selection-start-column="30" selection-end-line="51" selection-end-column="30" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Data.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="460">
-              <caret line="20" column="28" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/serverForMultiClientTCP.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="18" column="46" selection-start-line="18" selection-start-column="46" selection-end-line="18" selection-end-column="46" />
+            <state relative-caret-position="556">
+              <caret line="87" column="42" selection-start-line="87" selection-start-column="42" selection-end-line="87" selection-end-column="42" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -82,20 +57,14 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Map.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="217">
-              <caret line="45" column="18" selection-start-line="45" selection-start-column="18" selection-end-line="45" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/TestThread.java">
+        <entry file="file://$PROJECT_DIR$/src/serverGameControl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="15" column="33" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
+            <state relative-caret-position="336">
+              <caret line="16" column="35" lean-forward="true" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -103,8 +72,55 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/serverForMultiClientUDP.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="506">
-              <caret line="32" column="22" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="22" />
+            <state relative-caret-position="640">
+              <caret line="53" column="45" selection-start-line="53" selection-start-column="45" selection-end-line="53" selection-end-column="45" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Data.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="640">
+              <caret line="31" column="5" lean-forward="true" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#555#556#0" expanded="true" />
+                <element signature="e#616#617#0" expanded="true" />
+                <element signature="e#1581#1582#0" expanded="true" />
+                <element signature="e#1649#1650#0" expanded="true" />
+                <element signature="e#1844#1845#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Player.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="126">
+              <caret line="6" column="4" lean-forward="true" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="42">
+              <caret line="2" column="38" selection-start-line="2" selection-start-column="38" selection-end-line="2" selection-end-column="38" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/MapClass.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="189">
+              <caret line="12" column="30" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -129,22 +145,26 @@
       <list>
         <option value="$PROJECT_DIR$/src/TestThread.java" />
         <option value="$PROJECT_DIR$/src/RunnableTCP.java" />
+        <option value="$PROJECT_DIR$/src/Map.java" />
         <option value="$PROJECT_DIR$/src/Main.java" />
+        <option value="$PROJECT_DIR$/src/serverGameControl.java" />
+        <option value="$PROJECT_DIR$/src/Player.java" />
+        <option value="$PROJECT_DIR$/src/test.java" />
         <option value="$PROJECT_DIR$/src/serverForMultiClientUDP.java" />
         <option value="$PROJECT_DIR$/src/Data.java" />
         <option value="$PROJECT_DIR$/src/serverForMultiClientTCP.java" />
-        <option value="$PROJECT_DIR$/src/Map.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="276" />
+    <option name="x" value="273" />
+    <option name="y" value="-16" />
     <option name="width" value="1440" />
     <option name="height" value="1049" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
+    <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
@@ -161,12 +181,6 @@
               <item name="TestServer" type="b2602c69:ProjectViewProjectNode" />
               <item name="TestServer" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TestServer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TestServer" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="TestThread.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
             </path>
           </expand>
           <select />
@@ -192,32 +206,17 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Main">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true">
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="TestServer" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestThread" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="TestThread" />
-      <module name="TestServer" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <list>
-      <item itemvalue="Application.Main" />
-      <item itemvalue="Application.TestThread" />
-    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
-        <item itemvalue="Application.TestThread" />
       </list>
     </recent_temporary>
   </component>
@@ -244,25 +243,27 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15100671" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24626866" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info id="Resources Explorer" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.23185265" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.23185265" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32921174" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32921174" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.32936078" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.32719395" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -274,20 +275,8 @@
       <window_info anchor="right" id="Palette&#9;" order="7" />
     </layout>
   </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
-  </component>
   <component name="editorHistoryManager">
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/lang/Thread.java" />
-    <entry file="file://$PROJECT_DIR$/src/RunnableTCP.java" />
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/io/DataInputStream.java" />
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="49" column="21" selection-start-line="49" selection-start-column="21" selection-end-line="49" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/RunnableTCP.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/io/DataInputStream.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -296,41 +285,93 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1081">
-          <caret line="49" column="21" selection-start-line="49" selection-start-column="21" selection-end-line="49" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Data.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="20" column="28" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/TestThread.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
+        <state relative-caret-position="315">
           <caret line="15" column="33" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/serverForMultiClientUDP.java">
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="32" column="22" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="22" />
+        <state relative-caret-position="42">
+          <caret line="2" column="38" selection-start-line="2" selection-start-column="38" selection-end-line="2" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MapClass.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="12" column="30" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Map.java">
+    <entry file="file://$PROJECT_DIR$/src/test.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="18" column="46" selection-start-line="18" selection-start-column="46" selection-end-line="18" selection-end-column="46" />
+        <state relative-caret-position="231">
+          <caret line="11" column="1" lean-forward="true" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Player.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="6" column="4" lean-forward="true" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/serverForMultiClientUDP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="640">
+          <caret line="53" column="45" selection-start-line="53" selection-start-column="45" selection-end-line="53" selection-end-column="45" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/serverGameControl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="16" column="35" lean-forward="true" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Data.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="640">
+          <caret line="31" column="5" lean-forward="true" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#555#556#0" expanded="true" />
+            <element signature="e#616#617#0" expanded="true" />
+            <element signature="e#1581#1582#0" expanded="true" />
+            <element signature="e#1649#1650#0" expanded="true" />
+            <element signature="e#1844#1845#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1029">
+          <caret line="51" column="30" selection-start-line="51" selection-start-column="30" selection-end-line="51" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/serverForMultiClientTCP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="556">
+          <caret line="87" column="42" selection-start-line="87" selection-start-column="42" selection-end-line="87" selection-end-column="42" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

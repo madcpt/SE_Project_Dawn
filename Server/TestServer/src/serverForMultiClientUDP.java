@@ -44,11 +44,13 @@ public class serverForMultiClientUDP implements Runnable{
 
             ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
             ObjectOutputStream objectStream = new ObjectOutputStream(byteArrayStream);
-            objectStream.writeObject(dataclass.location);
+            objectStream.writeObject(dataclass.getUpdateList());
             byte[] arr = byteArrayStream.toByteArray();
 
             data.setData(arr);
+//            System.out.println("SENDING");
             server.send(data);
+//            System.out.println("SENDING OVER");
 //            System.out.println("send:" + System.currentTimeMillis());
 
             // System.out.println(data.getAddress());

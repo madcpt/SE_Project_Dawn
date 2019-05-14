@@ -3,20 +3,20 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+
 
 public class serverForMultiClientTCP extends ServerSocket {
-
+    private static serverGameControl serverGameControl;
 
     public serverForMultiClientTCP(int SERVER_PORT)throws IOException {
         super(SERVER_PORT);
+        serverGameControl = new serverGameControl();
     }
 
     public void runThread()throws IOException {
         try {
             while (true) {
-                System.out.println("waiting");
+//                System.out.println("waiting");
                 Socket socket = accept();
                 new CreateServerThread(socket);
                 Thread.sleep(1);
@@ -50,34 +50,33 @@ public class serverForMultiClientTCP extends ServerSocket {
                 DataInputStream in = new DataInputStream(client.getInputStream());
 
                 String inputString = in.readUTF();
-                List<String> myList = new ArrayList<String>(Arrays.asList(inputString.split(",")));
-//                System.out.println(myList);
-                System.out.println(dataclass.location[0] + "," + dataclass.location[1]);
-//                dataclass.location[0] = Float.parseFloat(myList.get(1));
-//                dataclass.location[1] = Float.parseFloat(myList.get(2));
+                System.out.println(inputString);
+
+                List<String> myList = new ArrayList<>(Arrays.asList(inputString.split(",")));
+                String pureIP = myList.get(0).split(":")[0];
                 switch (String.valueOf(myList.get(1))){
                     case "move":
                         switch (myList.get(2)){
                             case "0":
-                                dataclass.Lmove();
+                                dataclass.Lmove(pureIP);
                                 break;
                             case "1":
-                                dataclass.Rmove();
+                                dataclass.Rmove(pureIP);
                                 break;
                             case "2":
-                                dataclass.Umove();
+                                dataclass.Umove(pureIP);
                                 break;
                             case "3":
-                                dataclass.Dmove();
+                                dataclass.Dmove(pureIP);
                                 break;
                         }
                         break;
+                    case "init" :
+                        serverGameControl.addPlayer(pureIP);
                 }
 
+                System.out.println(dataclass.getUpdateList().get(pureIP)[0] + ", " + dataclass.getUpdateList().get(pureIP)[1]);
 
-
-                // DataOutputStream out = new DataOutputStream(client.getOutputStream());
-                // out.writeUTF("Thanks for connection, " + client.getLocalSocketAddress() + "\nGoodbye!");
                 client.close();
             }catch (IOException e) {
                 e.printStackTrace();

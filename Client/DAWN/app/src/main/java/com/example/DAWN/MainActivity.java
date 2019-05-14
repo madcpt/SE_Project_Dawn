@@ -17,7 +17,5 @@ public class MainActivity extends AppCompatActivity {
     public void startgame(View view) {
         Intent intent = new Intent(this, ClientGameControl.class);
         startActivity(intent);
-        Data dataclass = new Data ();
-        dataclass.setValue ();
     }
 }

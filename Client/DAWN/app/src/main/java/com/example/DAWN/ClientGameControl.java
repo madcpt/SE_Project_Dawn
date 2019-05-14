@@ -47,12 +47,11 @@ public class ClientGameControl extends AppCompatActivity {
     int vision=20;//视野范围
 
     //AsyncTask for TCP-client.
-    private class AsyncConTCP extends AsyncTask<Void ,Void, Void>{
+    static class AsyncConTCP extends AsyncTask<String ,Void, Void>{
         @Override
-        protected Void doInBackground(Void... voids) {
+        protected Void doInBackground(String... meg) {
             RunnableTCP R1 = new RunnableTCP( "Thread-TCP");
-//            R1.start(Arrays.toString (location));
-            R1.start("location");
+            R1.start(meg[0]);
             return null;
         }
 
@@ -354,7 +353,7 @@ public class ClientGameControl extends AppCompatActivity {
             direction = 4;
         else
             direction = 0;
-    //    new AsyncConTCP ().execute ();
+        new AsyncConTCP ().execute ("move,0");
     }
     public void Rmove(){
       location[0]=location[0]+3;
@@ -363,7 +362,7 @@ public class ClientGameControl extends AppCompatActivity {
             direction = 5;
         else
             direction = 1;
-  //      new AsyncConTCP ().execute ();
+        new AsyncConTCP ().execute ("move,1");
     }
     public void Umove(){
         location[1]=location[1]-3;
@@ -372,7 +371,7 @@ public class ClientGameControl extends AppCompatActivity {
             direction = 6;
         else
             direction = 2;
-//        new AsyncConTCP ().execute ();
+        new AsyncConTCP ().execute ("move,2");
     }
     public void Dmove(){
         location[1]=location[1]+3;
@@ -381,7 +380,7 @@ public class ClientGameControl extends AppCompatActivity {
             direction = 7;
         else
             direction = 3;
-  //      new AsyncConTCP ().execute ();
+        new AsyncConTCP ().execute ("move,3");
     }
     public void DLmove(){
         location[1]=location[1]+2;
@@ -452,8 +451,16 @@ public class ClientGameControl extends AppCompatActivity {
     private Runnable runnableUDP = new Runnable() {
         public void run() {
             new AsyncConUDP ().execute ();
-            location = dataclass.location;
-            handlerUDP.postDelayed(this, 20);// 刷新间隔(ms)
+            System.out.println (dataclass.playerLocation + "PALYER111");
+
+            if (dataclass.playerLocation != null && dataclass.playerLocation.containsKey (dataclass.LOCALIP)) {
+                System.out.println (location[0] + "," + location[1] + "LOCATION111");
+                location[0] = dataclass.playerLocation.get (dataclass.LOCALIP)[0];
+                location[1] = dataclass.playerLocation.get (dataclass.LOCALIP)[1];
+            } else {
+                location = new float[]{0, 0};
+            }
+            handlerUDP.postDelayed (this, 20);// 刷新间隔(ms)
         }
 //        void update() {
 //            location = dataclass.location;
