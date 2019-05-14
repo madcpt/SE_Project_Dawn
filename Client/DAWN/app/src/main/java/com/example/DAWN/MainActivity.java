@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
+
 
 public class MainActivity extends AppCompatActivity {
     Intent intent = getIntent();
@@ -17,7 +17,5 @@ public class MainActivity extends AppCompatActivity {
     public void startgame(View view) {
         Intent intent = new Intent(this, ClientGameControl.class);
         startActivity(intent);
-        Data dataclass = new Data ();
-        dataclass.setValue ();
     }
 }

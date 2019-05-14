@@ -51,10 +51,9 @@ public class Main {
 
         TCPThread a = new TCPThread();
         UDPThread b = new UDPThread();
-        System.out.println("Hello World");
+        System.out.println("Starting Server");
         a.start();
         b.start();
-        System.out.println("    Hello World");
 
 
     }
