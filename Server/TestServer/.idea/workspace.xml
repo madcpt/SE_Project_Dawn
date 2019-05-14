@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+
   <component name="ChangeListManager">
     <list default="true" id="52dc684f-8da2-48d7-ba17-8edfe15c0a83" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../../Client/DAWN/.idea/codeStyles/Project.xml" beforeDir="false" />
@@ -207,5 +208,6 @@
         </state>
       </provider>
     </entry>
+
   </component>
 </project>
