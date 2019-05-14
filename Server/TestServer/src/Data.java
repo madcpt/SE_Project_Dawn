@@ -51,6 +51,49 @@ public class Data {
         playerLocation.put(pureIP, tmpLoc);
         direction = 3;
     }
+
+    public void DLmove(String pureIP){
+//        location[1]=location[1]+2;
+//        location[0]=location[0]-2;
+//        dataclass.location = location;
+        float[] tmpLoc = playerLocation.get(pureIP);
+        tmpLoc[1] += 2;
+        tmpLoc[0] -= 2;
+        playerLocation.put(pureIP, tmpLoc);
+        direction = 3;
+    }
+    public void DRmove(String pureIP){
+//        location[1]=location[1]+2;
+//        location[0]=location[0]+2;
+//        dataclass.location = location;
+        float[] tmpLoc = playerLocation.get(pureIP);
+        tmpLoc[1] += 2;
+        tmpLoc[0] += 2;
+        playerLocation.put(pureIP, tmpLoc);
+        direction = 3;
+    }
+    public void ULmove(String pureIP){
+//        location[1]=location[1]-2;
+//        location[0]=location[0]-2;
+//        dataclass.location = location;
+        float[] tmpLoc = playerLocation.get(pureIP);
+        tmpLoc[1] -= 2;
+        tmpLoc[0] -= 2;
+        playerLocation.put(pureIP, tmpLoc);
+        direction = 3;
+    }
+    public void URmove(String pureIP){
+//        location[1]=location[1]-2;
+//        location[0]=location[0]+2;
+//        dataclass.location = location;
+        float[] tmpLoc = playerLocation.get(pureIP);
+        tmpLoc[1] -= 3;
+        tmpLoc[0] += 2;
+        playerLocation.put(pureIP, tmpLoc);
+        direction = 3;
+    }
+
+
     public static Long getDelay() {
         return delay;
     }
