@@ -55,6 +55,5 @@ public class Main {
         a.start();
         b.start();
 
-
     }
 }
