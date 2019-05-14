@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 package com.example.DAWN;
 
 import java.util.Vector;
@@ -10,5 +9,3 @@ public class Room{
     public Vector<Map> map;
     public Vector<Role> Roles;
 }
-
->>>>>>> parent of 78b2fbc... Merge pull request #21 from Schemeer/master
