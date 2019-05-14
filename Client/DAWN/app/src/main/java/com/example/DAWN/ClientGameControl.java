@@ -30,6 +30,7 @@ import static com.example.DAWN.RockerView.DirectionMode.DIRECTION_8;
 public class ClientGameControl extends AppCompatActivity {
     Intent intent = getIntent();
 
+    private Button Abutton;
     private RockerView mRockerView;
     private TextView testtxt ;
     private ImageView myroleview ;
@@ -101,15 +102,11 @@ public class ClientGameControl extends AppCompatActivity {
 //        当前模式：方向有改变时回调；8个方向
         mRockerView.setOnAngleChangeListener(new RockerView.OnAngleChangeListener() {
             private Boolean move=false;
-
-
             @Override
             public void onStart() {
 
             }
-
             @Override
-
             public void angle(final float angle) {
                 final float angle1;
                 if(angle==-1){
@@ -134,9 +131,7 @@ public class ClientGameControl extends AppCompatActivity {
                         }
                     };
                     t.start();
-
                 }
-
             }
 
             @Override
@@ -145,6 +140,37 @@ public class ClientGameControl extends AppCompatActivity {
             }
         });
 
+        Abutton= findViewById(R.id.Abutton);
+        Abutton.setOnTouchListener(new View.OnTouchListener(){
+            private Boolean longclicked=false;
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                // TODO Auto-generated method stub
+                switch (event.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        longclicked=true;
+                        Thread t = new Thread(){
+                            public void run(){
+                                super.run();
+                                while (longclicked){
+                                    Attack();
+                                    try{
+                                        Thread.sleep(20);
+                                    }catch(InterruptedException e){
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                        };
+                        t.start();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        longclicked = false;
+                        break;
+                }
+                return true;
+            }
+        });
 
         handler.postDelayed(runnable, 1000 * 1);//等1s后开始刷新显示
 //        handlerUDP.postDelayed(runnableUDP, 1000 * 1);//等1s后开始刷新位置UDP
@@ -156,6 +182,11 @@ public class ClientGameControl extends AppCompatActivity {
         draw = new Draw(sfh);
     }
 
+
+//    实现攻击
+    public void Attack(){
+        new AsyncConTCP ().execute ("attack,100,0");
+    }
     //实现移动
     public void Stopmove(){
         new AsyncConTCP ().execute ("stop");
