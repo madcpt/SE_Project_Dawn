@@ -156,7 +156,7 @@ public class ClientGameControl extends AppCompatActivity {
         draw = new Draw(sfh);
     }
 
-    //上下左右按键的监听函数
+    //实现移动
     public void Stopmove(){
         new AsyncConTCP ().execute ("stop");
     }
@@ -164,82 +164,7 @@ public class ClientGameControl extends AppCompatActivity {
         int angle1 = (int) angle;
         new AsyncConTCP ().execute ("move,"+ String.valueOf(angle1)+","+String.valueOf(1));
     }
-    public void Lmove(){
-        location[0]=location[0]-3;
-        dataclass.location = location;
-        if(direction == 0)
-            direction = 4;
-        else
-            direction = 0;
-        new AsyncConTCP ().execute ("move,0");
-    }
-    public void Rmove(){
-      location[0]=location[0]+3;
-        dataclass.location = location;
-        if(direction == 1)
-            direction = 5;
-        else
-            direction = 1;
-        new AsyncConTCP ().execute ("move,1");
-    }
-    public void Umove(){
-        location[1]=location[1]-3;
-        dataclass.location = location;
-        if(direction == 2)
-            direction = 6;
-        else
-            direction = 2;
-        new AsyncConTCP ().execute ("move,2");
-    }
-    public void Dmove(){
-        location[1]=location[1]+3;
-        dataclass.location = location;
-        if(direction == 3)
-            direction = 7;
-        else
-            direction = 3;
-        new AsyncConTCP ().execute ("move,3");
-    }
-    public void DLmove(){
-        location[1]=location[1]+2;
-        location[0]=location[0]-2;
-        dataclass.location = location;
-        if(direction == 0)
-            direction = 4;
-        else
-            direction = 0;
-        //      new AsyncConTCP ().execute ();
-    }
-    public void DRmove(){
-        location[1]=location[1]+2;
-        location[0]=location[0]+2;
-        dataclass.location = location;
-        if(direction == 1)
-            direction = 5;
-        else
-            direction = 1;
-        //      new AsyncConTCP ().execute ();
-    }
-    public void ULmove(){
-        location[1]=location[1]-2;
-        location[0]=location[0]-2;
-        dataclass.location = location;
-        if(direction == 0)
-            direction = 4;
-        else
-            direction = 0;
-        //      new AsyncConTCP ().execute ();
-    }
-    public void URmove(){
-        location[1]=location[1]-2;
-        location[0]=location[0]+2;
-        dataclass.location = location;
-        if(direction == 1)
-            direction = 5;
-        else
-            direction = 1;
-        //      new AsyncConTCP ().execute ();
-    }
+
 
     //Map初始化
     private Boolean MapInit(){
@@ -305,32 +230,6 @@ public class ClientGameControl extends AppCompatActivity {
         void update() {
 
             testtxt.setText(Arrays.toString(location));
-            switch(direction){
-                case 0 :
-                    myroleview.setImageResource(R.drawable.r_0_0_0);
-                    break;
-                case 1 :
-                    myroleview.setImageResource(R.drawable.r_0_1_0);
-                    break;
-                case 2 :
-                    myroleview.setImageResource(R.drawable.r_0_2_0);
-                    break;
-                case 3 :
-                    myroleview.setImageResource(R.drawable.r_0_3_0);
-                    break;
-                case 4 :
-                    myroleview.setImageResource(R.drawable.r_0_0_1);
-                    break;
-                case 5 :
-                    myroleview.setImageResource(R.drawable.r_0_1_1);
-                    break;
-                case 6 :
-                    myroleview.setImageResource(R.drawable.r_0_2_1);
-                    break;
-                case 7 :
-                    myroleview.setImageResource(R.drawable.r_0_3_1);
-                    break;
-            }
         }
     };
 
