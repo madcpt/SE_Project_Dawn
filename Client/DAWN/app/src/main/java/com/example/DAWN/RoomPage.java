@@ -73,25 +73,33 @@ public class RoomPage extends AppCompatActivity {
                     new AsyncConTCP ().execute ("init");
 
                     //PrepareSequence=第几个好的，从服务器接受
-                    int prepareSequence=2;
-                    switch (prepareSequence){
+                    int prepareCount=2;
+                    ImageView prepareImage1=findViewById(R.id.Role1);
+                    ImageView prepareImage2=findViewById(R.id.Role2);
+                    ImageView prepareImage3=findViewById(R.id.Role3);
+                    ImageView prepareImage4=findViewById(R.id.Role4);
+                    switch (prepareCount){
                         case 1:
-                            ImageView prepareImage1=findViewById(R.id.Role1);
                             prepareImage1.setImageResource(R.drawable.prepare);
                             break;
                         case 2:
-                            ImageView prepareImage2=findViewById(R.id.Role2);
+                            prepareImage1.setImageResource(R.drawable.prepare);
                             prepareImage2.setImageResource(R.drawable.prepare);
                             break;
                         case 3:
-                            ImageView prepareImage3=findViewById(R.id.Role3);
+                            prepareImage1.setImageResource(R.drawable.prepare);
+                            prepareImage2.setImageResource(R.drawable.prepare);
                             prepareImage3.setImageResource(R.drawable.prepare);
                             break;
                         case 4:
-                            ImageView prepareImage4=findViewById(R.id.Role4);
+                            prepareImage1.setImageResource(R.drawable.prepare);
+                            prepareImage2.setImageResource(R.drawable.prepare);
+                            prepareImage3.setImageResource(R.drawable.prepare);
                             prepareImage4.setImageResource(R.drawable.prepare);
                             break;
                     }
+
+
 
 
                     break;

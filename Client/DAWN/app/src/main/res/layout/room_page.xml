@@ -12,16 +12,14 @@
         android:layout_height="50dp"
         android:layout_below="@id/StartGame"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
         android:text="Prepare"
-        app:layout_constraintBottom_toTopOf="@+id/SelectRole"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/StartGame"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
+        android:layout_width="195dp"
+        android:layout_height="54dp"
         android:text="Start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/Confirm"
@@ -30,14 +28,11 @@
 
     <ImageView
         android:id="@+id/RoleView"
-        android:layout_width="208dp"
-        android:layout_height="89dp"
+        android:layout_width="199dp"
+        android:layout_height="97dp"
         android:layout_below="@id/SelectRole"
-        android:layout_marginEnd="1dp"
-        android:layout_marginRight="1dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/Confirm"
-        app:layout_constraintEnd_toEndOf="@+id/SelectRole"
+        android:layout_marginBottom="84dp"
+        app:layout_constraintBottom_toTopOf="@+id/Confirmchoice"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -47,10 +42,10 @@
         android:layout_below="@id/Prepare"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
         android:text="SelectRole"
         app:layout_constraintBottom_toTopOf="@+id/RoleView"
         app:layout_constraintEnd_toEndOf="@+id/Prepare"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
