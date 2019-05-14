@@ -2,7 +2,6 @@ package com.example.DAWN;
 
 import android.content.Intent;
 import android.content.res.Resources;
-import android.icu.util.ULocale;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -16,13 +15,8 @@ import java.util.Arrays;
 
 import android.graphics.*;
 
-import com.example.DAWN.Data;
 import com.example.DAWN.DialogManagement.RunnableTCP;
 import com.example.DAWN.DialogManagement.RunnableUDP;
-import com.example.DAWN.Map;
-import com.example.DAWN.R;
-import com.example.DAWN.Role;
-import com.example.DAWN.Role_simple;
 
 import static com.example.DAWN.RockerView.DirectionMode.DIRECTION_8;
 
@@ -43,7 +37,6 @@ public class ClientGameControl extends AppCompatActivity {
     float[] location={0,0}; //当前位置
 
     private Map map;
-    private Role myrole;
     int vision=20;//视野范围
 
     //AsyncTask for TCP-client.
@@ -135,7 +128,6 @@ public class ClientGameControl extends AppCompatActivity {
                                     }catch(InterruptedException e){
                                         e.printStackTrace();
                                     }
-
                                 }
                             }
                         };
@@ -577,10 +569,11 @@ public class ClientGameControl extends AppCompatActivity {
                             if (Math.abs(r.location[0] - location[0]) > vision * 20 || Math.abs(r.location[1] - location[1]) > vision * 20) {
                                 continue;
                             }
-                            c.drawBitmap(role_pic[r.id%100][r.direction][r.walk_mov],center_location[0] - location[0]+r.location[0],center_location[1] - location[1]+r.location[1],p);
-                            if (r.walk_mov!=0){
-                                r.walk_mov=(r.walk_mov+1)/3;//每个动作循环的帧数
+                            c.drawBitmap(role_pic[r.id%100][r.direction][r.walk_mov/5],center_location[0] - location[0]+r.location[0],center_location[1] - location[1]+r.location[1],p);
+                            if (r.walk_mov!=-1){
+                                r.walk_mov=(r.walk_mov+1)%10;//每个动作循环的帧数
                             }
+
                         }
                         //画黑雾
                         c.saveLayer(0, 0, center_location[0]*2+1, center_location[1]*2+1, p, Canvas.ALL_SAVE_FLAG);//保存上一层
