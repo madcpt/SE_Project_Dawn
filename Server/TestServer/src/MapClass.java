@@ -4,9 +4,12 @@ import java.io.InputStreamReader;
 import java.util.Vector;
 import java.util.Random;
 
+
 import javax.management.relation.Role;
 
-public class Map {
+
+public class MapClass {
+
     Random rand=new Random();
     public static int unit =50;
     public static int size =100;
@@ -50,7 +53,8 @@ public class Map {
     public Vector<Role_simple> rankrecord;
     public int[][] m;
 
-    Map () {
+
+    MapClass () {
         livingrole = new Vector<Role_simple>();
         proplist = new Vector<Prop>();
         rankrecord = new Vector<Role_simple>();

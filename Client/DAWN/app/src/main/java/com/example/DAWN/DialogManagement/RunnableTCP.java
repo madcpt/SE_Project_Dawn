@@ -1,13 +1,17 @@
-package com.example.DAWN;
+package com.example.DAWN.DialogManagement;
 
-class RunnableTCP implements Runnable {
+import com.example.DAWN.Data;
+
+import static com.example.DAWN.DialogManagement.Client.*;
+
+public class RunnableTCP implements Runnable {
     private Thread t;
     private String threadName;
     private Client client;
     private String location;    
     Data dataclass;
 
-    RunnableTCP(String name) {
+    public RunnableTCP(String name) {
         threadName = name;
         System.out.println("Creating " +  threadName );
         dataclass = new Data ();
@@ -20,7 +24,7 @@ class RunnableTCP implements Runnable {
         try {
             System.out.println("Location: "  + this.location);
             client.testCon(this.location);
-            Thread.sleep(50);
+            Thread.sleep(1);
         }catch (InterruptedException e) {
             System.out.println("Thread " +  threadName + " interrupted.");
         }
@@ -35,4 +39,10 @@ class RunnableTCP implements Runnable {
             t.start ();
         }
     }
+
+    public void sendInit (String meg) {
+        System.out.println("Sending: " +  threadName );
+        client.testCon(meg);
+    }
+
 }

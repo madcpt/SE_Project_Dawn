@@ -16,6 +16,7 @@ public class Map {
     public Vector<Prop> proplist;
     public int[][] m;
 
+
     Map() {
         String st="1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111\n" +
                 "1000000000000000000000000000000000000000000000000000000000000000000000000001111100000000000000000001\n" +
@@ -130,7 +131,6 @@ public class Map {
 
         livingrole = new Vector<Role_simple>();
         proplist = new Vector<Prop>();
-
 
     }
 

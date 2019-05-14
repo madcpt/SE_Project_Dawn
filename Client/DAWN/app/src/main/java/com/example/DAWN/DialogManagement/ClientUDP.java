@@ -1,4 +1,6 @@
-package com.example.DAWN;
+package com.example.DAWN.DialogManagement;
+
+import com.example.DAWN.Data;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -7,6 +9,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.util.Map;
 
 public class ClientUDP {
     static Data dataclass;
@@ -27,6 +30,7 @@ public class ClientUDP {
             if(client == null){
                 client = new DatagramSocket(null);
                 client.setReuseAddress(true);
+                client.setSoTimeout (1000);
                 client.bind(new InetSocketAddress (5062));
             }
             // Request
@@ -47,14 +51,16 @@ public class ClientUDP {
             ByteArrayInputStream byteArraySteam = new ByteArrayInputStream(ReceiveBytes);
             ObjectInputStream objectStream = new ObjectInputStream (byteArraySteam);
 
-            float[] inData = (float []) objectStream.readObject();
+//            float[] inData = (float []) objectStream.readObject();
+
+            Map<String, float[]> playerLocation = (Map<String, float[]>) objectStream.readObject();
 
             objectStream.close();
             byteArraySteam.close();
 
-            dataclass.location = inData;
-            System.out.println(dataclass.location[0] + "," + dataclass.location[1] + " SENDING");
+            dataclass.playerLocation = playerLocation;
 
+            System.out.println(dataclass.playerLocation + " RECEIVING");
 
             client.close();
         } catch (IOException e) {
