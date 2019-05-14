@@ -556,12 +556,12 @@ public class ClientGameControl extends AppCompatActivity {
         public void run(){
             Role_simple r;
             Paint p = new Paint();
-            //RadialGradient radialGradient = new RadialGradient(location[0],location[1],vision*10, Color.TRANSPARENT,Color.BLACK,Shader.TileMode.CLAMP);
+
             DisplayMetrics dm = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(dm);
             int[] center_location=new int[2];
             center_location[0] = dm.widthPixels/2;
-            center_location[1] = dm.heightPixels/2;
+            center_location[1] = dm.heightPixels/2;//中心点相对坐标在这里改
 
             while(isRun){
                 c=null;
@@ -574,10 +574,10 @@ public class ClientGameControl extends AppCompatActivity {
 
                         for (int i=0;i<map.livingrole.size();i++) {
                             r = map.livingrole.get(i);
-                            if (Math.abs(r.location[0] - location[0]) < vision * 10 && Math.abs(r.location[1] - location[1]) < vision * 10) {
+                            if (Math.abs(r.location[0] - location[0]) > vision * 20 || Math.abs(r.location[1] - location[1]) > vision * 20) {
                                 continue;
                             }
-                            c.drawBitmap(role_pic[r.id%100][r.direction][r.walk_mov],center_location[0] - location[0]+r.location[0],center_location[0] - location[1]+r.location[1],p);
+                            c.drawBitmap(role_pic[r.id%100][r.direction][r.walk_mov],center_location[0] - location[0]+r.location[0],center_location[1] - location[1]+r.location[1],p);
                             if (r.walk_mov!=0){
                                 r.walk_mov=(r.walk_mov+1)/3;//每个动作循环的帧数
                             }

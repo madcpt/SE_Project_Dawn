@@ -1,27 +1,14 @@
 import java.util.Vector;
 import java.util.Random;
 
-<<<<<<< HEAD:Server/TestServer/src/MapClass.java
-<<<<<<< HEAD:Server/TestServer/src/MapClass.java
-<<<<<<< HEAD:Server/TestServer/src/MapClass.java
-<<<<<<< HEAD:Server/TestServer/src/MapClass.java
 
 import javax.management.relation.Role;
 
 
 public class MapClass {
 
-=======
-=======
->>>>>>> parent of 24773d1... Y_2019.5.14:Server/TestServer/src/Map.java
-=======
->>>>>>> parent of 24773d1... Y_2019.5.14:Server/TestServer/src/Map.java
-=======
->>>>>>> parent of 24773d1... Y_2019.5.14:Server/TestServer/src/Map.java
-public class Map {
->>>>>>> parent of 24773d1... Y_2019.5.14:Server/TestServer/src/Map.java
     Random rand=new Random();
-    public static int unit =30;
+    public static int unit =50;
     public static int size =100;
 
     class Role_simple {
@@ -63,12 +50,8 @@ public class Map {
     public Vector<Role_simple> rankrecord;
     public int[][] m;
 
-<<<<<<< HEAD:Server/TestServer/src/MapClass.java
-<<<<<<< HEAD:Server/TestServer/src/MapClass.java
-<<<<<<< HEAD:Server/TestServer/src/MapClass.java
-<<<<<<< HEAD:Server/TestServer/src/MapClass.java
 
-    MapClass () {
+    public MapClass () {
         livingrole = new Vector<Role_simple>();
         proplist = new Vector<Prop>();
         rankrecord = new Vector<Role_simple>();
@@ -185,22 +168,7 @@ public class Map {
         }
 
 
-=======
-    Map () {
-        int[][] m={{1,2},{2,3}};
->>>>>>> parent of 24773d1... Y_2019.5.14:Server/TestServer/src/Map.java
-=======
-    Map () {
-        int[][] m={{1,2},{2,3}};
->>>>>>> parent of 24773d1... Y_2019.5.14:Server/TestServer/src/Map.java
-=======
-    Map () {
-        int[][] m={{1,2},{2,3}};
->>>>>>> parent of 24773d1... Y_2019.5.14:Server/TestServer/src/Map.java
-=======
-    Map () {
-        int[][] m={{1,2},{2,3}};
->>>>>>> parent of 24773d1... Y_2019.5.14:Server/TestServer/src/Map.java
+
         for (int i = 0; i <0; i++) { //构造prop的，暂无
         }
     }
