@@ -20,7 +20,7 @@ public class RoomPage extends AppCompatActivity {
     Button roomSelectRole;
     Button roomPrepare;
     Button startgame;
-    Button confirm;
+    Button roomconfirm;
 
     public RoomPage() throws IOException {
         Data dataclass = new Data ();
@@ -41,9 +41,11 @@ public class RoomPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.room_page);
+
         ImageView image=findViewById(R.id.RoleView);
         image.setImageResource(R.drawable.r_0_0_0);
         //通过id找到相应的控件 并且设置监听
+
         roomPrepare=findViewById(R.id.Prepare);
         roomPrepare.setOnClickListener(RoomListener);
 
@@ -53,7 +55,7 @@ public class RoomPage extends AppCompatActivity {
         startgame=findViewById(R.id.StartGame);
         startgame.setOnClickListener(RoomListener);
 
-        confirm=findViewById(R.id.Confirm);
+        roomconfirm=findViewById(R.id.Confirmchoice);
         startgame.setOnClickListener(RoomListener);
 
     }
@@ -65,18 +67,39 @@ public class RoomPage extends AppCompatActivity {
             switch (v.getId()) {
                 case R.id.Prepare:
                     System.out.println("prepared");
-                    //准备自己，设置第一个自己
-
-                    ImageView prepareImage=findViewById(R.id.Role1);
-                    prepareImage.setImageResource(R.drawable.prepare);
                     boolean flagprepare=true;
 
                     //向服务器传递flag,id
                     new AsyncConTCP ().execute ("init");
 
+                    //PrepareSequence=第几个好的，从服务器接受
+                    int prepareSequence=2;
+                    switch (prepareSequence){
+                        case 1:
+                            ImageView prepareImage1=findViewById(R.id.Role1);
+                            prepareImage1.setImageResource(R.drawable.prepare);
+                            break;
+                        case 2:
+                            ImageView prepareImage2=findViewById(R.id.Role2);
+                            prepareImage2.setImageResource(R.drawable.prepare);
+                            break;
+                        case 3:
+                            ImageView prepareImage3=findViewById(R.id.Role3);
+                            prepareImage3.setImageResource(R.drawable.prepare);
+                            break;
+                        case 4:
+                            ImageView prepareImage4=findViewById(R.id.Role4);
+                            prepareImage4.setImageResource(R.drawable.prepare);
+                            break;
+                    }
+
+
                     break;
                 case R.id.SelectRole:
                     //切换人物图标，暂时使用人物的前后左右图
+                    //count=role数量
+                    //count=0,1,..对应角色的索引
+                    System.out.println("changeRole");
                     ImageView image=findViewById(R.id.RoleView);
                     switch(count%2) {
                         case 0:
@@ -85,13 +108,18 @@ public class RoomPage extends AppCompatActivity {
                         case 1:
                             image.setImageResource(R.drawable.r_0_0_0);
                             break;
+                            //角色
 
                     }
                     count+=1;
                     break;
 
-                case R.id.Confirm:
-                    //向服务器提交RoleID,更新界面
+                case R.id.Confirmchoice:
+                    //向服务器提交RoleID,更新界面，并且停止更改
+                    System.out.println("SelectConfirm");
+
+                    roomPrepare.setClickable(false);
+                    roomSelectRole.setClickable(false);
                     break;
                 case R.id.StartGame:
                     //CheckPrepare;

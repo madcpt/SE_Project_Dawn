@@ -11,11 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.FullScreen">
-        <activity android:name=".test"></activity>
-        <!-- <activity android:name=".Room"></activity> -->
+
+
+        <activity android:name=".test" /> <!-- <activity android:name=".Room"></activity> -->
         <activity
             android:name=".RoomPage"
-            android:screenOrientation="landscape"></activity> <!-- <activity android:name=".DataBase" /> -->
+            android:screenOrientation="landscape" /> <!-- <activity android:name=".DataBase" /> -->
         <activity android:name=".Register" /> <!-- <activity android:name=".User" /> -->
         <activity android:name=".Login">
             <intent-filter>
