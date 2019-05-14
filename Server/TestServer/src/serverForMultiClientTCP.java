@@ -69,6 +69,18 @@ public class serverForMultiClientTCP extends ServerSocket {
                             case "3":
                                 dataclass.Dmove(pureIP);
                                 break;
+                            case "4":
+                                dataclass.DLmove(pureIP);
+                                break;
+                            case "5":
+                                dataclass.DRmove(pureIP);
+                                break;
+                            case "6":
+                                dataclass.ULmove(pureIP);
+                                break;
+                            case "7":
+                                dataclass.URmove(pureIP);
+                                break;
                         }
                         break;
                     case "init" :
