@@ -84,7 +84,7 @@ public class ClientGameControl extends AppCompatActivity {
 
         myroleview = findViewById(R.id.Myrole);
         dataclass = new Data ();
-        map=MapInit();
+        MapInit();
 
         //对上下左右进行监听
         Lbutton= findViewById(R.id.Lbutton);
@@ -266,8 +266,18 @@ public class ClientGameControl extends AppCompatActivity {
     }
 
     //Map初始化
-    private Map MapInit(){
+    private Boolean MapInit(){
         //发送请求并将服务器传递过来的所有数据转化为Map对象
+        //失败请return false
+        //仅供测试
+        map=new Map();
+        Role_simple test_r1=new Role_simple();
+        test_r1.location=new int[2];  test_r1.location[0]=100;  test_r1.location[1]=200;
+        Role_simple test_r2=new Role_simple();
+        test_r2.location=new int[2];  test_r2.location[0]=200;  test_r2.location[1]=400;
+        map.livingrole.add(test_r1);
+        map.livingrole.add(test_r2);
+
 
         //for drawing
         background = BitmapFactory.decodeResource(this.getResources(),R.drawable.map).copy(Bitmap.Config.ARGB_8888, true);
@@ -284,7 +294,7 @@ public class ClientGameControl extends AppCompatActivity {
             }
         }
 
-        return new Map();
+        return true;
     }
 
 
@@ -342,7 +352,7 @@ public class ClientGameControl extends AppCompatActivity {
     };
 
 
-    //SurfaceView（自带双缓冲） 施工中...
+    //SurfaceView
     private SurfaceView scr;
     private SurfaceHolder sfh;
     private Draw draw;
@@ -395,19 +405,18 @@ public class ClientGameControl extends AppCompatActivity {
                         c = holder.lockCanvas();
                         //执行具体的绘制操作
                         c.drawColor(Color.WHITE);
-
                         c.drawBitmap(background, center_location[0] - location[0], center_location[1] - location[1], p);
-                        //0,0 屏幕左上
-//                        for (int i=0;i<map.livingrole.size();i++) {
-//                            r = map.livingrole.get(i);
-//                            if (Math.abs(r.location[0] - location[0]) < vision * 10 && Math.abs(r.location[1] - location[1]) < vision * 10) {
-//                                continue;
-//                            }
-//                            c.drawBitmap(role_pic[r.id%100][r.direction][r.walk_mov],center_location[0] - location[0]+r.location[0],center_location[0] - location[1]+r.location[1],p);
-//                            if (r.walk_mov!=0){
-//                                r.walk_mov=(r.walk_mov+1)/3;//每个动作循环的帧数
-//                            }
-//                        }
+
+                        for (int i=0;i<map.livingrole.size();i++) {
+                            r = map.livingrole.get(i);
+                            if (Math.abs(r.location[0] - location[0]) < vision * 10 && Math.abs(r.location[1] - location[1]) < vision * 10) {
+                                continue;
+                            }
+                            c.drawBitmap(role_pic[r.id%100][r.direction][r.walk_mov],center_location[0] - location[0]+r.location[0],center_location[0] - location[1]+r.location[1],p);
+                            if (r.walk_mov!=0){
+                                r.walk_mov=(r.walk_mov+1)/3;//每个动作循环的帧数
+                            }
+                        }
                         //画黑雾
                         c.saveLayer(0, 0, center_location[0]*2+1, center_location[1]*2+1, p, Canvas.ALL_SAVE_FLAG);//保存上一层
                         p.setColor(Color.BLACK);

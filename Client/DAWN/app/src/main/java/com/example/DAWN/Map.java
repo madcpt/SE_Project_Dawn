@@ -15,7 +15,8 @@ public class Map {
     public int[][] m;
 
     Map (){
-        //Client表示并不需要
+        livingrole=new Vector<Role_simple>();
+        proplist=new Vector<Prop>();
     }
 
     public Boolean update(){
