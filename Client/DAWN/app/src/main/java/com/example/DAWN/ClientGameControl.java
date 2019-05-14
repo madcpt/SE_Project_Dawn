@@ -1,4 +1,4 @@
-﻿package com.example.DAWN;
+package com.example.DAWN;
 
 import android.content.Intent;
 import android.content.res.Resources;
