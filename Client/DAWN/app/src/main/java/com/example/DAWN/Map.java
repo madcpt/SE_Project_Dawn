@@ -12,6 +12,8 @@ public class Map {
 
     public Vector<Role_simple> livingrole;
     public Vector<Prop> proplist;
+    public int[][] m;
+
 
 
     Map() {
