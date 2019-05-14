@@ -1,17 +1,18 @@
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.util.Vector;
 import java.util.Random;
 
+<<<<<<< HEAD:Server/TestServer/src/MapClass.java
 
 import javax.management.relation.Role;
 
 
 public class MapClass {
 
+=======
+public class Map {
+>>>>>>> parent of 24773d1... Y_2019.5.14:Server/TestServer/src/Map.java
     Random rand=new Random();
-    public static int unit =50;
+    public static int unit =30;
     public static int size =100;
 
     class Role_simple {
@@ -53,6 +54,7 @@ public class MapClass {
     public Vector<Role_simple> rankrecord;
     public int[][] m;
 
+<<<<<<< HEAD:Server/TestServer/src/MapClass.java
 
     MapClass () {
         livingrole = new Vector<Role_simple>();
@@ -171,6 +173,10 @@ public class MapClass {
         }
 
 
+=======
+    Map () {
+        int[][] m={{1,2},{2,3}};
+>>>>>>> parent of 24773d1... Y_2019.5.14:Server/TestServer/src/Map.java
         for (int i = 0; i <0; i++) { //构造prop的，暂无
         }
     }

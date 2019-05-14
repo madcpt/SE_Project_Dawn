@@ -11,8 +11,6 @@ import android.util.DisplayMetrics;
 import android.view.*;
 import android.widget.*;
 
-import java.io.File;
-import java.io.InputStream;
 import java.lang.*;
 import java.util.Arrays;
 
@@ -427,6 +425,18 @@ public class ClientGameControl extends AppCompatActivity {
 
     //Map初始化
     private Boolean MapInit(){
+        //发送请求并将服务器传递过来的所有数据转化为Map对象
+        //失败请return false
+        //仅供测试
+        map=new Map();
+        Role_simple test_r1=new Role_simple();
+        test_r1.location=new int[2];  test_r1.location[0]=100;  test_r1.location[1]=200;
+        Role_simple test_r2=new Role_simple();
+        test_r2.location=new int[2];  test_r2.location[0]=200;  test_r2.location[1]=400;
+        map.livingrole.add(test_r1);
+        map.livingrole.add(test_r2);
+
+
         //for drawing
         background = BitmapFactory.decodeResource(this.getResources(),R.drawable.map).copy(Bitmap.Config.ARGB_8888, true);
         //Rolepic load
@@ -441,19 +451,6 @@ public class ClientGameControl extends AppCompatActivity {
                 }
             }
         }
-
-        //发送请求并将服务器传递过来的所有数据转化为Map对象
-        //失败请return false
-        //map=new Map(res.openRawResource(R.raw.map));
-        map=new Map();
-        //仅供测试
-        Role_simple test_r1=new Role_simple();
-        test_r1.location=new int[2];  test_r1.location[0]=100;  test_r1.location[1]=200;
-        Role_simple test_r2=new Role_simple();
-        test_r2.location=new int[2];  test_r2.location[0]=200;  test_r2.location[1]=400;
-        map.livingrole.add(test_r1);
-        map.livingrole.add(test_r2);
-
 
         return true;
     }
@@ -534,7 +531,9 @@ public class ClientGameControl extends AppCompatActivity {
         //当SurfaceView被创建的时候被调用
         public void surfaceCreated(SurfaceHolder holder) {
             draw.isRun = true;
+  //          c=new Canvas(background);
             draw.start();
+
         }
         //当SurfaceView被销毁的时候，比如不可见了，会被调用
         public void surfaceDestroyed(SurfaceHolder holder) {
@@ -557,11 +556,12 @@ public class ClientGameControl extends AppCompatActivity {
         public void run(){
             Role_simple r;
             Paint p = new Paint();
+            //RadialGradient radialGradient = new RadialGradient(location[0],location[1],vision*10, Color.TRANSPARENT,Color.BLACK,Shader.TileMode.CLAMP);
             DisplayMetrics dm = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(dm);
             int[] center_location=new int[2];
             center_location[0] = dm.widthPixels/2;
-            center_location[1] = dm.heightPixels/2;//屏幕中心的相对位置点直接在这里改就可以了
+            center_location[1] = dm.heightPixels/2;
 
             while(isRun){
                 c=null;
@@ -571,14 +571,13 @@ public class ClientGameControl extends AppCompatActivity {
                         //执行具体的绘制操作
                         c.drawColor(Color.WHITE);
                         c.drawBitmap(background, center_location[0] - location[0], center_location[1] - location[1], p);
-                        c.drawBitmap(role_pic[0][0][0],center_location[0],center_location[1],p);
 
                         for (int i=0;i<map.livingrole.size();i++) {
                             r = map.livingrole.get(i);
-                            if (Math.abs(r.location[0] - location[0]) > vision * 20 || Math.abs(r.location[1] - location[1]) > vision * 20) {
+                            if (Math.abs(r.location[0] - location[0]) < vision * 10 && Math.abs(r.location[1] - location[1]) < vision * 10) {
                                 continue;
                             }
-                            c.drawBitmap(role_pic[r.id%100][r.direction][r.walk_mov],center_location[0] - location[0]+r.location[0],center_location[1] - location[1]+r.location[1],p);
+                            c.drawBitmap(role_pic[r.id%100][r.direction][r.walk_mov],center_location[0] - location[0]+r.location[0],center_location[0] - location[1]+r.location[1],p);
                             if (r.walk_mov!=0){
                                 r.walk_mov=(r.walk_mov+1)/3;//每个动作循环的帧数
                             }
