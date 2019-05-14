@@ -110,11 +110,11 @@ public class ClientGameControl extends AppCompatActivity {
 
             @Override
 
-            public void angle(final double angle) {
-                final double angle1;
+            public void angle(final float angle) {
+                final float angle1;
                 if(angle==-1){
                     move = false;
-                    Stopmove(angle);
+                    Stopmove();
                 }
                 else{
                     move = true;
@@ -157,13 +157,12 @@ public class ClientGameControl extends AppCompatActivity {
     }
 
     //上下左右按键的监听函数
-    public void Stopmove(double angle){
-        new AsyncConTCP ().execute ("stop ,0");
-        System.out.println("angle:"+angle);
+    public void Stopmove(){
+        new AsyncConTCP ().execute ("stop");
     }
-    public void ARmove(double angle){
-        new AsyncConTCP ().execute ("move,0");
-        System.out.println("angle:"+angle);
+    public void ARmove(float angle){
+        int angle1 = (int) angle;
+        new AsyncConTCP ().execute ("move,"+ String.valueOf(angle1)+","+String.valueOf(1));
     }
     public void Lmove(){
         location[0]=location[0]-3;
