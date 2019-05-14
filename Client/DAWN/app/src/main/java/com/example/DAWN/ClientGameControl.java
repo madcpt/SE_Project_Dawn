@@ -16,14 +16,9 @@ import java.util.Arrays;
 
 import android.graphics.*;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
->>>>>>> parent of 78b2fbc... Merge pull request #21 from Schemeer/master
-=======
 
->>>>>>> parent of 78b2fbc... Merge pull request #21 from Schemeer/master
+
 import com.example.DAWN.Data;
 import com.example.DAWN.DialogManagement.RunnableTCP;
 import com.example.DAWN.DialogManagement.RunnableUDP;
