@@ -2,6 +2,7 @@ package com.example.DAWN;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.icu.util.ULocale;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -15,10 +16,21 @@ import java.util.Arrays;
 
 import android.graphics.*;
 
-import com.example.DAWN.Data;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
+>>>>>>> parent of 78b2fbc... Merge pull request #21 from Schemeer/master
+=======
+
+>>>>>>> parent of 78b2fbc... Merge pull request #21 from Schemeer/master
+import com.example.DAWN.Data;
 import com.example.DAWN.DialogManagement.RunnableTCP;
 import com.example.DAWN.DialogManagement.RunnableUDP;
+import com.example.DAWN.Map;
+import com.example.DAWN.R;
+import com.example.DAWN.Role;
+import com.example.DAWN.Role_simple;
 
 import static com.example.DAWN.RockerView.DirectionMode.DIRECTION_8;
 
@@ -39,6 +51,7 @@ public class ClientGameControl extends AppCompatActivity {
     float[] location={0,0}; //当前位置
 
     private Map map;
+    private Role myrole;
     int vision=20;//视野范围
 
     //AsyncTask for TCP-client.
@@ -130,6 +143,7 @@ public class ClientGameControl extends AppCompatActivity {
                                     }catch(InterruptedException e){
                                         e.printStackTrace();
                                     }
+
                                 }
                             }
                         };
@@ -330,7 +344,7 @@ public class ClientGameControl extends AppCompatActivity {
         });
 
         handler.postDelayed(runnable, 1000 * 1);//等1s后开始刷新显示
-        handlerUDP.postDelayed(runnableUDP, 1000 * 1);//等1s后开始刷新位置UDP
+//        handlerUDP.postDelayed(runnableUDP, 1000 * 1);//等1s后开始刷新位置UDP
 
 
         scr = findViewById(R.id.background) ;
@@ -341,8 +355,8 @@ public class ClientGameControl extends AppCompatActivity {
 
     //上下左右按键的监听函数
     public void Lmove(){
-//        location[0]=location[0]-3;
-//        dataclass.location = location;
+        location[0]=location[0]-3;
+        dataclass.location = location;
         if(direction == 0)
             direction = 4;
         else
@@ -350,8 +364,8 @@ public class ClientGameControl extends AppCompatActivity {
         new AsyncConTCP ().execute ("move,0");
     }
     public void Rmove(){
-//      location[0]=location[0]+3;
-//        dataclass.location = location;
+      location[0]=location[0]+3;
+        dataclass.location = location;
         if(direction == 1)
             direction = 5;
         else
@@ -359,8 +373,8 @@ public class ClientGameControl extends AppCompatActivity {
         new AsyncConTCP ().execute ("move,1");
     }
     public void Umove(){
-//        location[1]=location[1]-3;
-//        dataclass.location = location;
+        location[1]=location[1]-3;
+        dataclass.location = location;
         if(direction == 2)
             direction = 6;
         else
@@ -368,8 +382,8 @@ public class ClientGameControl extends AppCompatActivity {
         new AsyncConTCP ().execute ("move,2");
     }
     public void Dmove(){
-//        location[1]=location[1]+3;
-//        dataclass.location = location;
+        location[1]=location[1]+3;
+        dataclass.location = location;
         if(direction == 3)
             direction = 7;
         else
@@ -377,44 +391,44 @@ public class ClientGameControl extends AppCompatActivity {
         new AsyncConTCP ().execute ("move,3");
     }
     public void DLmove(){
-//        location[1]=location[1]+2;
-//        location[0]=location[0]-2;
-//        dataclass.location = location;
+        location[1]=location[1]+2;
+        location[0]=location[0]-2;
+        dataclass.location = location;
         if(direction == 0)
             direction = 4;
         else
             direction = 0;
-        new AsyncConTCP ().execute ("move,4");
+        //      new AsyncConTCP ().execute ();
     }
     public void DRmove(){
-//        location[1]=location[1]+2;
-//        location[0]=location[0]+2;
-//        dataclass.location = location;
+        location[1]=location[1]+2;
+        location[0]=location[0]+2;
+        dataclass.location = location;
         if(direction == 1)
             direction = 5;
         else
             direction = 1;
-        new AsyncConTCP ().execute ("move,5");
+        //      new AsyncConTCP ().execute ();
     }
     public void ULmove(){
-//        location[1]=location[1]-2;
-//        location[0]=location[0]-2;
-//        dataclass.location = location;
+        location[1]=location[1]-2;
+        location[0]=location[0]-2;
+        dataclass.location = location;
         if(direction == 0)
             direction = 4;
         else
             direction = 0;
-        new AsyncConTCP ().execute ("move,6");
+        //      new AsyncConTCP ().execute ();
     }
     public void URmove(){
-//        location[1]=location[1]-2;
-//        location[0]=location[0]+2;
-//        dataclass.location = location;
+        location[1]=location[1]-2;
+        location[0]=location[0]+2;
+        dataclass.location = location;
         if(direction == 1)
             direction = 5;
         else
             direction = 1;
-        new AsyncConTCP ().execute ("move,7");
+        //      new AsyncConTCP ().execute ();
     }
 
     //Map初始化
@@ -571,14 +585,13 @@ public class ClientGameControl extends AppCompatActivity {
                             if (Math.abs(r.location[0] - location[0]) > vision * 20 || Math.abs(r.location[1] - location[1]) > vision * 20) {
                                 continue;
                             }
-                            c.drawBitmap(role_pic[r.id%100][r.direction][r.walk_mov/5],center_location[0] - location[0]+r.location[0],center_location[1] - location[1]+r.location[1],p);
-                            if (r.walk_mov!=-1){
-                                r.walk_mov=(r.walk_mov+1)%10;//每个动作循环的帧数(2张动作帧，每帧持续5次刷新）
+                            c.drawBitmap(role_pic[r.id%100][r.direction][r.walk_mov],center_location[0] - location[0]+r.location[0],center_location[1] - location[1]+r.location[1],p);
+                            if (r.walk_mov!=0){
+                                r.walk_mov=(r.walk_mov+1)/3;//每个动作循环的帧数
                             }
-
                         }
                         //画黑雾
-                        c.saveLayer(0, 0, center_location[0]*2+1, center_location[1]*2+1, p,Canvas.ALL_SAVE_FLAG);//保存上一层
+                        c.saveLayer(0, 0, center_location[0]*2+1, center_location[1]*2+1, p, Canvas.ALL_SAVE_FLAG);//保存上一层
                         p.setColor(Color.BLACK);
                         c.drawRect(0,0,center_location[0]*2+1, center_location[1]*2+1,p);
                         p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
@@ -587,6 +600,7 @@ public class ClientGameControl extends AppCompatActivity {
                         c.restore();
                     }
                     Thread.sleep(10);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }finally{
@@ -594,9 +608,12 @@ public class ClientGameControl extends AppCompatActivity {
                         holder.unlockCanvasAndPost(c);
                     }
                 }
+
+
             }
         }
     }
+
 
 
 
