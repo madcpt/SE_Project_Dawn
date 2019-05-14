@@ -15,6 +15,7 @@ public class Map {
     public int[][] m;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     Map() {
         String st="1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111\n" +
@@ -131,6 +132,11 @@ public class Map {
         livingrole = new Vector<Role_simple>();
         proplist = new Vector<Prop>();
 
+=======
+    Map (){
+        livingrole=new Vector<Role_simple>();
+        proplist=new Vector<Prop>();
+>>>>>>> parent of 24773d1... Y_2019.5.14
 =======
     Map (){
         livingrole=new Vector<Role_simple>();

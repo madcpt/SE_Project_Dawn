@@ -2,6 +2,7 @@ import java.util.Vector;
 import java.util.Random;
 
 <<<<<<< HEAD:Server/TestServer/src/MapClass.java
+<<<<<<< HEAD:Server/TestServer/src/MapClass.java
 
 import javax.management.relation.Role;
 
@@ -9,6 +10,8 @@ import javax.management.relation.Role;
 public class MapClass {
 
 =======
+=======
+>>>>>>> parent of 24773d1... Y_2019.5.14:Server/TestServer/src/Map.java
 public class Map {
 >>>>>>> parent of 24773d1... Y_2019.5.14:Server/TestServer/src/Map.java
     Random rand=new Random();
@@ -54,6 +57,7 @@ public class Map {
     public Vector<Role_simple> rankrecord;
     public int[][] m;
 
+<<<<<<< HEAD:Server/TestServer/src/MapClass.java
 <<<<<<< HEAD:Server/TestServer/src/MapClass.java
 
     MapClass () {
@@ -173,6 +177,10 @@ public class Map {
         }
 
 
+=======
+    Map () {
+        int[][] m={{1,2},{2,3}};
+>>>>>>> parent of 24773d1... Y_2019.5.14:Server/TestServer/src/Map.java
 =======
     Map () {
         int[][] m={{1,2},{2,3}};
