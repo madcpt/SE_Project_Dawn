@@ -11,18 +11,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.FullScreen">
-        <!--<activity android:name=".Room"></activity>-->
+        <activity android:name=".test"></activity>
+        <!-- <activity android:name=".Room"></activity> -->
         <activity
             android:name=".RoomPage"
-            android:screenOrientation="landscape">
-
-        </activity>
-        <!--<activity android:name=".DataBase" />-->
-        <activity android:name=".Register" />
-        <!--<activity android:name=".User" />-->
+            android:screenOrientation="landscape"></activity> <!-- <activity android:name=".DataBase" /> -->
+        <activity android:name=".Register" /> <!-- <activity android:name=".User" /> -->
         <activity android:name=".Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -31,8 +29,8 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".ClientGameControl"
-            android:screenOrientation="landscape"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleInstance"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>

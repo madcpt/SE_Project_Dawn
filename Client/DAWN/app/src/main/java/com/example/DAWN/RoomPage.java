@@ -66,6 +66,7 @@ public class RoomPage extends AppCompatActivity {
                 case R.id.Prepare:
                     System.out.println("prepared");
                     //准备自己，设置第一个自己
+
                     ImageView prepareImage=findViewById(R.id.Role1);
                     prepareImage.setImageResource(R.drawable.prepare);
                     boolean flagprepare=true;
@@ -88,6 +89,7 @@ public class RoomPage extends AppCompatActivity {
                     }
                     count+=1;
                     break;
+
                 case R.id.Confirm:
                     //向服务器提交RoleID,更新界面
                     break;
