@@ -54,7 +54,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/Confirm"
+        android:id="@+id/Confirmchoice"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_below="@id/SelectRole"
@@ -78,6 +78,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/r_0_0_0" />
+
+
+
+
 
     <ImageView
         android:id="@+id/Role2"
