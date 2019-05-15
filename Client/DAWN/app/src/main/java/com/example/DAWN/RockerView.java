@@ -319,7 +319,7 @@ public class RockerView extends View {
         // 计算弧度
         double radian = Math.acos(lenX / lenXY) * (touchPoint.y < centerPoint.y ? -1 : 1);
         // 计算角度
-        double angle = radian2Angle(radian);
+        float angle = radian2Angle(radian);
 
         if (lenXY + rockerRadius <= regionRadius) { // 触摸位置在可活动范围内
             // 回调 返回参数
@@ -352,8 +352,8 @@ public class RockerView extends View {
      * @param radian 弧度
      * @return 角度[0, 360)
      */
-    private double radian2Angle(double radian) {
-        double tmp = Math.round(radian / Math.PI * 180);
+    private float radian2Angle(double radian) {
+        float tmp = Math.round(radian / Math.PI * 180);
         return tmp >= 0 ? tmp : 360 + tmp;
     }
 
@@ -397,7 +397,7 @@ public class RockerView extends View {
      *
      * @param angle 摇动角度
      */
-    private void callBack(double angle, float distance) {
+    private void callBack(float angle, float distance) {
         Log.d("distance",distance+"");
         if (Math.abs(distance - lastDistance) >= (baseDistance / mDistanceLevel)) {
             lastDistance = distance;
@@ -712,7 +712,7 @@ public class RockerView extends View {
          *
          * @param angle 角度[0,360)
          */
-        void angle(double angle);
+        void angle(float angle);
 
         // 结束
         void onFinish();
