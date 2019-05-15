@@ -21,7 +21,7 @@ public class serverForMultiClientUDP implements Runnable{
     public void run(){
         // System.out.println(new String(data.getData(),0,data.getLength()));
         try{
-            Thread.sleep(202);
+            Thread.sleep(20);
         } catch(Exception e){
             e.printStackTrace();
         }

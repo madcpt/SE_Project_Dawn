@@ -55,6 +55,8 @@ public class ClientUDP {
 
             Map<String, int[]> playerLocation = (Map<String, int[]>) objectStream.readObject();
 
+            System.out.println ("receive111" + playerLocation);
+
             for(String a : playerLocation.keySet ()){
                 System.out.println ("int111 "+ playerLocation.get (a)[1]);
             }
