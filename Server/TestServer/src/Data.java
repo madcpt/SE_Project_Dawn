@@ -17,6 +17,12 @@ public class Data {
         rand=new Random();
     }
 
+    public static void moveDegree(String pureIP, int degree, int velocity) {
+        double radians = Math.toRadians(degree);
+        playerLocation.get(pureIP)[2] += Math.cos(radians) * velocity;
+        playerLocation.get(pureIP)[3] += Math.sin(radians) * velocity;
+    }
+
     public void setValue() {
         System.out.println("SETTING VALUE");
         delay = 0L;
@@ -28,7 +34,6 @@ public class Data {
     }
 
     public void addPlayer(String pureIP, int[] lt) {
-
         playerLocation.put(pureIP, lt);
     }
     public void newPlayer(String pureIP,int id,String name) {

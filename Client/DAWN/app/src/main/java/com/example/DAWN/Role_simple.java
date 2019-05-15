@@ -13,7 +13,7 @@ public class Role_simple {
         direction = 3;
         walk_mov = -1;
         attack_mov = -1;
-        this.name = name;
         this.id = playerID;
+        this.name = name;
     }
 }

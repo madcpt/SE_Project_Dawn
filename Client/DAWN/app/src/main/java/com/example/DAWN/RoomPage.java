@@ -79,7 +79,7 @@ public class RoomPage extends AppCompatActivity {
                     boolean flagprepare=true;
 
                     //向服务器传递flag,id
-                    new AsyncConTCP ().execute ("init");
+                    new AsyncConTCP ().execute ("init," + player.Account);
 
                     //PrepareSequence=第几个好的，从服务器接受
                     int prepareCount=4;
