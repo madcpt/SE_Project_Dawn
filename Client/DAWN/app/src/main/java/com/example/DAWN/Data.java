@@ -9,8 +9,8 @@ public class Data {
     public static Long delay;
     public static String Server;
     public static int port;
-    public static float[] location;
-    public static Map<String, float[]> playerLocation;
+    public static int[] location;
+    public static Map<String, int[]> playerLocation;
     public Data(){
     }
     public void setValue() throws IOException {
@@ -19,7 +19,7 @@ public class Data {
 //        Server = "39.105.27.108";
         Server = "192.168.137.1";
         port = 66;
-        location = new float[]{0, 0};
+        location = new int[]{0, 0};
 
     }
 

@@ -13,8 +13,10 @@ import android.widget.*;
 
 import java.lang.*;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 import android.graphics.*;
+
 
 import com.example.DAWN.Data;
 import com.example.DAWN.DialogManagement.RunnableTCP;
@@ -40,7 +42,7 @@ public class ClientGameControl extends AppCompatActivity {
     //(所有图片的左上角为判定点）
 
     private int direction = 3;
-    float[] location={0,0}; //当前位置
+    int[] location={0,0}; //当前位置
 
     private Map map;
     private Role myrole;
@@ -94,19 +96,17 @@ public class ClientGameControl extends AppCompatActivity {
 
         myroleview = findViewById(R.id.Myrole);
         dataclass = new Data ();
-        MapInit();
+        try {
+            MapInit();
+        } catch (InterruptedException e) {
+            e.printStackTrace ();
+        }
 
         //对摇杆位置改变进行监听
 //        当前模式：方向有改变时回调；8个方向
-        mRockerView.setOnShakeListener(DIRECTION_8, new RockerView.OnShakeListener() {
-            private Boolean move0=false;
-            private Boolean move1=false;
-            private Boolean move2=false;
-            private Boolean move3=false;
-            private Boolean move4=false;
-            private Boolean move5=false;
-            private Boolean move6=false;
-            private Boolean move7=false;
+        mRockerView.setOnAngleChangeListener(new RockerView.OnAngleChangeListener() {
+            private Boolean move=false;
+
 
             @Override
             public void onStart() {
@@ -114,219 +114,34 @@ public class ClientGameControl extends AppCompatActivity {
             }
 
             @Override
-            public void direction(RockerView.Direction direction) {
-                switch(direction){
-                    case DIRECTION_DOWN:
-                        move0 = true;
-                        move1 = false;
-                        move2 = false;
-                        move3 = false;
-                        move4 = false;
-                        move5 = false;
-                        move6 = false;
-                        move7 = false;
-                        Thread t = new Thread(){
-                            public void run(){
-                                super.run();
-                                while (move0){
-                                    Dmove();
-                                    try{
-                                        Thread.sleep(20);
-                                    }catch(InterruptedException e){
-                                        e.printStackTrace();
-                                    }
 
-                                }
-                            }
-                        };
-                        t.start();
-                        break;
-                    case DIRECTION_LEFT:
-                        move1 = true;
-                        move0 = false;
-                        move2 = false;
-                        move3 = false;
-                        move4 = false;
-                        move5 = false;
-                        move6 = false;
-                        move7 = false;
-                        Thread t1 = new Thread(){
-                            public void run(){
-                                super.run();
-                                while (move1){
-                                    Lmove();
-                                    try{
-                                        Thread.sleep(20);
-                                    }catch(InterruptedException e){
-                                        e.printStackTrace();
-                                    }
-
-                                }
-                            }
-                        };
-                        t1.start();
-                        break;
-                    case DIRECTION_UP:
-                        move2 = true;
-                        move0 = false;
-                        move1 = false;
-                        move3 = false;
-                        move4 = false;
-                        move5 = false;
-                        move6 = false;
-                        move7 = false;
-                        Thread t2 = new Thread(){
-                            public void run(){
-                                super.run();
-                                while (move2){
-                                    Umove();
-                                    try{
-                                        Thread.sleep(20);
-                                    }catch(InterruptedException e){
-                                        e.printStackTrace();
-                                    }
-
-                                }
-                            }
-                        };
-                        t2.start();
-                        break;
-                    case DIRECTION_RIGHT:
-                        move3 = true;
-                        move0 = false;
-                        move1 = false;
-                        move2 = false;
-                        move4 = false;
-                        move5 = false;
-                        move6 = false;
-                        move7 = false;
-                        Thread t3 = new Thread(){
-                            public void run(){
-                                super.run();
-                                while (move3){
-                                    Rmove();
-                                    try{
-                                        Thread.sleep(20);
-                                    }catch(InterruptedException e){
-                                        e.printStackTrace();
-                                    }
-
-                                }
-                            }
-                        };
-                        t3.start();
-                        break;
-                    case DIRECTION_DOWN_LEFT:
-                        move4 = true;
-                        move0 = false;
-                        move1 = false;
-                        move2 = false;
-                        move3 = false;
-                        move5 = false;
-                        move6 = false;
-                        move7 = false;
-                        Thread t4 = new Thread(){
-                            public void run(){
-                                super.run();
-                                while (move4){
-                                    DLmove();
-                                    try{
-                                        Thread.sleep(20);
-                                    }catch(InterruptedException e){
-                                        e.printStackTrace();
-                                    }
-
-                                }
-                            }
-                        };
-                        t4.start();
-                        break;
-                    case DIRECTION_DOWN_RIGHT:
-                        move5 = true;
-                        move0 = false;
-                        move1 = false;
-                        move2 = false;
-                        move3 = false;
-                        move4 = false;
-                        move6 = false;
-                        move7 = false;
-                        Thread t5 = new Thread(){
-                            public void run(){
-                                super.run();
-                                while (move5){
-                                    DRmove();
-                                    try{
-                                        Thread.sleep(20);
-                                    }catch(InterruptedException e){
-                                        e.printStackTrace();
-                                    }
-
-                                }
-                            }
-                        };
-                        t5.start();
-                        break;
-                    case DIRECTION_UP_LEFT:
-                        move6 = true;
-                        move0 = false;
-                        move1 = false;
-                        move2 = false;
-                        move3 = false;
-                        move4 = false;
-                        move5 = false;
-                        move7 = false;
-                        Thread t6 = new Thread(){
-                            public void run(){
-                                super.run();
-                                while (move6){
-                                    ULmove();
-                                    try{
-                                        Thread.sleep(20);
-                                    }catch(InterruptedException e){
-                                        e.printStackTrace();
-                                    }
-
-                                }
-                            }
-                        };
-                        t6.start();
-                        break;
-                    case DIRECTION_UP_RIGHT:
-                        move7 = true;
-                        move0 = false;
-                        move1 = false;
-                        move2 = false;
-                        move3 = false;
-                        move4 = false;
-                        move5 = false;
-                        move6 = false;
-                        Thread t7 = new Thread(){
-                            public void run(){
-                                super.run();
-                                while (move7){
-                                    URmove();
-                                    try{
-                                        Thread.sleep(20);
-                                    }catch(InterruptedException e){
-                                        e.printStackTrace();
-                                    }
-
-                                }
-                            }
-                        };
-                        t7.start();
-                        break;
-                    case DIRECTION_CENTER:
-                        move0 = false;
-                        move1 = false;
-                        move2 = false;
-                        move3 = false;
-                        move4 = false;
-                        move5 = false;
-                        move6 = false;
-                        move7 = false;
-                        break;
+            public void angle(final float angle) {
+                final float angle1;
+                if(angle==-1){
+                    move = false;
+                    Stopmove();
                 }
+                else{
+                    move = true;
+                    angle1 = angle;
+                    Thread t = new Thread(){
+                        public void run(){
+                            super.run();
+                            while (move){
+                                ARmove(angle1);
+                                try{
+                                    Thread.sleep(20);
+                                }catch(InterruptedException e){
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        }
+                    };
+                    t.start();
+
+                }
+
             }
 
             @Override
@@ -334,6 +149,7 @@ public class ClientGameControl extends AppCompatActivity {
 
             }
         });
+
 
         handler.postDelayed(runnable, 1000 * 1);//等1s后开始刷新显示
 //        handlerUDP.postDelayed(runnableUDP, 1000 * 1);//等1s后开始刷新位置UDP
@@ -345,96 +161,37 @@ public class ClientGameControl extends AppCompatActivity {
         draw = new Draw(sfh);
     }
 
-    //上下左右按键的监听函数
-    public void Lmove(){
-        location[0]=location[0]-3;
-        dataclass.location = location;
-        if(direction == 0)
-            direction = 4;
-        else
-            direction = 0;
-        new AsyncConTCP ().execute ("move,0");
+    //实现移动
+    public void Stopmove(){
+        new AsyncConTCP ().execute ("stop");
     }
-    public void Rmove(){
-      location[0]=location[0]+3;
-        dataclass.location = location;
-        if(direction == 1)
-            direction = 5;
-        else
-            direction = 1;
-        new AsyncConTCP ().execute ("move,1");
-    }
-    public void Umove(){
-        location[1]=location[1]-3;
-        dataclass.location = location;
-        if(direction == 2)
-            direction = 6;
-        else
-            direction = 2;
-        new AsyncConTCP ().execute ("move,2");
-    }
-    public void Dmove(){
-        location[1]=location[1]+3;
-        dataclass.location = location;
-        if(direction == 3)
-            direction = 7;
-        else
-            direction = 3;
-        new AsyncConTCP ().execute ("move,3");
-    }
-    public void DLmove(){
-        location[1]=location[1]+2;
-        location[0]=location[0]-2;
-        dataclass.location = location;
-        if(direction == 0)
-            direction = 4;
-        else
-            direction = 0;
-        //      new AsyncConTCP ().execute ();
-    }
-    public void DRmove(){
-        location[1]=location[1]+2;
-        location[0]=location[0]+2;
-        dataclass.location = location;
-        if(direction == 1)
-            direction = 5;
-        else
-            direction = 1;
-        //      new AsyncConTCP ().execute ();
-    }
-    public void ULmove(){
-        location[1]=location[1]-2;
-        location[0]=location[0]-2;
-        dataclass.location = location;
-        if(direction == 0)
-            direction = 4;
-        else
-            direction = 0;
-        //      new AsyncConTCP ().execute ();
-    }
-    public void URmove(){
-        location[1]=location[1]-2;
-        location[0]=location[0]+2;
-        dataclass.location = location;
-        if(direction == 1)
-            direction = 5;
-        else
-            direction = 1;
-        //      new AsyncConTCP ().execute ();
+    public void ARmove(float angle){
+        int angle1 = (int) angle;
+        new AsyncConTCP ().execute ("move,"+ String.valueOf(angle1)+","+String.valueOf(1));
     }
 
+
     //Map初始化
-    private Boolean MapInit(){
+    private Boolean MapInit() throws InterruptedException {
         //发送请求并将服务器传递过来的所有数据转化为Map对象
         //失败请return false
         //仅供测试
         map=new Map();
-        Role_simple test_r1=new Role_simple();
-        test_r1.location=new int[2];  test_r1.location[0]=100;  test_r1.location[1]=200;
-        Role_simple test_r2=new Role_simple();
-        test_r2.location=new int[2];  test_r2.location[0]=200;  test_r2.location[1]=400;
-        map.livingrole.add(test_r1);
-        map.livingrole.add(test_r2);
+
+        while(Data.playerLocation == null){
+            System.out.println ("get111");
+            new AsyncConUDP ().execute ();
+            TimeUnit.SECONDS.sleep(1);
+        }
+
+        for (String playerIP : Data.playerLocation.keySet ()){
+            System.out.println (playerIP);
+            Role_simple test_r1=new Role_simple(111, playerIP);
+            test_r1.location[0] =  Data.playerLocation.get (playerIP)[0];
+            test_r1.location[1] =  Data.playerLocation.get (playerIP)[1];
+            map.livingrole.add(test_r1);
+        }
+
 
 
         //for drawing
@@ -468,7 +225,7 @@ public class ClientGameControl extends AppCompatActivity {
                 location[0] = dataclass.playerLocation.get (dataclass.LOCALIP)[0];
                 location[1] = dataclass.playerLocation.get (dataclass.LOCALIP)[1];
             } else {
-                location = new float[]{0, 0};
+                location = new int[]{0, 0};
             }
             handlerUDP.postDelayed (this, 20);// 刷新间隔(ms)
         }
@@ -487,32 +244,6 @@ public class ClientGameControl extends AppCompatActivity {
         void update() {
 
             testtxt.setText(Arrays.toString(location));
-            switch(direction){
-                case 0 :
-                    myroleview.setImageResource(R.drawable.r_0_0_0);
-                    break;
-                case 1 :
-                    myroleview.setImageResource(R.drawable.r_0_1_0);
-                    break;
-                case 2 :
-                    myroleview.setImageResource(R.drawable.r_0_2_0);
-                    break;
-                case 3 :
-                    myroleview.setImageResource(R.drawable.r_0_3_0);
-                    break;
-                case 4 :
-                    myroleview.setImageResource(R.drawable.r_0_0_1);
-                    break;
-                case 5 :
-                    myroleview.setImageResource(R.drawable.r_0_1_1);
-                    break;
-                case 6 :
-                    myroleview.setImageResource(R.drawable.r_0_2_1);
-                    break;
-                case 7 :
-                    myroleview.setImageResource(R.drawable.r_0_3_1);
-                    break;
-            }
         }
     };
 

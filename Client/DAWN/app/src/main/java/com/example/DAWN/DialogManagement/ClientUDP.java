@@ -20,8 +20,8 @@ public class ClientUDP {
 
     public void testCon() {
         try {
-            byte[] requestBytes = new byte[1024];
-            byte[] ReceiveBytes = new byte[1024];
+            byte[] requestBytes = new byte[2048];
+            byte[] ReceiveBytes = new byte[2048];
             DatagramPacket requestPacket = new DatagramPacket(requestBytes, requestBytes.length);
             DatagramPacket receivePacket = new DatagramPacket(ReceiveBytes,ReceiveBytes.length);
 
@@ -30,7 +30,7 @@ public class ClientUDP {
             if(client == null){
                 client = new DatagramSocket(null);
                 client.setReuseAddress(true);
-                client.setSoTimeout (1000);
+//                client.setSoTimeout (100);
                 client.bind(new InetSocketAddress (5062));
             }
             // Request
@@ -53,7 +53,11 @@ public class ClientUDP {
 
 //            float[] inData = (float []) objectStream.readObject();
 
-            Map<String, float[]> playerLocation = (Map<String, float[]>) objectStream.readObject();
+            Map<String, int[]> playerLocation = (Map<String, int[]>) objectStream.readObject();
+
+            for(String a : playerLocation.keySet ()){
+                System.out.println ("int111 "+ playerLocation.get (a)[1]);
+            }
 
             objectStream.close();
             byteArraySteam.close();

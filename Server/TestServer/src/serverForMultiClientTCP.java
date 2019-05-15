@@ -70,9 +70,12 @@ public class serverForMultiClientTCP extends ServerSocket {
                                 dataclass.Dmove(pureIP);
                                 break;
                         }
-                        break;
+                    case "stop":
+                        dataclass.mov_stop(pureIP);
+                    case "attack": break;
+                    case "atk_stp": break;
                     case "init" :
-                        serverGameControl.addPlayer(pureIP);
+                        serverGameControl.addPlayer(pureIP,111100,"LYT");
                 }
 
                 System.out.println(dataclass.getUpdateList().get(pureIP)[0] + ", " + dataclass.getUpdateList().get(pureIP)[1]);
