@@ -6,7 +6,14 @@ public class Player {
 
 
     public void setAccount(String account) {
+        //int c = Integer.parseInt(account);
         Account = account;
+        try {
+            int a = Integer.parseInt(account);
+            System.out.println(a);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setRoleType(int roletype)
