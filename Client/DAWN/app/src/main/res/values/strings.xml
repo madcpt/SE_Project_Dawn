@@ -25,5 +25,7 @@
     <string name="name_already_exist">已存在，请重新输入！</string>
     <string name="name_not_exist">不存在，请重新输入！</string>
     <string name="user_login_success">登录，欢迎光临！</string>
-
+    <string name="roomcontain_notvalid">Not Valid!Please input the roomcontain(2,3,4) again</string>
+    <string name="roomID_notvalid">Not Valid!Please input the roomcontain(1 to 99999) again</string>
+    <string name="roomID_repeated">Repeated!Please change the roomcontain(1 to 99999)</string>
 </resources>
