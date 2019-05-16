@@ -100,40 +100,235 @@ public class ClientGameControl extends AppCompatActivity {
 
         //对摇杆位置改变进行监听
 //        当前模式：方向有改变时回调；8个方向
-        mRockerView.setOnAngleChangeListener(new RockerView.OnAngleChangeListener() {
-            private Boolean move=false;
+        mRockerView.setOnShakeListener(DIRECTION_8, new RockerView.OnShakeListener() {
+            private Boolean move0=false;
+            private Boolean move1=false;
+            private Boolean move2=false;
+            private Boolean move3=false;
+            private Boolean move4=false;
+            private Boolean move5=false;
+            private Boolean move6=false;
+            private Boolean move7=false;
+
             @Override
             public void onStart() {
 
             }
             @Override
-            public void angle(final float angle) {
-                final float angle1;
-                if(angle==-1){
-                    move = false;
-                    Stopmove();
-                }
-                else{
-                    move = true;
-                    angle1 = angle;
-                    Thread t = new Thread(){
-                        public void run(){
-                            super.run();
-                            while (move){
-                                ARmove(angle1);
-                                try{
-                                    Thread.sleep(20);
-                                }catch(InterruptedException e){
-                                    e.printStackTrace();
-                                }
+            public void direction(RockerView.Direction direction) {
+                switch(direction){
+                    case DIRECTION_DOWN:
+                        move0 = true;
+                        move1 = false;
+                        move2 = false;
+                        move3 = false;
+                        move4 = false;
+                        move5 = false;
+                        move6 = false;
+                        move7 = false;
+                        Thread t = new Thread(){
+                            public void run(){
+                                super.run();
+                                while (move0){
+                                    Dmove();
+                                    try{
+                                        Thread.sleep(20);
+                                    }catch(InterruptedException e){
+                                        e.printStackTrace();
+                                    }
 
+                                }
                             }
-                        }
-                    };
-                    t.start();
+                        };
+                        t.start();
+                        break;
+                    case DIRECTION_LEFT:
+                        move1 = true;
+                        move0 = false;
+                        move2 = false;
+                        move3 = false;
+                        move4 = false;
+                        move5 = false;
+                        move6 = false;
+                        move7 = false;
+                        Thread t1 = new Thread(){
+                            public void run(){
+                                super.run();
+                                while (move1){
+                                    Lmove();
+                                    try{
+                                        Thread.sleep(20);
+                                    }catch(InterruptedException e){
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                            }
+                        };
+                        t1.start();
+                        break;
+                    case DIRECTION_UP:
+                        move2 = true;
+                        move0 = false;
+                        move1 = false;
+                        move3 = false;
+                        move4 = false;
+                        move5 = false;
+                        move6 = false;
+                        move7 = false;
+                        Thread t2 = new Thread(){
+                            public void run(){
+                                super.run();
+                                while (move2){
+                                    Umove();
+                                    try{
+                                        Thread.sleep(20);
+                                    }catch(InterruptedException e){
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                            }
+                        };
+                        t2.start();
+                        break;
+                    case DIRECTION_RIGHT:
+                        move3 = true;
+                        move0 = false;
+                        move1 = false;
+                        move2 = false;
+                        move4 = false;
+                        move5 = false;
+                        move6 = false;
+                        move7 = false;
+                        Thread t3 = new Thread(){
+                            public void run(){
+                                super.run();
+                                while (move3){
+                                    Rmove();
+                                    try{
+                                        Thread.sleep(20);
+                                    }catch(InterruptedException e){
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                            }
+                        };
+                        t3.start();
+                        break;
+                    case DIRECTION_DOWN_LEFT:
+                        move4 = true;
+                        move0 = false;
+                        move1 = false;
+                        move2 = false;
+                        move3 = false;
+                        move5 = false;
+                        move6 = false;
+                        move7 = false;
+                        Thread t4 = new Thread(){
+                            public void run(){
+                                super.run();
+                                while (move4){
+                                    DLmove();
+                                    try{
+                                        Thread.sleep(20);
+                                    }catch(InterruptedException e){
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                        };
+                        t4.start();
+                        break;
+                    case DIRECTION_DOWN_RIGHT:
+                        move5 = true;
+                        move0 = false;
+                        move1 = false;
+                        move2 = false;
+                        move3 = false;
+                        move4 = false;
+                        move6 = false;
+                        move7 = false;
+                        Thread t5 = new Thread(){
+                            public void run(){
+                                super.run();
+                                while (move5){
+                                    DRmove();
+                                    try{
+                                        Thread.sleep(20);
+                                    }catch(InterruptedException e){
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                            }
+                        };
+                        t5.start();
+                        break;
+                    case DIRECTION_UP_LEFT:
+                        move6 = true;
+                        move0 = false;
+                        move1 = false;
+                        move2 = false;
+                        move3 = false;
+                        move4 = false;
+                        move5 = false;
+                        move7 = false;
+                        Thread t6 = new Thread(){
+                            public void run(){
+                                super.run();
+                                while (move6){
+                                    ULmove();
+                                    try{
+                                        Thread.sleep(20);
+                                    }catch(InterruptedException e){
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                            }
+                        };
+                        t6.start();
+                        break;
+                    case DIRECTION_UP_RIGHT:
+                        move7 = true;
+                        move0 = false;
+                        move1 = false;
+                        move2 = false;
+                        move3 = false;
+                        move4 = false;
+                        move5 = false;
+                        move6 = false;
+                        Thread t7 = new Thread(){
+                            public void run(){
+                                super.run();
+                                while (move7){
+                                    URmove();
+                                    try{
+                                        Thread.sleep(20);
+                                    }catch(InterruptedException e){
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                            }
+                        };
+                        t7.start();
+                        break;
+                    case DIRECTION_CENTER:
+                        move0 = false;
+                        move1 = false;
+                        move2 = false;
+                        move3 = false;
+                        move4 = false;
+                        move5 = false;
+                        move6 = false;
+                        move7 = false;
+                        Stopmove();
+                        break;
                 }
             }
-
             @Override
             public void onFinish() {
 
@@ -189,11 +384,32 @@ public class ClientGameControl extends AppCompatActivity {
     }
     //实现移动
     public void Stopmove(){
-        new AsyncConTCP ().execute ("stop");
+        new AsyncConTCP ().execute ("stop ,0");
     }
-    public void ARmove(float angle){
-        int angle1 = (int) angle;
-        new AsyncConTCP ().execute ("move,"+ String.valueOf(angle1)+","+String.valueOf(1));
+//    感觉停止可以不需要
+    public void Lmove(){
+        new AsyncConTCP ().execute ("move,0");
+    }
+    public void Rmove(){
+        new AsyncConTCP ().execute ("move,1");
+    }
+    public void Umove(){
+        new AsyncConTCP ().execute ("move,2");
+    }
+    public void Dmove(){
+        new AsyncConTCP ().execute ("move,3");
+    }
+    public void DLmove(){
+        new AsyncConTCP ().execute ("move,4");
+    }
+    public void DRmove(){
+        new AsyncConTCP ().execute ("move,5");
+    }
+    public void ULmove(){
+        new AsyncConTCP ().execute ("move,6");
+    }
+    public void URmove(){
+        new AsyncConTCP ().execute ("move,7");
     }
 
 
