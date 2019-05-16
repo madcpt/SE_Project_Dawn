@@ -21,7 +21,7 @@ public class serverForMultiClientUDP implements Runnable{
     public void run(){
         // System.out.println(new String(data.getData(),0,data.getLength()));
         try{
-            Thread.sleep(20);
+            Thread.sleep(10);
         } catch(Exception e){
             e.printStackTrace();
         }
@@ -29,7 +29,7 @@ public class serverForMultiClientUDP implements Runnable{
 
     public static void openServer()throws Exception{
         DatagramSocket server = new DatagramSocket(5063);
-        ExecutorService service = Executors.newFixedThreadPool(500);
+        ExecutorService service = Executors.newFixedThreadPool(100);
         Data dataclass = new Data();
 
         while(true){
