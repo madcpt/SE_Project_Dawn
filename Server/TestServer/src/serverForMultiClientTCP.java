@@ -56,8 +56,8 @@ public class serverForMultiClientTCP extends ServerSocket {
                 List<String> myList = new ArrayList<>(Arrays.asList(inputString.split(",")));
                 String pureIP = myList.get(0).split(":")[0];
                 switch (String.valueOf(myList.get(1))){
-                    case "mov":
-                        Data.moveDegree(pureIP, Integer.parseInt(myList.get(2)), Integer.parseInt(myList.get(3)));
+                    case "move":
+                        Data.moveDegree(pureIP, myList.get(2), 1);
                         break;
 //                        switch (myList.get(2)){
 //                            case "0":
@@ -73,7 +73,7 @@ public class serverForMultiClientTCP extends ServerSocket {
 //                                dataclass.Dmove(pureIP);
 //                                break;
 //                        }
-                    case "stp":
+                    case "stop":
                         dataclass.mov_stop(pureIP);
                         break;
                     case "attack": break;
