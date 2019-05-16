@@ -8,7 +8,6 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/backgroundforlogin"
     tools:context="com.example.DAWN.Register">
 
     <RelativeLayout
@@ -22,8 +21,8 @@
 
         <ImageView
             android:id="@+id/logoforRe"
-            android:layout_width="300dp"
-            android:layout_height="150dp"
+            android:layout_width="571dp"
+            android:layout_height="101dp"
             android:layout_alignWithParentIfMissing="false"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
@@ -33,7 +32,7 @@
             android:layout_marginStart="49dp"
             android:layout_marginLeft="49dp"
             android:layout_marginTop="-2dp"
-            android:layout_marginEnd="48dp"
+            android:layout_marginEnd="63dp"
             android:layout_marginRight="0dp"
             android:background="#FFFFFF" />
 
@@ -41,8 +40,8 @@
         <EditText
 
             android:id="@+id/resetpwd_edit_name"
-            android:layout_width="363dp"
-            android:layout_height="wrap_content"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
             android:layout_below="@+id/logoforRe"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
@@ -65,14 +64,14 @@
 
         <EditText
             android:id="@+id/resetpwd_edit_pwd_old"
-            android:layout_width="363dp"
-            android:layout_height="56dp"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
             android:layout_below="@+id/resetpwd_edit_name"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_marginStart="0dp"
             android:layout_marginLeft="0dp"
-            android:layout_marginTop="34dp"
+            android:layout_marginTop="25dp"
             android:drawableLeft="@android:drawable/ic_lock_idle_lock"
             android:ems="10"
             android:hint="请输入您的密码"
@@ -80,25 +79,22 @@
 
         <Button
             android:id="@+id/register_btn_cancel"
-            android:layout_width="352dp"
-            android:layout_height="59dp"
-            android:layout_below="@+id/register_btn_sure"
-            android:layout_alignStart="@+id/register_btn_sure"
-            android:layout_alignLeft="@+id/register_btn_sure"
-            android:layout_marginStart="-7dp"
-            android:layout_marginLeft="-7dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginRight="-64dp"
-            android:background="@drawable/backforbutton"
+            android:layout_width="280dp"
+            android:layout_height="60dp"
+            android:layout_below="@id/logoforRe"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="49dp"
+            android:layout_toRightOf="@id/resetpwd_edit_pwd_new"
+
             android:text="取消"
             android:textSize="20dp" />
 
         <EditText
             android:id="@+id/resetpwd_edit_pwd_new"
-            android:layout_width="fill_parent"
-            android:layout_height="60dp"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
             android:layout_below="@+id/resetpwd_edit_pwd_old"
-            android:layout_marginTop="29dp"
+            android:layout_marginTop="25dp"
             android:drawableLeft="@android:drawable/ic_lock_idle_lock"
             android:ems="10"
             android:hint="请确认您的密码"
@@ -106,16 +102,13 @@
 
         <Button
             android:id="@+id/register_btn_sure"
-            android:layout_width="fill_parent"
+            android:layout_width="280dp"
             android:layout_height="60dp"
-            android:layout_below="@+id/resetpwd_edit_pwd_new"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginStart="2dp"
-            android:layout_marginLeft="2dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginRight="-64dp"
-            android:background="@drawable/backforbutton"
+            android:layout_below="@id/register_btn_cancel"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="39dp"
+            android:layout_toRightOf="@id/resetpwd_edit_pwd_old"
+
             android:text="确定"
             android:textSize="20dp" />
 
