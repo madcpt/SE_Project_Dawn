@@ -104,6 +104,17 @@ public class Login extends Activity {                 //登录界面活动
         if (isUserNameAndPwdValid()) {
             String userName = mAccount.getText().toString().trim();    //获取当前输入的用户名和密码信息
             String userPwd = mPwd.getText().toString().trim();
+            //默认账号
+            if (userName.equals("1")  && userPwd.equals("1"))
+            {
+                Intent intent = new Intent(Login.this,CreateRoom.class) ;    //切换Login Activity至User Activity
+
+                intent.putExtra("Account",userName);
+                startActivity(intent);
+                finish();
+                Toast.makeText(this, getString(R.string.login_success),Toast.LENGTH_SHORT).show();//登录成功提示
+            }
+
             SharedPreferences.Editor editor =login_sp.edit();
             int result=mUserDataManager.findUserByNameAndPwd(userName, userPwd);
             if(result>=1){                                             //返回1说明用户名和密码均正确
@@ -119,7 +130,7 @@ public class Login extends Activity {                 //登录界面活动
                 }
                 editor.commit();
 
-                Intent intent = new Intent(Login.this,RoomPage.class) ;    //切换Login Activity至User Activity
+                Intent intent = new Intent(Login.this,CreateRoom.class) ;    //切换Login Activity至User Activity
 
                 intent.putExtra("Account",userName);
                 startActivity(intent);
