@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.icu.util.ULocale;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -13,6 +15,8 @@ import android.widget.*;
 
 import java.lang.*;
 import java.util.Arrays;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import android.graphics.*;
 
@@ -30,6 +34,7 @@ import static com.example.DAWN.RockerView.DirectionMode.DIRECTION_8;
 public class ClientGameControl extends AppCompatActivity {
     Intent intent = getIntent();
 
+    private Button Abutton;
     private RockerView mRockerView;
     private TextView testtxt ;
     private ImageView myroleview ;
@@ -41,7 +46,7 @@ public class ClientGameControl extends AppCompatActivity {
     //(所有图片的左上角为判定点）
 
     private int direction = 3;
-    float[] location={0,0}; //当前位置
+    int[] location={0,0}; //当前位置
 
     private Map map;
     private Role myrole;
@@ -83,6 +88,7 @@ public class ClientGameControl extends AppCompatActivity {
 //        }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,7 +101,11 @@ public class ClientGameControl extends AppCompatActivity {
 
         myroleview = findViewById(R.id.Myrole);
         dataclass = new Data ();
-        MapInit();
+        try {
+            MapInit();
+        } catch (InterruptedException e) {
+            e.printStackTrace ();
+        }
 
         //对摇杆位置改变进行监听
 //        当前模式：方向有改变时回调；8个方向
@@ -113,7 +123,6 @@ public class ClientGameControl extends AppCompatActivity {
             public void onStart() {
 
             }
-
             @Override
             public void direction(RockerView.Direction direction) {
                 switch(direction){
@@ -236,7 +245,6 @@ public class ClientGameControl extends AppCompatActivity {
                                     }catch(InterruptedException e){
                                         e.printStackTrace();
                                     }
-
                                 }
                             }
                         };
@@ -326,18 +334,50 @@ public class ClientGameControl extends AppCompatActivity {
                         move5 = false;
                         move6 = false;
                         move7 = false;
+                        Stopmove();
                         break;
                 }
             }
-
             @Override
             public void onFinish() {
 
             }
         });
 
+        Abutton= findViewById(R.id.Abutton);
+        Abutton.setOnTouchListener(new View.OnTouchListener(){
+            private Boolean longclicked=false;
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                // TODO Auto-generated method stub
+                switch (event.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        longclicked=true;
+                        Thread t = new Thread(){
+                            public void run(){
+                                super.run();
+                                while (longclicked){
+                                    Attack();
+                                    try{
+                                        Thread.sleep(20);
+                                    }catch(InterruptedException e){
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                        };
+                        t.start();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        longclicked = false;
+                        break;
+                }
+                return true;
+            }
+        });
+
         handler.postDelayed(runnable, 1000 * 1);//等1s后开始刷新显示
-//        handlerUDP.postDelayed(runnableUDP, 1000 * 1);//等1s后开始刷新位置UDP
+        handlerUDP.postDelayed(runnableUDP, 1000 * 1);//等1s后开始刷新位置UDP
 
 
         scr = findViewById(R.id.background) ;
@@ -346,96 +386,64 @@ public class ClientGameControl extends AppCompatActivity {
         draw = new Draw(sfh);
     }
 
-    //上下左右按键的监听函数
+
+//    实现攻击
+    public void Attack(){
+        new AsyncConTCP ().execute ("attack,100,0");
+    }
+    //实现移动
+    public void Stopmove(){
+        new AsyncConTCP ().execute ("stop");
+    }
+//    感觉停止可以不需要
     public void Lmove(){
-        location[0]=location[0]-3;
-        dataclass.location = location;
-        if(direction == 0)
-            direction = 4;
-        else
-            direction = 0;
         new AsyncConTCP ().execute ("move,0");
     }
     public void Rmove(){
-      location[0]=location[0]+3;
-        dataclass.location = location;
-        if(direction == 1)
-            direction = 5;
-        else
-            direction = 1;
         new AsyncConTCP ().execute ("move,1");
     }
     public void Umove(){
-        location[1]=location[1]-3;
-        dataclass.location = location;
-        if(direction == 2)
-            direction = 6;
-        else
-            direction = 2;
         new AsyncConTCP ().execute ("move,2");
     }
     public void Dmove(){
-        location[1]=location[1]+3;
-        dataclass.location = location;
-        if(direction == 3)
-            direction = 7;
-        else
-            direction = 3;
         new AsyncConTCP ().execute ("move,3");
     }
     public void DLmove(){
-        location[1]=location[1]+2;
-        location[0]=location[0]-2;
-        dataclass.location = location;
-        if(direction == 0)
-            direction = 4;
-        else
-            direction = 0;
-        //      new AsyncConTCP ().execute ();
+        new AsyncConTCP ().execute ("move,4");
     }
     public void DRmove(){
-        location[1]=location[1]+2;
-        location[0]=location[0]+2;
-        dataclass.location = location;
-        if(direction == 1)
-            direction = 5;
-        else
-            direction = 1;
-        //      new AsyncConTCP ().execute ();
+        new AsyncConTCP ().execute ("move,5");
     }
     public void ULmove(){
-        location[1]=location[1]-2;
-        location[0]=location[0]-2;
-        dataclass.location = location;
-        if(direction == 0)
-            direction = 4;
-        else
-            direction = 0;
-        //      new AsyncConTCP ().execute ();
+        new AsyncConTCP ().execute ("move,6");
     }
     public void URmove(){
-        location[1]=location[1]-2;
-        location[0]=location[0]+2;
-        dataclass.location = location;
-        if(direction == 1)
-            direction = 5;
-        else
-            direction = 1;
-        //      new AsyncConTCP ().execute ();
+        new AsyncConTCP ().execute ("move,7");
     }
 
+
     //Map初始化
-    private Boolean MapInit(){
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private Boolean MapInit() throws InterruptedException {
         //发送请求并将服务器传递过来的所有数据转化为Map对象
         //失败请return false
         //仅供测试
         map=new Map();
-        Role_simple test_r1=new Role_simple();
-        test_r1.location=new int[2];  test_r1.location[0]=100;  test_r1.location[1]=200;
-        Role_simple test_r2=new Role_simple();
-        test_r2.location=new int[2];  test_r2.location[0]=200;  test_r2.location[1]=400;
-        map.livingrole.add(test_r1);
-        map.livingrole.add(test_r2);
+
+        while(Data.playerLocation == null){
+            System.out.println ("get111");
+            new AsyncConUDP ().execute ();
+            TimeUnit.SECONDS.sleep(1);
+        }
+
+        for (String playerIP : Data.playerLocation.keySet ()){
+            System.out.println (playerIP);
+            Role_simple test_r1=new Role_simple((Objects.requireNonNull (Data.playerLocation.get (playerIP)))[0], playerIP);
+            test_r1.location[0] =  Objects.requireNonNull (Data.playerLocation.get (playerIP))[2];
+            test_r1.location[1] =  Objects.requireNonNull (Data.playerLocation.get (playerIP))[3];
+            map.livingrole.add(test_r1);
+        }
+
 
 
         //for drawing
@@ -460,16 +468,17 @@ public class ClientGameControl extends AppCompatActivity {
     //位置刷新UDP
     private Handler handlerUDP = new Handler();
     private Runnable runnableUDP = new Runnable() {
+        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         public void run() {
             new AsyncConUDP ().execute ();
-            System.out.println (dataclass.playerLocation + "PALYER111");
+            System.out.println (Data.playerLocation + "PLAYER111");
 
-            if (dataclass.playerLocation != null && dataclass.playerLocation.containsKey (dataclass.LOCALIP)) {
+            if (Data.playerLocation != null && Data.playerLocation.containsKey (Data.LOCALIP)) {
                 System.out.println (location[0] + "," + location[1] + "LOCATION111");
-                location[0] = dataclass.playerLocation.get (dataclass.LOCALIP)[0];
-                location[1] = dataclass.playerLocation.get (dataclass.LOCALIP)[1];
+                location[0] = Objects.requireNonNull (Data.playerLocation.get (Data.LOCALIP))[2];
+                location[1] = Objects.requireNonNull (Data.playerLocation.get (Data.LOCALIP))[3];
             } else {
-                location = new float[]{0, 0};
+                location = new int[]{0, 0};
             }
             handlerUDP.postDelayed (this, 20);// 刷新间隔(ms)
         }
@@ -478,7 +487,7 @@ public class ClientGameControl extends AppCompatActivity {
 //        }
     };
 
-    //界面刷新
+    //界面刷新fs
     private Handler handler = new Handler();
     private Runnable runnable = new Runnable() {
         public void run() {
@@ -488,32 +497,6 @@ public class ClientGameControl extends AppCompatActivity {
         void update() {
 
             testtxt.setText(Arrays.toString(location));
-            switch(direction){
-                case 0 :
-                    myroleview.setImageResource(R.drawable.r_0_0_0);
-                    break;
-                case 1 :
-                    myroleview.setImageResource(R.drawable.r_0_1_0);
-                    break;
-                case 2 :
-                    myroleview.setImageResource(R.drawable.r_0_2_0);
-                    break;
-                case 3 :
-                    myroleview.setImageResource(R.drawable.r_0_3_0);
-                    break;
-                case 4 :
-                    myroleview.setImageResource(R.drawable.r_0_0_1);
-                    break;
-                case 5 :
-                    myroleview.setImageResource(R.drawable.r_0_1_1);
-                    break;
-                case 6 :
-                    myroleview.setImageResource(R.drawable.r_0_2_1);
-                    break;
-                case 7 :
-                    myroleview.setImageResource(R.drawable.r_0_3_1);
-                    break;
-            }
         }
     };
 
@@ -553,6 +536,7 @@ public class ClientGameControl extends AppCompatActivity {
             this.holder =holder;
             isRun = true;
         }
+        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         @Override
         public void run(){
             Role_simple r;
@@ -575,12 +559,18 @@ public class ClientGameControl extends AppCompatActivity {
 
                         for (int i=0;i<map.livingrole.size();i++) {
                             r = map.livingrole.get(i);
+                            r.location[0] = Objects.requireNonNull (Data.playerLocation.get (r.name))[2];
+                            r.location[1] = Objects.requireNonNull (Data.playerLocation.get (r.name))[3];
+                            System.out.println ("OTHER111 " + map.livingrole.size () + Arrays.toString (r.location));
+                            System.out.println (Arrays.toString (Data.playerLocation.get (r.name)));
                             if (Math.abs(r.location[0] - location[0]) > vision * 20 || Math.abs(r.location[1] - location[1]) > vision * 20) {
                                 continue;
                             }
-                            c.drawBitmap(role_pic[r.id%100][r.direction][r.walk_mov],center_location[0] - location[0]+r.location[0],center_location[1] - location[1]+r.location[1],p);
-                            if (r.walk_mov!=0){
-                                r.walk_mov=(r.walk_mov+1)/3;//每个动作循环的帧数
+                            if (r.walk_mov==-1) {
+                                c.drawBitmap (role_pic[r.id % 100][r.direction][0], center_location[0] - location[0] + r.location[0], center_location[1] - location[1] + r.location[1], p);
+                            } else{
+                                c.drawBitmap(role_pic[r.id%100][r.direction][r.walk_mov/5],center_location[0] - location[0]+r.location[0],center_location[1] - location[1]+r.location[1],p);
+                                r.walk_mov=(r.walk_mov+1)%10;//每个动作循环的帧数
                             }
                         }
                         //画黑雾
@@ -592,7 +582,7 @@ public class ClientGameControl extends AppCompatActivity {
                         p.setXfermode(null);
                         c.restore();
                     }
-                    Thread.sleep(10);
+                    Thread.sleep(20);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -606,8 +596,6 @@ public class ClientGameControl extends AppCompatActivity {
             }
         }
     }
-
-
 
 
     //析构
