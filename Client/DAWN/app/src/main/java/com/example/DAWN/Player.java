@@ -1,12 +1,17 @@
 package com.example.DAWN;
 
 public class Player {
-    public String Account;
+    public int Account;
     public int RoleType;
 
 
     public void setAccount(String account) {
-        Account = account;
+        try {
+            Account = Integer.parseInt(account);
+            System.out.println(Account);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setRoleType(int roletype)

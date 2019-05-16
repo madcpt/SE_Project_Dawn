@@ -1,3 +1,4 @@
+import java.awt.dnd.DropTarget;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
@@ -55,27 +56,33 @@ public class serverForMultiClientTCP extends ServerSocket {
                 List<String> myList = new ArrayList<>(Arrays.asList(inputString.split(",")));
                 String pureIP = myList.get(0).split(":")[0];
                 switch (String.valueOf(myList.get(1))){
-                    case "move":
-                        switch (myList.get(2)){
-                            case "0":
-                                dataclass.Lmove(pureIP);
-                                break;
-                            case "1":
-                                dataclass.Rmove(pureIP);
-                                break;
-                            case "2":
-                                dataclass.Umove(pureIP);
-                                break;
-                            case "3":
-                                dataclass.Dmove(pureIP);
-                                break;
-                        }
+                    case "mov":
+                        Data.moveDegree(pureIP, Integer.parseInt(myList.get(2)), Integer.parseInt(myList.get(3)));
                         break;
+//                        switch (myList.get(2)){
+//                            case "0":
+//                                dataclass.Lmove(pureIP);
+//                                break;
+//                            case "1":
+//                                dataclass.Rmove(pureIP);
+//                                break;
+//                            case "2":
+//                                dataclass.Umove(pureIP);
+//                                break;
+//                            case "3":
+//                                dataclass.Dmove(pureIP);
+//                                break;
+//                        }
+                    case "stp":
+                        dataclass.mov_stop(pureIP);
+                        break;
+                    case "attack": break;
+                    case "atk_stp": break;
                     case "init" :
-                        serverGameControl.addPlayer(pureIP);
+                        serverGameControl.addPlayer(pureIP,Integer.parseInt(myList.get(2)),pureIP);
                 }
 
-                System.out.println(dataclass.getUpdateList().get(pureIP)[0] + ", " + dataclass.getUpdateList().get(pureIP)[1]);
+                System.out.println(Arrays.toString(dataclass.getUpdateList().get(pureIP)));
 
                 client.close();
             }catch (IOException e) {
