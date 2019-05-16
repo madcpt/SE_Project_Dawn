@@ -76,7 +76,6 @@ public class RoomPage extends AppCompatActivity {
             switch (v.getId()) {
                 case R.id.Prepare:
                     System.out.println("prepared");
-                    boolean flagprepare=true;
 
                     //向服务器传递flag,id
                     new AsyncConTCP ().execute ("init," + player.Account);
