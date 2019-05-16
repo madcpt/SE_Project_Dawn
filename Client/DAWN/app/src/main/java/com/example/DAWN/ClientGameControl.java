@@ -32,7 +32,7 @@ public class ClientGameControl extends AppCompatActivity {
     private Button Abutton;
     private RockerView mRockerView;
     private TextView testtxt ;
-    private Data dataclass;
+
 
     //屏幕左上角为{0,0}，我的角色的绝对位置为{860,0}，相对（地图）位置为{x,y}
     //则地图相对位置为{-x,-y}，绝对位置{860-x,0-y}
@@ -41,10 +41,13 @@ public class ClientGameControl extends AppCompatActivity {
 
     private int direction = 3;
     int[] location={0,0}; //当前位置
+    int[] center_location;
 
     private Map map;
     private Role myrole;
     int vision=20;//视野范围
+    int pre_vision;
+
 
     //AsyncTask for TCP-client.
     static class AsyncConTCP extends AsyncTask<String ,Void, Void>{
@@ -94,7 +97,12 @@ public class ClientGameControl extends AppCompatActivity {
         testtxt.setText("loading... ");
         testtxt.setText(Arrays.toString(location));
 
-        dataclass = new Data ();
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        center_location=new int[2];
+        center_location[0] = dm.widthPixels/2;
+        center_location[1] = dm.heightPixels/2;//中心点相对坐标在这里改
+
         try {
             MapInit();
         } catch (InterruptedException e) {
@@ -446,14 +454,20 @@ public class ClientGameControl extends AppCompatActivity {
 
         //for drawing
         background = BitmapFactory.decodeResource(this.getResources(),R.drawable.map).copy(Bitmap.Config.ARGB_4444, true);
+        Bitmap tmp = BitmapFactory.decodeResource(this.getResources(),R.drawable.blackblock).copy(Bitmap.Config.ARGB_4444, true);
+        Matrix matrix=new Matrix();
+        matrix.postScale(((float)vision*30/tmp.getWidth()), ((float)vision*30/tmp.getHeight()));
+        hole = Bitmap.createBitmap(tmp, 0, 0,tmp.getWidth(),tmp.getHeight(),matrix,true);
+        tmp.recycle();
+
         //Rolepic load
         role_pic = new Bitmap[2][4][4];//人物数，方向数，每个方向动作帧数
         Resources res=getResources();
         String fname;
         for (int i=0;i<1;i++){
             for (int j=0;j<4;j++){
-                for (int k=0;k<2;k++){
-                    fname="r_"+ i +"_"+ j +"_"+ k;
+                for (int k=0;k<3;k++){
+                    fname="r_"+Integer.toString(i)+"_"+Integer.toString(j)+"_"+Integer.toString(k);
                     role_pic[i][j][k]=BitmapFactory.decodeResource(this.getResources(),res.getIdentifier(fname,"drawable",getPackageName())).copy(Bitmap.Config.ARGB_4444, true);
                 }
             }
@@ -476,7 +490,7 @@ public class ClientGameControl extends AppCompatActivity {
             } else {
                 location = new int[]{0, 0};
             }
-            handlerUDP.postDelayed (this, 20);// 刷新间隔(ms)
+            handlerUDP.postDelayed (this, 10);// 刷新间隔(ms)
         }
 //        void update() {
 //            location = dataclass.location;
@@ -522,6 +536,7 @@ public class ClientGameControl extends AppCompatActivity {
     private SurfaceHolder sfh;
     private Draw draw;
     private Bitmap background;
+    private Bitmap hole;
     private Bitmap[][][] role_pic;//所有角色图的Bitmap点阵,第一层为角色，第二层为方向，第三层为动作
     class MyCallBack implements SurfaceHolder.Callback {
         @Override
@@ -531,7 +546,7 @@ public class ClientGameControl extends AppCompatActivity {
         //当SurfaceView被创建的时候被调用
         public void surfaceCreated(SurfaceHolder holder) {
             draw.isRun = true;
-  //          c=new Canvas(background);
+            pre_vision=vision;
             draw.start();
 
         }
@@ -558,11 +573,6 @@ public class ClientGameControl extends AppCompatActivity {
             Role_simple r;
             Paint p = new Paint();
 
-            DisplayMetrics dm = new DisplayMetrics();
-            getWindowManager().getDefaultDisplay().getMetrics(dm);
-            int[] center_location=new int[2];
-            center_location[0] = dm.widthPixels/2;
-            center_location[1] = dm.heightPixels/2;//中心点相对坐标在这里改
 
             while(isRun){
                 c=null;
@@ -592,9 +602,17 @@ public class ClientGameControl extends AppCompatActivity {
                         //画黑雾
                         c.saveLayer(0, 0, center_location[0]*2+1, center_location[1]*2+1, p, Canvas.ALL_SAVE_FLAG);//保存上一层
                         p.setColor(Color.BLACK);
+                        if (vision>pre_vision){
+                            Bitmap tmp= hole;
+                            Matrix matrix=new Matrix();
+                            matrix.postScale((float)vision/pre_vision, (float)vision/pre_vision);
+                            hole = Bitmap.createBitmap(tmp, 0, 0,pre_vision,pre_vision,matrix,true);
+                            tmp.recycle();
+                            pre_vision=vision;
+                        }
                         c.drawRect(0,0,center_location[0]*2+1, center_location[1]*2+1,p);
-                        p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-                        c.drawCircle(center_location[0],center_location[1],vision*15,p);
+                        p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
+                        c.drawBitmap(hole,center_location[0]-vision*15,center_location[1]-vision*15,p);
                         p.setXfermode(null);
                         c.restore();
                     }
