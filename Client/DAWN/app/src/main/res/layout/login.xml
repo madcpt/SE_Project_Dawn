@@ -26,8 +26,9 @@
             android:layout_marginTop="18dp"
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
+            android:background="@drawable/button_style"
             android:text="注册"
-            android:textColor="#ffffff"
+            android:textColor="#888888"
             android:textSize="20dp" />
         <!--在该元素的下方-->
         android:layout_alignParentLeft="true"
@@ -40,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/login_edit_pwd"
             android:layout_alignParentStart="true"
+            android:background="@drawable/button_style"
             android:layout_alignParentLeft="true"
             android:layout_alignParentEnd="true"
 
@@ -50,8 +52,8 @@
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
             android:onClick="finish_login"
-            android:text="登录"
-            android:textColor="#ffffff"
+            android:text="@string/login"
+            android:textColor="#888888"
             android:textSize="20dp" />
 
         <ImageView
@@ -109,7 +111,7 @@
             android:layout_marginTop="46dp"
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
-            android:background="@drawable/r_0_3_0"
+
             android:text="注销"
             android:textColor="#ffffff"
             android:textSize="20dp" />
