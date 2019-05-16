@@ -115,7 +115,7 @@ public class CreateRoom extends AppCompatActivity {
     //@xzh
     public void GetServerRoomID()
     {
-        IDlist = new String[]{"111","123","253"};
+        IDlist = new String[]{"Choose","111","123","253"};
         ArrayAdapter<String> adapter=new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, IDlist);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sRoomSpinner.setAdapter(adapter);
@@ -127,11 +127,18 @@ public class CreateRoom extends AppCompatActivity {
     }
 
 
-    public void fCreateRoom()
+    public int fCreateRoom()
     {
         //获取roomcontain 和 roomID
+        String Account=getIntent().getStringExtra("Account");
+        System.out.println("Account is"+Account);
         String strtmp1=eRoomContain.getText().toString().trim();
         String strtmp2=eRoomID.getText().toString().trim();
+        if (strtmp1.equals("") || strtmp2.equals(""))
+        {
+            makeText(this, getString(R.string.notempty), Toast.LENGTH_SHORT).show();
+            return 0;
+        }
 
 
         int roomContain = Integer.parseInt(strtmp1);
@@ -139,14 +146,19 @@ public class CreateRoom extends AppCompatActivity {
         if (IsRoomInfoValid(roomContain,roomID))
         {
             Intent intent=new Intent(CreateRoom.this,RoomPage.class);
+            intent.putExtra("Account",Account);
             startActivity(intent);
         };
 
        // return true;
+        return 1;
 
     }
     public boolean IsRoomInfoValid(int rc,int ID)
     {
+        System.out.println("RoomContain");
+        System.out.println(rc);
+
         if (rc<1 || rc>4)
         {
             makeText(this, getString(R.string.roomcontain_notvalid), Toast.LENGTH_SHORT).show();
@@ -168,8 +180,9 @@ public class CreateRoom extends AppCompatActivity {
     public boolean IsRoomIDrepeated(int ID)
     {
         //if ID not repeat in the server
-        return true;
-        //else return false;
+       // return true;
+        //else
+        return false;
 
     }
 
