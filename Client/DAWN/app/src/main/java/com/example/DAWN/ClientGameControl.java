@@ -419,6 +419,7 @@ public class ClientGameControl extends AppCompatActivity {
     }
     public void URmove(){
         new AsyncConTCP ().execute ("move,7");
+    }
 
 
     //Map初始化
