@@ -33,14 +33,10 @@ public class serverForMultiClientTCP extends ServerSocket {
 
     static class CreateServerThread extends Thread {
         private Socket client;
-        static Data dataclass;
         // private BufferedReader bufferedReader;
         // private PrintWriter printWriter;
 
         public CreateServerThread(Socket s)throws IOException {
-            if(dataclass == null){
-                dataclass = new Data();
-            }
             client = s;
             start();
         }
@@ -59,30 +55,21 @@ public class serverForMultiClientTCP extends ServerSocket {
                     case "move":
                         Data.moveDegree(pureIP, myList.get(2), 1);
                         break;
-//                        switch (myList.get(2)){
-//                            case "0":
-//                                dataclass.Lmove(pureIP);
-//                                break;
-//                            case "1":
-//                                dataclass.Rmove(pureIP);
-//                                break;
-//                            case "2":
-//                                dataclass.Umove(pureIP);
-//                                break;
-//                            case "3":
-//                                dataclass.Dmove(pureIP);
-//                                break;
-//                        }
                     case "stop":
-                        dataclass.mov_stop(pureIP);
+                        Data.mov_stop(pureIP);
                         break;
                     case "attack": break;
                     case "atk_stp": break;
                     case "init" :
                         serverGameControl.addPlayer(pureIP,Integer.parseInt(myList.get(2)),pureIP);
+                        break;
+                    case "new_room":
+                        Data.roomList.createRoom(myList.get(2), Integer.parseInt(myList.get(3)));
+                        break;
+
                 }
 
-                System.out.println(Arrays.toString(dataclass.getUpdateList().get(pureIP)));
+                System.out.println(Arrays.toString(Data.getUpdateList().get(pureIP)));
 
                 client.close();
             }catch (IOException e) {

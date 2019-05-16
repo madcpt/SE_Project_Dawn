@@ -16,7 +16,7 @@ Final project for EI333 \<\<Software Engineering\>\>.
   + + [ ] 用例
       + [ ] Register
       + [ ] JoinRoom
-      + [ ] **CreateRoom**
+      + [x] **CreateRoom**
       + [ ] **Prepare**
       + [ ] **GameProcess**
       + [ ] Login

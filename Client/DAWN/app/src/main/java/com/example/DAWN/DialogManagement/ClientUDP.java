@@ -10,6 +10,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.util.Map;
+import java.util.Vector;
 
 public class ClientUDP {
     static Data dataclass;
@@ -18,7 +19,7 @@ public class ClientUDP {
         dataclass = new Data ();
     }
 
-    public void testCon() {
+    public void testCon(String msg) {
         try {
             byte[] requestBytes = new byte[2048];
             byte[] ReceiveBytes = new byte[2048];
@@ -35,14 +36,14 @@ public class ClientUDP {
             }
             // Request
             requestPacket.setPort(5063);
-            requestPacket.setAddress(InetAddress.getByName (dataclass.Server));
-            requestPacket.setData ("Request for location!".getBytes ());
+            requestPacket.setAddress(InetAddress.getByName (Data.Server));
+            requestPacket.setData ((msg + "!").getBytes ());
 
             long startTime = System.currentTimeMillis();
             client.send(requestPacket);
             long delay = System.currentTimeMillis() - startTime;
 
-            dataclass.setDelay (delay);
+            Data.setDelay (delay);
 
             // Receive
 
@@ -53,20 +54,30 @@ public class ClientUDP {
 
 //            float[] inData = (float []) objectStream.readObject();
 
-            Map<String, int[]> playerLocation = (Map<String, int[]>) objectStream.readObject();
+            switch (msg){
+                case "location!":
+                    Map<String, int[]> playerLocation = (Map<String, int[]>) objectStream.readObject();
 
-            System.out.println ("receive111" + playerLocation);
+                    System.out.println ("receive111" + playerLocation);
 
-            for(String a : playerLocation.keySet ()){
-                System.out.println ("int111 "+ playerLocation.get (a)[1]);
+                    for(String a : playerLocation.keySet ()){
+                        System.out.println ("int111 "+ playerLocation.get (a)[1]);
+                    }
+                    Data.playerLocation = playerLocation;
+                    System.out.println(Data.playerLocation + " RECEIVING");
+                    break;
+                case "ask_room!":
+                    Data.roomListStr = (Vector<String>) objectStream.readObject ();
+                    System.out.println ("ASK111" + Data.roomListStr.toString ());
+                    break;
+
             }
+
 
             objectStream.close();
             byteArraySteam.close();
 
-            dataclass.playerLocation = playerLocation;
 
-            System.out.println(dataclass.playerLocation + " RECEIVING");
 
             client.close();
         } catch (IOException e) {

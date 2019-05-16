@@ -15,8 +15,8 @@ public class RunnableTCP implements Runnable {
         threadName = name;
         System.out.println("Creating " +  threadName );
         dataclass = new Data ();
-        String serverName = dataclass.Server;
-        int port = dataclass.port;
+        String serverName = Data.Server;
+        int port = Data.port;
         client = new Client(serverName, port);
     }
     public void run() {

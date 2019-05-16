@@ -2,7 +2,9 @@ package com.example.DAWN;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Vector;
 
 public class Data {
     public static String LOCALIP;
@@ -11,9 +13,10 @@ public class Data {
     public static int port;
     public static int[] location;
     public static Map<String, int[]> playerLocation;
+    public static Vector<String> roomListStr;
     public Data(){
     }
-    public void setValue() throws IOException {
+    public void setValue() {
         LOCALIP = "/0.0.0.0"; //TODO
         delay = 0L;
 //        Server = "39.105.27.108";
