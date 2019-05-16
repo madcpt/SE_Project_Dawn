@@ -1,4 +1,5 @@
 package com.example.DAWN;
+import android.accounts.Account;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,10 @@ import java.io.IOException;
 public class RoomPage extends AppCompatActivity {
     static int count=0;
     Room room;
+    Player player=new Player();
+
+
+
     //含有room.id用来区别room;
     Button roomSelectRole;
     Button roomPrepare;
@@ -56,7 +61,11 @@ public class RoomPage extends AppCompatActivity {
         startgame.setOnClickListener(RoomListener);
 
         roomconfirm=findViewById(R.id.Confirmchoice);
-        startgame.setOnClickListener(RoomListener);
+        roomconfirm.setOnClickListener(RoomListener);
+
+        String Account=getIntent().getStringExtra("Account");
+        System.out.println("Account is"+Account);
+        player.setAccount(Account);
 
     }
 
@@ -70,10 +79,10 @@ public class RoomPage extends AppCompatActivity {
                     boolean flagprepare=true;
 
                     //向服务器传递flag,id
-                    new AsyncConTCP ().execute ("init");
+                    new AsyncConTCP ().execute ("init," + player.Account);
 
                     //PrepareSequence=第几个好的，从服务器接受
-                    int prepareCount=2;
+                    int prepareCount=4;
                     ImageView prepareImage1=findViewById(R.id.Role1);
                     ImageView prepareImage2=findViewById(R.id.Role2);
                     ImageView prepareImage3=findViewById(R.id.Role3);
@@ -98,7 +107,12 @@ public class RoomPage extends AppCompatActivity {
                             prepareImage4.setImageResource(R.drawable.prepare);
                             break;
                     }
-
+                    if (prepareCount==4) {
+                        Intent intent = new Intent(RoomPage.this, MainActivity.class);
+                        System.out.println("GameStart");
+                        startActivity(intent);
+                        finish();
+                    }
 
 
 
@@ -119,13 +133,13 @@ public class RoomPage extends AppCompatActivity {
                             //角色
 
                     }
+                    player.setRoleType(count);
                     count+=1;
                     break;
 
                 case R.id.Confirmchoice:
                     //向服务器提交RoleID,更新界面，并且停止更改
                     System.out.println("SelectConfirm");
-
                     roomPrepare.setClickable(false);
                     roomSelectRole.setClickable(false);
                     break;
@@ -136,8 +150,6 @@ public class RoomPage extends AppCompatActivity {
                     System.out.println("GameStart");
                     startActivity(intent);
                     finish();
-
-
             }
         }
     };
