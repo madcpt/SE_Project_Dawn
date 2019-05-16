@@ -56,23 +56,6 @@
         app:rockerScale="0.5"
         app:rockerSpeedLevel="10" />
 
-    <ImageView
-        android:id="@+id/Myrole"
-        android:layout_width="120px"
-        android:layout_height="120px"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="288dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="363dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.499"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/r_0_3_0" />
-
     <Button
         android:id="@+id/Abutton"
         android:layout_width="60dp"
