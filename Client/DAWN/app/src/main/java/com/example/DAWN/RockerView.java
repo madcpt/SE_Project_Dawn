@@ -288,7 +288,6 @@ public class RockerView extends View {
             case MotionEvent.ACTION_CANCEL:// 移出区域
                 // 回调 结束
                 callBackFinish();
-                mOnAngleChangeListener.angle(-1);
                 if (mOnShakeListener != null) {
                     mOnShakeListener.direction(Direction.DIRECTION_CENTER);
                 }
