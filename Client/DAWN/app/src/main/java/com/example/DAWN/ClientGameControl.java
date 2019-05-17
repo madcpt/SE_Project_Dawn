@@ -347,6 +347,7 @@ public class ClientGameControl extends AppCompatActivity {
                         t.start();
                         break;
                     case MotionEvent.ACTION_UP:
+                        StopAttack();
                         break;
                 }
                 return true;
@@ -366,6 +367,9 @@ public class ClientGameControl extends AppCompatActivity {
 
 
 //    实现攻击
+    public void StopAttack(){
+        new AsyncConTCP().execute("atk_stp");
+    }
     public void Attack(){
         new AsyncConTCP ().execute ("attack,100,0");
     }

@@ -61,7 +61,9 @@ public class serverForMultiClientTCP extends ServerSocket {
                     case "attack":
                         Data.Attack(pureIP, myList.get(2));
                         break;
-                    case "atk_stp":break;
+                    case "atk_stp":
+                        Data.att_stop(pureIP);
+                        break;
                     case "init" :
                         serverGameControl.addPlayer(pureIP,Integer.parseInt(myList.get(2)),pureIP);
                         break;

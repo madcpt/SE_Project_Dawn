@@ -283,5 +283,10 @@ public class Data {
         tmpLoc[5]=-1;
         playerLocation.put(pureIP,tmpLoc);
     }
-    
+
+    public static void att_stop(String pureIP){
+        int[] tmpLoc = playerLocation.get(pureIP);
+        tmpLoc[6]=-1;
+        playerLocation.put(pureIP,tmpLoc);
+    }
 }
