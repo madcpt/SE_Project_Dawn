@@ -57,32 +57,16 @@ public class ClientGameControl extends AppCompatActivity {
             R1.start(meg[0]);
             return null;
         }
-
-//        @Override
-//        protected void onProgressUpdate(String... values) { super.onProgressUpdate (values);}
-//
-//        @Override
-//        protected void onPostExecute(Void aVoid) {
-//            super.onPostExecute (aVoid);
-//        }
     }
 
     // AsyncTask for UDP-Client
-    private class AsyncConUDP extends AsyncTask<Void, Void, Void> {
+    public static class AsyncConUDP extends AsyncTask<String, Void, Void> {
         @Override
-        protected Void doInBackground(Void... voids) {
+        protected Void doInBackground(String... msg) {
             RunnableUDP R1 = new RunnableUDP ("Thread-UDP");
-            R1.start ();
+            R1.start (msg[0]);
             return null;
         }
-
-//        @Override
-//        protected void onProgressUpdate(String... values) { super.onProgressUpdate (values);        }
-//
-//        @Override
-//        protected void onPostExecute(Void aVoid) {
-//            super.onPostExecute (aVoid);
-//        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -435,7 +419,7 @@ public class ClientGameControl extends AppCompatActivity {
 
         while(Data.playerLocation == null){
             System.out.println ("get111");
-            new AsyncConUDP ().execute ();
+            new AsyncConUDP ().execute ("location");
             TimeUnit.SECONDS.sleep(1);
         }
 
@@ -481,7 +465,7 @@ public class ClientGameControl extends AppCompatActivity {
     private Runnable runnableUDP = new Runnable() {
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         public void run() {
-            new AsyncConUDP ().execute ();
+            new AsyncConUDP ().execute ("location");
             System.out.println (Data.playerLocation + "PLAYER111");
             if (Data.playerLocation != null && Data.playerLocation.containsKey (Data.LOCALIP)) {
                 System.out.println (location[0] + "," + location[1] + "LOCATION111");

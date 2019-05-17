@@ -1,6 +1,7 @@
 package com.example.DAWN;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +12,13 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.DAWN.DialogManagement.RunnableTCP;
+import com.example.DAWN.DialogManagement.RunnableUDP;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Vector;
+import java.util.concurrent.TimeUnit;
 
 import static android.widget.Toast.makeText;
 
@@ -21,11 +28,43 @@ public class CreateRoom extends AppCompatActivity {
     Button bJoinRoom;
     EditText eRoomContain;
     EditText eRoomID;
-    String[] IDlist;
+    Vector<String> IDlist;
     //ArrayList IDlist=new ArrayList();
+
+    //AsyncTask for TCP-client.
+    static class AsyncConTCP extends AsyncTask<String ,Void, Void> {
+        @Override
+        protected Void doInBackground(String... meg) {
+            RunnableTCP R1 = new RunnableTCP( "Thread-Create-Room");
+            R1.start(meg[0]);
+            return null;
+        }
+    }
+
+    // AsyncTask for UDP-Client
+    private class AsyncConUDP extends AsyncTask<String, Void, Void> {
+        @Override
+        protected Void doInBackground(String... meg) {
+            RunnableUDP R1 = new RunnableUDP ("Thread-UDP");
+            R1.start (meg[0]);
+            return null;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        while(Data.roomListStr == null){
+            System.out.println ("room111");
+            new ClientGameControl.AsyncConUDP ().execute ("ask_room!");
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace ();
+            }
+            break;
+        }
+        System.out.println ("room111" + Data.roomListStr.toString ());
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_room);
         //找到相应控件
@@ -51,7 +90,8 @@ public class CreateRoom extends AppCompatActivity {
 
             }
         });*/
-
+        System.out.println ("ID111 ");
+        System.out.println ("ID111 " + IDlist.toString ());
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, android.R.id.text1, IDlist);
         sRoomSpinner.setAdapter(adapter);
         //让第一个数据项已经被选中
@@ -115,7 +155,11 @@ public class CreateRoom extends AppCompatActivity {
     //@xzh
     public void GetServerRoomID()
     {
-        IDlist = new String[]{"Choose","111","123","253"};
+        IDlist = new Vector<> ();
+//        IDlist.add ("Choose");
+        for (String ID: Data.roomListStr){
+            IDlist.add (ID);
+        }
         ArrayAdapter<String> adapter=new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, IDlist);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sRoomSpinner.setAdapter(adapter);
@@ -148,6 +192,7 @@ public class CreateRoom extends AppCompatActivity {
             Intent intent=new Intent(CreateRoom.this,RoomPage.class);
             intent.putExtra("Account",Account);
             startActivity(intent);
+            new AsyncConTCP ().execute ("new_room," + strtmp2 + "," + strtmp1);
         };
 
        // return true;

@@ -12,10 +12,12 @@ public class Data {
     public int direction;
     public MapClass WholeMap;
     public Random rand;
+    public static RoomPool roomList;
 
     Data() {
         WholeMap = new MapClass();
         rand=new Random();
+        roomList = new RoomPool();
     }
 
     public static void moveDegree(String pureIP, String degree, int velocity) {
@@ -59,6 +61,7 @@ public class Data {
         port = 66;
         playerLocation = new HashMap<>();
         direction = 0;
+        roomList = new RoomPool();
     }
 
     public void addPlayer(String pureIP, int[] lt) {
@@ -182,11 +185,11 @@ public class Data {
         }
     }
 
-    public Map<String, int[]> getUpdateList() {
+    public static Map<String, int[]> getUpdateList() {
         return playerLocation;
     }
 
-    public void mov_stop(String pureIP) {
+    public static void mov_stop(String pureIP) {
         int[] tmpLoc = playerLocation.get(pureIP);
         tmpLoc[5]=0;
         playerLocation.put(pureIP,tmpLoc);

@@ -12,6 +12,7 @@ public class Test {
         int []a = livingrole.get(0);
         a[0] = 2;
         System.out.println(Arrays.toString(livingrole.get(0)));
+        System.out.println("aa".getBytes());
 
 //        int degrees = 45;
 //        double radians = Math.toRadians(45);
