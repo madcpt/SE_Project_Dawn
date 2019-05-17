@@ -38,8 +38,7 @@ public class Login extends Activity {                 //登录界面活动
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Data dataclass = new Data ();
-        dataclass.setValue ();
+        Data.setValue ();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);

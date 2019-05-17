@@ -419,7 +419,7 @@ public class ClientGameControl extends AppCompatActivity {
 
         while(Data.playerLocation == null){
             System.out.println ("get111");
-            new AsyncConUDP ().execute ("location");
+            new AsyncConUDP ().execute ("location!");
             TimeUnit.SECONDS.sleep(1);
         }
 
@@ -465,7 +465,7 @@ public class ClientGameControl extends AppCompatActivity {
     private Runnable runnableUDP = new Runnable() {
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         public void run() {
-            new AsyncConUDP ().execute ("location");
+            new AsyncConUDP ().execute ("location!");
             System.out.println (Data.playerLocation + "PLAYER111");
             if (Data.playerLocation != null && Data.playerLocation.containsKey (Data.LOCALIP)) {
                 System.out.println (location[0] + "," + location[1] + "LOCATION111");

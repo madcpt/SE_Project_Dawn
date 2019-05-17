@@ -11,18 +11,18 @@ public class Data {
     public static Long delay;
     public static String Server;
     public static int port;
-    public static int[] location;
     public static Map<String, int[]> playerLocation;
     public static Vector<String> roomListStr;
+    public static Room myRoom;
+
     public Data(){
     }
-    public void setValue() {
+    public static void setValue() {
         LOCALIP = "/0.0.0.0"; //TODO
         delay = 0L;
 //        Server = "39.105.27.108";
         Server = "192.168.137.1";
         port = 66;
-        location = new int[]{0, 0};
 
     }
 
@@ -37,5 +37,9 @@ public class Data {
         if(a > delay){
             delay = a;
         }
+    }
+
+    public static void getStatus() {
+        System.out.println ("STATUS111: " + LOCALIP + Server + port);
     }
 }

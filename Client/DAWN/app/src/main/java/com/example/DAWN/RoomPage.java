@@ -1,14 +1,15 @@
 package com.example.DAWN;
-import android.accounts.Account;
+
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.DAWN.DialogManagement.RunnableTCP;
+import com.example.DAWN.DialogManagement.RunnableUDP;
 
 import java.io.IOException;
 
@@ -17,8 +18,6 @@ import java.io.IOException;
 public class RoomPage extends AppCompatActivity {
     static int count=0;
     Player player=new Player();
-
-
 
     //含有room.id用来区别room;
     Button roomSelectRole;
@@ -33,14 +32,26 @@ public class RoomPage extends AppCompatActivity {
     static class AsyncConTCP extends AsyncTask<String ,Void, Void>{
         @Override
         protected Void doInBackground(String... meg) {
-            RunnableTCP R1 = new RunnableTCP( "Thread-TCP");
+            RunnableTCP R1 = new RunnableTCP( "Thread-TCP-IN-ROOM");
             R1.sendInit (meg[0]);
+            return null;
+        }
+    }
+
+    // AsyncTask for UDP-Client
+    public static class AsyncConUDP extends AsyncTask<String, Void, Void> {
+        @Override
+        protected Void doInBackground(String... msg) {
+            RunnableUDP R1 = new RunnableUDP ("Thread-UDP-ASK-IN-ROOM");
+            R1.start (msg[0]);
             return null;
         }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Data.myRoom.getStatus ();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.room_page);
 

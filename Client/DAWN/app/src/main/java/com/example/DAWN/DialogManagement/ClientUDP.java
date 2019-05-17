@@ -1,6 +1,7 @@
 package com.example.DAWN.DialogManagement;
 
 import com.example.DAWN.Data;
+import com.example.DAWN.Room;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -53,9 +54,11 @@ public class ClientUDP {
             ObjectInputStream objectStream = new ObjectInputStream (byteArraySteam);
 
 //            float[] inData = (float []) objectStream.readObject();
-
-            switch (msg){
-                case "location!":
+            String[] meslist = msg.split ("!");
+            System.out.println (meslist);
+            switch (meslist[0]){
+                case "location":
+                    System.out.println ("receive111-Starting");
                     Map<String, int[]> playerLocation = (Map<String, int[]>) objectStream.readObject();
 
                     System.out.println ("receive111" + playerLocation);
@@ -66,9 +69,18 @@ public class ClientUDP {
                     Data.playerLocation = playerLocation;
                     System.out.println(Data.playerLocation + " RECEIVING");
                     break;
-                case "ask_room!":
-                    Data.roomListStr = (Vector<String>) objectStream.readObject ();
-                    System.out.println ("ASK111" + Data.roomListStr.toString ());
+                case "ask_room":
+                    if(Data.roomListStr == null){
+                        Data.roomListStr = (Vector<String>) objectStream.readObject ();
+                        System.out.println ("ASK111" + Data.roomListStr.toString ());
+                    }
+                    break;
+                case "room_info":
+                    Vector<String> memberList = (Vector<String>) objectStream.readObject ();
+                    if(Data.myRoom == null) {
+                        Data.myRoom = new Room (meslist[1], memberList);
+                        System.out.println ("ROOM111" + memberList);
+                    }
                     break;
 
             }
