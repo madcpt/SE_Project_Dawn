@@ -362,7 +362,7 @@ public class ClientGameControl extends AppCompatActivity {
             }
         });
 
-        handler.postDelayed(runnable, 1000);//等1s后开始刷新显示
+
         handlerUDP.postDelayed(runnableUDP, 1000);//等1s后开始刷新位置UDP
         handlerInfo.postDelayed(runnableInfo, 1000);//等1s后开始刷新位置UDP
 
@@ -485,17 +485,6 @@ public class ClientGameControl extends AppCompatActivity {
 //        }
     };
 
-    //界面刷新fs
-    private Handler handler = new Handler();
-    private Runnable runnable = new Runnable() {
-        public void run() {
-            this.update();
-            handler.postDelayed(this, 20);// 刷新间隔(ms)
-        }
-        void update() {
-            testtxt.setText(Arrays.toString(location));
-        }
-    };
 
     //信息刷新fs
     private Handler handlerInfo = new Handler();
@@ -503,13 +492,14 @@ public class ClientGameControl extends AppCompatActivity {
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         public void run() {
             this.update();
-            handler.postDelayed(this, 20);// 刷新间隔(ms)
+            handlerInfo.postDelayed(this, 20);// 刷新间隔(ms)
         }
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         void update() {
             Role_simple r;
             for (int i=0;i<map.livingrole.size();i++) {
                 r = map.livingrole.get(i);
+                testtxt.setText(Arrays.toString(Objects.requireNonNull (Data.playerLocation.get (r.name))));
                 r.lifevalue = Objects.requireNonNull (Data.playerLocation.get (r.name))[1];
                 r.location[0] = Objects.requireNonNull (Data.playerLocation.get (r.name))[2];
                 r.location[1] = Objects.requireNonNull (Data.playerLocation.get (r.name))[3];
@@ -624,7 +614,7 @@ public class ClientGameControl extends AppCompatActivity {
     }
     //析构
     protected void onDestroy() {
-        handler.removeCallbacks(runnable);
+        handlerInfo.removeCallbacks(runnableUDP);
         super.onDestroy();
     }
 }
