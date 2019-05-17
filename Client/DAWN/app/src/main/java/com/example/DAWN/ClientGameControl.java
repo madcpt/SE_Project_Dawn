@@ -413,8 +413,7 @@ public class ClientGameControl extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void MapInit() throws InterruptedException {
         //发送请求并将服务器传递过来的所有数据转化为Map对象
-        //失败请return false
-        //仅供测试
+
         map=new Map();
 
         while(Data.playerLocation == null){
@@ -422,15 +421,19 @@ public class ClientGameControl extends AppCompatActivity {
             new AsyncConUDP ().execute ("location!");
             TimeUnit.SECONDS.sleep(1);
         }
-
+        //要存的东西 ：ID life location[0] location[1] direction walk_mov attack_mov
         for (String playerIP : Data.playerLocation.keySet ()){
             System.out.println (playerIP);
-            Role_simple test_r1=new Role_simple((Objects.requireNonNull (Data.playerLocation.get (playerIP)))[0], playerIP);
-            test_r1.location[0] =  Objects.requireNonNull (Data.playerLocation.get (playerIP))[2];
-            test_r1.location[1] =  Objects.requireNonNull (Data.playerLocation.get (playerIP))[3];
-            test_r1.direction = Objects.requireNonNull (Data.playerLocation.get (playerIP))[4];
-            test_r1.walk_mov = Objects.requireNonNull (Data.playerLocation.get (playerIP))[5];
-            test_r1.attack_mov = Objects.requireNonNull (Data.playerLocation.get (playerIP))[6];
+
+            int[] rcv=Objects.requireNonNull (Data.playerLocation.get (playerIP));
+            Role_simple test_r1=new Role_simple(rcv[0], playerIP);
+            test_r1.location[0] =  rcv[2];
+            test_r1.location[1] =  rcv[3];
+            test_r1.lifevalue = rcv[1];
+            test_r1.direction = rcv[4];
+            test_r1.walk_mov = rcv[5];
+            test_r1.attack_mov = rcv[6];
+
             map.livingrole.add(test_r1);
         }
 
@@ -468,6 +471,7 @@ public class ClientGameControl extends AppCompatActivity {
             new AsyncConUDP ().execute ("location!");
             System.out.println (Data.playerLocation + "PLAYER111");
             if (Data.playerLocation != null && Data.playerLocation.containsKey (Data.LOCALIP)) {
+
                 System.out.println (location[0] + "," + location[1] + "LOCATION111");
                 location[0] = Objects.requireNonNull (Data.playerLocation.get (Data.LOCALIP))[2];
                 location[1] = Objects.requireNonNull (Data.playerLocation.get (Data.LOCALIP))[3];
@@ -506,8 +510,12 @@ public class ClientGameControl extends AppCompatActivity {
             Role_simple r;
             for (int i=0;i<map.livingrole.size();i++) {
                 r = map.livingrole.get(i);
+                r.lifevalue = Objects.requireNonNull (Data.playerLocation.get (r.name))[1];
                 r.location[0] = Objects.requireNonNull (Data.playerLocation.get (r.name))[2];
                 r.location[1] = Objects.requireNonNull (Data.playerLocation.get (r.name))[3];
+                r.direction = Objects.requireNonNull (Data.playerLocation.get (r.name))[4];
+                r.walk_mov = Objects.requireNonNull (Data.playerLocation.get (r.name))[5];
+                r.attack_mov = Objects.requireNonNull (Data.playerLocation.get (r.name))[6];
                 System.out.println ("OTHER111 " + map.livingrole.size () + Arrays.toString (r.location));
                 System.out.println (Arrays.toString (Data.playerLocation.get (r.name)));
             }
