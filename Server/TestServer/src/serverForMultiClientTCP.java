@@ -64,12 +64,16 @@ public class serverForMultiClientTCP extends ServerSocket {
                         serverGameControl.addPlayer(pureIP,Integer.parseInt(myList.get(2)),pureIP);
                         break;
                     case "new_room":
-                        Data.roomList.createRoom(myList.get(2), Integer.parseInt(myList.get(3)));
+                        Data.roomList.createRoom(pureIP, myList.get(2), Integer.parseInt(myList.get(3)));
+                        break;
+                    case "chos_r":
+                        Data.roomList.joinRoom(pureIP, myList.get(2));
+                        Data.roomList.disPlayAllRoom();
                         break;
 
                 }
 
-                System.out.println(Arrays.toString(Data.getUpdateList().get(pureIP)));
+//                System.out.println(Arrays.toString(Data.getUpdateList().get(pureIP)));
 
                 client.close();
             }catch (IOException e) {

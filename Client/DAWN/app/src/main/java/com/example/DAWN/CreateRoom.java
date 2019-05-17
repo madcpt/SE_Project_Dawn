@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.DAWN.DialogManagement.RunnableTCP;
 import com.example.DAWN.DialogManagement.RunnableUDP;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Vector;
@@ -29,6 +30,7 @@ public class CreateRoom extends AppCompatActivity {
     EditText eRoomContain;
     EditText eRoomID;
     Vector<String> IDlist;
+    private String chooseRoomID;
     //ArrayList IDlist=new ArrayList();
 
     //AsyncTask for TCP-client.
@@ -42,20 +44,23 @@ public class CreateRoom extends AppCompatActivity {
     }
 
     // AsyncTask for UDP-Client
-    private class AsyncConUDP extends AsyncTask<String, Void, Void> {
+    static class AsyncConUDP extends AsyncTask<String, Void, Void> {
         @Override
-        protected Void doInBackground(String... meg) {
-            RunnableUDP R1 = new RunnableUDP ("Thread-UDP");
-            R1.start (meg[0]);
+        protected Void doInBackground(String... msg) {
+            RunnableUDP R1 = new RunnableUDP ("Thread-UDP-CREATE-ROOM");
+            R1.start (msg[0]);
             return null;
         }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.out.println ((Data.roomListStr == null) + "TRUE111");
+        Data.getStatus();
+
         while(Data.roomListStr == null){
             System.out.println ("room111");
-            new ClientGameControl.AsyncConUDP ().execute ("ask_room!");
+            new AsyncConUDP ().execute ("ask_room!");
             try {
                 TimeUnit.SECONDS.sleep(1);
             } catch (InterruptedException e) {
@@ -113,8 +118,8 @@ public class CreateRoom extends AppCompatActivity {
                 //System.out.println(view);
                 //String data = adapter.getItem(position);//从适配器中获取被选择的数据项
                 //String data = list.get(position);//从集合中获取被选择的数据项
-                String data = (String)sRoomSpinner.getItemAtPosition(position);//从spinner中获取被选择的数据
-                Toast.makeText(CreateRoom.this, data, Toast.LENGTH_SHORT).show();
+                chooseRoomID = (String)sRoomSpinner.getItemAtPosition(position);//从spinner中获取被选择的数据
+                Toast.makeText(CreateRoom.this, chooseRoomID, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -138,10 +143,18 @@ public class CreateRoom extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.CreateRoom:
-                    fCreateRoom();
+                    try {
+                        fCreateRoom();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace ();
+                    }
                     break;
                 case R.id.JoinRoom:
-                    //Check and JoinRoom()
+                    try {
+                        JoinRoom();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace ();
+                    }
                     break;
            /*     case R.id.RoomList:
                     //
@@ -152,6 +165,20 @@ public class CreateRoom extends AppCompatActivity {
 
         }
     };
+
+    private void JoinRoom() throws InterruptedException {
+        new AsyncConTCP ().execute ("chos_r," + chooseRoomID);
+        while(Data.myRoom == null){
+            TimeUnit.MILLISECONDS.sleep (500);
+            new RoomPage.AsyncConUDP ().execute ("room_info!" + chooseRoomID + "!");
+        }
+
+        String Account=getIntent().getStringExtra("Account");
+        Intent intent=new Intent(CreateRoom.this,RoomPage.class);
+        intent.putExtra("Account",Account);
+        startActivity(intent);
+    }
+
     //@xzh
     public void GetServerRoomID()
     {
@@ -165,14 +192,8 @@ public class CreateRoom extends AppCompatActivity {
         sRoomSpinner.setAdapter(adapter);
     }
 
-    public void  InitialData()
-    {
 
-    }
-
-
-    public int fCreateRoom()
-    {
+    public int fCreateRoom() throws InterruptedException {
         //获取roomcontain 和 roomID
         String Account=getIntent().getStringExtra("Account");
         System.out.println("Account is"+Account);
@@ -184,7 +205,6 @@ public class CreateRoom extends AppCompatActivity {
             return 0;
         }
 
-
         int roomContain = Integer.parseInt(strtmp1);
         int roomID = Integer.parseInt(strtmp2);
         if (IsRoomInfoValid(roomContain,roomID))
@@ -193,12 +213,18 @@ public class CreateRoom extends AppCompatActivity {
             intent.putExtra("Account",Account);
             startActivity(intent);
             new AsyncConTCP ().execute ("new_room," + strtmp2 + "," + strtmp1);
-        };
+        }
+        TimeUnit.MILLISECONDS.sleep (500);
+//        new AsyncConTCP ().execute ("chos_r," + strtmp2);
+        while(Data.myRoom == null){
+            new RoomPage.AsyncConUDP ().execute ("room_info!" + strtmp2 + "!");
+            TimeUnit.SECONDS.sleep (1);
+        }
 
        // return true;
         return 1;
-
     }
+
     public boolean IsRoomInfoValid(int rc,int ID)
     {
         System.out.println("RoomContain");
