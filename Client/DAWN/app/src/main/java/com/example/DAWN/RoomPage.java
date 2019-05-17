@@ -12,6 +12,7 @@ import com.example.DAWN.DialogManagement.RunnableTCP;
 import com.example.DAWN.DialogManagement.RunnableUDP;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 
 //简陋版
@@ -50,7 +51,15 @@ public class RoomPage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Data.myRoom.getStatus ();
+//        Data.myRoom.getStatus ();
+        while(Data.myRoom == null){
+            new RoomPage.AsyncConUDP ().execute ("room_info!" + Data.myRoomID + "!");
+            try {
+                TimeUnit.SECONDS.sleep (1);
+            } catch (InterruptedException e) {
+                e.printStackTrace ();
+            }
+        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.room_page);
