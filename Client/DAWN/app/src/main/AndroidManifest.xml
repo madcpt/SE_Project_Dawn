@@ -12,24 +12,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.FullScreen">
-        <activity android:name=".CreateRoom"
-            android:screenOrientation="landscape" >
-
-
-        </activity>
+        <activity
+            android:name=".ShowResult"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_show_result"
+            android:screenOrientation="landscape"
+            android:theme="@style/FullscreenTheme"></activity>
+        <activity
+            android:name=".CreateRoom"
+            android:screenOrientation="landscape"></activity>
         <activity android:name=".test" /> <!-- <activity android:name=".Room"></activity> -->
         <activity
             android:name=".RoomPage"
             android:screenOrientation="landscape" /> <!-- <activity android:name=".DataBase" /> -->
-        <activity android:name=".Register"
-            android:screenOrientation="landscape"/> <!-- <activity android:name=".User" /> -->
-        <activity android:name=".Login"
+        <activity
+            android:name=".Register"
+            android:screenOrientation="landscape" /> <!-- <activity android:name=".User" /> -->
+        <activity
+            android:name=".Login"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".MainActivity"

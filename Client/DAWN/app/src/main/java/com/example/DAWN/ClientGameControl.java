@@ -362,7 +362,7 @@ public class ClientGameControl extends AppCompatActivity {
             }
         });
 
-        handler.postDelayed(runnable, 1000);//等1s后开始刷新显示
+
         handlerUDP.postDelayed(runnableUDP, 1000);//等1s后开始刷新位置UDP
         handlerInfo.postDelayed(runnableInfo, 1000);//等1s后开始刷新位置UDP
 
@@ -480,17 +480,6 @@ public class ClientGameControl extends AppCompatActivity {
 //        }
     };
 
-    //界面刷新fs
-    private Handler handler = new Handler();
-    private Runnable runnable = new Runnable() {
-        public void run() {
-            this.update();
-            handler.postDelayed(this, 20);// 刷新间隔(ms)
-        }
-        void update() {
-            testtxt.setText(Arrays.toString(location));
-        }
-    };
 
     //信息刷新fs
     private Handler handlerInfo = new Handler();
@@ -498,13 +487,18 @@ public class ClientGameControl extends AppCompatActivity {
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         public void run() {
             this.update();
-            handler.postDelayed(this, 20);// 刷新间隔(ms)
+            handlerInfo.postDelayed(this, 20);// 刷新间隔(ms)
         }
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         void update() {
             Role_simple r;
             for (int i=0;i<map.livingrole.size();i++) {
                 r = map.livingrole.get(i);
+
+                testtxt.setText(Arrays.toString(Objects.requireNonNull (Data.playerLocation.get (r.name))));
+                r.lifevalue = Objects.requireNonNull (Data.playerLocation.get (r.name))[1];
+//                check_alive(r);
+
                 r.location[0] = Objects.requireNonNull (Data.playerLocation.get (r.name))[2];
                 r.location[1] = Objects.requireNonNull (Data.playerLocation.get (r.name))[3];
                 r.direction = Objects.requireNonNull (Data.playerLocation.get (r.name))[4];
@@ -570,10 +564,6 @@ public class ClientGameControl extends AppCompatActivity {
 
                         for (int i=0;i<map.livingrole.size();i++) {
                             r = map.livingrole.get(i);
-//                            r.location[0] = Objects.requireNonNull (Data.playerLocation.get (r.name))[2];
-//                            r.location[1] = Objects.requireNonNull (Data.playerLocation.get (r.name))[3];
-//                            System.out.println ("OTHER111 " + map.livingrole.size () + Arrays.toString (r.location));
-//                            System.out.println (Arrays.toString (Data.playerLocation.get (r.name)));
                             if (Math.abs(r.location[0] - location[0]) > vision * 20 || Math.abs(r.location[1] - location[1]) > vision * 20) {
                                 continue;
                             }
@@ -581,7 +571,7 @@ public class ClientGameControl extends AppCompatActivity {
                                 c.drawBitmap (role_pic[r.id % 100][r.direction][0], center_location[0] - location[0] + r.location[0], center_location[1] - location[1] + r.location[1], p);
                             } else{
                                 c.drawBitmap(role_pic[r.id%100][r.direction][r.walk_mov/5],center_location[0] - location[0]+r.location[0],center_location[1] - location[1]+r.location[1],p);
-                                r.walk_mov=(r.walk_mov+1)%10;//每个动作循环的帧数
+                                r.walk_mov=(r.walk_mov+1)%15;//每个动作循环的帧数
                             }
                         }
                         //画黑雾
@@ -616,8 +606,14 @@ public class ClientGameControl extends AppCompatActivity {
         }
     }
     //析构
+//    void check_alive(Role_simple r){
+//        if (r.id==myrole.id){
+//
+//        }
+//    }
+
     protected void onDestroy() {
-        handler.removeCallbacks(runnable);
+        handlerInfo.removeCallbacks(runnableUDP);
         super.onDestroy();
     }
 }
