@@ -332,30 +332,20 @@ public class ClientGameControl extends AppCompatActivity {
 
         Abutton= findViewById(R.id.Abutton);
         Abutton.setOnTouchListener(new View.OnTouchListener(){
-            private Boolean longclicked=false;
             @Override
             public boolean onTouch(View view, MotionEvent event) {
                 // TODO Auto-generated method stub
                 switch (event.getAction()){
                     case MotionEvent.ACTION_DOWN:
-                        longclicked=true;
                         Thread t = new Thread(){
                             public void run(){
                                 super.run();
-                                while (longclicked){
-                                    Attack();
-                                    try{
-                                        Thread.sleep(20);
-                                    }catch(InterruptedException e){
-                                        e.printStackTrace();
-                                    }
+                                Attack();
                                 }
-                            }
                         };
                         t.start();
                         break;
                     case MotionEvent.ACTION_UP:
-                        longclicked = false;
                         break;
                 }
                 return true;
