@@ -1,7 +1,10 @@
+import javafx.print.PageLayout;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Vector;
+
 
 public class Test {
     public static Vector<int[]> livingrole;

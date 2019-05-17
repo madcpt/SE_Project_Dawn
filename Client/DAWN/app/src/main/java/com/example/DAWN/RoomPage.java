@@ -13,6 +13,7 @@ import com.example.DAWN.DialogManagement.RunnableTCP;
 import com.example.DAWN.DialogManagement.RunnableUDP;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 
 //简陋版
@@ -55,13 +56,21 @@ public class RoomPage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Data.myRoom.getStatus ();
+//        Data.myRoom.getStatus ();
+        while(Data.myRoom == null){
+            new RoomPage.AsyncConUDP ().execute ("room_info!" + Data.myRoomID + "!");
+            try {
+                TimeUnit.SECONDS.sleep (1);
+            } catch (InterruptedException e) {
+                e.printStackTrace ();
+            }
+        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.room_page);
 
         ImageView image=findViewById(R.id.RoleView);
-        image.setImageResource(R.drawable.r_0_0_0);
+        image.setImageResource(R.drawable.r_0_2_0);
         //通过id找到相应的控件 并且设置监听
 
         roomPrepare=findViewById(R.id.Prepare);
@@ -146,10 +155,10 @@ public class RoomPage extends AppCompatActivity {
                     ImageView image=findViewById(R.id.RoleView);
                     switch(count%2) {
                         case 0:
-                            image.setImageResource(R.drawable.r_0_1_0);
+                            image.setImageResource(R.drawable.r_0_0_0);
                             break;
                         case 1:
-                            image.setImageResource(R.drawable.r_0_0_0);
+                            image.setImageResource(R.drawable.r_0_2_0);
                             break;
                             //角色
 
