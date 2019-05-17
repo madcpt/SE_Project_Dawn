@@ -52,6 +52,11 @@ public class serverForMultiClientUDP implements Runnable{
                     objectStream.writeObject(Data.getUpdateList());
                     break;
                 case "room_info":
+                    System.out.println(inputMes.length);
+                    if(inputMes[1] == "null") {
+                        System.out.println("room_info: null");
+                        break;
+                    }
                     objectStream.writeObject(Data.roomList.RoomList.get(inputMes[1]).memberList);
                     break;
                 default:

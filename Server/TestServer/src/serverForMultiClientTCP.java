@@ -1,6 +1,7 @@
-import java.awt.dnd.DropTarget;
-import java.io.*;
-import java.net.*;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -66,17 +67,23 @@ public class serverForMultiClientTCP extends ServerSocket {
                         serverGameControl.addPlayer(pureIP,Integer.parseInt(myList.get(2)),pureIP);
                         break;
                     case "new_room":
+                        if(myList.get(2) == "null" || myList.get(3) == "null"){
+                            System.out.println("null pointer1111");
+                            break;
+                        }
                         Data.roomList.createRoom(pureIP, myList.get(2), Integer.parseInt(myList.get(3)));
                         break;
                     case "chos_r":
+                        if(myList.get(2) == "null") {
+                            System.out.println("null pointer1112");
+                            break;
+                        }
                         Data.roomList.joinRoom(pureIP, myList.get(2));
                         Data.roomList.disPlayAllRoom();
                         break;
 
                 }
-
 //                System.out.println(Arrays.toString(Data.getUpdateList().get(pureIP)));
-
                 client.close();
             }catch (IOException e) {
                 e.printStackTrace();

@@ -21,8 +21,8 @@ public class Data {
     public static void setValue() {
         LOCALIP = "/0.0.0.0"; //TODO
         delay = 0L;
-//        Server = "39.105.27.108";
-        Server = "192.168.137.1";
+        Server = "39.105.27.108";
+//        Server = "192.168.137.1";
         port = 66;
 
     }

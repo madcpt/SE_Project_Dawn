@@ -52,6 +52,11 @@ public class RoomPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 //        Data.myRoom.getStatus ();
+        try {
+            TimeUnit.MILLISECONDS.sleep (500);
+        } catch (InterruptedException e) {
+            e.printStackTrace ();
+        }
         while(Data.myRoom == null){
             new RoomPage.AsyncConUDP ().execute ("room_info!" + Data.myRoomID + "!");
             try {

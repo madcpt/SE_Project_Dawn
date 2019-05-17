@@ -1,26 +1,52 @@
-import javafx.print.PageLayout;
+import sun.rmi.runtime.Log;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Vector;
-
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Test {
-    public static Vector<int[]> livingrole;
-    public static void main(String args[]) {
-        livingrole = new Vector<>();
-        livingrole.add(new int[]{1, 1});
-        livingrole.add(new int[]{2, 2});
-        int []a = livingrole.get(0);
-        a[0] = 2;
-        System.out.println(Arrays.toString(livingrole.get(0)));
-        System.out.println("aa".getBytes());
-
-//        int degrees = 45;
-//        double radians = Math.toRadians(45);
+    public static void main(String[] args) throws Exception {
+        System.out.print("Progress:");
+        System.out.print("\b");
+//        for (int i = 1; i <= 100; i++) {
+//            System.out.print(i + "%");
+//            Thread.sleep(100);
 //
-//        System.out.format("The value of pi is %.4f%n", Math.PI);
-//        System.out.format("The sine of %d degrees is %.4f%n", degrees, Math.sin(radians));
+//            for (int j = 0; j <= String.valueOf(i).length(); j++) {
+//                System.out.print("\b");
+//            }
+//        }
+        System.out.println();
+
+        ExecutorService executorService = Executors.newFixedThreadPool(5);
+        while (true) {
+            Runnable syncRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println(Thread.currentThread().getName());
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+            executorService.execute(syncRunnable);
+        }
+        ExecutorService executorService2 = Executors.newFixedThreadPool(5);
+        for (int i = 0; i < 200; i++) {
+            Runnable syncRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println(Thread.currentThread().getName());
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+            executorService2.execute(syncRunnable);
+        }
+
     }
 }
