@@ -76,7 +76,7 @@
         app:layout_constraintBottom_toTopOf="@+id/Role2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/r_0_0_0" />
+        app:srcCompat="@drawable/r_0_2_0" />
 
 
 
@@ -93,7 +93,7 @@
         app:layout_constraintBottom_toTopOf="@+id/Role3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Role1"
-        app:srcCompat="@drawable/r_0_1_0" />
+        app:srcCompat="@drawable/r_0_0_0" />
 
     <ImageView
         android:id="@+id/Role3"
@@ -106,7 +106,7 @@
         app:layout_constraintBottom_toTopOf="@+id/Role4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Role2"
-        app:srcCompat="@drawable/r_0_2_0" />
+        app:srcCompat="@drawable/r_0_1_0" />
 
     <ImageView
         android:id="@+id/Role4"
