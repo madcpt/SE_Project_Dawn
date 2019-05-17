@@ -2,8 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dbf502b0-2041-4d21-8f08-1ff458719218" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../../Client/DAWN/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/ShowResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/res/layout/activity_show_result.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Client/DAWN/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/DAWN/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/ClientGameControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/ClientGameControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/MyRole.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/MyRole.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/res/values/attrs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/res/values/attrs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/res/values/colors.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/res/values/styles.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
