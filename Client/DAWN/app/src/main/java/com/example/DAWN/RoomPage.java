@@ -56,7 +56,7 @@ public class RoomPage extends AppCompatActivity {
         setContentView(R.layout.room_page);
 
         ImageView image=findViewById(R.id.RoleView);
-        image.setImageResource(R.drawable.r_0_0_0);
+        image.setImageResource(R.drawable.r_0_2_0);
         //通过id找到相应的控件 并且设置监听
 
         roomPrepare=findViewById(R.id.Prepare);
@@ -132,10 +132,10 @@ public class RoomPage extends AppCompatActivity {
                     ImageView image=findViewById(R.id.RoleView);
                     switch(count%2) {
                         case 0:
-                            image.setImageResource(R.drawable.r_0_1_0);
+                            image.setImageResource(R.drawable.r_0_0_0);
                             break;
                         case 1:
-                            image.setImageResource(R.drawable.r_0_0_0);
+                            image.setImageResource(R.drawable.r_0_2_0);
                             break;
                             //角色
 

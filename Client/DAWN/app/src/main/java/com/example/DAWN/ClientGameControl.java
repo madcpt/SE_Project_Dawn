@@ -502,7 +502,10 @@ public class ClientGameControl extends AppCompatActivity {
                 r.location[0] = Objects.requireNonNull (Data.playerLocation.get (r.name))[2];
                 r.location[1] = Objects.requireNonNull (Data.playerLocation.get (r.name))[3];
                 r.direction = Objects.requireNonNull (Data.playerLocation.get (r.name))[4];
-                r.walk_mov = Objects.requireNonNull (Data.playerLocation.get (r.name))[5];
+                if (r.walk_mov*Objects.requireNonNull (Data.playerLocation.get (r.name))[5]<0)
+                {r.walk_mov = Objects.requireNonNull (Data.playerLocation.get (r.name))[5];}
+                if (r.walk_mov*Objects.requireNonNull (Data.playerLocation.get (r.name))[6]<0)
+                {r.attack_mov = Objects.requireNonNull (Data.playerLocation.get (r.name))[6];}
                 System.out.println ("OTHER111 " + map.livingrole.size () + Arrays.toString (r.location));
                 System.out.println (Arrays.toString (Data.playerLocation.get (r.name)));
             }
