@@ -431,8 +431,7 @@ public class ClientGameControl extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private Boolean MapInit() throws InterruptedException {
         //发送请求并将服务器传递过来的所有数据转化为Map对象
-        //失败请return false
-        //仅供测试
+
         map=new Map();
 
         while(Data.playerLocation == null){
@@ -440,12 +439,17 @@ public class ClientGameControl extends AppCompatActivity {
             new AsyncConUDP ().execute ();
             TimeUnit.SECONDS.sleep(1);
         }
-
+        //要存的东西 ：ID life location[0] location[1] direction walk_mov attack_mov
         for (String playerIP : Data.playerLocation.keySet ()){
             System.out.println (playerIP);
-            Role_simple test_r1=new Role_simple((Objects.requireNonNull (Data.playerLocation.get (playerIP)))[0], playerIP);
-            test_r1.location[0] =  Objects.requireNonNull (Data.playerLocation.get (playerIP))[2];
-            test_r1.location[1] =  Objects.requireNonNull (Data.playerLocation.get (playerIP))[3];
+            int[] rcv=Objects.requireNonNull (Data.playerLocation.get (playerIP));
+            Role_simple test_r1=new Role_simple(rcv[0], playerIP);
+            test_r1.location[0] =  rcv[2];
+            test_r1.location[1] =  rcv[3];
+            test_r1.lifevalue = rcv[1];
+            test_r1.direction = rcv[4];
+            test_r1.walk_mov = rcv[5];
+            test_r1.attack_mov = rcv[6];
             map.livingrole.add(test_r1);
         }
 
@@ -484,6 +488,7 @@ public class ClientGameControl extends AppCompatActivity {
             System.out.println (Data.playerLocation + "PLAYER111");
 
             if (Data.playerLocation != null && Data.playerLocation.containsKey (Data.LOCALIP)) {
+
                 System.out.println (location[0] + "," + location[1] + "LOCATION111");
                 location[0] = Objects.requireNonNull (Data.playerLocation.get (Data.LOCALIP))[2];
                 location[1] = Objects.requireNonNull (Data.playerLocation.get (Data.LOCALIP))[3];
