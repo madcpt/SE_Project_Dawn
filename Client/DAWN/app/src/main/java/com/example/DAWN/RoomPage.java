@@ -16,7 +16,6 @@ import java.io.IOException;
 //简陋版
 public class RoomPage extends AppCompatActivity {
     static int count=0;
-    Room room;
     Player player=new Player();
 
 
@@ -28,8 +27,6 @@ public class RoomPage extends AppCompatActivity {
     Button roomconfirm;
 
     public RoomPage() throws IOException {
-        Data dataclass = new Data ();
-        dataclass.setValue ();
     }
 
     //AsyncTask for TCP-client.
@@ -76,7 +73,6 @@ public class RoomPage extends AppCompatActivity {
             switch (v.getId()) {
                 case R.id.Prepare:
                     System.out.println("prepared");
-                    boolean flagprepare=true;
 
                     //向服务器传递flag,id
                     new AsyncConTCP ().execute ("init," + player.Account);

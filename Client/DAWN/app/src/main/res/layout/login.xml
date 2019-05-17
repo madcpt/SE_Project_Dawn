@@ -7,7 +7,6 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/backgroundforlogin"
     tools:context="com.example.DAWN.Login">
 
     <RelativeLayout
@@ -19,13 +18,17 @@
 
         <Button
             android:id="@+id/login_btn_register"
-            android:layout_width="fill_parent"
-            android:layout_height="60dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/login_btn_login"
-            android:layout_marginTop="47dp"
-            android:background="@drawable/r_0_3_0"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:background="@drawable/button_style"
             android:text="注册"
-            android:textColor="#ffffff"
+            android:textColor="#888888"
             android:textSize="20dp" />
         <!--在该元素的下方-->
         android:layout_alignParentLeft="true"
@@ -34,55 +37,65 @@
 
         <Button
             android:id="@+id/login_btn_login"
-            android:layout_width="fill_parent"
-            android:layout_height="60dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/login_edit_pwd"
             android:layout_alignParentStart="true"
+            android:background="@drawable/button_style"
             android:layout_alignParentLeft="true"
-            android:layout_marginTop="52dp"
-            android:background="@drawable/r_0_3_0"
+            android:layout_alignParentEnd="true"
+
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="51dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
             android:onClick="finish_login"
-            android:text="登录"
-            android:textColor="#ffffff"
+            android:text="@string/login"
+            android:textColor="#888888"
             android:textSize="20dp" />
 
         <ImageView
             android:id="@+id/logo"
-            android:layout_width="300dp"
-            android:layout_height="150dp"
+            android:layout_width="393dp"
+            android:layout_height="95dp"
             android:layout_alignWithParentIfMissing="false"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="false"
+            android:layout_marginStart="7dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="-20dp"
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
             android:background="#FFFFFF" />
 
         <EditText
-            android:layout_width="400dp"
-            android:layout_height="60dp"
-            android:inputType="textPassword"
-            android:ems="10"
             android:id="@+id/login_edit_pwd"
-            android:drawableLeft="@android:drawable/ic_lock_idle_lock"
-            android:hint="请输入您的密码"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/login_edit_account"
+            android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:drawableLeft="@android:drawable/ic_lock_idle_lock"
+            android:ems="10"
+            android:hint="请输入您的密码"
+            android:inputType="textPassword" />
 
         <EditText
-            android:layout_width="400dp"
-            android:layout_height="60dp"
-            android:inputType="textPersonName"
             android:id="@+id/login_edit_account"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_below="@+id/logo"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="20dp"
             android:drawableLeft="@android:drawable/ic_menu_myplaces"
             android:hint="请输入您的用户名"
-            android:layout_below="@+id/logo"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="20dp" />
+            android:inputType="textPersonName" />
 
         <Button
             android:id="@+id/login_btn_cancle"
@@ -98,7 +111,7 @@
             android:layout_marginTop="46dp"
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
-            android:background="@drawable/r_0_3_0"
+
             android:text="注销"
             android:textColor="#ffffff"
             android:textSize="20dp" />

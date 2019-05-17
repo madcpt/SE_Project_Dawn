@@ -21,7 +21,7 @@ public class serverForMultiClientUDP implements Runnable{
     public void run(){
         // System.out.println(new String(data.getData(),0,data.getLength()));
         try{
-            Thread.sleep(20);
+            Thread.sleep(10);
         } catch(Exception e){
             e.printStackTrace();
         }
@@ -29,22 +29,33 @@ public class serverForMultiClientUDP implements Runnable{
 
     public static void openServer()throws Exception{
         DatagramSocket server = new DatagramSocket(5063);
-        ExecutorService service = Executors.newFixedThreadPool(500);
+        ExecutorService service = Executors.newFixedThreadPool(100);
         Data dataclass = new Data();
 
         while(true){
             // Receive
             byte[] bytes = new byte[1024];
             DatagramPacket data = new DatagramPacket(bytes, bytes.length);
-            server.receive(data);
-
-            // System.out.println(new String(data.getData()));
-
-//            float[] location =  {(float) 1.2, 2};
-
             ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
             ObjectOutputStream objectStream = new ObjectOutputStream(byteArrayStream);
-            objectStream.writeObject(dataclass.getUpdateList());
+
+            server.receive(data);
+            String inputMes = new String(data.getData()).split("!")[0];
+//            System.out.println(new String(data.getData()));
+            System.out.println(inputMes);
+            switch (inputMes){
+                case "ask_room":
+                    System.out.println(Data.roomList.RoomListVec.toString());
+                    objectStream.writeObject(Data.roomList.RoomListVec);
+                    break;
+                case "location":
+                    objectStream.writeObject(Data.getUpdateList());
+                    break;
+                default:
+                    objectStream.writeObject(Data.getUpdateList());
+                    break;
+            }
+
             byte[] arr = byteArrayStream.toByteArray();
 
             data.setData(arr);
@@ -59,8 +70,8 @@ public class serverForMultiClientUDP implements Runnable{
             objectStream.close();
             byteArrayStream.close();
             // server.close();
-
             service.execute(new serverForMultiClientUDP(data));
+
         }
     }
 
