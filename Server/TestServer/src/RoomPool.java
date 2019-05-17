@@ -11,23 +11,27 @@ public class RoomPool {
         RoomListVec = new Vector<>();
         RoomListVec.add("Choose");
     }
-    public void createRoom(String RoomID, int capacity){
-        Room newRoom = new Room(RoomID, capacity);
+    public void createRoom(String pureIP, String RoomID, int capacity){
+        Room newRoom = new Room(pureIP, RoomID, capacity);
         RoomList.put(RoomID, newRoom);
         RoomListVec.add(RoomID);
         System.out.println("New Room Created.");
         disPlayAllRoom();
     }
-    private void disPlayAllRoom(){
+    public void joinRoom(String pureIP, String roomID) {
+        RoomList.get(roomID).addPlayer(pureIP);
+    }
+    public void disPlayAllRoom(){
         for(String ID : RoomList.keySet()){
-            System.out.println("RoomID: " + ID + ", " + RoomList.get(ID).numberOfMember);
+            System.out.println("RoomID: " + ID + ", ");
+            RoomList.get(ID).displayAllMember();
         }
     }
+
     public static void main(String[] args) {
         RoomPool tmp = new RoomPool();
-        tmp.createRoom("111", 2);
-        tmp.createRoom("222", 3);
+        tmp.createRoom("xzh","111", 2);
+        tmp.createRoom("xzzzz", "222", 3);
         tmp.disPlayAllRoom();
     }
-
 }

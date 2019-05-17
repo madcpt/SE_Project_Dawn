@@ -29,7 +29,7 @@ public class serverForMultiClientUDP implements Runnable{
 
     public static void openServer()throws Exception{
         DatagramSocket server = new DatagramSocket(5063);
-        ExecutorService service = Executors.newFixedThreadPool(100);
+        ExecutorService service = Executors.newFixedThreadPool(300);
         Data dataclass = new Data();
 
         while(true){
@@ -40,16 +40,19 @@ public class serverForMultiClientUDP implements Runnable{
             ObjectOutputStream objectStream = new ObjectOutputStream(byteArrayStream);
 
             server.receive(data);
-            String inputMes = new String(data.getData()).split("!")[0];
+            String [] inputMes = new String(data.getData()).split("!");
 //            System.out.println(new String(data.getData()));
-            System.out.println(inputMes);
-            switch (inputMes){
+            System.out.println(Arrays.toString(inputMes));
+            switch (inputMes[0]){
                 case "ask_room":
                     System.out.println(Data.roomList.RoomListVec.toString());
                     objectStream.writeObject(Data.roomList.RoomListVec);
                     break;
                 case "location":
                     objectStream.writeObject(Data.getUpdateList());
+                    break;
+                case "room_info":
+                    objectStream.writeObject(Data.roomList.RoomList.get(inputMes[1]).memberList);
                     break;
                 default:
                     objectStream.writeObject(Data.getUpdateList());
