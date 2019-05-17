@@ -168,11 +168,11 @@ public class CreateRoom extends AppCompatActivity {
 
     private void JoinRoom() throws InterruptedException {
         new AsyncConTCP ().execute ("chos_r," + chooseRoomID);
-        while(Data.myRoom == null){
-            TimeUnit.MILLISECONDS.sleep (500);
-            new RoomPage.AsyncConUDP ().execute ("room_info!" + chooseRoomID + "!");
-        }
-
+//        while(Data.myRoom == null){
+//            TimeUnit.MILLISECONDS.sleep (500);
+//            new RoomPage.AsyncConUDP ().execute ("room_info!" + chooseRoomID + "!");
+//        }
+        Data.myRoomID = chooseRoomID;
         String Account=getIntent().getStringExtra("Account");
         Intent intent=new Intent(CreateRoom.this,RoomPage.class);
         intent.putExtra("Account",Account);
@@ -209,17 +209,18 @@ public class CreateRoom extends AppCompatActivity {
         int roomID = Integer.parseInt(strtmp2);
         if (IsRoomInfoValid(roomContain,roomID))
         {
+            Data.myRoomID = strtmp2;
             Intent intent=new Intent(CreateRoom.this,RoomPage.class);
             intent.putExtra("Account",Account);
             startActivity(intent);
             new AsyncConTCP ().execute ("new_room," + strtmp2 + "," + strtmp1);
         }
-        TimeUnit.MILLISECONDS.sleep (500);
+//        TimeUnit.MILLISECONDS.sleep (500);
 //        new AsyncConTCP ().execute ("chos_r," + strtmp2);
-        while(Data.myRoom == null){
-            new RoomPage.AsyncConUDP ().execute ("room_info!" + strtmp2 + "!");
-            TimeUnit.SECONDS.sleep (1);
-        }
+//        while(Data.myRoom == null){
+//            new RoomPage.AsyncConUDP ().execute ("room_info!" + strtmp2 + "!");
+//            TimeUnit.SECONDS.sleep (1);
+//        }
 
        // return true;
         return 1;

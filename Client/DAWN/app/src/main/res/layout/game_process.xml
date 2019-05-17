@@ -66,7 +66,6 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:longClickable="true"
         android:rotation="0"
         android:text="Attack"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"

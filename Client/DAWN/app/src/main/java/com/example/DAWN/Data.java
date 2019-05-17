@@ -14,6 +14,7 @@ public class Data {
     public static Map<String, int[]> playerLocation;
     public static Vector<String> roomListStr;
     public static Room myRoom;
+    public static String myRoomID;
 
     public Data(){
     }

@@ -7,11 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.DAWN.DialogManagement.RunnableTCP;
 import com.example.DAWN.DialogManagement.RunnableUDP;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 
 //简陋版
@@ -24,6 +26,10 @@ public class RoomPage extends AppCompatActivity {
     Button roomPrepare;
     Button startgame;
     Button roomconfirm;
+    TextView AC1;
+    TextView AC2;
+    TextView AC3;
+    TextView AC4;
 
     public RoomPage() throws IOException {
     }
@@ -50,7 +56,15 @@ public class RoomPage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Data.myRoom.getStatus ();
+//        Data.myRoom.getStatus ();
+        while(Data.myRoom == null){
+            new RoomPage.AsyncConUDP ().execute ("room_info!" + Data.myRoomID + "!");
+            try {
+                TimeUnit.SECONDS.sleep (1);
+            } catch (InterruptedException e) {
+                e.printStackTrace ();
+            }
+        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.room_page);
@@ -73,6 +87,15 @@ public class RoomPage extends AppCompatActivity {
 
         String Account=getIntent().getStringExtra("Account");
         System.out.println("Account is"+Account);
+
+        AC1=findViewById(R.id.textView2);
+        AC2=findViewById(R.id.textView3);
+        AC3=findViewById(R.id.textView4);
+        AC4=findViewById(R.id.textView5);
+        AC1.setText("1");
+        AC2.setText("2");
+        AC3.setText("3");
+        AC4.setText("4");
         player.setAccount(Account);
 
     }
