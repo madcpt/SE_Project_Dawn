@@ -74,6 +74,7 @@ public class ClientGameControl extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_process);
 
@@ -474,11 +475,8 @@ public class ClientGameControl extends AppCompatActivity {
             } else {
                 location_tmp = new int[]{0, 0};
             }
-            handlerUDP.postDelayed (this, 50);// 刷新间隔(ms)
+            handlerUDP.postDelayed (this, 20);// 刷新间隔(ms)
         }
-//        void update() {
-//            location = dataclass.location;
-//        }
     };
 
 
@@ -596,7 +594,7 @@ public class ClientGameControl extends AppCompatActivity {
                         p.setXfermode(null);
                         c.restore();
                     }
-                    Thread.sleep(10);
+                    Thread.sleep(40);
 
                 } catch (Exception e) {
                     e.printStackTrace();

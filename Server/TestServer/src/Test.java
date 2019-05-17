@@ -17,14 +17,15 @@ public class Test {
 //        }
         System.out.println();
 
+        Boolean endofgame = false;
         ExecutorService executorService = Executors.newFixedThreadPool(5);
-        while (true) {
+        while (!endofgame) {
             Runnable syncRunnable = new Runnable() {
                 @Override
                 public void run() {
                     System.out.println(Thread.currentThread().getName());
                     try {
-                        Thread.sleep(100);
+                        Thread.sleep(1);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -39,7 +40,7 @@ public class Test {
                 public void run() {
                     System.out.println(Thread.currentThread().getName());
                     try {
-                        Thread.sleep(100);
+                        Thread.sleep(1);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
