@@ -430,13 +430,20 @@ public class ClientGameControl extends AppCompatActivity {
 
 
 
-        //for drawing
-        background = BitmapFactory.decodeResource(this.getResources(),R.drawable.map).copy(Bitmap.Config.ARGB_4444, true);
+        //for drawing;
         Bitmap tmp = BitmapFactory.decodeResource(this.getResources(),R.drawable.blackblock).copy(Bitmap.Config.ARGB_4444, true);
         Matrix matrix=new Matrix();
         matrix.postScale(((float)vision*30/tmp.getWidth()), ((float)vision*30/tmp.getHeight()));
         hole = Bitmap.createBitmap(tmp, 0, 0,tmp.getWidth(),tmp.getHeight(),matrix,true);
         tmp.recycle();
+        tmp=null;
+
+        tmp=BitmapFactory.decodeResource(this.getResources(),R.drawable.map).copy(Bitmap.Config.ARGB_4444, true);
+        matrix=new Matrix();
+        matrix.postScale(((float)5000/tmp.getWidth()), ((float)5000/tmp.getHeight()));
+        background = Bitmap.createBitmap(tmp, 0, 0,tmp.getWidth(),tmp.getHeight(),matrix,true);
+        tmp.recycle();
+        tmp=null;
 
         //Rolepic load
         role_pic = new Bitmap[2][4][4];//人物数，方向数，每个方向动作帧数
@@ -499,7 +506,7 @@ public class ClientGameControl extends AppCompatActivity {
             for (int i=0;i<map.livingrole.size();i++) {
                 r = map.livingrole.get(i);
 
-                testtxt.setText(Arrays.toString(Objects.requireNonNull (Data.playerLocation.get (r.name))));
+
                 r.lifevalue = Objects.requireNonNull (Data.playerLocation.get (r.name))[1];
 //                check_alive(r);
 
@@ -630,13 +637,19 @@ public class ClientGameControl extends AppCompatActivity {
             }
         }
     }
-    //析构
+
 //    void check_alive(Role_simple r){
-//        if (r.id==myrole.id){
-//
+//        if (r.id==myrole.id && r.lifevalue<=0){
+//            Intent intent = new Intent(this, ClientGameControl.class);
+//            Bundle bundle=new Bundle();
+//            bundle.putString("rank","1");
+//            bundle.putString("name","LYT");
+//            bundle.putString("score",String.valueOf(vision));
+//            startActivity(intent);
 //        }
 //    }
 
+    //析构
     protected void onDestroy() {
         handlerInfo.removeCallbacks(runnableUDP);
         super.onDestroy();
