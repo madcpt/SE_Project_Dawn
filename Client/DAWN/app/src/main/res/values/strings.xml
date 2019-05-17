@@ -30,4 +30,8 @@
     <string name="roomID_repeated">Repeated!Please change the roomcontain(1 to 99999)</string>
     <string name="notempty">Not empty</string>
 
+    <string name="title_activity_show_result">ShowResult</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
 </resources>

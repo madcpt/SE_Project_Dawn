@@ -7,7 +7,6 @@ public class MyRole {
         public String name;
         public int attack;
         public int speed;
-        public int maxlife;
         public Vector<Prop> bag;
         public Prop weapon;
         public Prop shoe;
