@@ -424,7 +424,7 @@ public class ClientGameControl extends AppCompatActivity {
         //要存的东西 ：ID life location[0] location[1] direction walk_mov attack_mov
         for (String playerIP : Data.playerLocation.keySet ()){
             System.out.println (playerIP);
-            
+
             int[] rcv=Objects.requireNonNull (Data.playerLocation.get (playerIP));
             Role_simple test_r1=new Role_simple(rcv[0], playerIP);
             test_r1.location[0] =  rcv[2];
@@ -510,8 +510,12 @@ public class ClientGameControl extends AppCompatActivity {
             Role_simple r;
             for (int i=0;i<map.livingrole.size();i++) {
                 r = map.livingrole.get(i);
+                r.lifevalue = Objects.requireNonNull (Data.playerLocation.get (r.name))[1];
                 r.location[0] = Objects.requireNonNull (Data.playerLocation.get (r.name))[2];
                 r.location[1] = Objects.requireNonNull (Data.playerLocation.get (r.name))[3];
+                r.direction = Objects.requireNonNull (Data.playerLocation.get (r.name))[4];
+                r.walk_mov = Objects.requireNonNull (Data.playerLocation.get (r.name))[5];
+                r.attack_mov = Objects.requireNonNull (Data.playerLocation.get (r.name))[6];
                 System.out.println ("OTHER111 " + map.livingrole.size () + Arrays.toString (r.location));
                 System.out.println (Arrays.toString (Data.playerLocation.get (r.name)));
             }
