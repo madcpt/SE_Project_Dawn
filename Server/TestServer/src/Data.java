@@ -10,14 +10,57 @@ public class Data {
     public static int port;
     private static Map<String, int[]> playerLocation;
     public int direction;
-    public MapClass WholeMap;
+    public static MapClass WholeMap;
     public Random rand;
+    private static Collision Colli;
     public static RoomPool roomList;
 
     Data() {
         WholeMap = new MapClass();
         rand=new Random();
         roomList = new RoomPool();
+    }
+
+    public static boolean MoveCollisionDetect(int x, int y) {
+        int h = Colli.getCollision_height();
+        int w = Colli.getCollision_width();
+        //return true if it's invalid to move
+        return ( ( WholeMap.m[ x / WholeMap.unit ][ y / WholeMap.unit] == 1 ) || ( WholeMap.m[ ( x + w ) / WholeMap.unit ][ ( y + h ) / WholeMap.unit] == 1 ) || ( WholeMap.m[ ( x + w ) / WholeMap.unit ][ y / WholeMap.unit] == 1 ) || ( WholeMap.m[ x / WholeMap.unit ][ ( y + h ) / WholeMap.unit] == 1 ));
+    }
+
+    public static boolean AttackCollisionDetect(int x1, int y1, int x2, int y2){
+        int h = Colli.getCollision_height();
+        int w = Colli.getCollision_width();
+        return ( x2 > x1 - w && x2 < x1 + w && y2 > y1 - h && y2 < y1 + h );
+    }
+
+    public static void Attack(String pureIP, String damage){
+        int dama = Integer.valueOf(damage);
+        int dire = playerLocation.get(pureIP)[4];
+        int x = playerLocation.get(pureIP)[2];
+        int y = playerLocation.get(pureIP)[3];
+        for(String ID : playerLocation.keySet()){
+            if(ID == pureIP){
+                continue;
+            }
+            switch (dire){
+                case 0:
+                    x += Colli.getCollision_width();
+                    break;
+                case 1:
+                    y += Colli.getCollision_height();
+                    break;
+                case 2:
+                    x -= Colli.getCollision_width();
+                    break;
+                case 3:
+                    y -= Colli.getCollision_height();
+                    break;
+            }
+            if(AttackCollisionDetect(x,y,playerLocation.get(ID)[2],playerLocation.get(ID)[3])){
+                playerLocation.get(ID)[1] -= dama;
+            }
+        }
     }
 
     public static void moveDegree(String pureIP, String degree, int velocity) {
@@ -53,6 +96,7 @@ public class Data {
 //        playerLocation.get(pureIP)[3] += Math.sin(radians) * velocity;
     }
 
+
     public void setValue() {
         System.out.println("SETTING VALUE");
         delay = 0L;
@@ -85,6 +129,10 @@ public class Data {
     public static void Lmove(String pureIP) {
 //        location[0]=location[0]-3;
         playerLocation.get(pureIP)[2] -= 3;
+        if(MoveCollisionDetect(playerLocation.get(pureIP)[2], playerLocation.get(pureIP)[3])){
+            playerLocation.get(pureIP)[2] += 3;
+        }
+        System.out.println("LEFT111 " + Arrays.toString(playerLocation.get(pureIP)));
         playerLocation.get(pureIP)[4] = 2;
         playerLocation.get(pureIP)[5] = 1;
 //        System.out.println("LEFT111 " + Arrays.toString(playerLocation.get(pureIP)));
@@ -96,6 +144,9 @@ public class Data {
     public static void Rmove(String pureIP) {
 //        location[0]=location[0]+3;
         playerLocation.get(pureIP)[2] += 3;
+        if(MoveCollisionDetect(playerLocation.get(pureIP)[2], playerLocation.get(pureIP)[3])){
+            playerLocation.get(pureIP)[2] -= 3;
+        }
         playerLocation.get(pureIP)[4] = 0;
         playerLocation.get(pureIP)[5] = 1;
 //        int[] tmpLoc = playerLocation.get(pureIP);
@@ -107,6 +158,9 @@ public class Data {
     public static void Umove(String pureIP) {
 //        location[1]=location[1]-3;
         playerLocation.get(pureIP)[3] -= 3;
+        if(MoveCollisionDetect(playerLocation.get(pureIP)[2], playerLocation.get(pureIP)[3])){
+            playerLocation.get(pureIP)[3] += 3;
+        }
         playerLocation.get(pureIP)[4] = 1;
         playerLocation.get(pureIP)[5] = 1;
 //        int[] tmpLoc = playerLocation.get(pureIP);
@@ -118,9 +172,11 @@ public class Data {
     public static void Dmove(String pureIP) {
 //        location[1]=location[1]+3;
         playerLocation.get(pureIP)[3] += 3;
+        if(MoveCollisionDetect(playerLocation.get(pureIP)[2], playerLocation.get(pureIP)[3])){
+            playerLocation.get(pureIP)[3] -= 3;
+        }
         playerLocation.get(pureIP)[4] = 3;
         playerLocation.get(pureIP)[5] = 1;
-
 //        int[] tmpLoc = playerLocation.get(pureIP);
 //        tmpLoc[3] += 3;
 //        playerLocation.put(pureIP, tmpLoc);
@@ -133,6 +189,10 @@ public class Data {
 //        dataclass.location = location;
         playerLocation.get(pureIP)[2] -= 2;
         playerLocation.get(pureIP)[3] += 2;
+        if(MoveCollisionDetect(playerLocation.get(pureIP)[2], playerLocation.get(pureIP)[3])){
+            playerLocation.get(pureIP)[2] += 2;
+            playerLocation.get(pureIP)[3] -= 2;
+        }
         playerLocation.get(pureIP)[5] = 1;
 //        int[] tmpLoc = playerLocation.get(pureIP);
 //        tmpLoc[1] += 2;
@@ -147,6 +207,10 @@ public class Data {
 //        dataclass.location = location;
         playerLocation.get(pureIP)[2] += 2;
         playerLocation.get(pureIP)[3] += 2;
+        if(MoveCollisionDetect(playerLocation.get(pureIP)[2], playerLocation.get(pureIP)[3])){
+            playerLocation.get(pureIP)[2] -= 2;
+            playerLocation.get(pureIP)[3] -= 2;
+        }
         playerLocation.get(pureIP)[5] = 1;
 //        int[] tmpLoc = playerLocation.get(pureIP);
 //        tmpLoc[1] += 2;
@@ -161,6 +225,10 @@ public class Data {
 //        dataclass.location = location;
         playerLocation.get(pureIP)[2] -= 2;
         playerLocation.get(pureIP)[3] -= 2;
+        if(MoveCollisionDetect(playerLocation.get(pureIP)[2], playerLocation.get(pureIP)[3])){
+            playerLocation.get(pureIP)[2] += 2;
+            playerLocation.get(pureIP)[3] += 2;
+        }
         playerLocation.get(pureIP)[5] = 1;
 //        int[] tmpLoc = playerLocation.get(pureIP);
 //        tmpLoc[1] -= 2;
@@ -175,6 +243,10 @@ public class Data {
 //        dataclass.location = location;
         playerLocation.get(pureIP)[2] += 2;
         playerLocation.get(pureIP)[3] -= 2;
+        if(MoveCollisionDetect(playerLocation.get(pureIP)[2], playerLocation.get(pureIP)[3])){
+            playerLocation.get(pureIP)[2] -= 2;
+            playerLocation.get(pureIP)[3] += 2;
+        }
         playerLocation.get(pureIP)[5] = 1;
 //        int[] tmpLoc = playerLocation.get(pureIP);
 //        tmpLoc[1] -= 3;
