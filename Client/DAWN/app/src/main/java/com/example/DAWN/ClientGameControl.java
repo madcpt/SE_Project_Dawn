@@ -43,6 +43,7 @@ public class ClientGameControl extends AppCompatActivity {
     int[] location={0,0}; //当前位置
     int[] center_location;
 
+    private Collision Colli;
     private Map map;
     private Role myrole;
     int vision=20;//视野范围
@@ -332,30 +333,21 @@ public class ClientGameControl extends AppCompatActivity {
 
         Abutton= findViewById(R.id.Abutton);
         Abutton.setOnTouchListener(new View.OnTouchListener(){
-            private Boolean longclicked=false;
             @Override
             public boolean onTouch(View view, MotionEvent event) {
                 // TODO Auto-generated method stub
                 switch (event.getAction()){
                     case MotionEvent.ACTION_DOWN:
-                        longclicked=true;
                         Thread t = new Thread(){
                             public void run(){
                                 super.run();
-                                while (longclicked){
-                                    Attack();
-                                    try{
-                                        Thread.sleep(20);
-                                    }catch(InterruptedException e){
-                                        e.printStackTrace();
-                                    }
+                                Attack();
                                 }
-                            }
                         };
                         t.start();
                         break;
                     case MotionEvent.ACTION_UP:
-                        longclicked = false;
+                        StopAttack();
                         break;
                 }
                 return true;
@@ -375,6 +367,9 @@ public class ClientGameControl extends AppCompatActivity {
 
 
 //    实现攻击
+    public void StopAttack(){
+        new AsyncConTCP().execute("atk_stp");
+    }
     public void Attack(){
         new AsyncConTCP ().execute ("attack,100,0");
     }
@@ -456,6 +451,15 @@ public class ClientGameControl extends AppCompatActivity {
             }
         }
 
+        //Attackpic load
+        attack_pic = new Bitmap[1][5];
+        for(int i = 0;i < 1;++i){
+            for(int j = 0;j < 5;++j){
+                fname = "a_" + Integer.toString(i) + "_" + Integer.toString(j);
+                attack_pic[i][j] = BitmapFactory.decodeResource(this.getResources(),res.getIdentifier(fname,"drawable", getPackageName())).copy(Bitmap.Config.ARGB_4444,true);
+            }
+        }
+
     }
 
 
@@ -520,6 +524,7 @@ public class ClientGameControl extends AppCompatActivity {
     private Bitmap background;
     private Bitmap hole;
     private Bitmap[][][] role_pic;//所有角色图的Bitmap点阵,第一层为角色，第二层为方向，第三层为动作
+    private Bitmap[][] attack_pic;//所有攻击效果的点阵图，第一层为特效，第二层为效果帧
     class MyCallBack implements SurfaceHolder.Callback {
         @Override
         //当SurfaceView的视图发生改变，比如横竖屏切换时，这个方法被调用
@@ -575,6 +580,23 @@ public class ClientGameControl extends AppCompatActivity {
                             } else{
                                 c.drawBitmap(role_pic[r.id%100][r.direction][r.walk_mov/5],center_location[0] - location[0]+r.location[0],center_location[1] - location[1]+r.location[1],p);
                                 r.walk_mov=(r.walk_mov+1)%15;//每个动作循环的帧数
+                            }
+                            if (r.attack_mov!=-1) {
+                                switch(r.direction){
+                                    case 0:
+                                        c.drawBitmap(attack_pic[0][r.attack_mov/3],center_location[0] - location[0]+r.location[0]+Colli.getCollision_width(),center_location[1] - location[1]+r.location[1],p);
+                                        break;
+                                    case 1:
+                                        c.drawBitmap(attack_pic[0][r.attack_mov/3],center_location[0] - location[0]+r.location[0],center_location[1] - location[1]+r.location[1]+Colli.getCollision_height(),p);
+                                        break;
+                                    case 2:
+                                        c.drawBitmap(attack_pic[0][r.attack_mov/3],center_location[0] - location[0]+r.location[0]-Colli.getCollision_height(),center_location[1] - location[1]+r.location[1],p);
+                                        break;
+                                    case 3:
+                                        c.drawBitmap(attack_pic[0][r.attack_mov/3],center_location[0] - location[0]+r.location[0],center_location[1] - location[1]+r.location[1]-Colli.getCollision_height(),p);
+                                        break;
+                                }
+                                r.attack_mov = (r.attack_mov+1)%15;
                             }
                         }
                         //画黑雾
