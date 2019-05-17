@@ -1,5 +1,4 @@
-package com.example.DAWN;
-
+import java.util.HashMap;
 import java.util.Vector;
 
 public class Room {

@@ -1,8 +1,8 @@
 package com.example.DAWN;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.icu.util.ULocale;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
@@ -21,13 +21,8 @@ import java.util.concurrent.TimeUnit;
 import android.graphics.*;
 
 
-import com.example.DAWN.Data;
 import com.example.DAWN.DialogManagement.RunnableTCP;
 import com.example.DAWN.DialogManagement.RunnableUDP;
-import com.example.DAWN.Map;
-import com.example.DAWN.R;
-import com.example.DAWN.Role;
-import com.example.DAWN.Role_simple;
 
 import static com.example.DAWN.RockerView.DirectionMode.DIRECTION_8;
 
@@ -37,6 +32,7 @@ public class ClientGameControl extends AppCompatActivity {
     private Button Abutton;
     private RockerView mRockerView;
     private TextView testtxt ;
+
 
     //屏幕左上角为{0,0}，我的角色的绝对位置为{860,0}，相对（地图）位置为{x,y}
     //则地图相对位置为{-x,-y}，绝对位置{860-x,0-y}
@@ -61,41 +57,26 @@ public class ClientGameControl extends AppCompatActivity {
             R1.start(meg[0]);
             return null;
         }
-
-//        @Override
-//        protected void onProgressUpdate(String... values) { super.onProgressUpdate (values);}
-//
-//        @Override
-//        protected void onPostExecute(Void aVoid) {
-//            super.onPostExecute (aVoid);
-//        }
     }
 
     // AsyncTask for UDP-Client
-    private class AsyncConUDP extends AsyncTask<Void, Void, Void> {
+    public static class AsyncConUDP extends AsyncTask<String, Void, Void> {
         @Override
-        protected Void doInBackground(Void... voids) {
+        protected Void doInBackground(String... msg) {
             RunnableUDP R1 = new RunnableUDP ("Thread-UDP");
-            R1.start ();
+            R1.start (msg[0]);
             return null;
         }
-
-//        @Override
-//        protected void onProgressUpdate(String... values) { super.onProgressUpdate (values);        }
-//
-//        @Override
-//        protected void onPostExecute(Void aVoid) {
-//            super.onPostExecute (aVoid);
-//        }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_process);
 
-        mRockerView = (RockerView) findViewById(R.id.my_rocker);
+        mRockerView = findViewById(R.id.my_rocker);
         testtxt= findViewById(R.id.Fortest);
         testtxt.setText("loading... ");
         testtxt.setText(Arrays.toString(location));
@@ -381,8 +362,9 @@ public class ClientGameControl extends AppCompatActivity {
             }
         });
 
-        handler.postDelayed(runnable, 1000 * 1);//等1s后开始刷新显示
-        handlerUDP.postDelayed(runnableUDP, 1000 * 1);//等1s后开始刷新位置UDP
+        handler.postDelayed(runnable, 1000);//等1s后开始刷新显示
+        handlerUDP.postDelayed(runnableUDP, 1000);//等1s后开始刷新位置UDP
+        handlerInfo.postDelayed(runnableInfo, 1000);//等1s后开始刷新位置UDP
 
 
         scr = findViewById(R.id.background) ;
@@ -429,19 +411,20 @@ public class ClientGameControl extends AppCompatActivity {
 
     //Map初始化
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private Boolean MapInit() throws InterruptedException {
+    private void MapInit() throws InterruptedException {
         //发送请求并将服务器传递过来的所有数据转化为Map对象
 
         map=new Map();
 
         while(Data.playerLocation == null){
             System.out.println ("get111");
-            new AsyncConUDP ().execute ();
+            new AsyncConUDP ().execute ("location");
             TimeUnit.SECONDS.sleep(1);
         }
         //要存的东西 ：ID life location[0] location[1] direction walk_mov attack_mov
         for (String playerIP : Data.playerLocation.keySet ()){
             System.out.println (playerIP);
+            
             int[] rcv=Objects.requireNonNull (Data.playerLocation.get (playerIP));
             Role_simple test_r1=new Role_simple(rcv[0], playerIP);
             test_r1.location[0] =  rcv[2];
@@ -450,6 +433,7 @@ public class ClientGameControl extends AppCompatActivity {
             test_r1.direction = rcv[4];
             test_r1.walk_mov = rcv[5];
             test_r1.attack_mov = rcv[6];
+
             map.livingrole.add(test_r1);
         }
 
@@ -462,6 +446,7 @@ public class ClientGameControl extends AppCompatActivity {
         matrix.postScale(((float)vision*30/tmp.getWidth()), ((float)vision*30/tmp.getHeight()));
         hole = Bitmap.createBitmap(tmp, 0, 0,tmp.getWidth(),tmp.getHeight(),matrix,true);
         tmp.recycle();
+
         //Rolepic load
         role_pic = new Bitmap[2][4][4];//人物数，方向数，每个方向动作帧数
         Resources res=getResources();
@@ -475,7 +460,6 @@ public class ClientGameControl extends AppCompatActivity {
             }
         }
 
-        return true;
     }
 
 
@@ -484,9 +468,8 @@ public class ClientGameControl extends AppCompatActivity {
     private Runnable runnableUDP = new Runnable() {
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         public void run() {
-            new AsyncConUDP ().execute ();
+            new AsyncConUDP ().execute ("location");
             System.out.println (Data.playerLocation + "PLAYER111");
-
             if (Data.playerLocation != null && Data.playerLocation.containsKey (Data.LOCALIP)) {
 
                 System.out.println (location[0] + "," + location[1] + "LOCATION111");
@@ -510,8 +493,28 @@ public class ClientGameControl extends AppCompatActivity {
             handler.postDelayed(this, 20);// 刷新间隔(ms)
         }
         void update() {
-
             testtxt.setText(Arrays.toString(location));
+        }
+    };
+
+    //信息刷新fs
+    private Handler handlerInfo = new Handler();
+    private Runnable runnableInfo = new Runnable() {
+        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+        public void run() {
+            this.update();
+            handler.postDelayed(this, 20);// 刷新间隔(ms)
+        }
+        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+        void update() {
+            Role_simple r;
+            for (int i=0;i<map.livingrole.size();i++) {
+                r = map.livingrole.get(i);
+                r.location[0] = Objects.requireNonNull (Data.playerLocation.get (r.name))[2];
+                r.location[1] = Objects.requireNonNull (Data.playerLocation.get (r.name))[3];
+                System.out.println ("OTHER111 " + map.livingrole.size () + Arrays.toString (r.location));
+                System.out.println (Arrays.toString (Data.playerLocation.get (r.name)));
+            }
         }
     };
 
@@ -570,10 +573,10 @@ public class ClientGameControl extends AppCompatActivity {
 
                         for (int i=0;i<map.livingrole.size();i++) {
                             r = map.livingrole.get(i);
-                            r.location[0] = Objects.requireNonNull (Data.playerLocation.get (r.name))[2];
-                            r.location[1] = Objects.requireNonNull (Data.playerLocation.get (r.name))[3];
-                            System.out.println ("OTHER111 " + map.livingrole.size () + Arrays.toString (r.location));
-                            System.out.println (Arrays.toString (Data.playerLocation.get (r.name)));
+//                            r.location[0] = Objects.requireNonNull (Data.playerLocation.get (r.name))[2];
+//                            r.location[1] = Objects.requireNonNull (Data.playerLocation.get (r.name))[3];
+//                            System.out.println ("OTHER111 " + map.livingrole.size () + Arrays.toString (r.location));
+//                            System.out.println (Arrays.toString (Data.playerLocation.get (r.name)));
                             if (Math.abs(r.location[0] - location[0]) > vision * 20 || Math.abs(r.location[1] - location[1]) > vision * 20) {
                                 continue;
                             }
@@ -601,7 +604,7 @@ public class ClientGameControl extends AppCompatActivity {
                         p.setXfermode(null);
                         c.restore();
                     }
-                    Thread.sleep(20);
+                    Thread.sleep(10);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -615,8 +618,6 @@ public class ClientGameControl extends AppCompatActivity {
             }
         }
     }
-
-
     //析构
     protected void onDestroy() {
         handler.removeCallbacks(runnable);
