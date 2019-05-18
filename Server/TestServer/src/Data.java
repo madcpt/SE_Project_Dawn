@@ -25,7 +25,7 @@ public class Data {
         int h = Colli.getCollision_height();
         int w = Colli.getCollision_width();
         //return true if it's invalid to move
-        return ( ( WholeMap.m[ x / WholeMap.unit ][ y / WholeMap.unit] == 1 ) || ( WholeMap.m[ ( x + w ) / WholeMap.unit ][ ( y + h ) / WholeMap.unit] == 1 ) || ( WholeMap.m[ ( x + w ) / WholeMap.unit ][ y / WholeMap.unit] == 1 ) || ( WholeMap.m[ x / WholeMap.unit ][ ( y + h ) / WholeMap.unit] == 1 ));
+        return ( ( WholeMap.m[ y / WholeMap.unit][ x / WholeMap.unit ] == 1 ) || ( WholeMap.m[ ( y + h ) / WholeMap.unit][ ( x + w ) / WholeMap.unit ] == 1 ) || ( WholeMap.m[ y / WholeMap.unit][ ( x + w ) / WholeMap.unit ] == 1 ) || ( WholeMap.m[ ( y + h ) / WholeMap.unit][ x / WholeMap.unit ] == 1 ));
     }
 
     public static boolean AttackCollisionDetect(int x1, int y1, int x2, int y2){
@@ -46,19 +46,19 @@ public class Data {
             switch (dire){
                 case 0:
                     x += Colli.getCollision_width();
-                    playerLocation.get(pureIP)[6] = 1;
+                    playerLocation.get(pureIP)[6] = 0;
                     break;
                 case 1:
                     y += Colli.getCollision_height();
-                    playerLocation.get(pureIP)[6] = 1;
+                    playerLocation.get(pureIP)[6] = 0;
                     break;
                 case 2:
                     x -= Colli.getCollision_width();
-                    playerLocation.get(pureIP)[6] = 1;
+                    playerLocation.get(pureIP)[6] = 0;
                     break;
                 case 3:
                     y -= Colli.getCollision_height();
-                    playerLocation.get(pureIP)[6] = 1;
+                    playerLocation.get(pureIP)[6] = 0;
                     break;
             }
             if(AttackCollisionDetect(x,y,playerLocation.get(ID)[2],playerLocation.get(ID)[3])){
