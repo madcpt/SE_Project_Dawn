@@ -2,6 +2,7 @@ package com.example.DAWN;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.DAWN.DialogManagement.RunnableTCP;
+import com.example.DAWN.DialogManagement.RunnableUDP;
+
 public class Register extends AppCompatActivity {
     private EditText mAccount;                        //用户名编辑
     private EditText mPwd;                            //密码编辑
@@ -17,6 +21,26 @@ public class Register extends AppCompatActivity {
     private Button mSureButton;                       //确定按钮
     private Button mCancelButton;                     //取消按钮
     private UserDataManager mUserDataManager;         //用户数据管理类
+
+    // AsyncTask for UDP-Client
+    static class AsyncConUDP extends AsyncTask<String, Void, Void> {
+        @Override
+        protected Void doInBackground(String... msg) {
+            RunnableUDP R1 = new RunnableUDP ("Thread-UDP-LOGIN");
+            R1.start (msg[0]);
+            return null;
+        }
+    }
+
+    private Boolean sendRegister(String userID, String pwd){
+        new AsyncConUDP ().execute ("register!"+userID+"!"+pwd);
+        if(Data.accountStatus.containsKey ("isRegisterValid")){
+            return Data.accountStatus.get ("isRegisterValid");
+        }
+        System.out.println ("Register Failed");
+        return false;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,10 +105,12 @@ public class Register extends AppCompatActivity {
                 if (flag == -1) {
                     Toast.makeText(this, getString(R.string.register_fail),Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(this, getString(R.string.register_success),Toast.LENGTH_SHORT).show();
-                    Intent intent_Register_to_Login = new Intent(Register.this,Login.class) ;    //切换User Activity至Login Activity
-                    startActivity(intent_Register_to_Login);
-                    finish();
+                    if(sendRegister (userName, userPwd)) {
+                        Toast.makeText (this, getString (R.string.register_success), Toast.LENGTH_SHORT).show ();
+                        Intent intent_Register_to_Login = new Intent (Register.this, Login.class);    //切换User Activity至Login Activity
+                        startActivity (intent_Register_to_Login);
+                        finish ();
+                    }
                 }
             }
         }

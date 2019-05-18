@@ -68,6 +68,18 @@ public class serverForMultiClientUDP implements Runnable{
                     }
                     objectStream.writeObject(Data.roomList.RoomList.get(inputMes[1]).memberList);
                     break;
+                case "register":
+                    System.out.println("Register Request From Client:" + inputMes[1] + "," + inputMes[2]);
+                    Boolean isRegisterValid = true;
+                    //
+                    objectStream.writeObject(isRegisterValid);
+                    break;
+                case "login":
+                    System.out.println("Login Request From Client:" + inputMes[1] + "," + inputMes[2]);
+                    Boolean isLoginValid = true;
+                    //
+                    objectStream.writeObject(isLoginValid);
+                    break;
                 default:
                     objectStream.writeObject(Data.getUpdateList());
                     break;
