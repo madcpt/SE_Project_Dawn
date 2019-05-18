@@ -90,11 +90,15 @@ public class Register extends AppCompatActivity {
             int count=mUserDataManager.findUserByName(userName);
             System.out.println("count"+count);
             //用户已经存在时返回，给出提示文字
-            if(count>0){
+            //System.out.println("");
+
+            if(count>0)
+            {
                 Toast.makeText(this, getString(R.string.name_already_exist),Toast.LENGTH_SHORT).show();
                 return ;
             }
-            if(userPwd.equals(userPwdCheck)==false){     //两次密码输入不一样
+            if(userPwd.equals(userPwdCheck)==false)
+            {     //两次密码输入不一样
                 Toast.makeText(this, getString(R.string.pwd_not_the_same),Toast.LENGTH_SHORT).show();
                 return ;
             } else {
@@ -103,9 +107,10 @@ public class Register extends AppCompatActivity {
                 mUserDataManager.openDataBase();
                 long flag = mUserDataManager.insertUserData(mUser); //新建用户信息
                 if (flag == -1) {
+                    System.out.println("flag -1");
                     Toast.makeText(this, getString(R.string.register_fail),Toast.LENGTH_SHORT).show();
                 }else{
-                    if(sendRegister (userName, userPwd)) {
+                    if(sendRegister (userName, userPwd) || true) {
                         Toast.makeText (this, getString (R.string.register_success), Toast.LENGTH_SHORT).show ();
                         Intent intent_Register_to_Login = new Intent (Register.this, Login.class);    //切换User Activity至Login Activity
                         startActivity (intent_Register_to_Login);
