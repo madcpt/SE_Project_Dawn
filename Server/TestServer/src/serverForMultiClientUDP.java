@@ -42,16 +42,30 @@ public class serverForMultiClientUDP implements Runnable{
             server.receive(data);
             String [] inputMes = new String(data.getData()).split("!");
 //            System.out.println(new String(data.getData()));
-            System.out.println(Arrays.toString(inputMes));
+//            System.out.println(Arrays.toString(inputMes));
             switch (inputMes[0]){
                 case "ask_room":
+                    System.out.println(inputMes[0]);
                     System.out.println(Data.roomList.RoomListVec.toString());
                     objectStream.writeObject(Data.roomList.RoomListVec);
                     break;
                 case "location":
+//                    System.out.println(Data.getUpdateList());
+//                    System.out.println(data.getAddress());
+//                    System.out.println(Arrays.toString(Data.getUpdateList().get(data.getAddress())));
+//                    System.out.println(Data.getUpdateList().containsKey(data.getAddress()));
+                    for(String i : Data.getUpdateList().keySet()){
+                        System.out.println(i + " " + Arrays.toString(Data.getUpdateList().get(i)));
+                    }
                     objectStream.writeObject(Data.getUpdateList());
                     break;
                 case "room_info":
+                    System.out.println(inputMes[0]);
+                    System.out.println(inputMes.length);
+                    if(inputMes[1] == "null") {
+                        System.out.println("room_info: null");
+                        break;
+                    }
                     objectStream.writeObject(Data.roomList.RoomList.get(inputMes[1]).memberList);
                     break;
                 default:
