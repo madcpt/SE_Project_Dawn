@@ -106,6 +106,7 @@ public class Register extends AppCompatActivity {
                     Toast.makeText(this, getString(R.string.register_fail),Toast.LENGTH_SHORT).show();
                 }else{
                     if(sendRegister (userName, userPwd)) {
+                        System.out.println ("sendRegister ");
                         Toast.makeText (this, getString (R.string.register_success), Toast.LENGTH_SHORT).show ();
                         Intent intent_Register_to_Login = new Intent (Register.this, Login.class);    //切换User Activity至Login Activity
                         startActivity (intent_Register_to_Login);

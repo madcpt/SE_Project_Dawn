@@ -6,8 +6,8 @@ public class Test {
     private String driveName = "com.mysql.cj.jdbc.Driver";
     private String url = "jdbc:mysql://39.105.27.108:3306/dawn?serverTimezone=GMT%2B8";
     // jdbc:mysql://127.0.0.1:3306/onestep?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2B8
-    private String user = "root";
-    private String pass = "";
+    private String user = "dawn";
+    private String pass = "dawnnb";
     public  void create() throws ClassNotFoundException, SQLException {
         Class.forName(driveName);
         //连接
