@@ -59,6 +59,7 @@ public class Data {
                 break;
         }
         playerLocation.get(pureIP)[6] = 1;
+        System.out.println("attack_mov " + playerLocation.get(pureIP)[6]);
         for(String ID : playerLocation.keySet()){
             if(ID == pureIP){
                 continue;
