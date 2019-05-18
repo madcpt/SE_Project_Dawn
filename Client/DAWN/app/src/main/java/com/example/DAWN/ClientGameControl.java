@@ -252,11 +252,12 @@ public class ClientGameControl extends AppCompatActivity {
 
 //    实现攻击
     public void StopAttack(){
+        Attackable = true;
         new AsyncConTCP().execute("atk_stp");
     }
     public void Attack(){
         Attackable = false;
-        new AsyncConTCP ().execute ("attack,100,0");
+        new AsyncConTCP().execute ("attack,100,0");
     }
     //实现移动
     public void Stopmove(){
@@ -411,8 +412,11 @@ public class ClientGameControl extends AppCompatActivity {
                 r.direction = Objects.requireNonNull (Data.playerLocation.get (r.name))[4];
                 if (r.walk_mov*Objects.requireNonNull (Data.playerLocation.get (r.name))[5]<0)
                 {r.walk_mov = Objects.requireNonNull (Data.playerLocation.get (r.name))[5];}
-                if (r.attack_mov*Objects.requireNonNull (Data.playerLocation.get (r.name))[6]<0)
-                {r.attack_mov = Objects.requireNonNull (Data.playerLocation.get (r.name))[6];}
+                switch (Objects.requireNonNull (Data.playerLocation.get (r.name))[6]){
+                    case -1: r.attack_mov=-1; break;
+                    case 1: if (r.attack_mov==-1) {r.attack_mov = 1;} break;
+                }
+
                 System.out.println ("OTHER111 " + map.livingrole.size () + Arrays.toString (r.location));
                 System.out.println (Arrays.toString (Data.playerLocation.get (r.name)));
             }
@@ -504,14 +508,12 @@ public class ClientGameControl extends AppCompatActivity {
                                         c.drawBitmap(attack_pic[0][r.attack_mov/3],center_location[0] - location[0]+r.location[0],center_location[1] - location[1]+r.location[1] + Colli.getCollision_height(),p);
                                         break;
                                 }
-                                r.attack_mov = (r.attack_mov == 14 )?  (-1) : (r.attack_mov + 1);
-
+                                r.attack_mov = (r.attack_mov >= 14 )?  (-1) : (r.attack_mov + 1);
                                 System.out.println("attack_mov " + r.attack_mov);
+                                if (Data.LOCALIP == r.name && r.attack_mov == -1) {
+                                    StopAttack();
+                                }
                             }
-                            if (Data.LOCALIP == r.name && r.attack_mov == -1) {
-                                StopAttack();
-                            }
-                            Attackable = (r.attack_mov == -1 && r.walk_mov == -1);
                         }
                         //画黑雾
                         c.saveLayer(0, 0, (center_location[0]+50)*2+1, (center_location[1]+60)*2+1, p, Canvas.ALL_SAVE_FLAG);//保存上一层
