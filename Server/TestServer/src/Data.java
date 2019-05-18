@@ -14,6 +14,7 @@ public class Data {
     public Random rand;
     private static Collision Colli = new Collision(120,100);
     public static RoomPool roomList;
+    public static Test database;
 
     Data() {
         WholeMap = new MapClass();
@@ -113,6 +114,7 @@ public class Data {
         playerLocation = new HashMap<>();
         direction = 0;
         roomList = new RoomPool();
+        database=new Test();
     }
 
     public void addPlayer(String pureIP, int[] lt) {

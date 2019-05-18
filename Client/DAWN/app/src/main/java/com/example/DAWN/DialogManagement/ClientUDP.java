@@ -86,13 +86,13 @@ public class ClientUDP {
                     }
                     break;
                 case "register":
-                    Boolean isRegisterValid = true;
+                    Boolean isRegisterValid;
                     isRegisterValid = (Boolean) objectStream.readObject ();
                     System.out.println ("From Server: Register " + isRegisterValid);
                     Data.accountStatus.put ("isRegisterValid", isRegisterValid);
                     break;
                 case "login":
-                    Boolean isLoginValid = true;
+                    Boolean isLoginValid;
                     isLoginValid = (Boolean) objectStream.readObject ();
                     System.out.println ("From Server: Login " + isLoginValid);
                     Data.accountStatus.put ("isLoginValid", isLoginValid);

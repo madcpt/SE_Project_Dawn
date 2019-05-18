@@ -6,7 +6,7 @@ public class TestDB {
 
     // JDBC 驱动名及数据库 URL
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://39.105.27.108:3306/RUNOOB";
+    static final String DB_URL = "jdbc:mysql://39.105.27.108:3306/dawn";
 
     // 数据库的用户名与密码，需要根据自己的设置
     static final String USER = "dawn";
@@ -21,6 +21,7 @@ public class TestDB {
 
             // 打开链接
             System.out.println("连接数据库...");
+
             conn = DriverManager.getConnection(DB_URL,USER,PASS);
 
             // 执行查询
