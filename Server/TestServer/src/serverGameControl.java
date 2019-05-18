@@ -21,4 +21,12 @@ public class serverGameControl {
         System.out.println("Prepared: " + playerList);
     }
 
+    public void removePlayer(String pureIP) {
+        if(playerList.contains(pureIP)){
+            System.out.println("Remove from ServerGameControl");
+            playerList.remove(pureIP);
+        }else{
+            System.out.println("Remove from ServerGameControl Failed");
+        }
+    }
 }
