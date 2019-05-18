@@ -22,40 +22,40 @@
 
         <Button
             android:id="@+id/CreateRoom"
-            android:layout_width="383dp"
-            android:layout_height="47dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
+            android:layout_width="288dp"
+            android:layout_height="55dp"
             android:layout_marginTop="38dp"
+            android:layout_marginEnd="39dp"
+            android:layout_marginRight="39dp"
             android:background="@drawable/button_style"
             android:text="CreateRoom"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/RoomContain"
-            android:layout_width="400dp"
+            android:layout_width="300dp"
             android:layout_height="60dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="31dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="36dp"
+            android:layout_marginRight="36dp"
             android:ems="10"
             android:hint="Please input the RoomContain"
             android:inputType="text"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/RoomID" />
 
         <EditText
             android:id="@+id/RoomID"
-            android:layout_width="400dp"
+            android:layout_width="300dp"
             android:layout_height="60dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="23dp"
+            android:layout_marginTop="44dp"
+            android:layout_marginEnd="36dp"
+            android:layout_marginRight="36dp"
             android:ems="10"
             android:hint="Please input the RoomID"
             android:inputType="text"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/CreateRoom" />
 
     </android.support.constraint.ConstraintLayout>
