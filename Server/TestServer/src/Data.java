@@ -128,7 +128,7 @@ public class Data {
             new_rl[2]=rand.nextInt(WholeMap.unit*WholeMap.size);
             new_rl[3]=rand.nextInt(WholeMap.unit*WholeMap.size);
 
-        }while (WholeMap.m[new_rl[2]/WholeMap.unit][new_rl[3]/WholeMap.unit]!=0);
+        }while (WholeMap.m[new_rl[3]/WholeMap.unit][new_rl[2]/WholeMap.unit]!=0);
         new_rl[4]=3; new_rl[5]=-1; new_rl[6]=-1;
         addPlayer(pureIP,new_rl);
     }

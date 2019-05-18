@@ -99,7 +99,7 @@ public class ClientGameControl extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace ();
         }
-
+        myrole=new MyRole((Objects.requireNonNull (Data.playerLocation.get (Data.LOCALIP)))[0], Data.LOCALIP);
         //对摇杆位置改变进行监听
 //        当前模式：方向有改变时回调；8个方向
         mRockerView.setOnShakeListener(DIRECTION_8, new RockerView.OnShakeListener() {
@@ -437,9 +437,7 @@ public class ClientGameControl extends AppCompatActivity {
             test_r1.walk_mov = Objects.requireNonNull (Data.playerLocation.get (playerIP))[5];
             test_r1.attack_mov = Objects.requireNonNull (Data.playerLocation.get (playerIP))[6];
             map.livingrole.add(test_r1);
-            if (playerIP==Data.LOCALIP){
-                myrole=new MyRole((Objects.requireNonNull (Data.playerLocation.get (playerIP)))[0], playerIP);
-            }
+
         }
 
 
