@@ -1,12 +1,11 @@
 package com.example.DAWN;
 
-import android.support.v7.app.AppCompatActivity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -15,6 +14,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.DAWN.DialogManagement.RunnableTCP;
+import com.example.DAWN.DialogManagement.RunnableUDP;
 
 public class Login extends Activity {                 //登录界面活动
 
@@ -35,6 +37,25 @@ public class Login extends Activity {                 //登录界面活动
     private TextView mChangepwdText;
     private UserDataManager mUserDataManager;         //用户数据管理类
 
+
+    // AsyncTask for UDP-Client
+    static class AsyncConUDP extends AsyncTask<String, Void, Void> {
+        @Override
+        protected Void doInBackground(String... msg) {
+            RunnableUDP R1 = new RunnableUDP ("Thread-UDP-LOGIN");
+            R1.start (msg[0]);
+            return null;
+        }
+    }
+
+    private Boolean sendLogin(String userID, String pwd){
+        new AsyncConUDP ().execute ("login!"+userID+"!"+pwd);
+        if(Data.accountStatus.containsKey ("isLoginValid")){
+            return Data.accountStatus.get ("isLoginValid");
+        }
+        System.out.println ("Login Failed");
+        return false;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,7 +108,7 @@ public class Login extends Activity {                 //登录界面活动
                     startActivity(intent_Login_to_Register);
                     finish();
                     break;
-                case R.id.login_btn_login:                              //登录界面的登录按钮
+                case R.id.login_btn_login:                            //登录界面的登录按钮
                     login();
                     break;
                 case R.id.login_btn_cancle:                             //登录界面的注销按钮
@@ -115,6 +136,7 @@ public class Login extends Activity {                 //登录界面活动
                 startActivity(intent);
                 finish();
                 Toast.makeText(this, getString(R.string.login_success),Toast.LENGTH_SHORT).show();//登录成功提示
+                onDestroy();
             }
 
             SharedPreferences.Editor editor =login_sp.edit();
@@ -137,6 +159,7 @@ public class Login extends Activity {                 //登录界面活动
                 intent.putExtra("Account",userName);
                 startActivity(intent);
                 finish();
+                if(sendLogin (userName, userPwd)) //
                 Toast.makeText(this, getString(R.string.login_success),Toast.LENGTH_SHORT).show();//登录成功提示
             }else if(result==0){
                 Toast.makeText(this, getString(R.string.login_fail),Toast.LENGTH_SHORT).show();  //登录失败提示
