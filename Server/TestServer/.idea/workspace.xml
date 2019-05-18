@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a1012407-8f23-43a2-8073-582d56ecc542" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/Login.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/RoomPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/RoomPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/ClientGameControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/ClientGameControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +36,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/serverForMultiClientUDP.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="325">
+            <state relative-caret-position="1270">
               <caret line="99" column="85" selection-start-line="99" selection-start-column="74" selection-end-line="99" selection-end-column="85" />
             </state>
           </provider>
@@ -120,7 +120,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="218" />
     <option name="y" value="-13" />
     <option name="width" value="1152" />
@@ -195,7 +195,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20575693" />
@@ -240,7 +240,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/serverForMultiClientUDP.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
+        <state relative-caret-position="1270">
           <caret line="99" column="85" selection-start-line="99" selection-start-column="74" selection-end-line="99" selection-end-column="85" />
         </state>
       </provider>

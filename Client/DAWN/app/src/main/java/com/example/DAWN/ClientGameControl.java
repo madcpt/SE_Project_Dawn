@@ -714,6 +714,7 @@ public class ClientGameControl extends AppCompatActivity {
                                 c.drawBitmap(role_pic[r.id%100][r.direction][r.walk_mov/5],center_location[0] - location[0]+r.location[0],center_location[1] - location[1]+r.location[1],p);
                                 r.walk_mov=(r.walk_mov+1)%10;//每个动作循环的帧数
                             }
+                            System.out.println("attack_mov " + r.attack_mov);
                             if (r.attack_mov!=-1) {
                                 switch(r.direction){
                                     case 0:
@@ -730,9 +731,9 @@ public class ClientGameControl extends AppCompatActivity {
                                         break;
                                 }
                                 r.attack_mov = (r.attack_mov == 14 )?  (-1) : (r.attack_mov + 1);
-                                Attackable = (r.attack_mov == -1);
                                 System.out.println("attack_mov " + r.attack_mov);
                             }
+                            Attackable = (r.attack_mov == -1 && r.walk_mov == -1);
                         }
                         //画黑雾
                         c.saveLayer(0, 0, (center_location[0]+50)*2+1, (center_location[1]+60)*2+1, p, Canvas.ALL_SAVE_FLAG);//保存上一层
