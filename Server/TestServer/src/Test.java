@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class Test {
     private String driveName = "com.mysql.cj.jdbc.Driver";
-    private String url = "jdbc:mysql://localhost:3306/dawn?serverTimezone=GMT%2B8";
+    private String url = "jdbc:mysql://192.168.137.1:3306/dawn?serverTimezone=GMT%2B8";
     // jdbc:mysql://127.0.0.1:3306/onestep?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2B8
     private String user = "root";
     private String pass = "";

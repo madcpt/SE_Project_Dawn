@@ -184,7 +184,7 @@ public class CreateRoom extends AppCompatActivity {
         Intent intent=new Intent(CreateRoom.this,RoomPage.class);
         intent.putExtra("Account",Account);
         startActivity(intent);
-        //onDestroy();
+        // onDestroy();
 
     }
 
