@@ -469,7 +469,12 @@ public class ClientGameControl extends AppCompatActivity {
         for(int i = 0;i < 1;++i){
             for(int j = 0;j < 5;++j){
                 fname = "a_" + Integer.toString(i) + "_" + Integer.toString(j);
-                attack_pic[i][j] = BitmapFactory.decodeResource(this.getResources(),res.getIdentifier(fname,"drawable", getPackageName())).copy(Bitmap.Config.ARGB_4444,true);
+                tmp = BitmapFactory.decodeResource(this.getResources(),res.getIdentifier(fname,"drawable", getPackageName())).copy(Bitmap.Config.ARGB_4444,true);
+                matrix=new Matrix();
+                matrix.postScale(((float)100/tmp.getWidth()), ((float)120/tmp.getHeight()));//人物宽高
+                attack_pic[i][j] = Bitmap.createBitmap(tmp, 0, 0,tmp.getWidth(),tmp.getHeight(),matrix,true);
+                tmp.recycle();
+                tmp=null;
             }
         }
 
