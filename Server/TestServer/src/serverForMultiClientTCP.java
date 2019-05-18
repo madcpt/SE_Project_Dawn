@@ -66,7 +66,9 @@ public class serverForMultiClientTCP extends ServerSocket {
                         Data.att_stop(pureIP);
                         break;
                     case "init" :
-                        serverGameControl.addPlayer(pureIP,Integer.parseInt(myList.get(2)),pureIP);
+                        serverGameControl.addPlayer(pureIP,Integer.parseInt(myList.get(3)),pureIP);
+                        Data.roomList.RoomList.get(myList.get(2)).prepareOne(pureIP);
+                        System.out.println(Data.roomList.RoomList.get(myList.get(2)).prepareList.toString());
                         break;
                     case "new_room":
                         if(myList.get(2) == "null" || myList.get(3) == "null"){
@@ -82,6 +84,9 @@ public class serverForMultiClientTCP extends ServerSocket {
                         }
                         Data.roomList.joinRoom(pureIP, myList.get(2));
                         Data.roomList.disPlayAllRoom();
+                        break;
+                    case "delete":
+                        Data.playerLocation.remove(pureIP);
                         break;
 //                    case "kill":
 //                        String kill

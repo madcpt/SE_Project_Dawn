@@ -8,7 +8,7 @@ public class Data {
     public static Long delay;
     public static String Server;
     public static int port;
-    private static Map<String, int[]> playerLocation;
+    public static Map<String, int[]> playerLocation;
     public int direction;
     public static MapClass WholeMap;
     public Random rand;
@@ -26,11 +26,11 @@ public class Data {
         int h = Colli.getCollision_height();
         int w = Colli.getCollision_width();
         //return true if it's invalid to move
-        System.out.println("x,y: "+ WholeMap.m[ y / WholeMap.unit][ x / WholeMap.unit ]);
-        System.out.println("x + w,y: "+ WholeMap.m[ y / WholeMap.unit][ ( x + w ) / WholeMap.unit ]);
-        System.out.println("x,y + h: "+ WholeMap.m[ ( y + h ) / WholeMap.unit][ x / WholeMap.unit ]);
-        System.out.println("x + w,y + h: "+ WholeMap.m[ ( y + h ) / WholeMap.unit][ ( x + w ) / WholeMap.unit ]);
-        System.out.println(( WholeMap.m[ y / WholeMap.unit][ x / WholeMap.unit ] == 1 ) || ( WholeMap.m[ ( y + h ) / WholeMap.unit][ ( x + w ) / WholeMap.unit ] == 1 ) || ( WholeMap.m[ y / WholeMap.unit][ ( x + w ) / WholeMap.unit ] == 1 ) || ( WholeMap.m[ ( y + h ) / WholeMap.unit][ x / WholeMap.unit ] == 1 ));
+//        System.out.println("x,y: "+ WholeMap.m[ y / WholeMap.unit][ x / WholeMap.unit ]);
+//        System.out.println("x + w,y: "+ WholeMap.m[ y / WholeMap.unit][ ( x + w ) / WholeMap.unit ]);
+//        System.out.println("x,y + h: "+ WholeMap.m[ ( y + h ) / WholeMap.unit][ x / WholeMap.unit ]);
+//        System.out.println("x + w,y + h: "+ WholeMap.m[ ( y + h ) / WholeMap.unit][ ( x + w ) / WholeMap.unit ]);
+//        System.out.println(( WholeMap.m[ y / WholeMap.unit][ x / WholeMap.unit ] == 1 ) || ( WholeMap.m[ ( y + h ) / WholeMap.unit][ ( x + w ) / WholeMap.unit ] == 1 ) || ( WholeMap.m[ y / WholeMap.unit][ ( x + w ) / WholeMap.unit ] == 1 ) || ( WholeMap.m[ ( y + h ) / WholeMap.unit][ x / WholeMap.unit ] == 1 ));
         return ( ( WholeMap.m[ y / WholeMap.unit][ x / WholeMap.unit ] == 1 ) || ( WholeMap.m[ ( y + h ) / WholeMap.unit][ ( x + w ) / WholeMap.unit ] == 1 ) || ( WholeMap.m[ y / WholeMap.unit][ ( x + w ) / WholeMap.unit ] == 1 ) || ( WholeMap.m[ ( y + h ) / WholeMap.unit][ x / WholeMap.unit ] == 1 ));
     }
 
@@ -120,7 +120,7 @@ public class Data {
     public void addPlayer(String pureIP, int[] lt) {
         playerLocation.put(pureIP, lt);
     }
-    public void newPlayer(String pureIP,int id,String name) {
+    public void newPlayer(String pureIP, int id, String name) {
         int[] new_rl = new int[7];
         new_rl[0]=id;
         new_rl[1]=100;
@@ -128,7 +128,7 @@ public class Data {
             new_rl[2]=rand.nextInt(WholeMap.unit*WholeMap.size);
             new_rl[3]=rand.nextInt(WholeMap.unit*WholeMap.size);
 
-        }while (WholeMap.m[new_rl[2]/WholeMap.unit][new_rl[3]/WholeMap.unit]!=0);
+        }while (WholeMap.m[new_rl[3]/WholeMap.unit][new_rl[2]/WholeMap.unit]!=0);
         new_rl[4]=3; new_rl[5]=-1; new_rl[6]=-1;
         addPlayer(pureIP,new_rl);
     }

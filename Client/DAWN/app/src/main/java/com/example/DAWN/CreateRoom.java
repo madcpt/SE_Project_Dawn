@@ -171,20 +171,20 @@ public class CreateRoom extends AppCompatActivity {
     private void JoinRoom() throws InterruptedException {
         if(chooseRoomID == null){
             System.out.println ("null_in_choose_room");
-            return;
-        }
-        new AsyncConTCP ().execute ("chos_r," + chooseRoomID);
+
+        }else {
+            new AsyncConTCP ().execute ("chos_r," + chooseRoomID);
 //        while(Data.myRoom == null){
 //            TimeUnit.MILLISECONDS.sleep (500);
 //            new RoomPage.AsyncConUDP ().execute ("room_info!" + chooseRoomID + "!");
 //        }
-        Data.myRoomID = chooseRoomID;
-        String Account=getIntent().getStringExtra("Account");
-        Intent intent=new Intent(CreateRoom.this,RoomPage.class);
-        intent.putExtra("Account",Account);
-        startActivity(intent);
-        // onDestroy();
-
+            Data.myRoomID = chooseRoomID;
+            String Account = getIntent ().getStringExtra ("Account");
+            Intent intent = new Intent (CreateRoom.this, RoomPage.class);
+            intent.putExtra ("Account", Account);
+            startActivity (intent);
+            // onDestroy();
+        }
     }
 
     //@xzh

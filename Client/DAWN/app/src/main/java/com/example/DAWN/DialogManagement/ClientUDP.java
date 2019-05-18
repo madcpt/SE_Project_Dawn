@@ -10,6 +10,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Vector;
 
@@ -96,6 +97,12 @@ public class ClientUDP {
                     isLoginValid = (Boolean) objectStream.readObject ();
                     System.out.println ("From Server: Login " + isLoginValid);
                     Data.accountStatus.put ("isLoginValid", isLoginValid);
+                    break;
+                case "room_cnt":
+                    int [] room_cnt;
+                    room_cnt = (int[]) objectStream.readObject ();
+                    Data.myRoom.roomPrepareCnt = room_cnt;
+                    System.out.println ("From Server: Room_cnt: " + Arrays.toString (room_cnt));
                     break;
 
             }

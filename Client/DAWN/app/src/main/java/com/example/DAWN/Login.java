@@ -1,11 +1,14 @@
 package com.example.DAWN;
 
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -18,6 +21,8 @@ import android.widget.Toast;
 import com.example.DAWN.DialogManagement.RunnableTCP;
 import com.example.DAWN.DialogManagement.RunnableUDP;
 
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class Login extends Activity {                 //登录界面活动
@@ -49,6 +54,7 @@ public class Login extends Activity {                 //登录界面活动
             return null;
         }
     }
+
 
     private Boolean sendLogin(String userID, String pwd) throws InterruptedException {
         new AsyncConUDP ().execute ("login!"+userID+"!"+pwd);

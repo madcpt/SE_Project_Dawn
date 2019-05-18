@@ -1,9 +1,10 @@
+import javax.print.attribute.standard.DateTimeAtCompleted;
 import java.util.ArrayList;
 import java.util.List;
 
 public class serverGameControl {
     private List<String> playerList;
-    private Data dataclass;
+    Data dataclass;
 
     public serverGameControl(){
         playerList = new ArrayList<>();
@@ -19,4 +20,5 @@ public class serverGameControl {
         }
         System.out.println("Prepared: " + playerList);
     }
+
 }

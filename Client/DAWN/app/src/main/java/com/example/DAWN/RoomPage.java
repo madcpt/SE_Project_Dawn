@@ -2,7 +2,10 @@ package com.example.DAWN;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +16,8 @@ import com.example.DAWN.DialogManagement.RunnableTCP;
 import com.example.DAWN.DialogManagement.RunnableUDP;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 
@@ -54,11 +59,21 @@ public class RoomPage extends AppCompatActivity {
         }
     }
 
+    //房间准备刷新(UDP)
+    private Handler handlerUDP = new Handler();
+    private Runnable runnableUDP = new Runnable() {
+        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+        public void run() {
+            new AsyncConUDP ().execute ("room_cnt!" + Data.myRoom.RoomID);
+            handlerUDP.postDelayed (this, 1000);// 刷新间隔(ms)
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 //        Data.myRoom.getStatus ();
         try {
-            TimeUnit.MILLISECONDS.sleep (500);
+            TimeUnit.MILLISECONDS.sleep (1000);
         } catch (InterruptedException e) {
             e.printStackTrace ();
         }
@@ -103,6 +118,7 @@ public class RoomPage extends AppCompatActivity {
         AC4.setText("4");
         player.setAccount(Account);
 
+        handlerUDP.postDelayed(runnableUDP, 100);
     }
 
     View.OnClickListener RoomListener=new View.OnClickListener() {
@@ -114,7 +130,7 @@ public class RoomPage extends AppCompatActivity {
                     System.out.println("prepared");
 
                     //向服务器传递flag,id
-                    new AsyncConTCP ().execute ("init," + player.Account);
+                    new AsyncConTCP ().execute ("init," + Data.myRoomID + "," + player.Account);
 
                     //PrepareSequence=第几个好的，从服务器接受
                     int prepareCount=4;
