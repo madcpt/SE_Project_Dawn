@@ -44,27 +44,24 @@ public class Data {
         int dire = playerLocation.get(pureIP)[4];
         int x = playerLocation.get(pureIP)[2];
         int y = playerLocation.get(pureIP)[3];
+        switch (dire){
+            case 0:
+                x += Colli.getCollision_width();
+                break;
+            case 1:
+                y -= Colli.getCollision_height();
+                break;
+            case 2:
+                x -= Colli.getCollision_width();
+                break;
+            case 3:
+                y += Colli.getCollision_height();
+                break;
+        }
+        playerLocation.get(pureIP)[6] = 1;
         for(String ID : playerLocation.keySet()){
             if(ID == pureIP){
                 continue;
-            }
-            switch (dire){
-                case 0:
-                    x += Colli.getCollision_width();
-                    playerLocation.get(pureIP)[6] = 0;
-                    break;
-                case 1:
-                    y += Colli.getCollision_height();
-                    playerLocation.get(pureIP)[6] = 0;
-                    break;
-                case 2:
-                    x -= Colli.getCollision_width();
-                    playerLocation.get(pureIP)[6] = 0;
-                    break;
-                case 3:
-                    y -= Colli.getCollision_height();
-                    playerLocation.get(pureIP)[6] = 0;
-                    break;
             }
             if(AttackCollisionDetect(x,y,playerLocation.get(ID)[2],playerLocation.get(ID)[3])){
                 playerLocation.get(ID)[1] -= dama;
