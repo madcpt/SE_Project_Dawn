@@ -58,7 +58,7 @@ public class RoomPage extends AppCompatActivity {
             e.printStackTrace ();
         }
         while(Data.myRoom == null){
-            new RoomPage.AsyncConUDP ().execute ("room_info!" + Data.myRoomID + "!");
+            new AsyncConUDP ().execute ("room_info!" + Data.myRoomID + "!");
             try {
                 TimeUnit.SECONDS.sleep (1);
             } catch (InterruptedException e) {
