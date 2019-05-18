@@ -42,6 +42,7 @@ public class ClientGameControl extends AppCompatActivity {
     //(所有图片的左上角为判定点）
 
     private volatile Boolean isend;
+    private volatile boolean Attackable;
     private int direction = 3;
     private volatile int[] location={0,0}; //当前位置
     int[] center_location;
@@ -148,12 +149,12 @@ public class ClientGameControl extends AppCompatActivity {
         setContentView(R.layout.game_process);
 
         isend = false;
+        Attackable = true;
 
         mRockerView = findViewById(R.id.my_rocker);
         testtxt= findViewById(R.id.Fortest);
         testtxt.setText("loading... ");
         testtxt.setText(Arrays.toString(location));
-        Attackable = true;
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -204,7 +205,6 @@ public class ClientGameControl extends AppCompatActivity {
                             }
                             break;
                         case MotionEvent.ACTION_UP:
-                            StopAttack();
                             break;
                     }
                 }
@@ -252,10 +252,12 @@ public class ClientGameControl extends AppCompatActivity {
 
 //    实现攻击
     public void StopAttack(){
+        Attackable = true;
         new AsyncConTCP().execute("atk_stp");
     }
     public void Attack(){
-        new AsyncConTCP ().execute ("attack,100,0");
+        Attackable = false;
+        new AsyncConTCP().execute ("attack,100,0");
     }
     //实现移动
     public void Stopmove(){
@@ -410,8 +412,11 @@ public class ClientGameControl extends AppCompatActivity {
                 r.direction = Objects.requireNonNull (Data.playerLocation.get (r.name))[4];
                 if (r.walk_mov*Objects.requireNonNull (Data.playerLocation.get (r.name))[5]<0)
                 {r.walk_mov = Objects.requireNonNull (Data.playerLocation.get (r.name))[5];}
-                if (r.walk_mov*Objects.requireNonNull (Data.playerLocation.get (r.name))[6]<0)
-                {r.attack_mov = Objects.requireNonNull (Data.playerLocation.get (r.name))[6];}
+                switch (Objects.requireNonNull (Data.playerLocation.get (r.name))[6]){
+                    case -1: r.attack_mov=-1; break;
+                    case 1: if (r.attack_mov==-1) {r.attack_mov = 1;} break;
+                }
+
                 System.out.println ("OTHER111 " + map.livingrole.size () + Arrays.toString (r.location));
                 System.out.println (Arrays.toString (Data.playerLocation.get (r.name)));
             }
@@ -448,7 +453,6 @@ public class ClientGameControl extends AppCompatActivity {
 
 
     }
-    private boolean Attackable;
 
     class Draw extends Thread {
         private SurfaceHolder holder;
@@ -505,8 +509,11 @@ public class ClientGameControl extends AppCompatActivity {
                                         c.drawBitmap(attack_pic[0][r.attack_mov/3],center_location[0] - location[0]+r.location[0],center_location[1] - location[1]+r.location[1] + Colli.getCollision_height(),p);
                                         break;
                                 }
-                                r.attack_mov = (r.attack_mov == 14 )?  (-1) : (r.attack_mov + 1);
+                                r.attack_mov = (r.attack_mov >= 14 )?  (-1) : (r.attack_mov + 1);
                                 System.out.println("attack_mov " + r.attack_mov);
+                                if (Data.LOCALIP == r.name && r.attack_mov == -1) {
+                                    StopAttack();
+                                }
                             }
                             Attackable = (r.attack_mov == -1 && r.walk_mov == -1);
                         }
@@ -561,8 +568,8 @@ public class ClientGameControl extends AppCompatActivity {
     }
 
     public void finish(View v){
-        new AsyncConTCP().execute("delete");
-        Intent intent = new Intent(this,RoomPage.class);
+        new AsyncConTCP().execute("delete,"+Data.myRoom.RoomID);
+        Intent intent = new Intent(this,CreateRoom.class);
         startActivity(intent);
 
     }
