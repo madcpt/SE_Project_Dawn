@@ -7,6 +7,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -39,14 +41,14 @@ public class ClientGameControl extends AppCompatActivity {
     //其他角色绝对位置为{840-x+m,430-y+n}
     //(所有图片的左上角为判定点）
 
+    private volatile Boolean isend;
     private int direction = 3;
-    int[] location={0,0}; //当前位置
-    int[] location_tmp = {0,0}; //地图位置缓存
+    private volatile int[] location={0,0}; //当前位置
     int[] center_location;
 
     private Collision Colli = new Collision(120,100);
     private Map map;
-    private Role myrole;
+    private MyRole myrole;
     int vision=20;//视野范围
     int pre_vision;
 
@@ -78,6 +80,8 @@ public class ClientGameControl extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_process);
+
+        isend = false;
 
         mRockerView = findViewById(R.id.my_rocker);
         testtxt= findViewById(R.id.Fortest);
@@ -428,6 +432,9 @@ public class ClientGameControl extends AppCompatActivity {
             test_r1.walk_mov = Objects.requireNonNull (Data.playerLocation.get (playerIP))[5];
             test_r1.attack_mov = Objects.requireNonNull (Data.playerLocation.get (playerIP))[6];
             map.livingrole.add(test_r1);
+            if (playerIP==Data.LOCALIP){
+                myrole=new MyRole((Objects.requireNonNull (Data.playerLocation.get (playerIP)))[0], playerIP);
+            }
         }
 
 
@@ -486,17 +493,19 @@ public class ClientGameControl extends AppCompatActivity {
     private Runnable runnableUDP = new Runnable() {
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         public void run() {
-            new AsyncConUDP ().execute ("location!");
-            System.out.println (Data.playerLocation + "PLAYER111");
-            if (Data.playerLocation != null && Data.playerLocation.containsKey (Data.LOCALIP)) {
-                System.out.println (location[0] + "," + location[1] + "LOCATION111");
-                location_tmp[0] = Objects.requireNonNull (Data.playerLocation.get (Data.LOCALIP))[2];
-                location_tmp[1] = Objects.requireNonNull (Data.playerLocation.get (Data.LOCALIP))[3];
-            } else {
-                location_tmp = new int[]{0, 0};
+            if (!isend) {
+                new AsyncConUDP().execute("location!");
+                System.out.println(Data.playerLocation + "PLAYER111");
+                if (Data.playerLocation != null && Data.playerLocation.containsKey(Data.LOCALIP)) {
+                    System.out.println(location[0] + "," + location[1] + "LOCATION111");
+                    location[0] = Objects.requireNonNull(Data.playerLocation.get(Data.LOCALIP))[2];
+                    location[1] = Objects.requireNonNull(Data.playerLocation.get(Data.LOCALIP))[3];
+                } else {
+                    location = new int[]{0, 0};
+                }
+                testtxt.setText(Arrays.toString(location));
+                handlerUDP.postDelayed(this, 20);// 刷新间隔(ms)
             }
-            testtxt.setText(Arrays.toString(location));
-            handlerUDP.postDelayed (this, 20);// 刷新间隔(ms)
         }
     };
 
@@ -506,19 +515,19 @@ public class ClientGameControl extends AppCompatActivity {
     private Runnable runnableInfo = new Runnable() {
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         public void run() {
-            this.update();
-            handlerInfo.postDelayed(this, 20);// 刷新间隔(ms)
+            if (!isend) {
+                this.update();
+                handlerInfo.postDelayed(this, 20);// 刷新间隔(ms)
+            }
         }
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         void update() {
             Role_simple r;
-            location = location_tmp;
             for (int i=0;i<map.livingrole.size();i++) {
                 r = map.livingrole.get(i);
 
-
                 r.lifevalue = Objects.requireNonNull (Data.playerLocation.get (r.name))[1];
-//                check_alive(r);
+                check_alive(r);
 
                 r.location[0] = Objects.requireNonNull (Data.playerLocation.get (r.name))[2];
                 r.location[1] = Objects.requireNonNull (Data.playerLocation.get (r.name))[3];
@@ -652,16 +661,29 @@ public class ClientGameControl extends AppCompatActivity {
         }
     }
 
-//    void check_alive(Role_simple r){
-//        if (r.id==myrole.id && r.lifevalue<=0){
+    void check_alive(Role_simple r){
+        if (r.id==myrole.id && r.lifevalue<=0) {
+            isend=true;
+            ImageView black_layer=findViewById(R.id.black_layer);
+            black_layer.setVisibility(View.VISIBLE);
+            ImageView my_pic=findViewById(R.id.res_mine);
+            switch (myrole.id%100) {
+                case 0:my_pic.setImageResource(R.drawable.role0); break;
+            }
+            my_pic.setVisibility(View.VISIBLE);
+            TextView score_board=findViewById(R.id.score_board);
+            score_board.setText("Nane:"+myrole.name+"\nRank:"+"1"+"\nScore:"+String.valueOf(vision));
+            score_board.setVisibility(View.VISIBLE);
+            Button ret=findViewById(R.id.Return);
+            ret.setVisibility(View.VISIBLE);
 //            Intent intent = new Intent(this, ClientGameControl.class);
-//            Bundle bundle=new Bundle();
-//            bundle.putString("rank","1");
-//            bundle.putString("name","LYT");
-//            bundle.putString("score",String.valueOf(vision));
+//            Bundle bundle = new Bundle();
+//            bundle.putString("rank", "1");
+//            bundle.putString("name", "LYT");
+//            bundle.putString("score", String.valueOf(vision));
 //            startActivity(intent);
-//        }
-//    }
+        }
+    }
 
     //析构
     protected void onDestroy() {
