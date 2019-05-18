@@ -58,7 +58,7 @@ public class Login extends Activity {                 //登录界面活动
 
     private Boolean sendLogin(String userID, String pwd) throws InterruptedException {
         new AsyncConUDP ().execute ("login!"+userID+"!"+pwd);
-        TimeUnit.MILLISECONDS.sleep (500);
+        TimeUnit.MILLISECONDS.sleep (1000);
         System.out.println ("Search: " + Data.accountStatus.containsKey ("isLoginValid"));
         if(Data.accountStatus.containsKey ("isLoginValid")){
             return Data.accountStatus.get ("isLoginValid");

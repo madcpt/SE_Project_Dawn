@@ -12,13 +12,13 @@ public class Room {
         this.RoomID = RoomID;
         this.numberOfMember = numberOfMember;
         this.memberList = new Vector<>(numberOfMember);
-        this.roomPrepareCnt = new int [] {3,2};
+        this.roomPrepareCnt = new int [] {1,0};
     }
     public Room(String RoomID, Vector<String> memberList){
         this.RoomID = RoomID;
         this.memberList = memberList;
         this.numberOfMember = memberList.size ();
-        this.roomPrepareCnt = new int [] {3,2};
+        this.roomPrepareCnt = new int [] {1,0};
     }
     public void getStatus(){
         System.out.println ("STATUS111 " + memberList.toString ());

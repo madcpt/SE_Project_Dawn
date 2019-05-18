@@ -59,13 +59,106 @@ public class RoomPage extends AppCompatActivity {
         }
     }
 
+    static boolean stop = false;
+
     //房间准备刷新(UDP)
     private Handler handlerUDP = new Handler();
     private Runnable runnableUDP = new Runnable() {
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         public void run() {
-            new AsyncConUDP ().execute ("room_cnt!" + Data.myRoom.RoomID);
-            handlerUDP.postDelayed (this, 1000);// 刷新间隔(ms)
+            if (!stop) {
+                new AsyncConUDP ().execute ("room_cnt!" + Data.myRoom.RoomID);
+                handlerUDP.postDelayed (this, 1000);// 刷新间隔(ms)
+
+                ImageView prepareImage1 = findViewById (R.id.Role1);
+                ImageView prepareImage2 = findViewById (R.id.Role2);
+                ImageView prepareImage3 = findViewById (R.id.Role3);
+                ImageView prepareImage4 = findViewById (R.id.Role4);
+                AC1 = findViewById (R.id.textView2);
+                AC2 = findViewById (R.id.textView3);
+                AC3 = findViewById (R.id.textView4);
+                AC4 = findViewById (R.id.textView5);
+
+                System.out.println ("From Server: Room_cnt111" + Arrays.toString (Data.myRoom.roomPrepareCnt));
+
+                int rc = Data.myRoom.roomPrepareCnt[0]; //room-capacity
+                if(rc == 1){
+                    prepareImage4.setImageResource (R.drawable.white);
+                    prepareImage3.setImageResource (R.drawable.white);
+                    prepareImage2.setImageResource (R.drawable.white);
+                    prepareImage1.setImageResource (R.drawable.r_0_3_0);
+                    AC1.setText ("1");
+                    AC2.setText ("");
+                    AC3.setText ("");
+                    AC4.setText ("");
+                }
+                if (rc == 2) {
+                    prepareImage4.setImageResource (R.drawable.white);
+                    prepareImage3.setImageResource (R.drawable.white);
+                    prepareImage2.setImageResource (R.drawable.r_0_3_0);
+                    prepareImage1.setImageResource (R.drawable.r_0_3_0);
+                    AC1.setText ("1");
+                    AC2.setText ("2");
+                    AC3.setText ("");
+                    AC4.setText ("");
+                }
+                if (rc == 3) {
+                    prepareImage4.setImageResource (R.drawable.white);
+                    prepareImage3.setImageResource (R.drawable.r_0_3_0);
+                    prepareImage2.setImageResource (R.drawable.r_0_3_0);
+                    prepareImage1.setImageResource (R.drawable.r_0_3_0);
+                    AC1.setText ("1");
+                    AC2.setText ("2");
+                    AC3.setText ("3");
+                    AC4.setText ("");
+                }
+                if (rc == 4) {
+                    prepareImage4.setImageResource (R.drawable.r_0_3_0);
+                    prepareImage3.setImageResource (R.drawable.r_0_3_0);
+                    prepareImage2.setImageResource (R.drawable.r_0_3_0);
+                    prepareImage1.setImageResource (R.drawable.r_0_3_0);
+
+                    AC1.setText ("1");
+                    AC2.setText ("2");
+                    AC3.setText ("3");
+                    AC4.setText ("4");
+                }
+
+                int prepareCount = Data.myRoom.roomPrepareCnt[1];
+                switch (prepareCount) {
+                    case 1:
+                        prepareImage1.setImageResource (R.drawable.prepare);
+//                        prepareImage2.setImageResource (R.drawable.r_0_3_0);
+//                        prepareImage3.setImageResource (R.drawable.r_0_3_0);
+//                        prepareImage4.setImageResource (R.drawable.r_0_3_0);
+                        break;
+                    case 2:
+                        prepareImage1.setImageResource (R.drawable.prepare);
+                        prepareImage2.setImageResource (R.drawable.prepare);
+//                        prepareImage3.setImageResource (R.drawable.r_0_3_0);
+//                        prepareImage4.setImageResource (R.drawable.r_0_3_0);
+                        break;
+                    case 3:
+                        prepareImage1.setImageResource (R.drawable.prepare);
+                        prepareImage2.setImageResource (R.drawable.prepare);
+                        prepareImage3.setImageResource (R.drawable.prepare);
+//                        prepareImage4.setImageResource (R.drawable.r_0_3_0);
+                        break;
+                    case 4:
+                        prepareImage1.setImageResource (R.drawable.prepare);
+                        prepareImage2.setImageResource (R.drawable.prepare);
+                        prepareImage3.setImageResource (R.drawable.prepare);
+                        prepareImage4.setImageResource (R.drawable.prepare);
+                        break;
+                }
+                if (prepareCount == rc) {
+                    stop = true;
+                    Intent intent = new Intent (RoomPage.this, MainActivity.class);
+                    System.out.println ("GameStart");
+                    startActivity (intent);
+                    finish ();
+                }
+            }
         }
     };
 
@@ -111,44 +204,9 @@ public class RoomPage extends AppCompatActivity {
 
         AC3=findViewById(R.id.textView4);
         AC4=findViewById(R.id.textView5);
-        ImageView prepareImage1=findViewById(R.id.Role1);
-        ImageView prepareImage2=findViewById(R.id.Role2);
-        ImageView prepareImage3=findViewById(R.id.Role3);
-        ImageView prepareImage4=findViewById(R.id.Role4);
 
 
-        int rc=3;
-        if (rc==3) {
-            prepareImage4.setImageResource(R.drawable.white);
-            AC1 = findViewById(R.id.textView2);
-            AC2 = findViewById(R.id.textView3);
-            AC3 = findViewById(R.id.textView4);
-            AC1.setText("1");
-            AC2.setText("2");
-            AC3.setText("3");
-        }
-        if (rc==2) {
-            prepareImage3.setImageResource(R.drawable.white);
-            AC1 = findViewById(R.id.textView2);
-            AC2 = findViewById(R.id.textView3);
-            AC1.setText("1");
-            AC2.setText("2");
-        }
-        if (rc==4)
-        {
-            prepareImage3.setImageResource(R.drawable.white);
-            AC1 = findViewById(R.id.textView2);
-            AC2 = findViewById(R.id.textView3);
-            AC3 = findViewById(R.id.textView4);
-            AC4 = findViewById(R.id.textView5);
-            AC1.setText("1");
-            AC2.setText("2");
-            AC4.setText("4");
-            AC3.setText("3");
-
-        }
-
-        player.setAccount(Account);
+        player.setAccount(Account); //设置用户名
 
         handlerUDP.postDelayed(runnableUDP, 100);
     }
@@ -164,39 +222,6 @@ public class RoomPage extends AppCompatActivity {
                     new AsyncConTCP ().execute ("init," + Data.myRoomID + "," + player.Account);
 
                     //PrepareSequence=第几个好的，从服务器接受
-                    int prepareCount=4;
-                    ImageView prepareImage1=findViewById(R.id.Role1);
-                    ImageView prepareImage2=findViewById(R.id.Role2);
-                    ImageView prepareImage3=findViewById(R.id.Role3);
-                    ImageView prepareImage4=findViewById(R.id.Role4);
-                    switch (prepareCount){
-                        case 1:
-                            prepareImage1.setImageResource(R.drawable.prepare);
-                            break;
-                        case 2:
-                            prepareImage1.setImageResource(R.drawable.prepare);
-                            prepareImage2.setImageResource(R.drawable.prepare);
-                            break;
-                        case 3:
-                            prepareImage1.setImageResource(R.drawable.prepare);
-                            prepareImage2.setImageResource(R.drawable.prepare);
-                            prepareImage3.setImageResource(R.drawable.prepare);
-                            break;
-                        case 4:
-                            prepareImage1.setImageResource(R.drawable.prepare);
-                            prepareImage2.setImageResource(R.drawable.prepare);
-                            prepareImage3.setImageResource(R.drawable.prepare);
-                            prepareImage4.setImageResource(R.drawable.prepare);
-                            break;
-                    }
-                    if (prepareCount==4) {
-                        Intent intent = new Intent(RoomPage.this, MainActivity.class);
-                        System.out.println("GameStart");
-                        startActivity(intent);
-                        finish();
-                    }
-
-
 
                     break;
                 case R.id.SelectRole:
