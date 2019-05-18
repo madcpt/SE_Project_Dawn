@@ -1,4 +1,4 @@
-﻿package com.example.DAWN;
+package com.example.DAWN;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
