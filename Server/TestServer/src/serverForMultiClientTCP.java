@@ -83,6 +83,8 @@ public class serverForMultiClientTCP extends ServerSocket {
                         Data.roomList.joinRoom(pureIP, myList.get(2));
                         Data.roomList.disPlayAllRoom();
                         break;
+//                    case "kill":
+//                        String kill
 
                 }
 //                System.out.println(Arrays.toString(Data.getUpdateList().get(pureIP)));

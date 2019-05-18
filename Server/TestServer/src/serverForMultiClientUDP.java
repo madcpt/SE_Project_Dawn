@@ -70,14 +70,25 @@ public class serverForMultiClientUDP implements Runnable{
                     break;
                 case "register":
                     System.out.println("Register Request From Client:" + inputMes[1] + "," + inputMes[2]);
-                    Boolean isRegisterValid = true;
-                    //
+                    Boolean isRegisterValid;
+                    if(Data.database.check(inputMes[1])){
+                        Data.database.update(inputMes[1], inputMes[2]);
+                        isRegisterValid = true;
+                    }else {
+                        isRegisterValid = false;
+                    }
                     objectStream.writeObject(isRegisterValid);
                     break;
                 case "login":
+                    boolean isLoginValid;
                     System.out.println("Login Request From Client:" + inputMes[1] + "," + inputMes[2]);
-                    Boolean isLoginValid = true;
-                    //
+                    System.out.println();
+                    if(Data.database.checkvalid(inputMes[1], inputMes[2])){
+                        isLoginValid = true;
+                    }else{
+                        isLoginValid = false;
+                    }
+//                    database.create();
                     objectStream.writeObject(isLoginValid);
                     break;
                 default:
@@ -105,7 +116,7 @@ public class serverForMultiClientUDP implements Runnable{
     }
 
     public static void startUDP() throws Exception{
-        System.out.println("Asd");
+        System.out.println("123123");
         // Data dataclass = new Data();
         openServer();
     }

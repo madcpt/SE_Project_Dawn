@@ -18,7 +18,7 @@ public class MyRole {
 
             bag=new Vector<Prop>();
 
-            switch (id/100){
+            switch (id%100){
                 //不同角色特性
             }
 

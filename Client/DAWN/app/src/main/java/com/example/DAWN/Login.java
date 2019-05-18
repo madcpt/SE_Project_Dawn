@@ -18,6 +18,8 @@ import android.widget.Toast;
 import com.example.DAWN.DialogManagement.RunnableTCP;
 import com.example.DAWN.DialogManagement.RunnableUDP;
 
+import java.util.concurrent.TimeUnit;
+
 public class Login extends Activity {                 //登录界面活动
 
     public int pwdresetFlag=0;
@@ -48,8 +50,10 @@ public class Login extends Activity {                 //登录界面活动
         }
     }
 
-    private Boolean sendLogin(String userID, String pwd){
+    private Boolean sendLogin(String userID, String pwd) throws InterruptedException {
         new AsyncConUDP ().execute ("login!"+userID+"!"+pwd);
+        TimeUnit.MILLISECONDS.sleep (500);
+        System.out.println ("Search: " + Data.accountStatus.containsKey ("isLoginValid"));
         if(Data.accountStatus.containsKey ("isLoginValid")){
             return Data.accountStatus.get ("isLoginValid");
         }
@@ -109,7 +113,11 @@ public class Login extends Activity {                 //登录界面活动
                     finish();
                     break;
                 case R.id.login_btn_login:                            //登录界面的登录按钮
-                    login();
+                    try {
+                        login();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace ();
+                    }
                     break;
                 case R.id.login_btn_cancle:                             //登录界面的注销按钮
                     cancel();
@@ -123,47 +131,66 @@ public class Login extends Activity {                 //登录界面活动
         }
     };
 
-    public void login() {                                              //登录按钮监听事件
+    public void login() throws InterruptedException {                                              //登录按钮监听事件
         if (isUserNameAndPwdValid()) {
             String userName = mAccount.getText().toString().trim();    //获取当前输入的用户名和密码信息
             String userPwd = mPwd.getText().toString().trim();
-            //默认账号
-            if (userName.equals("1")  && userPwd.equals("1"))
-            {
-                Intent intent = new Intent(Login.this,CreateRoom.class) ;    //切换Login Activity至User Activity
 
-                intent.putExtra("Account",userName);
-                startActivity(intent);
-                finish();
-                Toast.makeText(this, getString(R.string.login_success),Toast.LENGTH_SHORT).show();//登录成功提示
-//                onDestroy();
-            }
+//            //默认账号
+//            if (userName.equals("1")  && userPwd.equals("1"))
+//            {
+//                Intent intent = new Intent(Login.this,CreateRoom.class) ;    //切换Login Activity至User Activity
+//
+//                intent.putExtra("Account",userName);
+//                startActivity(intent);
+//                finish();
+//                Toast.makeText(this, getString(R.string.login_success),Toast.LENGTH_SHORT).show();//登录成功提示
+////                onDestroy();
+//            }
 
-            SharedPreferences.Editor editor =login_sp.edit();
-            int result=mUserDataManager.findUserByNameAndPwd(userName, userPwd);
-            if(result>=1){                                             //返回1说明用户名和密码均正确
-                //保存用户名和密码
-                editor.putString("USER_NAME", userName);
-                editor.putString("PASSWORD", userPwd);
 
-                //是否记住密码
-                if(mRememberCheck.isChecked()){
-                    editor.putBoolean("mRememberCheck", true);
-                }else{
-                    editor.putBoolean("mRememberCheck", false);
-                }
-                editor.commit();
+            if(sendLogin (userName, userPwd)){
+                System.out.println ("Login Succeed");
+//                UserData mUser = new UserData(userName, userPwd);
+//                System.out.println(mUser);
+//                mUserDataManager.openDataBase();
+//                mUserDataManager.insertUserData(mUser); //新建用户信息
 
-                Intent intent = new Intent(Login.this,CreateRoom.class) ;    //切换Login Activity至User Activity
+                SharedPreferences.Editor editor =login_sp.edit();
+//                int result=mUserDataManager.findUserByNameAndPwd(userName, userPwd);
+//                if(result>=1){                                             //返回1说明用户名和密码均正确
+                    //保存用户名和密码
+                    editor.putString("USER_NAME", userName);
+                    editor.putString("PASSWORD", userPwd);
 
-                intent.putExtra("Account",userName);
-                startActivity(intent);
-                finish();
-                if(sendLogin (userName, userPwd)) //
-                Toast.makeText(this, getString(R.string.login_success),Toast.LENGTH_SHORT).show();//登录成功提示
-            }else if(result==0){
+                    //是否记住密码
+                    if(mRememberCheck.isChecked()){
+                        editor.putBoolean("mRememberCheck", true);
+                    }else{
+                        editor.putBoolean("mRememberCheck", false);
+                    }
+                    editor.commit();
+
+                    Intent intent = new Intent(Login.this,CreateRoom.class) ;    //切换Login Activity至User Activity
+
+                    intent.putExtra("Account",userName);
+                    startActivity(intent);
+                    finish();
+
+//                }else if(result==0){
+//                    if(sendLogin (userName, userPwd))
+//                        Toast.makeText(this, getString(R.string.login_success),Toast.LENGTH_SHORT).show();//登录成功提示
+//                    else Toast.makeText(this, getString(R.string.login_fail),Toast.LENGTH_SHORT).show();  //登录失败提示
+//                }
+
+//                Intent intent = new Intent(Login.this,CreateRoom.class) ;    //切换Login Activity至User Activity
+//                intent.putExtra("Account",userName);
+//                startActivity(intent);
+//                finish();
+            }else{
                 Toast.makeText(this, getString(R.string.login_fail),Toast.LENGTH_SHORT).show();  //登录失败提示
             }
+
         }
     }
     public void cancel() {           //注销
