@@ -48,7 +48,9 @@ public class ClientUDP {
 
             // Receive
 
+            System.out.println ("RECEIVE1112");
             client.receive(receivePacket);
+            System.out.println ("RECEIVE1113");
 
             ByteArrayInputStream byteArraySteam = new ByteArrayInputStream(ReceiveBytes);
             ObjectInputStream objectStream = new ObjectInputStream (byteArraySteam);
@@ -71,6 +73,7 @@ public class ClientUDP {
                     break;
                 case "ask_room":
                     if(Data.roomListStr == null){
+                        System.out.println ("ASK111");
                         Data.roomListStr = (Vector<String>) objectStream.readObject ();
                         System.out.println ("ASK111" + Data.roomListStr.toString ());
                     }
@@ -88,6 +91,7 @@ public class ClientUDP {
 
             objectStream.close();
             byteArraySteam.close();
+            
 
 
 

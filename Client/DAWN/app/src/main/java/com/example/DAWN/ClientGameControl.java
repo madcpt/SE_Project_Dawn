@@ -41,6 +41,7 @@ public class ClientGameControl extends AppCompatActivity {
 
     private int direction = 3;
     int[] location={0,0}; //当前位置
+    int[] location_tmp = {0,0}; //地图位置缓存
     int[] center_location;
 
     private Collision Colli;
@@ -74,6 +75,7 @@ public class ClientGameControl extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_process);
 
@@ -479,16 +481,13 @@ public class ClientGameControl extends AppCompatActivity {
             System.out.println (Data.playerLocation + "PLAYER111");
             if (Data.playerLocation != null && Data.playerLocation.containsKey (Data.LOCALIP)) {
                 System.out.println (location[0] + "," + location[1] + "LOCATION111");
-                location[0] = Objects.requireNonNull (Data.playerLocation.get (Data.LOCALIP))[2];
-                location[1] = Objects.requireNonNull (Data.playerLocation.get (Data.LOCALIP))[3];
+                location_tmp[0] = Objects.requireNonNull (Data.playerLocation.get (Data.LOCALIP))[2];
+                location_tmp[1] = Objects.requireNonNull (Data.playerLocation.get (Data.LOCALIP))[3];
             } else {
-                location = new int[]{0, 0};
+                location_tmp = new int[]{0, 0};
             }
-            handlerUDP.postDelayed (this, 10);// 刷新间隔(ms)
+            handlerUDP.postDelayed (this, 20);// 刷新间隔(ms)
         }
-//        void update() {
-//            location = dataclass.location;
-//        }
     };
 
 
@@ -503,6 +502,7 @@ public class ClientGameControl extends AppCompatActivity {
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         void update() {
             Role_simple r;
+            location = location_tmp;
             for (int i=0;i<map.livingrole.size();i++) {
                 r = map.livingrole.get(i);
 
@@ -623,7 +623,7 @@ public class ClientGameControl extends AppCompatActivity {
                         p.setXfermode(null);
                         c.restore();
                     }
-                    Thread.sleep(10);
+                    Thread.sleep(40);
 
                 } catch (Exception e) {
                     e.printStackTrace();
