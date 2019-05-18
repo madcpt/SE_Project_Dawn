@@ -13,12 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.FullScreen">
-        <activity
-            android:name=".ShowResult"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_show_result"
-            android:screenOrientation="landscape"
-            android:theme="@style/FullscreenTheme"></activity>
+
         <activity
             android:name=".CreateRoom"
             android:screenOrientation="landscape"></activity>
