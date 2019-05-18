@@ -14,6 +14,7 @@ public class Data {
     public Random rand;
     private static Collision Colli = new Collision(120,100);
     public static RoomPool roomList;
+    public static Test database;
 
     Data() {
         WholeMap = new MapClass();
@@ -25,7 +26,12 @@ public class Data {
         int h = Colli.getCollision_height();
         int w = Colli.getCollision_width();
         //return true if it's invalid to move
-        return ( ( WholeMap.m[ x / WholeMap.unit ][ y / WholeMap.unit] == 1 ) || ( WholeMap.m[ ( x + w ) / WholeMap.unit ][ ( y + h ) / WholeMap.unit] == 1 ) || ( WholeMap.m[ ( x + w ) / WholeMap.unit ][ y / WholeMap.unit] == 1 ) || ( WholeMap.m[ x / WholeMap.unit ][ ( y + h ) / WholeMap.unit] == 1 ));
+        System.out.println("x,y: "+ WholeMap.m[ y / WholeMap.unit][ x / WholeMap.unit ]);
+        System.out.println("x + w,y: "+ WholeMap.m[ y / WholeMap.unit][ ( x + w ) / WholeMap.unit ]);
+        System.out.println("x,y + h: "+ WholeMap.m[ ( y + h ) / WholeMap.unit][ x / WholeMap.unit ]);
+        System.out.println("x + w,y + h: "+ WholeMap.m[ ( y + h ) / WholeMap.unit][ ( x + w ) / WholeMap.unit ]);
+        System.out.println(( WholeMap.m[ y / WholeMap.unit][ x / WholeMap.unit ] == 1 ) || ( WholeMap.m[ ( y + h ) / WholeMap.unit][ ( x + w ) / WholeMap.unit ] == 1 ) || ( WholeMap.m[ y / WholeMap.unit][ ( x + w ) / WholeMap.unit ] == 1 ) || ( WholeMap.m[ ( y + h ) / WholeMap.unit][ x / WholeMap.unit ] == 1 ));
+        return ( ( WholeMap.m[ y / WholeMap.unit][ x / WholeMap.unit ] == 1 ) || ( WholeMap.m[ ( y + h ) / WholeMap.unit][ ( x + w ) / WholeMap.unit ] == 1 ) || ( WholeMap.m[ y / WholeMap.unit][ ( x + w ) / WholeMap.unit ] == 1 ) || ( WholeMap.m[ ( y + h ) / WholeMap.unit][ x / WholeMap.unit ] == 1 ));
     }
 
     public static boolean AttackCollisionDetect(int x1, int y1, int x2, int y2){
@@ -39,27 +45,25 @@ public class Data {
         int dire = playerLocation.get(pureIP)[4];
         int x = playerLocation.get(pureIP)[2];
         int y = playerLocation.get(pureIP)[3];
+        switch (dire){
+            case 0:
+                x += Colli.getCollision_width();
+                break;
+            case 1:
+                y -= Colli.getCollision_height();
+                break;
+            case 2:
+                x -= Colli.getCollision_width();
+                break;
+            case 3:
+                y += Colli.getCollision_height();
+                break;
+        }
+        playerLocation.get(pureIP)[6] = 1;
+        System.out.println("attack_mov " + playerLocation.get(pureIP)[6]);
         for(String ID : playerLocation.keySet()){
             if(ID == pureIP){
                 continue;
-            }
-            switch (dire){
-                case 0:
-                    x += Colli.getCollision_width();
-                    playerLocation.get(pureIP)[6] = 1;
-                    break;
-                case 1:
-                    y += Colli.getCollision_height();
-                    playerLocation.get(pureIP)[6] = 1;
-                    break;
-                case 2:
-                    x -= Colli.getCollision_width();
-                    playerLocation.get(pureIP)[6] = 1;
-                    break;
-                case 3:
-                    y -= Colli.getCollision_height();
-                    playerLocation.get(pureIP)[6] = 1;
-                    break;
             }
             if(AttackCollisionDetect(x,y,playerLocation.get(ID)[2],playerLocation.get(ID)[3])){
                 playerLocation.get(ID)[1] -= dama;
@@ -110,6 +114,7 @@ public class Data {
         playerLocation = new HashMap<>();
         direction = 0;
         roomList = new RoomPool();
+        database=new Test();
     }
 
     public void addPlayer(String pureIP, int[] lt) {

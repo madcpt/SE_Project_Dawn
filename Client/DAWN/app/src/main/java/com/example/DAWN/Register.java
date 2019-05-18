@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.example.DAWN.DialogManagement.RunnableTCP;
 import com.example.DAWN.DialogManagement.RunnableUDP;
 
+import java.util.concurrent.TimeUnit;
+
 public class Register extends AppCompatActivity {
     private EditText mAccount;                        //用户名编辑
     private EditText mPwd;                            //密码编辑
@@ -32,8 +34,9 @@ public class Register extends AppCompatActivity {
         }
     }
 
-    private Boolean sendRegister(String userID, String pwd){
+    private Boolean sendRegister(String userID, String pwd) throws InterruptedException {
         new AsyncConUDP ().execute ("register!"+userID+"!"+pwd);
+        TimeUnit.MILLISECONDS.sleep (1000);
         if(Data.accountStatus.containsKey ("isRegisterValid")){
             return Data.accountStatus.get ("isRegisterValid");
         }
@@ -69,19 +72,23 @@ public class Register extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.register_btn_sure:                       //确认按钮的监听事件
-                    register_check();
-                    onDestroy();
+                    try {
+                        register_check();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace ();
+                    }
+//                    onDestroy();
                     break;
                 case R.id.register_btn_cancel:                     //取消按钮的监听事件,由注册界面返回登录界面
                     Intent intent_Register_to_Login = new Intent(Register.this,Login.class) ;    //切换User Activity至Login Activity
                     startActivity(intent_Register_to_Login);
                     finish();
-                    onDestroy();
+//                    onDestroy();
                     break;
             }
         }
     };
-    public void register_check() {                                //确认按钮的监听事件
+    public void register_check() throws InterruptedException {                                //确认按钮的监听事件
         if (isUserNameAndPwdValid()) {
             String userName = mAccount.getText().toString().trim();
             String userPwd = mPwd.getText().toString().trim();
@@ -90,28 +97,44 @@ public class Register extends AppCompatActivity {
             int count=mUserDataManager.findUserByName(userName);
             System.out.println("count"+count);
             //用户已经存在时返回，给出提示文字
-            if(count>0){
+            //System.out.println("");
+
+            if(count>0)
+            {
                 Toast.makeText(this, getString(R.string.name_already_exist),Toast.LENGTH_SHORT).show();
                 return ;
             }
-            if(userPwd.equals(userPwdCheck)==false){     //两次密码输入不一样
+            if(userPwd.equals(userPwdCheck)==false)
+            {     //两次密码输入不一样
                 Toast.makeText(this, getString(R.string.pwd_not_the_same),Toast.LENGTH_SHORT).show();
                 return ;
             } else {
-                UserData mUser = new UserData(userName, userPwd);
-                System.out.println(mUser);
-                mUserDataManager.openDataBase();
-                long flag = mUserDataManager.insertUserData(mUser); //新建用户信息
-                if (flag == -1) {
-                    Toast.makeText(this, getString(R.string.register_fail),Toast.LENGTH_SHORT).show();
-                }else{
-                    if(sendRegister (userName, userPwd)) {
-                        Toast.makeText (this, getString (R.string.register_success), Toast.LENGTH_SHORT).show ();
-                        Intent intent_Register_to_Login = new Intent (Register.this, Login.class);    //切换User Activity至Login Activity
-                        startActivity (intent_Register_to_Login);
-                        finish ();
-                    }
+//                UserData mUser = new UserData(userName, userPwd);
+//                System.out.println(mUser);
+//                mUserDataManager.openDataBase();
+//                long flag = mUserDataManager.insertUserData(mUser); //新建用户信息
+//                if (flag == -1) {
+//                    System.out.println("flag -1");
+//                    Toast.makeText(this, getString(R.string.register_fail),Toast.LENGTH_SHORT).show();
+//                }else{
+//                    if(sendRegister (userName, userPwd)) {
+//                        System.out.println ("sendRegister ");
+//                        Toast.makeText (this, getString (R.string.register_success), Toast.LENGTH_SHORT).show ();
+//                        Intent intent_Register_to_Login = new Intent (Register.this, Login.class);    //切换User Activity至Login Activity
+//                        startActivity (intent_Register_to_Login);
+//                        finish ();
+//                    }
+//                }
+                if(sendRegister (userName, userPwd)) {
+                    System.out.println ("sendRegister ");
+                    Toast.makeText (this, getString (R.string.register_success), Toast.LENGTH_SHORT).show ();
+                    Intent intent_Register_to_Login = new Intent (Register.this, Login.class);    //切换User Activity至Login Activity
+                    startActivity (intent_Register_to_Login);
+                    finish ();
+                }else {
+                    Toast.makeText (this, getString (R.string.register_fail), Toast.LENGTH_SHORT).show ();
                 }
+
             }
         }
     }

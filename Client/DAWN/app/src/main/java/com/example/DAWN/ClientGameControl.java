@@ -348,6 +348,11 @@ public class ClientGameControl extends AppCompatActivity {
                             public void run(){
                                 super.run();
                                 Attack();
+                                try{
+                                    Thread.sleep(20);
+                                }catch(InterruptedException e){
+                                    e.printStackTrace();
+                                }
                                 }
                         };
                         t.start();
@@ -617,16 +622,16 @@ public class ClientGameControl extends AppCompatActivity {
                                         c.drawBitmap(attack_pic[0][r.attack_mov/3],center_location[0] - location[0]+r.location[0]+Colli.getCollision_width(),center_location[1] - location[1]+r.location[1],p);
                                         break;
                                     case 1:
-                                        c.drawBitmap(attack_pic[0][r.attack_mov/3],center_location[0] - location[0]+r.location[0],center_location[1] - location[1]+r.location[1]+Colli.getCollision_height(),p);
+                                        c.drawBitmap(attack_pic[0][r.attack_mov/3],center_location[0] - location[0]+r.location[0],center_location[1] - location[1]+r.location[1] - Colli.getCollision_height(),p);
                                         break;
                                     case 2:
                                         c.drawBitmap(attack_pic[0][r.attack_mov/3],center_location[0] - location[0]+r.location[0]-Colli.getCollision_height(),center_location[1] - location[1]+r.location[1],p);
                                         break;
                                     case 3:
-                                        c.drawBitmap(attack_pic[0][r.attack_mov/3],center_location[0] - location[0]+r.location[0],center_location[1] - location[1]+r.location[1]-Colli.getCollision_height(),p);
+                                        c.drawBitmap(attack_pic[0][r.attack_mov/3],center_location[0] - location[0]+r.location[0],center_location[1] - location[1]+r.location[1] + Colli.getCollision_height(),p);
                                         break;
                                 }
-                                r.attack_mov = (r.attack_mov+1)%12;
+                                r.attack_mov = (r.attack_mov == 14 )?  (-1) : (r.attack_mov + 1);
                             }
                         }
                         //画黑雾
