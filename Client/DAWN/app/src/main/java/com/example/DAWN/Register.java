@@ -70,13 +70,13 @@ public class Register extends AppCompatActivity {
             switch (v.getId()) {
                 case R.id.register_btn_sure:                       //确认按钮的监听事件
                     register_check();
-                    onDestroy();
+//                    onDestroy();
                     break;
                 case R.id.register_btn_cancel:                     //取消按钮的监听事件,由注册界面返回登录界面
                     Intent intent_Register_to_Login = new Intent(Register.this,Login.class) ;    //切换User Activity至Login Activity
                     startActivity(intent_Register_to_Login);
                     finish();
-                    onDestroy();
+//                    onDestroy();
                     break;
             }
         }

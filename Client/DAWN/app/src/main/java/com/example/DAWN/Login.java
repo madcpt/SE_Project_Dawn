@@ -136,7 +136,7 @@ public class Login extends Activity {                 //登录界面活动
                 startActivity(intent);
                 finish();
                 Toast.makeText(this, getString(R.string.login_success),Toast.LENGTH_SHORT).show();//登录成功提示
-                onDestroy();
+//                onDestroy();
             }
 
             SharedPreferences.Editor editor =login_sp.edit();
