@@ -9,11 +9,12 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="429dp"
-        android:layout_height="414dp"
+        android:layout_width="438dp"
+        android:layout_height="408dp"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:background="@drawable/shape_cornel"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/constraintLayout2"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"

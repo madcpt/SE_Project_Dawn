@@ -52,6 +52,26 @@ public class Test {
     }
 
 
+    public boolean checkvalid(String account,String password) throws ClassNotFoundException, SQLException {
+        boolean flag=true;
+        Class.forName(driveName);
+        //连接
+        Connection con = DriverManager.getConnection(url, user, pass);
+        Statement state = con.createStatement();
+        String  str="";
+        String  pwd="";
+        // String querySql = "select * from userinfo where Account='1'";
+        String querySql = "select * from userinfo where Account='"+account+"' ";
+        ResultSet rs = state.executeQuery(querySql);
+        if (rs.next()){
+            str = rs.getString("Account");
+            pwd=rs.getString("pwd");
+            System.out.println(str);
+            if (pwd.equals(password))
+                return  true;
+        }
+        return false;
+    }
 
 
 

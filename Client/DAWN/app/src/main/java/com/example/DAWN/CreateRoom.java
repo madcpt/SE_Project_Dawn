@@ -2,6 +2,7 @@ package com.example.DAWN;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -183,6 +184,8 @@ public class CreateRoom extends AppCompatActivity {
         Intent intent=new Intent(CreateRoom.this,RoomPage.class);
         intent.putExtra("Account",Account);
         startActivity(intent);
+        //onDestroy();
+
     }
 
     //@xzh
@@ -220,6 +223,7 @@ public class CreateRoom extends AppCompatActivity {
             intent.putExtra("Account",Account);
             startActivity(intent);
             new AsyncConTCP ().execute ("new_room," + strtmp2 + "," + strtmp1);
+            onDestroy();
         }
 //        TimeUnit.MILLISECONDS.sleep (500);
 //        new AsyncConTCP ().execute ("chos_r," + strtmp2);
@@ -267,5 +271,9 @@ public class CreateRoom extends AppCompatActivity {
 
 
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 
 }
