@@ -85,6 +85,18 @@ public class ClientUDP {
                         System.out.println ("ROOM111" + memberList);
                     }
                     break;
+                case "register":
+                    Boolean isRegisterValid = true;
+                    isRegisterValid = (Boolean) objectStream.readObject ();
+                    System.out.println ("From Server: Register " + isRegisterValid);
+                    Data.accountStatus.put ("isRegisterValid", isRegisterValid);
+                    break;
+                case "login":
+                    Boolean isLoginValid = true;
+                    isLoginValid = (Boolean) objectStream.readObject ();
+                    System.out.println ("From Server: Login " + isLoginValid);
+                    Data.accountStatus.put ("isLoginValid", isLoginValid);
+                    break;
 
             }
 
