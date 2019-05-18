@@ -51,19 +51,19 @@ public class Data {
             switch (dire){
                 case 0:
                     x += Colli.getCollision_width();
-                    playerLocation.get(pureIP)[6] = 1;
+                    playerLocation.get(pureIP)[6] = 0;
                     break;
                 case 1:
                     y += Colli.getCollision_height();
-                    playerLocation.get(pureIP)[6] = 1;
+                    playerLocation.get(pureIP)[6] = 0;
                     break;
                 case 2:
                     x -= Colli.getCollision_width();
-                    playerLocation.get(pureIP)[6] = 1;
+                    playerLocation.get(pureIP)[6] = 0;
                     break;
                 case 3:
                     y -= Colli.getCollision_height();
-                    playerLocation.get(pureIP)[6] = 1;
+                    playerLocation.get(pureIP)[6] = 0;
                     break;
             }
             if(AttackCollisionDetect(x,y,playerLocation.get(ID)[2],playerLocation.get(ID)[3])){
