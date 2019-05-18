@@ -12,7 +12,7 @@ public class Data {
     public int direction;
     public static MapClass WholeMap;
     public Random rand;
-    private static Collision Colli;
+    private static Collision Colli = new Collision(120,100);
     public static RoomPool roomList;
 
     Data() {

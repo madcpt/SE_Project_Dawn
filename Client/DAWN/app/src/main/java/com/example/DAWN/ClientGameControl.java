@@ -43,7 +43,7 @@ public class ClientGameControl extends AppCompatActivity {
     int[] location={0,0}; //当前位置
     int[] center_location;
 
-    private Collision Colli;
+    private Collision Colli = new Collision(120,100);
     private Map map;
     private Role myrole;
     int vision=20;//视野范围

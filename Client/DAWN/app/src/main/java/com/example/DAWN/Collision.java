@@ -1,8 +1,12 @@
 package com.example.DAWN;
 
 public class Collision {
-    private static final int Collision_height = 48;
-    private static final int Collision_width = 38;
+    private int Collision_height;
+    private int Collision_width;
+    Collision(int height, int width){
+        this.Collision_height = height;
+        this.Collision_width = width;
+    }
 
     public int getCollision_height(){
         return Collision_height;
