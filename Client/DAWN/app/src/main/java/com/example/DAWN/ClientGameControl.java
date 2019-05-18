@@ -87,7 +87,7 @@ public class ClientGameControl extends AppCompatActivity {
         public void run() {
             System.out.println("Running " +  threadName );
             try {
-                    while(true){
+                    while(!isend){
                         switch (moveDirection){
                             case DIRECTION_CENTER:
                                 Stopmove();
@@ -195,16 +195,18 @@ public class ClientGameControl extends AppCompatActivity {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
                 // TODO Auto-generated method stub
-                switch (event.getAction()){
-                    case MotionEvent.ACTION_DOWN:
-                        System.out.println("Attackable "+Attackable);
-                        if(Attackable){
-                            Attack();
-                        }
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        StopAttack();
-                        break;
+                if (!isend) {
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            System.out.println("Attackable " + Attackable);
+                            if (Attackable) {
+                                Attack();
+                            }
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            StopAttack();
+                            break;
+                    }
                 }
                 return true;
             }
