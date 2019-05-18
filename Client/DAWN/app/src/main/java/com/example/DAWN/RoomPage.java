@@ -86,7 +86,7 @@ public class RoomPage extends AppCompatActivity {
             }
         }
 
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState );
         setContentView(R.layout.room_page);
 
         ImageView image=findViewById(R.id.RoleView);
@@ -108,14 +108,46 @@ public class RoomPage extends AppCompatActivity {
         String Account=getIntent().getStringExtra("Account");
         System.out.println("Account is"+Account);
 
-        AC1=findViewById(R.id.textView2);
-        AC2=findViewById(R.id.textView3);
+
         AC3=findViewById(R.id.textView4);
         AC4=findViewById(R.id.textView5);
-        AC1.setText("1");
-        AC2.setText("2");
-        AC3.setText("3");
-        AC4.setText("4");
+        ImageView prepareImage1=findViewById(R.id.Role1);
+        ImageView prepareImage2=findViewById(R.id.Role2);
+        ImageView prepareImage3=findViewById(R.id.Role3);
+        ImageView prepareImage4=findViewById(R.id.Role4);
+
+
+        int rc=3;
+        if (rc==3) {
+            prepareImage4.setImageResource(R.drawable.white);
+            AC1 = findViewById(R.id.textView2);
+            AC2 = findViewById(R.id.textView3);
+            AC3 = findViewById(R.id.textView4);
+            AC1.setText("1");
+            AC2.setText("2");
+            AC3.setText("3");
+        }
+        if (rc==2) {
+            prepareImage3.setImageResource(R.drawable.white);
+            AC1 = findViewById(R.id.textView2);
+            AC2 = findViewById(R.id.textView3);
+            AC1.setText("1");
+            AC2.setText("2");
+        }
+        if (rc==4)
+        {
+            prepareImage3.setImageResource(R.drawable.white);
+            AC1 = findViewById(R.id.textView2);
+            AC2 = findViewById(R.id.textView3);
+            AC3 = findViewById(R.id.textView4);
+            AC4 = findViewById(R.id.textView5);
+            AC1.setText("1");
+            AC2.setText("2");
+            AC4.setText("4");
+            AC3.setText("3");
+
+        }
+
         player.setAccount(Account);
 
         handlerUDP.postDelayed(runnableUDP, 100);
@@ -128,7 +160,6 @@ public class RoomPage extends AppCompatActivity {
             switch (v.getId()) {
                 case R.id.Prepare:
                     System.out.println("prepared");
-
                     //向服务器传递flag,id
                     new AsyncConTCP ().execute ("init," + Data.myRoomID + "," + player.Account);
 
@@ -176,7 +207,7 @@ public class RoomPage extends AppCompatActivity {
                     ImageView image=findViewById(R.id.RoleView);
                     switch(count%2) {
                         case 0:
-                            image.setImageResource(R.drawable.r_0_0_0);
+                            image.setImageResource(R.drawable.role0);
                             break;
                         case 1:
                             image.setImageResource(R.drawable.r_0_2_0);

@@ -109,7 +109,7 @@
             app:layout_constraintBottom_toTopOf="@+id/Role2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/r_0_0_0" />
+            app:srcCompat="@drawable/r_0_3_0" />
 
 
         <ImageView
@@ -123,7 +123,7 @@
             app:layout_constraintBottom_toTopOf="@+id/Role3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Role1"
-            app:srcCompat="@drawable/r_0_1_0" />
+            app:srcCompat="@drawable/r_0_3_0" />
 
 
         <ImageView
@@ -137,7 +137,7 @@
             app:layout_constraintBottom_toTopOf="@+id/Role4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Role2"
-            app:srcCompat="@drawable/r_0_2_0" />
+            app:srcCompat="@drawable/r_0_3_0" />
 
         <ImageView
             android:id="@+id/Role4"
@@ -160,7 +160,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
-            android:text="TextView"
+            android:text=""
             app:layout_constraintBottom_toTopOf="@+id/textView3"
             app:layout_constraintEnd_toStartOf="@+id/Role1" />
 
@@ -171,7 +171,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
-            android:text="TextView"
+            android:text=""
             app:layout_constraintBottom_toTopOf="@+id/textView4"
             app:layout_constraintEnd_toStartOf="@+id/Role2" />
 
@@ -182,7 +182,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
-            android:text="TextView"
+            android:text=""
             app:layout_constraintBottom_toTopOf="@+id/textView5"
             app:layout_constraintEnd_toStartOf="@+id/Role3" />
 
@@ -193,7 +193,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
-            android:text="TextView"
+            android:text=""
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/Role4" />
     </android.support.constraint.ConstraintLayout>

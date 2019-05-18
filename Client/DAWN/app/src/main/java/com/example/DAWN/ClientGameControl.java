@@ -7,6 +7,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -39,14 +41,14 @@ public class ClientGameControl extends AppCompatActivity {
     //其他角色绝对位置为{840-x+m,430-y+n}
     //(所有图片的左上角为判定点）
 
+    private volatile Boolean isend;
     private int direction = 3;
-    int[] location={0,0}; //当前位置
-    int[] location_tmp = {0,0}; //地图位置缓存
+    private volatile int[] location={0,0}; //当前位置
     int[] center_location;
 
     private Collision Colli = new Collision(120,100);
     private Map map;
-    private Role myrole;
+    private MyRole myrole;
     int vision=20;//视野范围
     int pre_vision;
 
@@ -71,6 +73,72 @@ public class ClientGameControl extends AppCompatActivity {
         }
     }
 
+    class ThreadMove extends Thread {
+        private Thread t;
+        private String threadName;
+        private RockerView.Direction moveDirection;
+
+        ThreadMove(String name) {
+            threadName = name;
+            moveDirection = RockerView.Direction.DIRECTION_CENTER;
+            System.out.println("Creating " +  threadName );
+        }
+
+        public void run() {
+            System.out.println("Running " +  threadName );
+            try {
+                    while(true){
+                        switch (moveDirection){
+                            case DIRECTION_CENTER:
+                                Stopmove();
+                                break;
+                            case DIRECTION_RIGHT:
+                                Rmove();
+                                break;
+                            case DIRECTION_UP:
+                                Umove();
+                                break;
+                            case DIRECTION_LEFT:
+                                Lmove();
+                                break;
+                            case DIRECTION_DOWN:
+                                Dmove();
+                                break;
+                            case DIRECTION_UP_RIGHT:
+                                URmove();
+                                break;
+                            case DIRECTION_UP_LEFT:
+                                ULmove();
+                                break;
+                            case DIRECTION_DOWN_LEFT:
+                                DLmove();
+                                break;
+                            case DIRECTION_DOWN_RIGHT:
+                                DRmove();
+                                break;
+                        }
+                        Thread.sleep(20);
+                }
+            }catch (InterruptedException e) {
+                System.out.println("Thread " +  threadName + " interrupted.");
+            }
+            System.out.println("Thread " +  threadName + " exiting.");
+        }
+
+        private void setDirection(RockerView.Direction Direction){
+            moveDirection = Direction;
+        }
+
+        public void start () {
+            System.out.println("Starting " +  threadName );
+            if (t == null) {
+                t = new Thread (this, threadName);
+                t.start ();
+            }
+        }
+    }
+
+
     @SuppressLint("ClickableViewAccessibility")
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -79,16 +147,21 @@ public class ClientGameControl extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_process);
 
+        isend = false;
+
         mRockerView = findViewById(R.id.my_rocker);
         testtxt= findViewById(R.id.Fortest);
         testtxt.setText("loading... ");
         testtxt.setText(Arrays.toString(location));
+        Attackable = true;
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         center_location=new int[2];
         center_location[0] = dm.widthPixels/2-50;
         center_location[1] = dm.heightPixels/2-60;//中心点相对坐标在这里改
+        final ThreadMove t1 = new ThreadMove("ThreadMove");
+        t1.start();
 
         try {
             MapInit();
@@ -96,17 +169,11 @@ public class ClientGameControl extends AppCompatActivity {
             e.printStackTrace ();
         }
 
+        myrole=new MyRole((Objects.requireNonNull (Data.playerLocation.get (Data.LOCALIP)))[0], Data.LOCALIP);
+
         //对摇杆位置改变进行监听
 //        当前模式：方向有改变时回调；8个方向
         mRockerView.setOnShakeListener(DIRECTION_8, new RockerView.OnShakeListener() {
-            private Boolean move0=false;
-            private Boolean move1=false;
-            private Boolean move2=false;
-            private Boolean move3=false;
-            private Boolean move4=false;
-            private Boolean move5=false;
-            private Boolean move6=false;
-            private Boolean move7=false;
 
             @Override
             public void onStart() {
@@ -114,224 +181,241 @@ public class ClientGameControl extends AppCompatActivity {
             }
             @Override
             public void direction(RockerView.Direction direction) {
-                switch(direction){
-                    case DIRECTION_DOWN:
-                        move0 = true;
-                        move1 = false;
-                        move2 = false;
-                        move3 = false;
-                        move4 = false;
-                        move5 = false;
-                        move6 = false;
-                        move7 = false;
-                        Thread t = new Thread(){
-                            public void run(){
-                                super.run();
-                                while (move0){
-                                    Dmove();
-                                    try{
-                                        Thread.sleep(20);
-                                    }catch(InterruptedException e){
-                                        e.printStackTrace();
-                                    }
-
-                                }
-                            }
-                        };
-                        t.start();
-                        break;
-                    case DIRECTION_LEFT:
-                        move1 = true;
-                        move0 = false;
-                        move2 = false;
-                        move3 = false;
-                        move4 = false;
-                        move5 = false;
-                        move6 = false;
-                        move7 = false;
-                        Thread t1 = new Thread(){
-                            public void run(){
-                                super.run();
-                                while (move1){
-                                    Lmove();
-                                    try{
-                                        Thread.sleep(20);
-                                    }catch(InterruptedException e){
-                                        e.printStackTrace();
-                                    }
-
-                                }
-                            }
-                        };
-                        t1.start();
-                        break;
-                    case DIRECTION_UP:
-                        move2 = true;
-                        move0 = false;
-                        move1 = false;
-                        move3 = false;
-                        move4 = false;
-                        move5 = false;
-                        move6 = false;
-                        move7 = false;
-                        Thread t2 = new Thread(){
-                            public void run(){
-                                super.run();
-                                while (move2){
-                                    Umove();
-                                    try{
-                                        Thread.sleep(20);
-                                    }catch(InterruptedException e){
-                                        e.printStackTrace();
-                                    }
-
-                                }
-                            }
-                        };
-                        t2.start();
-                        break;
-                    case DIRECTION_RIGHT:
-                        move3 = true;
-                        move0 = false;
-                        move1 = false;
-                        move2 = false;
-                        move4 = false;
-                        move5 = false;
-                        move6 = false;
-                        move7 = false;
-                        Thread t3 = new Thread(){
-                            public void run(){
-                                super.run();
-                                while (move3){
-                                    Rmove();
-                                    try{
-                                        Thread.sleep(20);
-                                    }catch(InterruptedException e){
-                                        e.printStackTrace();
-                                    }
-
-                                }
-                            }
-                        };
-                        t3.start();
-                        break;
-                    case DIRECTION_DOWN_LEFT:
-                        move4 = true;
-                        move0 = false;
-                        move1 = false;
-                        move2 = false;
-                        move3 = false;
-                        move5 = false;
-                        move6 = false;
-                        move7 = false;
-                        Thread t4 = new Thread(){
-                            public void run(){
-                                super.run();
-                                while (move4){
-                                    DLmove();
-                                    try{
-                                        Thread.sleep(20);
-                                    }catch(InterruptedException e){
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }
-                        };
-                        t4.start();
-                        break;
-                    case DIRECTION_DOWN_RIGHT:
-                        move5 = true;
-                        move0 = false;
-                        move1 = false;
-                        move2 = false;
-                        move3 = false;
-                        move4 = false;
-                        move6 = false;
-                        move7 = false;
-                        Thread t5 = new Thread(){
-                            public void run(){
-                                super.run();
-                                while (move5){
-                                    DRmove();
-                                    try{
-                                        Thread.sleep(20);
-                                    }catch(InterruptedException e){
-                                        e.printStackTrace();
-                                    }
-
-                                }
-                            }
-                        };
-                        t5.start();
-                        break;
-                    case DIRECTION_UP_LEFT:
-                        move6 = true;
-                        move0 = false;
-                        move1 = false;
-                        move2 = false;
-                        move3 = false;
-                        move4 = false;
-                        move5 = false;
-                        move7 = false;
-                        Thread t6 = new Thread(){
-                            public void run(){
-                                super.run();
-                                while (move6){
-                                    ULmove();
-                                    try{
-                                        Thread.sleep(20);
-                                    }catch(InterruptedException e){
-                                        e.printStackTrace();
-                                    }
-
-                                }
-                            }
-                        };
-                        t6.start();
-                        break;
-                    case DIRECTION_UP_RIGHT:
-                        move7 = true;
-                        move0 = false;
-                        move1 = false;
-                        move2 = false;
-                        move3 = false;
-                        move4 = false;
-                        move5 = false;
-                        move6 = false;
-                        Thread t7 = new Thread(){
-                            public void run(){
-                                super.run();
-                                while (move7){
-                                    URmove();
-                                    try{
-                                        Thread.sleep(20);
-                                    }catch(InterruptedException e){
-                                        e.printStackTrace();
-                                    }
-
-                                }
-                            }
-                        };
-                        t7.start();
-                        break;
-                    case DIRECTION_CENTER:
-                        move0 = false;
-                        move1 = false;
-                        move2 = false;
-                        move3 = false;
-                        move4 = false;
-                        move5 = false;
-                        move6 = false;
-                        move7 = false;
-                        Stopmove();
-                        break;
-                }
+                t1.setDirection(direction);
             }
             @Override
             public void onFinish() {
 
             }
         });
+
+//        mRockerView.setOnShakeListener(DIRECTION_8, new RockerView.OnShakeListener() {
+//            private Boolean move0=false;
+//            private Boolean move1=false;
+//            private Boolean move2=false;
+//            private Boolean move3=false;
+//            private Boolean move4=false;
+//            private Boolean move5=false;
+//            private Boolean move6=false;
+//            private Boolean move7=false;
+//
+//            @Override
+//            public void onStart() {
+//
+//            }
+//            @Override
+//            public void direction(RockerView.Direction direction) {
+//                switch(direction){
+//                    case DIRECTION_DOWN:
+//                        move0 = true;
+//                        move1 = false;
+//                        move2 = false;
+//                        move3 = false;
+//                        move4 = false;
+//                        move5 = false;
+//                        move6 = false;
+//                        move7 = false;
+//                        Thread t = new Thread(){
+//                            public void run(){
+//                                super.run();
+//                                while (move0){
+//                                    Dmove();
+//                                    try{
+//                                        Thread.sleep(20);
+//                                    }catch(InterruptedException e){
+//                                        e.printStackTrace();
+//                                    }
+//                                }
+//                            }
+//                        };
+//                        t.start();
+//                        break;
+//                    case DIRECTION_LEFT:
+//                        move1 = true;
+//                        move0 = false;
+//                        move2 = false;
+//                        move3 = false;
+//                        move4 = false;
+//                        move5 = false;
+//                        move6 = false;
+//                        move7 = false;
+//                        Thread t1 = new Thread(){
+//                            public void run(){
+//                                super.run();
+//                                while (move1){
+//                                    Lmove();
+//                                    try{
+//                                        Thread.sleep(20);
+//                                    }catch(InterruptedException e){
+//                                        e.printStackTrace();
+//                                    }
+//                                }
+//                            }
+//                        };
+//                        t1.start();
+//                        break;
+//                    case DIRECTION_UP:
+//                        move2 = true;
+//                        move0 = false;
+//                        move1 = false;
+//                        move3 = false;
+//                        move4 = false;
+//                        move5 = false;
+//                        move6 = false;
+//                        move7 = false;
+//                        Thread t2 = new Thread(){
+//                            public void run(){
+//                                super.run();
+//                                while (move2){
+//                                    Umove();
+//                                    try{
+//                                        Thread.sleep(20);
+//                                    }catch(InterruptedException e){
+//                                        e.printStackTrace();
+//                                    }
+//                                }
+//                            }
+//                        };
+//                        t2.start();
+//                        break;
+//                    case DIRECTION_RIGHT:
+//                        move3 = true;
+//                        move0 = false;
+//                        move1 = false;
+//                        move2 = false;
+//                        move4 = false;
+//                        move5 = false;
+//                        move6 = false;
+//                        move7 = false;
+//                        Thread t3 = new Thread(){
+//                            public void run(){
+//                                super.run();
+//                                while (move3){
+//                                    Rmove();
+//                                    try{
+//                                        Thread.sleep(20);
+//                                    }catch(InterruptedException e){
+//                                        e.printStackTrace();
+//                                    }
+//                                }
+//                            }
+//                        };
+//                        t3.start();
+//                        break;
+//                    case DIRECTION_DOWN_LEFT:
+//                        move4 = true;
+//                        move0 = false;
+//                        move1 = false;
+//                        move2 = false;
+//                        move3 = false;
+//                        move5 = false;
+//                        move6 = false;
+//                        move7 = false;
+//                        Thread t4 = new Thread(){
+//                            public void run(){
+//                                super.run();
+//                                while (move4){
+//                                    DLmove();
+//                                    try{
+//                                        Thread.sleep(20);
+//                                    }catch(InterruptedException e){
+//                                        e.printStackTrace();
+//                                    }
+//                                }
+//                            }
+//                        };
+//                        t4.start();
+//                        break;
+//                    case DIRECTION_DOWN_RIGHT:
+//                        move5 = true;
+//                        move0 = false;
+//                        move1 = false;
+//                        move2 = false;
+//                        move3 = false;
+//                        move4 = false;
+//                        move6 = false;
+//                        move7 = false;
+//                        Thread t5 = new Thread(){
+//                            public void run(){
+//                                super.run();
+//                                while (move5){
+//                                    DRmove();
+//                                    try{
+//                                        Thread.sleep(20);
+//                                    }catch(InterruptedException e){
+//                                        e.printStackTrace();
+//                                    }
+//                                }
+//                            }
+//                        };
+//                        t5.start();
+//                        break;
+//                    case DIRECTION_UP_LEFT:
+//                        move6 = true;
+//                        move0 = false;
+//                        move1 = false;
+//                        move2 = false;
+//                        move3 = false;
+//                        move4 = false;
+//                        move5 = false;
+//                        move7 = false;
+//                        Thread t6 = new Thread(){
+//                            public void run(){
+//                                super.run();
+//                                while (move6){
+//                                    ULmove();
+//                                    try{
+//                                        Thread.sleep(20);
+//                                    }catch(InterruptedException e){
+//                                        e.printStackTrace();
+//                                    }
+//                                }
+//                            }
+//                        };
+//                        t6.start();
+//                        break;
+//                    case DIRECTION_UP_RIGHT:
+//                        move7 = true;
+//                        move0 = false;
+//                        move1 = false;
+//                        move2 = false;
+//                        move3 = false;
+//                        move4 = false;
+//                        move5 = false;
+//                        move6 = false;
+//                        Thread t7 = new Thread(){
+//                            public void run(){
+//                                super.run();
+//                                while (move7){
+//                                    URmove();
+//                                    try{
+//                                        Thread.sleep(20);
+//                                    }catch(InterruptedException e){
+//                                        e.printStackTrace();
+//                                    }
+//                                }
+//                            }
+//                        };
+//                        t7.start();
+//                        break;
+//                    case DIRECTION_CENTER:
+//                        move0 = false;
+//                        move1 = false;
+//                        move2 = false;
+//                        move3 = false;
+//                        move4 = false;
+//                        move5 = false;
+//                        move6 = false;
+//                        move7 = false;
+//                        Stopmove();
+//                        break;
+//                }
+//            }
+//            @Override
+//            public void onFinish() {
+//
+//            }
+//        });
 
         Abutton= findViewById(R.id.Abutton);
         Abutton.setOnTouchListener(new View.OnTouchListener(){
@@ -340,18 +424,10 @@ public class ClientGameControl extends AppCompatActivity {
                 // TODO Auto-generated method stub
                 switch (event.getAction()){
                     case MotionEvent.ACTION_DOWN:
-                        Thread t = new Thread(){
-                            public void run(){
-                                super.run();
-                                Attack();
-                                try{
-                                    Thread.sleep(20);
-                                }catch(InterruptedException e){
-                                    e.printStackTrace();
-                                }
-                                }
-                        };
-                        t.start();
+                        System.out.println("Attackable "+Attackable);
+                        if(Attackable){
+                            Attack();
+                        }
                         break;
                     case MotionEvent.ACTION_UP:
                         StopAttack();
@@ -360,6 +436,32 @@ public class ClientGameControl extends AppCompatActivity {
                 return true;
             }
         });
+//        Abutton.setOnTouchListener(new View.OnTouchListener(){
+//            @Override
+//            public boolean onTouch(View view, MotionEvent event) {
+//                // TODO Auto-generated method stub
+//                switch (event.getAction()){
+//                    case MotionEvent.ACTION_DOWN:
+//                        Thread t = new Thread(){
+//                            public void run(){
+//                                super.run();
+//                                Attack();
+//                                try{
+//                                    Thread.sleep(100);
+//                                }catch(InterruptedException e){
+//                                    e.printStackTrace();
+//                                }
+//                                }
+//                        };
+//                        t.start();
+//                        break;
+//                    case MotionEvent.ACTION_UP:
+//                        StopAttack();
+//                        break;
+//                }
+//                return true;
+//            }
+//        });
 
 
         handlerUDP.postDelayed(runnableUDP, 1000);//等1s后开始刷新位置UDP
@@ -433,6 +535,7 @@ public class ClientGameControl extends AppCompatActivity {
             test_r1.walk_mov = Objects.requireNonNull (Data.playerLocation.get (playerIP))[5];
             test_r1.attack_mov = Objects.requireNonNull (Data.playerLocation.get (playerIP))[6];
             map.livingrole.add(test_r1);
+
         }
 
 
@@ -474,7 +577,12 @@ public class ClientGameControl extends AppCompatActivity {
         for(int i = 0;i < 1;++i){
             for(int j = 0;j < 5;++j){
                 fname = "a_" + Integer.toString(i) + "_" + Integer.toString(j);
-                attack_pic[i][j] = BitmapFactory.decodeResource(this.getResources(),res.getIdentifier(fname,"drawable", getPackageName())).copy(Bitmap.Config.ARGB_4444,true);
+                tmp = BitmapFactory.decodeResource(this.getResources(),res.getIdentifier(fname,"drawable", getPackageName())).copy(Bitmap.Config.ARGB_4444,true);
+                matrix=new Matrix();
+                matrix.postScale(((float)100/tmp.getWidth()), ((float)120/tmp.getHeight()));//人物宽高
+                attack_pic[i][j] = Bitmap.createBitmap(tmp, 0, 0,tmp.getWidth(),tmp.getHeight(),matrix,true);
+                tmp.recycle();
+                tmp=null;
             }
         }
 
@@ -486,17 +594,19 @@ public class ClientGameControl extends AppCompatActivity {
     private Runnable runnableUDP = new Runnable() {
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         public void run() {
-            new AsyncConUDP ().execute ("location!");
-            System.out.println (Data.playerLocation + "PLAYER111");
-            if (Data.playerLocation != null && Data.playerLocation.containsKey (Data.LOCALIP)) {
-                System.out.println (location[0] + "," + location[1] + "LOCATION111");
-                location_tmp[0] = Objects.requireNonNull (Data.playerLocation.get (Data.LOCALIP))[2];
-                location_tmp[1] = Objects.requireNonNull (Data.playerLocation.get (Data.LOCALIP))[3];
-            } else {
-                location_tmp = new int[]{0, 0};
+            if (!isend) {
+                new AsyncConUDP().execute("location!");
+                System.out.println(Data.playerLocation + "PLAYER111");
+                if (Data.playerLocation != null && Data.playerLocation.containsKey(Data.LOCALIP)) {
+                    System.out.println(location[0] + "," + location[1] + "LOCATION111");
+                    location[0] = Objects.requireNonNull(Data.playerLocation.get(Data.LOCALIP))[2];
+                    location[1] = Objects.requireNonNull(Data.playerLocation.get(Data.LOCALIP))[3];
+                } else {
+                    location = new int[]{0, 0};
+                }
+                testtxt.setText(Arrays.toString(location));
+                handlerUDP.postDelayed(this, 20);// 刷新间隔(ms)
             }
-            testtxt.setText(Arrays.toString(location));
-            handlerUDP.postDelayed (this, 20);// 刷新间隔(ms)
         }
     };
 
@@ -506,19 +616,19 @@ public class ClientGameControl extends AppCompatActivity {
     private Runnable runnableInfo = new Runnable() {
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         public void run() {
-            this.update();
-            handlerInfo.postDelayed(this, 20);// 刷新间隔(ms)
+            if (!isend) {
+                this.update();
+                handlerInfo.postDelayed(this, 20);// 刷新间隔(ms)
+            }
         }
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         void update() {
             Role_simple r;
-            location = location_tmp;
             for (int i=0;i<map.livingrole.size();i++) {
                 r = map.livingrole.get(i);
 
-
                 r.lifevalue = Objects.requireNonNull (Data.playerLocation.get (r.name))[1];
-//                check_alive(r);
+                check_alive(r);
 
                 r.location[0] = Objects.requireNonNull (Data.playerLocation.get (r.name))[2];
                 r.location[1] = Objects.requireNonNull (Data.playerLocation.get (r.name))[3];
@@ -563,6 +673,8 @@ public class ClientGameControl extends AppCompatActivity {
 
 
     }
+    private boolean Attackable;
+
     class Draw extends Thread {
         private SurfaceHolder holder;
         public boolean isRun ;
@@ -618,6 +730,8 @@ public class ClientGameControl extends AppCompatActivity {
                                         break;
                                 }
                                 r.attack_mov = (r.attack_mov == 14 )?  (-1) : (r.attack_mov + 1);
+                                Attackable = (r.attack_mov == -1);
+                                System.out.println("attack_mov " + r.attack_mov);
                             }
                         }
                         //画黑雾
@@ -652,16 +766,29 @@ public class ClientGameControl extends AppCompatActivity {
         }
     }
 
-//    void check_alive(Role_simple r){
-//        if (r.id==myrole.id && r.lifevalue<=0){
+    void check_alive(Role_simple r){
+        if (r.id==myrole.id && r.lifevalue<=0) {
+            isend=true;
+            ImageView black_layer=findViewById(R.id.black_layer);
+            black_layer.setVisibility(View.VISIBLE);
+            ImageView my_pic=findViewById(R.id.res_mine);
+            switch (myrole.id%100) {
+                case 0:my_pic.setImageResource(R.drawable.role0); break;
+            }
+            my_pic.setVisibility(View.VISIBLE);
+            TextView score_board=findViewById(R.id.score_board);
+            score_board.setText("Nane:"+myrole.name+"\nRank:"+"1"+"\nScore:"+String.valueOf(vision));
+            score_board.setVisibility(View.VISIBLE);
+            Button ret=findViewById(R.id.Return);
+            ret.setVisibility(View.VISIBLE);
 //            Intent intent = new Intent(this, ClientGameControl.class);
-//            Bundle bundle=new Bundle();
-//            bundle.putString("rank","1");
-//            bundle.putString("name","LYT");
-//            bundle.putString("score",String.valueOf(vision));
+//            Bundle bundle = new Bundle();
+//            bundle.putString("rank", "1");
+//            bundle.putString("name", "LYT");
+//            bundle.putString("score", String.valueOf(vision));
 //            startActivity(intent);
-//        }
-//    }
+        }
+    }
 
     //析构
     protected void onDestroy() {
