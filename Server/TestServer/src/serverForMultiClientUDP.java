@@ -125,7 +125,7 @@ public class serverForMultiClientUDP implements Runnable{
     }
 
     public static void startUDP() throws Exception{
-        System.out.println("123123");
+        System.out.println("Starting Service...");
         // Data dataclass = new Data();
         openServer();
     }

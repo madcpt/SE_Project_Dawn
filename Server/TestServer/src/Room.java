@@ -41,4 +41,15 @@ public class Room {
         tmp.displayAllMember();
 
     }
+
+    public void removePlayer(String pureIP) {
+        if(memberList.contains(pureIP)){
+            memberList.remove(pureIP);
+            System.out.println("Remove from room.");
+        }
+        if(prepareList.contains(pureIP)){
+            prepareList.remove(pureIP);
+            System.out.println("Remove from prepare list");
+        }
+    }
 }
