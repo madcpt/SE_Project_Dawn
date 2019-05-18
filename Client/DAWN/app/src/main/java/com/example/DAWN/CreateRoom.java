@@ -66,7 +66,6 @@ public class CreateRoom extends AppCompatActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace ();
             }
-            break;
         }
         System.out.println ("room111" + Data.roomListStr.toString ());
 

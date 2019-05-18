@@ -438,12 +438,7 @@ public class ClientGameControl extends AppCompatActivity {
         tmp.recycle();
         tmp=null;
 
-        tmp=BitmapFactory.decodeResource(this.getResources(),R.drawable.map).copy(Bitmap.Config.ARGB_4444, true);
-        matrix=new Matrix();
-        matrix.postScale(((float)5000/tmp.getWidth()), ((float)5000/tmp.getHeight()));
-        background = Bitmap.createBitmap(tmp, 0, 0,tmp.getWidth(),tmp.getHeight(),matrix,true);
-        tmp.recycle();
-        tmp=null;
+        background=BitmapFactory.decodeResource(this.getResources(),R.drawable.map).copy(Bitmap.Config.ARGB_4444, true);
 
         //Rolepic load
         role_pic = new Bitmap[2][4][4];//人物数，方向数，每个方向动作帧数
