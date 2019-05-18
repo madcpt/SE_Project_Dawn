@@ -1,53 +1,80 @@
-import sun.rmi.runtime.Log;
+import java.awt.*;
+import java.sql.*;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class Test {
-    public static void main(String[] args) throws Exception {
-        System.out.print("Progress:");
-        System.out.print("\b");
-//        for (int i = 1; i <= 100; i++) {
-//            System.out.print(i + "%");
-//            Thread.sleep(100);
-//
-//            for (int j = 0; j <= String.valueOf(i).length(); j++) {
-//                System.out.print("\b");
-//            }
-//        }
-        System.out.println();
+    private String driveName = "com.mysql.cj.jdbc.Driver";
+    private String url = "jdbc:mysql://localhost:3306/dawn?serverTimezone=GMT%2B8";
+    // jdbc:mysql://127.0.0.1:3306/onestep?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2B8
+    private String user = "root";
+    private String pass = "";
+    public  void create() throws ClassNotFoundException, SQLException {
+        Class.forName(driveName);
+        //连接
+        Connection con = DriverManager.getConnection(url, user, pass);
+        Statement state = con.createStatement();
+        state.executeUpdate("create table userinfo(Account varchar(40),pwd varchar(40))");
+    }
 
-        Boolean endofgame = false;
-        ExecutorService executorService = Executors.newFixedThreadPool(5);
-        while (!endofgame) {
-            Runnable syncRunnable = new Runnable() {
-                @Override
-                public void run() {
-                    System.out.println(Thread.currentThread().getName());
-                    try {
-                        Thread.sleep(1);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            };
-            executorService.execute(syncRunnable);
+
+
+
+    public  void update(String account,String password) throws SQLException, ClassNotFoundException {
+        Class.forName(driveName);
+        //连接
+        Connection con = DriverManager.getConnection(url, user, pass);
+        Statement state = con.createStatement();
+        String sql="insert into  userinfo (Account,pwd)  values(?,?)";//sql语句
+        PreparedStatement pstmt=con.prepareStatement(sql);//获得预置对象
+        pstmt.setString(1, account);//设置占位符的值
+        pstmt.setString(2, password);//设置占位符的值
+        pstmt.executeUpdate();
+        state.close();
+        con.close();
+    }
+
+    public boolean check(String account) throws ClassNotFoundException, SQLException {
+        boolean flag=true;
+        Class.forName(driveName);
+        //连接
+        Connection con = DriverManager.getConnection(url, user, pass);
+        Statement state = con.createStatement();
+        String  str="";
+        // String querySql = "select * from userinfo where Account='1'";
+        String querySql = "select * from userinfo where Account='"+account+"' ";
+        ResultSet rs = state.executeQuery(querySql);
+        if (rs.next()){
+            flag=false;
+            str = str+rs.getString("Account");
+            System.out.println(str);
         }
-        ExecutorService executorService2 = Executors.newFixedThreadPool(5);
-        for (int i = 0; i < 200; i++) {
-            Runnable syncRunnable = new Runnable() {
-                @Override
-                public void run() {
-                    System.out.println(Thread.currentThread().getName());
-                    try {
-                        Thread.sleep(1);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            };
-            executorService2.execute(syncRunnable);
+        return flag;
+    }
+
+
+
+
+
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        Test serverInfoData=new Test();
+        serverInfoData.create();
+        String account,pwd;
+        //get from server
+        account="10";
+        pwd="10";
+        if (serverInfoData.check(account))
+        {
+            serverInfoData.update(account,pwd);
         }
+        else{
+            //传递valid信息
+        }
+
 
     }
+
+
+
+
+
 }
