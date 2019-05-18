@@ -66,7 +66,7 @@ public class CreateRoom extends AppCompatActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace ();
             }
-            break;
+//            break;
         }
         System.out.println ((Data.roomListStr == null) + "FALSE111");
 
