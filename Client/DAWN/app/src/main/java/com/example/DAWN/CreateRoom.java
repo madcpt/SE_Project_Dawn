@@ -1,4 +1,4 @@
-package com.example.DAWN;
+﻿package com.example.DAWN;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -67,7 +67,6 @@ public class CreateRoom extends AppCompatActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace ();
             }
-//            break;
         }
         System.out.println ((Data.roomListStr == null) + "FALSE111");
 
@@ -184,7 +183,7 @@ public class CreateRoom extends AppCompatActivity {
         Intent intent=new Intent(CreateRoom.this,RoomPage.class);
         intent.putExtra("Account",Account);
         startActivity(intent);
-        //onDestroy();
+        // onDestroy();
 
     }
 

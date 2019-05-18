@@ -7,7 +7,7 @@ import java.lang.*;
 import java.util.Vector;
 
 public class Map {
-    public static int unit =50;
+    public static int unit =150;
     public static int size =100;
 
     public Vector<Role_simple> livingrole;
