@@ -25,6 +25,11 @@ public class Data {
         int h = Colli.getCollision_height();
         int w = Colli.getCollision_width();
         //return true if it's invalid to move
+        System.out.println("x,y: "+ WholeMap.m[ x / WholeMap.unit ][ y / WholeMap.unit]);
+        System.out.println("x + w,y: "+ WholeMap.m[ ( x + w ) / WholeMap.unit ][ y / WholeMap.unit]);
+        System.out.println("x,y + h: "+ WholeMap.m[ x / WholeMap.unit ][ ( y + h ) / WholeMap.unit]);
+        System.out.println("x + w,y + h: "+ WholeMap.m[ ( x + w ) / WholeMap.unit ][ ( y + h ) / WholeMap.unit]);
+        System.out.println(( WholeMap.m[ x / WholeMap.unit ][ y / WholeMap.unit] == 1 ) || ( WholeMap.m[ ( x + w ) / WholeMap.unit ][ ( y + h ) / WholeMap.unit] == 1 ) || ( WholeMap.m[ ( x + w ) / WholeMap.unit ][ y / WholeMap.unit] == 1 ) || ( WholeMap.m[ x / WholeMap.unit ][ ( y + h ) / WholeMap.unit] == 1 ));
         return ( ( WholeMap.m[ x / WholeMap.unit ][ y / WholeMap.unit] == 1 ) || ( WholeMap.m[ ( x + w ) / WholeMap.unit ][ ( y + h ) / WholeMap.unit] == 1 ) || ( WholeMap.m[ ( x + w ) / WholeMap.unit ][ y / WholeMap.unit] == 1 ) || ( WholeMap.m[ x / WholeMap.unit ][ ( y + h ) / WholeMap.unit] == 1 ));
     }
 

@@ -221,8 +221,9 @@ public class CreateRoom extends AppCompatActivity {
             Intent intent=new Intent(CreateRoom.this,RoomPage.class);
             intent.putExtra("Account",Account);
             startActivity(intent);
+            System.out.println ("Start creating");
             new AsyncConTCP ().execute ("new_room," + strtmp2 + "," + strtmp1);
-            onDestroy();
+//            onDestroy();
         }
 //        TimeUnit.MILLISECONDS.sleep (500);
 //        new AsyncConTCP ().execute ("chos_r," + strtmp2);
