@@ -1,7 +1,8 @@
-package com.example.DAWN;
+﻿package com.example.DAWN;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -56,7 +57,7 @@ public class CreateRoom extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         System.out.println ((Data.roomListStr == null) + "TRUE111");
-        Data.getStatus();
+//        Data.getStatus();
 
         while(Data.roomListStr == null){
             System.out.println ("room111");
@@ -66,9 +67,10 @@ public class CreateRoom extends AppCompatActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace ();
             }
-            break;
         }
-        System.out.println ("room111" + Data.roomListStr.toString ());
+        System.out.println ((Data.roomListStr == null) + "FALSE111");
+
+//        System.out.println ("room111" + Data.roomListStr.toString ());
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_room);
@@ -167,6 +169,10 @@ public class CreateRoom extends AppCompatActivity {
     };
 
     private void JoinRoom() throws InterruptedException {
+        if(chooseRoomID == null){
+            System.out.println ("null_in_choose_room");
+            return;
+        }
         new AsyncConTCP ().execute ("chos_r," + chooseRoomID);
 //        while(Data.myRoom == null){
 //            TimeUnit.MILLISECONDS.sleep (500);
@@ -177,6 +183,8 @@ public class CreateRoom extends AppCompatActivity {
         Intent intent=new Intent(CreateRoom.this,RoomPage.class);
         intent.putExtra("Account",Account);
         startActivity(intent);
+        // onDestroy();
+
     }
 
     //@xzh
@@ -214,6 +222,7 @@ public class CreateRoom extends AppCompatActivity {
             intent.putExtra("Account",Account);
             startActivity(intent);
             new AsyncConTCP ().execute ("new_room," + strtmp2 + "," + strtmp1);
+            onDestroy();
         }
 //        TimeUnit.MILLISECONDS.sleep (500);
 //        new AsyncConTCP ().execute ("chos_r," + strtmp2);
@@ -261,5 +270,9 @@ public class CreateRoom extends AppCompatActivity {
 
 
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 
 }

@@ -1,26 +1,100 @@
-import javafx.print.PageLayout;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Vector;
+import java.awt.*;
+import java.sql.*;
 
 
 public class Test {
-    public static Vector<int[]> livingrole;
-    public static void main(String args[]) {
-        livingrole = new Vector<>();
-        livingrole.add(new int[]{1, 1});
-        livingrole.add(new int[]{2, 2});
-        int []a = livingrole.get(0);
-        a[0] = 2;
-        System.out.println(Arrays.toString(livingrole.get(0)));
-        System.out.println("aa".getBytes());
-
-//        int degrees = 45;
-//        double radians = Math.toRadians(45);
-//
-//        System.out.format("The value of pi is %.4f%n", Math.PI);
-//        System.out.format("The sine of %d degrees is %.4f%n", degrees, Math.sin(radians));
+    private String driveName = "com.mysql.cj.jdbc.Driver";
+    private String url = "jdbc:mysql://192.168.137.1:3306/dawn?serverTimezone=GMT%2B8";
+    // jdbc:mysql://127.0.0.1:3306/onestep?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2B8
+    private String user = "root";
+    private String pass = "";
+    public  void create() throws ClassNotFoundException, SQLException {
+        Class.forName(driveName);
+        //连接
+        Connection con = DriverManager.getConnection(url, user, pass);
+        Statement state = con.createStatement();
+        state.executeUpdate("create table userinfo(Account varchar(40),pwd varchar(40))");
     }
+
+
+
+
+    public  void update(String account,String password) throws SQLException, ClassNotFoundException {
+        Class.forName(driveName);
+        //连接
+        Connection con = DriverManager.getConnection(url, user, pass);
+        Statement state = con.createStatement();
+        String sql="insert into  userinfo (Account,pwd)  values(?,?)";//sql语句
+        PreparedStatement pstmt=con.prepareStatement(sql);//获得预置对象
+        pstmt.setString(1, account);//设置占位符的值
+        pstmt.setString(2, password);//设置占位符的值
+        pstmt.executeUpdate();
+        state.close();
+        con.close();
+    }
+
+    public boolean check(String account) throws ClassNotFoundException, SQLException {
+        boolean flag=true;
+        Class.forName(driveName);
+        //连接
+        Connection con = DriverManager.getConnection(url, user, pass);
+        Statement state = con.createStatement();
+        String  str="";
+        // String querySql = "select * from userinfo where Account='1'";
+        String querySql = "select * from userinfo where Account='"+account+"' ";
+        ResultSet rs = state.executeQuery(querySql);
+        if (rs.next()){
+            flag=false;
+            str = str+rs.getString("Account");
+            System.out.println(str);
+        }
+        return flag;
+    }
+
+
+    public boolean checkvalid(String account,String password) throws ClassNotFoundException, SQLException {
+        boolean flag=true;
+        Class.forName(driveName);
+        //连接
+        Connection con = DriverManager.getConnection(url, user, pass);
+        Statement state = con.createStatement();
+        String  str="";
+        String  pwd="";
+        // String querySql = "select * from userinfo where Account='1'";
+        String querySql = "select * from userinfo where Account='"+account+"' ";
+        ResultSet rs = state.executeQuery(querySql);
+        if (rs.next()){
+            str = rs.getString("Account");
+            pwd=rs.getString("pwd");
+            System.out.println(str);
+            if (pwd.equals(password))
+                return  true;
+        }
+        return false;
+    }
+
+
+
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        Test serverInfoData=new Test();
+        serverInfoData.create();
+        String account,pwd;
+        //get from server
+        account="10";
+        pwd="10";
+        if (serverInfoData.check(account))
+        {
+            serverInfoData.update(account,pwd);
+        }
+        else{
+            //传递valid信息
+        }
+
+
+    }
+
+
+
+
+
 }

@@ -48,7 +48,9 @@ public class ClientUDP {
 
             // Receive
 
+            System.out.println ("RECEIVE1112");
             client.receive(receivePacket);
+            System.out.println ("RECEIVE1113");
 
             ByteArrayInputStream byteArraySteam = new ByteArrayInputStream(ReceiveBytes);
             ObjectInputStream objectStream = new ObjectInputStream (byteArraySteam);
@@ -71,6 +73,7 @@ public class ClientUDP {
                     break;
                 case "ask_room":
                     if(Data.roomListStr == null){
+                        System.out.println ("ASK111");
                         Data.roomListStr = (Vector<String>) objectStream.readObject ();
                         System.out.println ("ASK111" + Data.roomListStr.toString ());
                     }
@@ -82,12 +85,25 @@ public class ClientUDP {
                         System.out.println ("ROOM111" + memberList);
                     }
                     break;
+                case "register":
+                    Boolean isRegisterValid = true;
+                    isRegisterValid = (Boolean) objectStream.readObject ();
+                    System.out.println ("From Server: Register " + isRegisterValid);
+                    Data.accountStatus.put ("isRegisterValid", isRegisterValid);
+                    break;
+                case "login":
+                    Boolean isLoginValid = true;
+                    isLoginValid = (Boolean) objectStream.readObject ();
+                    System.out.println ("From Server: Login " + isLoginValid);
+                    Data.accountStatus.put ("isLoginValid", isLoginValid);
+                    break;
 
             }
 
 
             objectStream.close();
             byteArraySteam.close();
+            
 
 
 

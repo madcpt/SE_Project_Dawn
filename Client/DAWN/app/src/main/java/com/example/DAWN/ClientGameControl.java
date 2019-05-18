@@ -1,4 +1,4 @@
-package com.example.DAWN;
+﻿package com.example.DAWN;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -41,6 +41,7 @@ public class ClientGameControl extends AppCompatActivity {
 
     private int direction = 3;
     int[] location={0,0}; //当前位置
+    int[] location_tmp = {0,0}; //地图位置缓存
     int[] center_location;
 
     private Collision Colli = new Collision(120,100);
@@ -74,6 +75,7 @@ public class ClientGameControl extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_process);
 
@@ -85,8 +87,8 @@ public class ClientGameControl extends AppCompatActivity {
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         center_location=new int[2];
-        center_location[0] = dm.widthPixels/2;
-        center_location[1] = dm.heightPixels/2;//中心点相对坐标在这里改
+        center_location[0] = dm.widthPixels/2-50;
+        center_location[1] = dm.heightPixels/2-60;//中心点相对坐标在这里改
 
         try {
             MapInit();
@@ -430,14 +432,20 @@ public class ClientGameControl extends AppCompatActivity {
 
 
 
-        //for drawing
-        background = BitmapFactory.decodeResource(this.getResources(),R.drawable.map).copy(Bitmap.Config.ARGB_4444, true);
+        //for drawing;
         Bitmap tmp = BitmapFactory.decodeResource(this.getResources(),R.drawable.blackblock).copy(Bitmap.Config.ARGB_4444, true);
         Matrix matrix=new Matrix();
         matrix.postScale(((float)vision*30/tmp.getWidth()), ((float)vision*30/tmp.getHeight()));
         hole = Bitmap.createBitmap(tmp, 0, 0,tmp.getWidth(),tmp.getHeight(),matrix,true);
         tmp.recycle();
+        tmp=null;
 
+        tmp=BitmapFactory.decodeResource(this.getResources(),R.drawable.map).copy(Bitmap.Config.ARGB_4444, true);
+        matrix=new Matrix();
+        matrix.postScale(((float)map.unit*map.size/tmp.getWidth()), ((float)map.unit*map.size/tmp.getHeight()));
+        background = Bitmap.createBitmap(tmp, 0, 0,tmp.getWidth(),tmp.getHeight(),matrix,true);
+        tmp.recycle();
+        tmp=null;
         //Rolepic load
         role_pic = new Bitmap[2][4][4];//人物数，方向数，每个方向动作帧数
         Resources res=getResources();
@@ -446,7 +454,12 @@ public class ClientGameControl extends AppCompatActivity {
             for (int j=0;j<4;j++){
                 for (int k=0;k<3;k++){
                     fname="r_"+Integer.toString(i)+"_"+Integer.toString(j)+"_"+Integer.toString(k);
-                    role_pic[i][j][k]=BitmapFactory.decodeResource(this.getResources(),res.getIdentifier(fname,"drawable",getPackageName())).copy(Bitmap.Config.ARGB_4444, true);
+                    tmp=BitmapFactory.decodeResource(this.getResources(),res.getIdentifier(fname,"drawable",getPackageName())).copy(Bitmap.Config.ARGB_4444, true);
+                    matrix=new Matrix();
+                    matrix.postScale(((float)100/tmp.getWidth()), ((float)120/tmp.getHeight()));//人物宽高
+                    role_pic[i][j][k] = Bitmap.createBitmap(tmp, 0, 0,tmp.getWidth(),tmp.getHeight(),matrix,true);
+                    tmp.recycle();
+                    tmp=null;
                 }
             }
         }
@@ -472,16 +485,14 @@ public class ClientGameControl extends AppCompatActivity {
             System.out.println (Data.playerLocation + "PLAYER111");
             if (Data.playerLocation != null && Data.playerLocation.containsKey (Data.LOCALIP)) {
                 System.out.println (location[0] + "," + location[1] + "LOCATION111");
-                location[0] = Objects.requireNonNull (Data.playerLocation.get (Data.LOCALIP))[2];
-                location[1] = Objects.requireNonNull (Data.playerLocation.get (Data.LOCALIP))[3];
+                location_tmp[0] = Objects.requireNonNull (Data.playerLocation.get (Data.LOCALIP))[2];
+                location_tmp[1] = Objects.requireNonNull (Data.playerLocation.get (Data.LOCALIP))[3];
             } else {
-                location = new int[]{0, 0};
+                location_tmp = new int[]{0, 0};
             }
-            handlerUDP.postDelayed (this, 10);// 刷新间隔(ms)
+            testtxt.setText(Arrays.toString(location));
+            handlerUDP.postDelayed (this, 20);// 刷新间隔(ms)
         }
-//        void update() {
-//            location = dataclass.location;
-//        }
     };
 
 
@@ -496,10 +507,11 @@ public class ClientGameControl extends AppCompatActivity {
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         void update() {
             Role_simple r;
+            location = location_tmp;
             for (int i=0;i<map.livingrole.size();i++) {
                 r = map.livingrole.get(i);
 
-                testtxt.setText(Arrays.toString(Objects.requireNonNull (Data.playerLocation.get (r.name))));
+
                 r.lifevalue = Objects.requireNonNull (Data.playerLocation.get (r.name))[1];
 //                check_alive(r);
 
@@ -559,7 +571,10 @@ public class ClientGameControl extends AppCompatActivity {
         public void run(){
             Role_simple r;
             Paint p = new Paint();
-
+            p.setColor(Color.BLACK);
+            p.setAntiAlias(true);
+            p.setTextSize(25);
+            p.setTextAlign(Paint.Align.CENTER);
 
             while(isRun){
                 c=null;
@@ -575,11 +590,12 @@ public class ClientGameControl extends AppCompatActivity {
                             if (Math.abs(r.location[0] - location[0]) > vision * 20 || Math.abs(r.location[1] - location[1]) > vision * 20) {
                                 continue;
                             }
+                            c.drawText(r.name,center_location[0] - location[0] + r.location[0]+48, center_location[1] - location[1] + r.location[1],p);
                             if (r.walk_mov==-1) {
                                 c.drawBitmap (role_pic[r.id % 100][r.direction][0], center_location[0] - location[0] + r.location[0], center_location[1] - location[1] + r.location[1], p);
                             } else{
                                 c.drawBitmap(role_pic[r.id%100][r.direction][r.walk_mov/5],center_location[0] - location[0]+r.location[0],center_location[1] - location[1]+r.location[1],p);
-                                r.walk_mov=(r.walk_mov+1)%15;//每个动作循环的帧数
+                                r.walk_mov=(r.walk_mov+1)%10;//每个动作循环的帧数
                             }
                             if (r.attack_mov!=-1) {
                                 switch(r.direction){
@@ -596,11 +612,11 @@ public class ClientGameControl extends AppCompatActivity {
                                         c.drawBitmap(attack_pic[0][r.attack_mov/3],center_location[0] - location[0]+r.location[0],center_location[1] - location[1]+r.location[1]-Colli.getCollision_height(),p);
                                         break;
                                 }
-                                r.attack_mov = (r.attack_mov+1)%15;
+                                r.attack_mov = (r.attack_mov+1)%12;
                             }
                         }
                         //画黑雾
-                        c.saveLayer(0, 0, center_location[0]*2+1, center_location[1]*2+1, p, Canvas.ALL_SAVE_FLAG);//保存上一层
+                        c.saveLayer(0, 0, (center_location[0]+50)*2+1, (center_location[1]+60)*2+1, p, Canvas.ALL_SAVE_FLAG);//保存上一层
                         p.setColor(Color.BLACK);
                         if (vision>pre_vision){
                             Bitmap tmp= hole;
@@ -610,13 +626,13 @@ public class ClientGameControl extends AppCompatActivity {
                             tmp.recycle();
                             pre_vision=vision;
                         }
-                        c.drawRect(0,0,center_location[0]*2+1, center_location[1]*2+1,p);
+                        c.drawRect(0,0,(center_location[0]+50)*2+1, (center_location[1]+60)*2+1,p);
                         p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
-                        c.drawBitmap(hole,center_location[0]-vision*15,center_location[1]-vision*15,p);
+                        c.drawBitmap(hole,center_location[0]+50-vision*15,center_location[1]+60-vision*15,p);
                         p.setXfermode(null);
                         c.restore();
                     }
-                    Thread.sleep(10);
+                    Thread.sleep(20);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -630,13 +646,19 @@ public class ClientGameControl extends AppCompatActivity {
             }
         }
     }
-    //析构
+
 //    void check_alive(Role_simple r){
-//        if (r.id==myrole.id){
-//
+//        if (r.id==myrole.id && r.lifevalue<=0){
+//            Intent intent = new Intent(this, ClientGameControl.class);
+//            Bundle bundle=new Bundle();
+//            bundle.putString("rank","1");
+//            bundle.putString("name","LYT");
+//            bundle.putString("score",String.valueOf(vision));
+//            startActivity(intent);
 //        }
 //    }
 
+    //析构
     protected void onDestroy() {
         handlerInfo.removeCallbacks(runnableUDP);
         super.onDestroy();

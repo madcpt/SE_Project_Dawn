@@ -8,10 +8,12 @@ public class RunnableTCP implements Runnable {
     private Thread t;
     private String threadName;
     private Client client;
-    private String location;    
+    private String location;
+    private static int threadCnt = 0;
     Data dataclass;
 
     public RunnableTCP(String name) {
+        threadCnt += 1;
         threadName = name;
         System.out.println("Creating " +  threadName );
         dataclass = new Data ();
@@ -28,7 +30,8 @@ public class RunnableTCP implements Runnable {
         }catch (InterruptedException e) {
             System.out.println("Thread " +  threadName + " interrupted.");
         }
-        System.out.println("Thread " +  threadName + " exiting.");
+        System.out.println(threadName + " exiting " + threadCnt);
+
     }
 
     public void start (String meg) {
@@ -39,6 +42,7 @@ public class RunnableTCP implements Runnable {
             t.start ();
         }
     }
+
 
     public void sendInit (String meg) {
         System.out.println("Sending: " +  threadName );
