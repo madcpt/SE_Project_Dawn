@@ -1,9 +1,10 @@
+import javax.print.attribute.standard.DateTimeAtCompleted;
 import java.util.ArrayList;
 import java.util.List;
 
 public class serverGameControl {
     private List<String> playerList;
-    private Data dataclass;
+    Data dataclass;
 
     public serverGameControl(){
         playerList = new ArrayList<>();
@@ -18,5 +19,14 @@ public class serverGameControl {
             dataclass.newPlayer(pureIP,id*100,name);
         }
         System.out.println("Prepared: " + playerList);
+    }
+
+    public void removePlayer(String pureIP) {
+        if(playerList.contains(pureIP)){
+            System.out.println("Remove from ServerGameControl");
+            playerList.remove(pureIP);
+        }else{
+            System.out.println("Remove from ServerGameControl Failed");
+        }
     }
 }

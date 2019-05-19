@@ -91,6 +91,15 @@ public class serverForMultiClientUDP implements Runnable{
 //                    database.create();
                     objectStream.writeObject(isLoginValid);
                     break;
+                case "room_cnt":
+                    int [] room_cnt = {4, 2};
+                    System.out.println("From Client: " + inputMes[1]);
+                    System.out.println(Data.roomList.RoomList.get(inputMes[1]).memberList);
+                    System.out.println(Data.roomList.RoomList.get(inputMes[1]).prepareList);
+                    room_cnt[0] = Data.roomList.RoomList.get(inputMes[1]).memberList.size();
+                    room_cnt[1] = Data.roomList.RoomList.get(inputMes[1]).prepareList.size();
+                    objectStream.writeObject(room_cnt);
+                    break;
                 default:
                     objectStream.writeObject(Data.getUpdateList());
                     break;
@@ -116,7 +125,7 @@ public class serverForMultiClientUDP implements Runnable{
     }
 
     public static void startUDP() throws Exception{
-        System.out.println("123123");
+        System.out.println("Starting Service...");
         // Data dataclass = new Data();
         openServer();
     }
