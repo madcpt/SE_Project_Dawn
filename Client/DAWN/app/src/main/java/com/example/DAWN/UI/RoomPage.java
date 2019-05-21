@@ -157,8 +157,6 @@ public class RoomPage extends AppCompatActivity {
                     stop = true;
                     Intent intent = new Intent (RoomPage.this, MainActivity.class);
                     System.out.println ("GameStart");
-                    onDestroy();
-                    //CreateRoom.onDestroy();
                     startActivity (intent);
                     finish ();
                 }
@@ -264,9 +262,4 @@ public class RoomPage extends AppCompatActivity {
             }
         }
     };
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }

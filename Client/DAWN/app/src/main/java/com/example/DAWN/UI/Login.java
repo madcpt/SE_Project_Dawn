@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import android.app.Activity;
-import android.content.Intent;  
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -122,7 +122,9 @@ public class Login extends Activity {                 //登录界面活动
                         e.printStackTrace ();
                     }
                     break;
-
+                case R.id.login_btn_cancle:                             //登录界面的注销按钮
+                    cancel();
+                    break;
                 case R.id.login_text_change_pwd:                             //登录界面的注销按钮
                     Intent intent_Login_to_reset = new Intent(Login.this, Resetpwd.class) ;    //切换Login Activity至User Activity
                     startActivity(intent_Login_to_reset);
@@ -175,7 +177,6 @@ public class Login extends Activity {                 //登录界面活动
                     Intent intent = new Intent(Login.this, CreateRoom.class) ;    //切换Login Activity至User Activity
 
                     intent.putExtra("Account",userName);
-                    onDestroy();
                     startActivity(intent);
                     finish();
 
@@ -194,6 +195,24 @@ public class Login extends Activity {                 //登录界面活动
             }
 
         }
+    }
+    public void cancel() {           //注销
+        if (isUserNameAndPwdValid()) {
+            String userName = mAccount.getText().toString().trim();    //获取当前输入的用户名和密码信息
+            String userPwd = mPwd.getText().toString().trim();
+            int result=mUserDataManager.findUserByNameAndPwd(userName, userPwd);
+            if(result==1){                                             //返回1说明用户名和密码均正确
+//                Intent intent = new Intent(Login.this,User.class) ;    //切换Login Activity至User Activity
+//                startActivity(intent);
+                Toast.makeText(this, getString(R.string.cancel_success),Toast.LENGTH_SHORT).show();//登录成功提示
+                mPwd.setText("");
+                mAccount.setText("");
+                mUserDataManager.deleteUserDatabyname(userName);
+            }else if(result==0){
+                Toast.makeText(this, getString(R.string.cancel_fail),Toast.LENGTH_SHORT).show();  //登录失败提示
+            }
+        }
+
     }
 
     public boolean isUserNameAndPwdValid() {

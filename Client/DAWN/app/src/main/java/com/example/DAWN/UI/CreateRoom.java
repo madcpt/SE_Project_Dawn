@@ -179,9 +179,7 @@ public class CreateRoom extends AppCompatActivity {
             Data.myRoomID = chooseRoomID;
             String Account = getIntent ().getStringExtra ("Account");
             Intent intent = new Intent (CreateRoom.this, RoomPage.class);
-
             intent.putExtra ("Account", Account);
-
             startActivity (intent);
             // onDestroy();
         }
@@ -220,11 +218,10 @@ public class CreateRoom extends AppCompatActivity {
             Data.myRoomID = strtmp2;
             Intent intent=new Intent(CreateRoom.this,RoomPage.class);
             intent.putExtra("Account",Account);
-
             startActivity(intent);
             System.out.println ("Start creating");
             new AsyncConTCP ().execute ("new_room," + strtmp2 + "," + strtmp1);
-
+//            onDestroy();
         }
 //        TimeUnit.MILLISECONDS.sleep (500);
 //        new AsyncConTCP ().execute ("chos_r," + strtmp2);
@@ -269,7 +266,11 @@ public class CreateRoom extends AppCompatActivity {
 
     }
 
-     public void onDestroy() {
+
+
+
+    @Override
+    protected void onDestroy() {
         super.onDestroy();
     }
 
