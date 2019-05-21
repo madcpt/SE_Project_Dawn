@@ -273,36 +273,36 @@ public class ClientGameControl extends AppCompatActivity {
     }
     public void Attack(){
         Attackable = false;
-        new AsyncConTCP().execute ("attack,100,0");
+        new AsyncConTCP().execute ("atk,100,0");
     }
     //实现移动
     public void Stopmove(){
-        new AsyncConTCP ().execute ("stop");
+        new AsyncConTCP ().execute ("stp");
     }
 //    感觉停止可以不需要
     public void Lmove(){
-        new AsyncConTCP ().execute ("move,0,3");
+        new AsyncConTCP ().execute ("mov,0,3");
     }
     public void Rmove(){
-        new AsyncConTCP ().execute ("move,1,3");
+        new AsyncConTCP ().execute ("mov,1,3");
     }
     public void Umove(){
-        new AsyncConTCP ().execute ("move,2,3");
+        new AsyncConTCP ().execute ("mov,2,3");
     }
     public void Dmove(){
-        new AsyncConTCP ().execute ("move,3,3");
+        new AsyncConTCP ().execute ("mov,3,3");
     }
     public void DLmove(){
-        new AsyncConTCP ().execute ("move,4,3");
+        new AsyncConTCP ().execute ("mov,4,3");
     }
     public void DRmove(){
-        new AsyncConTCP ().execute ("move,5,3");
+        new AsyncConTCP ().execute ("mov,5,3");
     }
     public void ULmove(){
-        new AsyncConTCP ().execute ("move,6,3");
+        new AsyncConTCP ().execute ("mov,6,3");
     }
     public void URmove(){
-        new AsyncConTCP ().execute ("move,7,3");
+        new AsyncConTCP ().execute ("mov,7,3");
     }
 
     //Map初始化
@@ -362,6 +362,8 @@ public class ClientGameControl extends AppCompatActivity {
                     tmp.recycle();
                     tmp=null;
                 }
+                role_pic[i][j][3]=role_pic[i][j][2];
+                role_pic[i][j][2]=role_pic[i][j][0];
             }
         }
 
@@ -505,8 +507,8 @@ public class ClientGameControl extends AppCompatActivity {
                             if (r.walk_mov==-1) {
                                 c.drawBitmap (role_pic[r.id % 100][r.direction][0], center_location[0] - location[0] + r.location[0], center_location[1] - location[1] + r.location[1], p);
                             } else{
-                                c.drawBitmap(role_pic[r.id%100][r.direction][r.walk_mov/5],center_location[0] - location[0]+r.location[0],center_location[1] - location[1]+r.location[1],p);
-                                r.walk_mov=(r.walk_mov+1)%10;//每个动作循环的帧数
+                                c.drawBitmap(role_pic[r.id%100][r.direction][r.walk_mov/4],center_location[0] - location[0]+r.location[0],center_location[1] - location[1]+r.location[1],p);
+                                r.walk_mov=(r.walk_mov+1)%16;//每个动作循环的帧数
                             }
                             System.out.println("attack_mov " + r.attack_mov);
                             if (r.attack_mov!=-1) {
