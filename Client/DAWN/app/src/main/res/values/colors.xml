@@ -6,4 +6,6 @@
     <color name="trans_blue">#BF87CEEB</color>
     <color name="black_overlay">#66000000</color>
     <color name="trans_black">#66000000</color>
+    <color name="abutton_pressed">#8D8888</color>
+    <color name="abutton">#C7C7C7</color>
 </resources>
