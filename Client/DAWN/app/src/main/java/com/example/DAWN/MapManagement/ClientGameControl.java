@@ -11,6 +11,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.graphics.Shader;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -36,6 +37,7 @@ import com.example.DAWN.RoleManagement.Role_simple;
 import com.example.DAWN.UI.CreateRoom;
 import com.example.DAWN.UI.RockerView;
 
+import java.sql.Time;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -47,6 +49,7 @@ public class ClientGameControl extends AppCompatActivity {
 
     private RockerView mRockerView;
     private TextView testtxt ;
+    private ImageView black_layer;
 
 
     //屏幕左上角为{0,0}，我的角色的绝对位置为{860,0}，相对（地图）位置为{x,y}
@@ -62,7 +65,7 @@ public class ClientGameControl extends AppCompatActivity {
     private Collision Colli = new Collision(120,100);
     private Map map;
     private MyRole myrole;
-    int vision=20;//视野范围
+    int vision=30;//视野范围
     int pre_vision;
 
 
@@ -215,6 +218,15 @@ public class ClientGameControl extends AppCompatActivity {
         sfh = scr.getHolder();
         sfh.addCallback(new MyCallBack());
         draw = new Draw(sfh);
+
+        //加载完毕，显示
+        try{
+            Thread.sleep(3000);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        black_layer=findViewById(R.id.black_layer);
+        black_layer.setVisibility(View.GONE);
     }
 
     public void TAttack(View view){
@@ -536,7 +548,8 @@ public class ClientGameControl extends AppCompatActivity {
     void check_alive(Role_simple r){
         if (r.id==myrole.id && r.lifevalue<=0) {
             isend=true;
-            ImageView black_layer=findViewById(R.id.black_layer);
+
+            black_layer.setColorFilter(Color.WHITE,PorterDuff.Mode.SRC);
             black_layer.setVisibility(View.VISIBLE);
             ImageView my_pic=findViewById(R.id.res_mine);
             switch (myrole.id%100) {
@@ -544,7 +557,7 @@ public class ClientGameControl extends AppCompatActivity {
             }
             my_pic.setVisibility(View.VISIBLE);
             TextView score_board=findViewById(R.id.score_board);
-            score_board.setText("Nane:"+myrole.name+"\nRank:"+"1"+"\nScore:"+String.valueOf(vision));
+            score_board.setText("Name:"+myrole.name+"\nRank:"+"1"+"\nScore:"+String.valueOf(vision));
             score_board.setVisibility(View.VISIBLE);
             Button ret=findViewById(R.id.Return);
             ret.setVisibility(View.VISIBLE);
