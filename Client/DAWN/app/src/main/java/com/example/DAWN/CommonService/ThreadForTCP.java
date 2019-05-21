@@ -1,27 +1,25 @@
 package com.example.DAWN.CommonService;
 
-public class RunnableTCP implements Runnable {
+public class ThreadForTCP implements Runnable {
     private Thread t;
     private String threadName;
-    private Client client;
+    private ClientForTCP client;
     private String location;
     private static int threadCnt = 0;
-    Data dataclass;
 
-    public RunnableTCP(String name) {
+    public ThreadForTCP(String name) {
         threadCnt += 1;
         threadName = name;
         System.out.println("Creating " +  threadName );
-        dataclass = new Data ();
         String serverName = Data.Server;
         int port = Data.port;
-        client = new Client(serverName, port);
+        client = new ClientForTCP (serverName, port);
     }
     public void run() {
         System.out.println("Running " +  threadName );
         try {
             System.out.println("Location: "  + this.location);
-            client.testCon(this.location);
+            client.sendMessage (this.location);
             Thread.sleep(1);
         }catch (InterruptedException e) {
             System.out.println("Thread " +  threadName + " interrupted.");
@@ -42,7 +40,7 @@ public class RunnableTCP implements Runnable {
 
     public void sendInit (String meg) {
         System.out.println("Sending: " +  threadName );
-        client.testCon(meg);
+        client.sendMessage (meg);
     }
 
 }

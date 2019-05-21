@@ -13,14 +13,12 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.Vector;
 
-public class ClientUDP {
-    static Data dataclass;
+class ClientForUDP {
 
-    ClientUDP() {
-        dataclass = new Data ();
+    ClientForUDP(){
     }
 
-    public void testCon(String msg) {
+    void testCon(String msg) {
         try {
             byte[] requestBytes = new byte[2048];
             byte[] ReceiveBytes = new byte[2048];
@@ -109,9 +107,6 @@ public class ClientUDP {
 
             objectStream.close();
             byteArraySteam.close();
-            
-
-
 
             client.close();
         } catch (IOException e) {

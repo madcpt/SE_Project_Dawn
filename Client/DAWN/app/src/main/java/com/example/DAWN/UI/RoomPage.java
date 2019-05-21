@@ -13,8 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.DAWN.CommonService.Data;
-import com.example.DAWN.CommonService.RunnableTCP;
-import com.example.DAWN.CommonService.RunnableUDP;
+import com.example.DAWN.CommonService.ThreadForTCP;
+import com.example.DAWN.CommonService.ThreadForUDP;
 import com.example.DAWN.RoomManagement.Player;
 import com.example.DAWN.R;
 
@@ -45,7 +45,7 @@ public class RoomPage extends AppCompatActivity {
     static class AsyncConTCP extends AsyncTask<String ,Void, Void>{
         @Override
         protected Void doInBackground(String... meg) {
-            RunnableTCP R1 = new RunnableTCP( "Thread-TCP-IN-ROOM");
+            ThreadForTCP R1 = new ThreadForTCP ( "Thread-TCP-IN-ROOM");
             R1.sendInit (meg[0]);
             return null;
         }
@@ -55,7 +55,7 @@ public class RoomPage extends AppCompatActivity {
     public static class AsyncConUDP extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(String... msg) {
-            RunnableUDP R1 = new RunnableUDP ("Thread-UDP-ASK-IN-ROOM");
+            ThreadForUDP R1 = new ThreadForUDP ("Thread-UDP-ASK-IN-ROOM");
             R1.start (msg[0]);
             return null;
         }

@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.DAWN.CommonService.Data;
-import com.example.DAWN.CommonService.RunnableUDP;
+import com.example.DAWN.CommonService.ThreadForUDP;
 import com.example.DAWN.R;
 import com.example.DAWN.UserManament.UserDataManager;
 
@@ -46,7 +46,7 @@ public class Login extends Activity {                 //登录界面活动
     static class AsyncConUDP extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(String... msg) {
-            RunnableUDP R1 = new RunnableUDP ("Thread-UDP-LOGIN");
+            ThreadForUDP R1 = new ThreadForUDP ("Thread-UDP-LOGIN");
             R1.start (msg[0]);
             return null;
         }

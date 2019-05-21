@@ -1,17 +1,17 @@
 package com.example.DAWN.CommonService;
 
-public class RunnableUDP implements Runnable {
+public class ThreadForUDP implements Runnable {
     private Thread t;
     private String threadName;
-    private ClientUDP client;
+    private ClientForUDP client;
     private String msg;
     static private int threadCnt = 0;
 
-    public RunnableUDP(String name) {
+    public ThreadForUDP(String name) {
         threadCnt += 1;
         threadName = name;
 //        System.out.println("Creating " +  threadName );
-        client = new ClientUDP ();
+        client = new ClientForUDP ();
     }
     public void run() {
 //        System.out.println("Running " +  threadName );
