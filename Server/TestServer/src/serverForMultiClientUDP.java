@@ -9,6 +9,7 @@ import java.util.concurrent.Executors;
 
 public class serverForMultiClientUDP implements Runnable{
 
+    
     private DatagramPacket data;
     public serverForMultiClientUDP(DatagramPacket data){
         this.data = data;
@@ -70,35 +71,15 @@ public class serverForMultiClientUDP implements Runnable{
                     break;
                 case "register":
                     System.out.println("Register Request From Client:" + inputMes[1] + "," + inputMes[2]);
-                    Boolean isRegisterValid;
-                    if(Data.database.check(inputMes[1])){
-                        Data.database.update(inputMes[1], inputMes[2]);
-                        isRegisterValid = true;
-                    }else {
-                        isRegisterValid = false;
-                    }
+                    Boolean isRegisterValid = true;
+                    //
                     objectStream.writeObject(isRegisterValid);
                     break;
                 case "login":
-                    boolean isLoginValid;
                     System.out.println("Login Request From Client:" + inputMes[1] + "," + inputMes[2]);
-                    System.out.println();
-                    if(Data.database.checkvalid(inputMes[1], inputMes[2])){
-                        isLoginValid = true;
-                    }else{
-                        isLoginValid = false;
-                    }
-//                    database.create();
+                    Boolean isLoginValid = true;
+                    //
                     objectStream.writeObject(isLoginValid);
-                    break;
-                case "room_cnt":
-                    int [] room_cnt = {4, 2};
-                    System.out.println("From Client: " + inputMes[1]);
-                    System.out.println(Data.roomList.RoomList.get(inputMes[1]).memberList);
-                    System.out.println(Data.roomList.RoomList.get(inputMes[1]).prepareList);
-                    room_cnt[0] = Data.roomList.RoomList.get(inputMes[1]).memberList.size();
-                    room_cnt[1] = Data.roomList.RoomList.get(inputMes[1]).prepareList.size();
-                    objectStream.writeObject(room_cnt);
                     break;
                 default:
                     objectStream.writeObject(Data.getUpdateList());
@@ -125,7 +106,7 @@ public class serverForMultiClientUDP implements Runnable{
     }
 
     public static void startUDP() throws Exception{
-        System.out.println("Starting Service...");
+        System.out.println("Asd");
         // Data dataclass = new Data();
         openServer();
     }
