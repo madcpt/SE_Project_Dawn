@@ -3,41 +3,53 @@ package com.example.DAWN.MapManagement;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Shader;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.*;
-import android.widget.*;
+import android.view.MotionEvent;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import java.lang.*;
+import com.example.DAWN.CommonService.Data;
+import com.example.DAWN.CommonService.ClientComContext;
+import com.example.DAWN.CommonService.ClientComTCP;
+import com.example.DAWN.CommonService.ClientComUDP;
+import com.example.DAWN.R;
+import com.example.DAWN.RoleManagement.MyRole;
+import com.example.DAWN.RoleManagement.Role_simple;
+import com.example.DAWN.UI.CreateRoom;
+import com.example.DAWN.UI.RockerView;
+
+import java.sql.Time;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-
-import android.graphics.*;
-
-
-import com.example.DAWN.CommonService.RunnableTCP;
-import com.example.DAWN.CommonService.RunnableUDP;
-import com.example.DAWN.CommonService.Data;
-import com.example.DAWN.RoleManagement.MyRole;
-import com.example.DAWN.R;
-import com.example.DAWN.UI.RockerView;
-import com.example.DAWN.RoleManagement.Role_simple;
-import com.example.DAWN.UI.CreateRoom;
 
 import static com.example.DAWN.UI.RockerView.DirectionMode.DIRECTION_8;
 
 public class ClientGameControl extends AppCompatActivity {
     Intent intent = getIntent();
 
-    private Button Abutton;
     private RockerView mRockerView;
     private TextView testtxt ;
+    private ImageView black_layer;
 
 
     //屏幕左上角为{0,0}，我的角色的绝对位置为{860,0}，相对（地图）位置为{x,y}
@@ -45,16 +57,15 @@ public class ClientGameControl extends AppCompatActivity {
     //其他角色绝对位置为{840-x+m,430-y+n}
     //(所有图片的左上角为判定点）
 
-    private volatile Boolean isend;
+    private volatile boolean isend;
     private volatile boolean Attackable;
-    private int direction = 3;
     private volatile int[] location={0,0}; //当前位置
     int[] center_location;
 
     private Collision Colli = new Collision(120,100);
     private Map map;
     private MyRole myrole;
-    int vision=20;//视野范围
+    int vision=30;//视野范围
     int pre_vision;
 
 
@@ -62,8 +73,9 @@ public class ClientGameControl extends AppCompatActivity {
     static class AsyncConTCP extends AsyncTask<String ,Void, Void>{
         @Override
         protected Void doInBackground(String... meg) {
-            RunnableTCP R1 = new RunnableTCP( "Thread-TCP");
-            R1.start(meg[0]);
+            ClientComContext context = new ClientComContext (new ClientComTCP ()) {
+            };
+            context.executeStrategy (meg[0]);
             return null;
         }
     }
@@ -72,11 +84,12 @@ public class ClientGameControl extends AppCompatActivity {
     public static class AsyncConUDP extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(String... msg) {
-            RunnableUDP R1 = new RunnableUDP ("Thread-UDP");
-            R1.start (msg[0]);
+            ClientComContext context = new ClientComContext (new ClientComUDP ());
+            context.executeStrategy (msg[0]);
             return null;
         }
     }
+
 
     class ThreadMove extends Thread {
         private Thread t;
@@ -174,7 +187,7 @@ public class ClientGameControl extends AppCompatActivity {
             e.printStackTrace ();
         }
 
-        myrole=new MyRole((Objects.requireNonNull (Data.playerLocation.get (Data.LOCALIP)))[0], Data.LOCALIP);
+        myrole=new MyRole((Objects.requireNonNull (Data.playerLocation.get (Data.LOCAL_IP)))[0], Data.LOCAL_IP);
 
         //对摇杆位置改变进行监听
 //        当前模式：方向有改变时回调；8个方向
@@ -195,52 +208,6 @@ public class ClientGameControl extends AppCompatActivity {
         });
 
 
-        Abutton= findViewById(R.id.Abutton);
-        Abutton.setOnTouchListener(new View.OnTouchListener(){
-            @Override
-            public boolean onTouch(View view, MotionEvent event) {
-                // TODO Auto-generated method stub
-                if (!isend) {
-                    switch (event.getAction()) {
-                        case MotionEvent.ACTION_DOWN:
-                            System.out.println("Attackable " + Attackable);
-                            if (Attackable) {
-                                Attack();
-                            }
-                            break;
-                        case MotionEvent.ACTION_UP:
-                            break;
-                    }
-                }
-                return true;
-            }
-        });
-//        Abutton.setOnTouchListener(new View.OnTouchListener(){
-//            @Override
-//            public boolean onTouch(View view, MotionEvent event) {
-//                // TODO Auto-generated method stub
-//                switch (event.getAction()){
-//                    case MotionEvent.ACTION_DOWN:
-//                        Thread t = new Thread(){
-//                            public void run(){
-//                                super.run();
-//                                Attack();
-//                                try{
-//                                    Thread.sleep(100);
-//                                }catch(InterruptedException e){
-//                                    e.printStackTrace();
-//                                }
-//                                }
-//                        };
-//                        t.start();
-//                        break;
-//                    case MotionEvent.ACTION_UP:
-//                        StopAttack();
-//                        break;
-//                }
-//                return true;
-//            }
-//        });
 
 
         handlerUDP.postDelayed(runnableUDP, 1000);//等1s后开始刷新位置UDP
@@ -251,8 +218,25 @@ public class ClientGameControl extends AppCompatActivity {
         sfh = scr.getHolder();
         sfh.addCallback(new MyCallBack());
         draw = new Draw(sfh);
+
+        //加载完毕，显示
+        try{
+            Thread.sleep(3000);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        black_layer=findViewById(R.id.black_layer);
+        black_layer.setVisibility(View.GONE);
     }
 
+    public void TAttack(View view){
+        if (!isend) {
+            System.out.println("Attackable " + Attackable);
+            if (Attackable) {
+                Attack();
+            }
+        }
+    }
 
 //    实现攻击
     public void StopAttack(){
@@ -261,36 +245,44 @@ public class ClientGameControl extends AppCompatActivity {
     }
     public void Attack(){
         Attackable = false;
-        new AsyncConTCP().execute ("attack,100,0");
+        new AsyncConTCP().execute ("atk,100,0");
     }
     //实现移动
     public void Stopmove(){
-        new AsyncConTCP ().execute ("stop");
+        new AsyncConTCP ().execute ("stp");
     }
 //    感觉停止可以不需要
     public void Lmove(){
-        new AsyncConTCP ().execute ("move,0,3");
+        if (Attackable)
+            new AsyncConTCP().execute("mov,0,3");
     }
     public void Rmove(){
-        new AsyncConTCP ().execute ("move,1,3");
+        if (Attackable)
+            new AsyncConTCP ().execute ("mov,1,3");
     }
     public void Umove(){
-        new AsyncConTCP ().execute ("move,2,3");
+        if (Attackable)
+            new AsyncConTCP ().execute ("mov,2,3");
     }
     public void Dmove(){
-        new AsyncConTCP ().execute ("move,3,3");
+        if (Attackable)
+            new AsyncConTCP ().execute ("mov,3,3");
     }
     public void DLmove(){
-        new AsyncConTCP ().execute ("move,4,3");
+        if (Attackable)
+            new AsyncConTCP ().execute ("mov,4,3");
     }
     public void DRmove(){
-        new AsyncConTCP ().execute ("move,5,3");
+        if (Attackable)
+            new AsyncConTCP ().execute ("mov,5,3");
     }
     public void ULmove(){
-        new AsyncConTCP ().execute ("move,6,3");
+        if (Attackable)
+            new AsyncConTCP ().execute ("mov,6,3");
     }
     public void URmove(){
-        new AsyncConTCP ().execute ("move,7,3");
+        if (Attackable)
+            new AsyncConTCP ().execute ("mov,7,3");
     }
 
     //Map初始化
@@ -350,6 +342,8 @@ public class ClientGameControl extends AppCompatActivity {
                     tmp.recycle();
                     tmp=null;
                 }
+                role_pic[i][j][3]=role_pic[i][j][2];
+                role_pic[i][j][2]=role_pic[i][j][0];
             }
         }
 
@@ -363,7 +357,6 @@ public class ClientGameControl extends AppCompatActivity {
                 matrix.postScale(((float)100/tmp.getWidth()), ((float)120/tmp.getHeight()));//人物宽高
                 attack_pic[i][j] = Bitmap.createBitmap(tmp, 0, 0,tmp.getWidth(),tmp.getHeight(),matrix,true);
                 tmp.recycle();
-                tmp=null;
             }
         }
 
@@ -378,10 +371,10 @@ public class ClientGameControl extends AppCompatActivity {
             if (!isend) {
                 new AsyncConUDP().execute("location!");
                 System.out.println(Data.playerLocation + "PLAYER111");
-                if (Data.playerLocation != null && Data.playerLocation.containsKey(Data.LOCALIP)) {
+                if (Data.playerLocation != null && Data.playerLocation.containsKey(Data.LOCAL_IP)) {
                     System.out.println(location[0] + "," + location[1] + "LOCATION111");
-                    location[0] = Objects.requireNonNull(Data.playerLocation.get(Data.LOCALIP))[2];
-                    location[1] = Objects.requireNonNull(Data.playerLocation.get(Data.LOCALIP))[3];
+                    location[0] = Objects.requireNonNull(Data.playerLocation.get(Data.LOCAL_IP))[2];
+                    location[1] = Objects.requireNonNull(Data.playerLocation.get(Data.LOCAL_IP))[3];
                 } else {
                     location = new int[]{0, 0};
                 }
@@ -494,8 +487,8 @@ public class ClientGameControl extends AppCompatActivity {
                             if (r.walk_mov==-1) {
                                 c.drawBitmap (role_pic[r.id % 100][r.direction][0], center_location[0] - location[0] + r.location[0], center_location[1] - location[1] + r.location[1], p);
                             } else{
-                                c.drawBitmap(role_pic[r.id%100][r.direction][r.walk_mov/5],center_location[0] - location[0]+r.location[0],center_location[1] - location[1]+r.location[1],p);
-                                r.walk_mov=(r.walk_mov+1)%10;//每个动作循环的帧数
+                                c.drawBitmap(role_pic[r.id%100][r.direction][r.walk_mov/4],center_location[0] - location[0]+r.location[0],center_location[1] - location[1]+r.location[1],p);
+                                r.walk_mov=(r.walk_mov+1)%16;//每个动作循环的帧数
                             }
                             System.out.println("attack_mov " + r.attack_mov);
                             if (r.attack_mov!=-1) {
@@ -515,11 +508,10 @@ public class ClientGameControl extends AppCompatActivity {
                                 }
                                 r.attack_mov = (r.attack_mov >= 14 )?  (-1) : (r.attack_mov + 1);
                                 System.out.println("attack_mov " + r.attack_mov);
-                                if (Data.LOCALIP == r.name && r.attack_mov == -1) {
+                                if (r.attack_mov == -1 && Data.LOCAL_IP.equals(r.name)) {
                                     StopAttack();
                                 }
                             }
-                            Attackable = (r.attack_mov == -1 && r.walk_mov == -1);
                         }
                         //画黑雾
                         c.saveLayer(0, 0, (center_location[0]+50)*2+1, (center_location[1]+60)*2+1, p, Canvas.ALL_SAVE_FLAG);//保存上一层
@@ -556,7 +548,8 @@ public class ClientGameControl extends AppCompatActivity {
     void check_alive(Role_simple r){
         if (r.id==myrole.id && r.lifevalue<=0) {
             isend=true;
-            ImageView black_layer=findViewById(R.id.black_layer);
+
+            black_layer.setColorFilter(Color.WHITE,PorterDuff.Mode.SRC);
             black_layer.setVisibility(View.VISIBLE);
             ImageView my_pic=findViewById(R.id.res_mine);
             switch (myrole.id%100) {
@@ -564,7 +557,7 @@ public class ClientGameControl extends AppCompatActivity {
             }
             my_pic.setVisibility(View.VISIBLE);
             TextView score_board=findViewById(R.id.score_board);
-            score_board.setText("Nane:"+myrole.name+"\nRank:"+"1"+"\nScore:"+String.valueOf(vision));
+            score_board.setText("Name:"+myrole.name+"\nRank:"+"1"+"\nScore:"+String.valueOf(vision));
             score_board.setVisibility(View.VISIBLE);
             Button ret=findViewById(R.id.Return);
             ret.setVisibility(View.VISIBLE);

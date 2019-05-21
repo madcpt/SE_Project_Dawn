@@ -7,10 +7,10 @@ import java.util.Map;
 import java.util.Vector;
 
 public class Data {
-    public static String LOCALIP;
-    public static Long delay;
-    public static String Server;
-    public static int port;
+    public static String LOCAL_IP;
+    private static Long delay;
+    static String Server;
+    static int port;
     public static Map<String, int[]> playerLocation;
     public static Vector<String> roomListStr;
     public static Room myRoom;
@@ -20,7 +20,7 @@ public class Data {
     public Data(){
     }
     public static void setValue() {
-        LOCALIP = "/0.0.0.0"; //TODO
+        LOCAL_IP = "/0.0.0.0"; //TODO
         delay = 0L;
 //        Server = "39.105.27.108";
         Server = "192.168.137.1";
@@ -36,6 +36,7 @@ public class Data {
     public static void setDelay(Long a) {
         delay = a;
     }
+
     public static void setMaxDelay(Long a) {
         if(a > delay){
             delay = a;
@@ -43,6 +44,6 @@ public class Data {
     }
 
     public static void getStatus() {
-        System.out.println ("STATUS111: " + LOCALIP + Server + port);
+        System.out.println ("STATUS111: " + LOCAL_IP + Server + port);
     }
 }
