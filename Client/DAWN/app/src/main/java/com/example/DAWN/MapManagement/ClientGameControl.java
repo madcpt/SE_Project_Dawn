@@ -3,32 +3,42 @@ package com.example.DAWN.MapManagement;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.*;
-import android.widget.*;
+import android.view.MotionEvent;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import java.lang.*;
+import com.example.DAWN.CommonService.Data;
+import com.example.DAWN.CommonService.ClientComContext;
+import com.example.DAWN.CommonService.ClientComTCP;
+import com.example.DAWN.CommonService.ClientComUDP;
+import com.example.DAWN.R;
+import com.example.DAWN.RoleManagement.MyRole;
+import com.example.DAWN.RoleManagement.Role_simple;
+import com.example.DAWN.UI.CreateRoom;
+import com.example.DAWN.UI.RockerView;
+
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-
-import android.graphics.*;
-
-
-import com.example.DAWN.CommonService.RunnableTCP;
-import com.example.DAWN.CommonService.RunnableUDP;
-import com.example.DAWN.CommonService.Data;
-import com.example.DAWN.RoleManagement.MyRole;
-import com.example.DAWN.R;
-import com.example.DAWN.UI.RockerView;
-import com.example.DAWN.RoleManagement.Role_simple;
-import com.example.DAWN.UI.CreateRoom;
 
 import static com.example.DAWN.UI.RockerView.DirectionMode.DIRECTION_8;
 
@@ -62,8 +72,9 @@ public class ClientGameControl extends AppCompatActivity {
     static class AsyncConTCP extends AsyncTask<String ,Void, Void>{
         @Override
         protected Void doInBackground(String... meg) {
-            RunnableTCP R1 = new RunnableTCP( "Thread-TCP");
-            R1.start(meg[0]);
+            ClientComContext context = new ClientComContext (new ClientComTCP ()) {
+            };
+            context.executeStrategy (meg[0]);
             return null;
         }
     }
@@ -72,11 +83,12 @@ public class ClientGameControl extends AppCompatActivity {
     public static class AsyncConUDP extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(String... msg) {
-            RunnableUDP R1 = new RunnableUDP ("Thread-UDP");
-            R1.start (msg[0]);
+            ClientComContext context = new ClientComContext (new ClientComUDP ());
+            context.executeStrategy (msg[0]);
             return null;
         }
     }
+
 
     class ThreadMove extends Thread {
         private Thread t;
@@ -174,7 +186,7 @@ public class ClientGameControl extends AppCompatActivity {
             e.printStackTrace ();
         }
 
-        myrole=new MyRole((Objects.requireNonNull (Data.playerLocation.get (Data.LOCALIP)))[0], Data.LOCALIP);
+        myrole=new MyRole((Objects.requireNonNull (Data.playerLocation.get (Data.LOCAL_IP)))[0], Data.LOCAL_IP);
 
         //对摇杆位置改变进行监听
 //        当前模式：方向有改变时回调；8个方向
@@ -363,7 +375,6 @@ public class ClientGameControl extends AppCompatActivity {
                 matrix.postScale(((float)100/tmp.getWidth()), ((float)120/tmp.getHeight()));//人物宽高
                 attack_pic[i][j] = Bitmap.createBitmap(tmp, 0, 0,tmp.getWidth(),tmp.getHeight(),matrix,true);
                 tmp.recycle();
-                tmp=null;
             }
         }
 
@@ -378,10 +389,10 @@ public class ClientGameControl extends AppCompatActivity {
             if (!isend) {
                 new AsyncConUDP().execute("location!");
                 System.out.println(Data.playerLocation + "PLAYER111");
-                if (Data.playerLocation != null && Data.playerLocation.containsKey(Data.LOCALIP)) {
+                if (Data.playerLocation != null && Data.playerLocation.containsKey(Data.LOCAL_IP)) {
                     System.out.println(location[0] + "," + location[1] + "LOCATION111");
-                    location[0] = Objects.requireNonNull(Data.playerLocation.get(Data.LOCALIP))[2];
-                    location[1] = Objects.requireNonNull(Data.playerLocation.get(Data.LOCALIP))[3];
+                    location[0] = Objects.requireNonNull(Data.playerLocation.get(Data.LOCAL_IP))[2];
+                    location[1] = Objects.requireNonNull(Data.playerLocation.get(Data.LOCAL_IP))[3];
                 } else {
                     location = new int[]{0, 0};
                 }
@@ -515,7 +526,7 @@ public class ClientGameControl extends AppCompatActivity {
                                 }
                                 r.attack_mov = (r.attack_mov >= 14 )?  (-1) : (r.attack_mov + 1);
                                 System.out.println("attack_mov " + r.attack_mov);
-                                if (Data.LOCALIP == r.name && r.attack_mov == -1) {
+                                if (Data.LOCAL_IP == r.name && r.attack_mov == -1) {
                                     StopAttack();
                                 }
                             }

@@ -13,8 +13,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.DAWN.CommonService.Data;
-import com.example.DAWN.CommonService.RunnableTCP;
-import com.example.DAWN.CommonService.RunnableUDP;
+import com.example.DAWN.CommonService.ThreadForTCP;
+import com.example.DAWN.CommonService.ThreadForUDP;
 import com.example.DAWN.R;
 
 import java.util.Vector;
@@ -36,7 +36,7 @@ public class CreateRoom extends AppCompatActivity {
     static class AsyncConTCP extends AsyncTask<String ,Void, Void> {
         @Override
         protected Void doInBackground(String... meg) {
-            RunnableTCP R1 = new RunnableTCP( "Thread-Create-Room");
+            ThreadForTCP R1 = new ThreadForTCP ( "Thread-Create-Room");
             R1.start(meg[0]);
             return null;
         }
@@ -46,7 +46,7 @@ public class CreateRoom extends AppCompatActivity {
     static class AsyncConUDP extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(String... msg) {
-            RunnableUDP R1 = new RunnableUDP ("Thread-UDP-CREATE-ROOM");
+            ThreadForUDP R1 = new ThreadForUDP ("Thread-UDP-CREATE-ROOM");
             R1.start (msg[0]);
             return null;
         }
