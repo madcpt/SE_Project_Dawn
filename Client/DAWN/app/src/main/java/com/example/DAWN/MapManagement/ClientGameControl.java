@@ -249,40 +249,40 @@ public class ClientGameControl extends AppCompatActivity {
     }
     //实现移动
     public void Stopmove(){
-        new AsyncConTCP ().execute ("stp");
+        new AsyncConTCP ().execute ("stop");
     }
 //    感觉停止可以不需要
     public void Lmove(){
         if (Attackable)
-            new AsyncConTCP().execute("mov,0,3");
+            new AsyncConTCP().execute("move,0,3");
     }
     public void Rmove(){
         if (Attackable)
-            new AsyncConTCP ().execute ("mov,1,3");
+            new AsyncConTCP ().execute ("move,1,3");
     }
     public void Umove(){
         if (Attackable)
-            new AsyncConTCP ().execute ("mov,2,3");
+            new AsyncConTCP ().execute ("move,2,3");
     }
     public void Dmove(){
         if (Attackable)
-            new AsyncConTCP ().execute ("mov,3,3");
+            new AsyncConTCP ().execute ("move,3,3");
     }
     public void DLmove(){
         if (Attackable)
-            new AsyncConTCP ().execute ("mov,4,3");
+            new AsyncConTCP ().execute ("move,4,3");
     }
     public void DRmove(){
         if (Attackable)
-            new AsyncConTCP ().execute ("mov,5,3");
+            new AsyncConTCP ().execute ("move,5,3");
     }
     public void ULmove(){
         if (Attackable)
-            new AsyncConTCP ().execute ("mov,6,3");
+            new AsyncConTCP ().execute ("move,6,3");
     }
     public void URmove(){
         if (Attackable)
-            new AsyncConTCP ().execute ("mov,7,3");
+            new AsyncConTCP ().execute ("move,7,3");
     }
 
     //Map初始化
