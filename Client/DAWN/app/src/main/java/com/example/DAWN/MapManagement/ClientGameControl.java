@@ -45,7 +45,6 @@ import static com.example.DAWN.UI.RockerView.DirectionMode.DIRECTION_8;
 public class ClientGameControl extends AppCompatActivity {
     Intent intent = getIntent();
 
-    private Button Abutton;
     private RockerView mRockerView;
     private TextView testtxt ;
 
@@ -55,9 +54,8 @@ public class ClientGameControl extends AppCompatActivity {
     //其他角色绝对位置为{840-x+m,430-y+n}
     //(所有图片的左上角为判定点）
 
-    private volatile Boolean isend;
+    private volatile boolean isend;
     private volatile boolean Attackable;
-    private int direction = 3;
     private volatile int[] location={0,0}; //当前位置
     int[] center_location;
 
@@ -207,52 +205,6 @@ public class ClientGameControl extends AppCompatActivity {
         });
 
 
-        Abutton= findViewById(R.id.Abutton);
-        Abutton.setOnTouchListener(new View.OnTouchListener(){
-            @Override
-            public boolean onTouch(View view, MotionEvent event) {
-                // TODO Auto-generated method stub
-                if (!isend) {
-                    switch (event.getAction()) {
-                        case MotionEvent.ACTION_DOWN:
-                            System.out.println("Attackable " + Attackable);
-                            if (Attackable) {
-                                Attack();
-                            }
-                            break;
-                        case MotionEvent.ACTION_UP:
-                            break;
-                    }
-                }
-                return true;
-            }
-        });
-//        Abutton.setOnTouchListener(new View.OnTouchListener(){
-//            @Override
-//            public boolean onTouch(View view, MotionEvent event) {
-//                // TODO Auto-generated method stub
-//                switch (event.getAction()){
-//                    case MotionEvent.ACTION_DOWN:
-//                        Thread t = new Thread(){
-//                            public void run(){
-//                                super.run();
-//                                Attack();
-//                                try{
-//                                    Thread.sleep(100);
-//                                }catch(InterruptedException e){
-//                                    e.printStackTrace();
-//                                }
-//                                }
-//                        };
-//                        t.start();
-//                        break;
-//                    case MotionEvent.ACTION_UP:
-//                        StopAttack();
-//                        break;
-//                }
-//                return true;
-//            }
-//        });
 
 
         handlerUDP.postDelayed(runnableUDP, 1000);//等1s后开始刷新位置UDP
@@ -265,6 +217,14 @@ public class ClientGameControl extends AppCompatActivity {
         draw = new Draw(sfh);
     }
 
+    public void TAttack(View view){
+        if (!isend) {
+            System.out.println("Attackable " + Attackable);
+            if (Attackable) {
+                Attack();
+            }
+        }
+    }
 
 //    实现攻击
     public void StopAttack(){
@@ -281,28 +241,36 @@ public class ClientGameControl extends AppCompatActivity {
     }
 //    感觉停止可以不需要
     public void Lmove(){
-        new AsyncConTCP ().execute ("mov,0,3");
+        if (Attackable)
+            new AsyncConTCP().execute("mov,0,3");
     }
     public void Rmove(){
-        new AsyncConTCP ().execute ("mov,1,3");
+        if (Attackable)
+            new AsyncConTCP ().execute ("mov,1,3");
     }
     public void Umove(){
-        new AsyncConTCP ().execute ("mov,2,3");
+        if (Attackable)
+            new AsyncConTCP ().execute ("mov,2,3");
     }
     public void Dmove(){
-        new AsyncConTCP ().execute ("mov,3,3");
+        if (Attackable)
+            new AsyncConTCP ().execute ("mov,3,3");
     }
     public void DLmove(){
-        new AsyncConTCP ().execute ("mov,4,3");
+        if (Attackable)
+            new AsyncConTCP ().execute ("mov,4,3");
     }
     public void DRmove(){
-        new AsyncConTCP ().execute ("mov,5,3");
+        if (Attackable)
+            new AsyncConTCP ().execute ("mov,5,3");
     }
     public void ULmove(){
-        new AsyncConTCP ().execute ("mov,6,3");
+        if (Attackable)
+            new AsyncConTCP ().execute ("mov,6,3");
     }
     public void URmove(){
-        new AsyncConTCP ().execute ("mov,7,3");
+        if (Attackable)
+            new AsyncConTCP ().execute ("mov,7,3");
     }
 
     //Map初始化
@@ -528,11 +496,10 @@ public class ClientGameControl extends AppCompatActivity {
                                 }
                                 r.attack_mov = (r.attack_mov >= 14 )?  (-1) : (r.attack_mov + 1);
                                 System.out.println("attack_mov " + r.attack_mov);
-                                if (Data.LOCAL_IP == r.name && r.attack_mov == -1) {
+                                if (r.attack_mov == -1 && Data.LOCAL_IP.equals(r.name)) {
                                     StopAttack();
                                 }
                             }
-                            Attackable = (r.attack_mov == -1 && r.walk_mov == -1);
                         }
                         //画黑雾
                         c.saveLayer(0, 0, (center_location[0]+50)*2+1, (center_location[1]+60)*2+1, p, Canvas.ALL_SAVE_FLAG);//保存上一层
