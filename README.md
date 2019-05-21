@@ -1,6 +1,6 @@
 ## DAWN v1.0
 
-Dawn is a Battle Royal Game based on Java.
+Dawn is a Battle Royale Game based on Java.
 
 It is a survival battle royal game where players gets drop off by an air plane onto a forest and they have to battle other players and try to be last one standing to win the game. The objective is to gather as much resources and weapons as soon as possible and get ready to fight with anther player.
 
