@@ -1,3 +1,4 @@
+
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -5,6 +6,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 
 public class serverForMultiClientTCP extends ServerSocket {
@@ -66,7 +68,9 @@ public class serverForMultiClientTCP extends ServerSocket {
                         Data.att_stop(pureIP);
                         break;
                     case "init" :
-                        serverGameControl.addPlayer(pureIP,Integer.parseInt(myList.get(2)),pureIP);
+                        serverGameControl.addPlayer(pureIP,Integer.parseInt(myList.get(3)),pureIP);
+                        Data.roomList.RoomList.get(myList.get(2)).prepareOne(pureIP);
+                        System.out.println(Data.roomList.RoomList.get(myList.get(2)).prepareList.toString());
                         break;
                     case "new_room":
                         if(myList.get(2) == "null" || myList.get(3) == "null"){
@@ -82,6 +86,12 @@ public class serverForMultiClientTCP extends ServerSocket {
                         }
                         Data.roomList.joinRoom(pureIP, myList.get(2));
                         Data.roomList.disPlayAllRoom();
+                        break;
+                    case "delete":
+                        Data.playerLocation.remove(pureIP);
+                        Data.roomList.RoomList.get(myList.get((2))).removePlayer(pureIP);
+                        serverGameControl.removePlayer(pureIP);
+//                        Data.roomList.RoomList.get()
                         break;
 //                    case "kill":
 //                        String kill
