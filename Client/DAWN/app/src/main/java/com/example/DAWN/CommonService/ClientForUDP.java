@@ -20,8 +20,8 @@ class ClientForUDP {
 
     void testCon(String msg) {
         try {
-            byte[] requestBytes = new byte[2048];
-            byte[] ReceiveBytes = new byte[2048];
+            byte[] requestBytes = new byte[128];
+            byte[] ReceiveBytes = new byte[256];
             DatagramPacket requestPacket = new DatagramPacket(requestBytes, requestBytes.length);
             DatagramPacket receivePacket = new DatagramPacket(ReceiveBytes,ReceiveBytes.length);
 

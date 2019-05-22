@@ -249,40 +249,40 @@ public class ClientGameControl extends AppCompatActivity {
     }
     //实现移动
     public void Stopmove(){
-        new AsyncConTCP ().execute ("stp");
+        new AsyncConTCP ().execute ("stop");
     }
 //    感觉停止可以不需要
     public void Lmove(){
         if (Attackable)
-            new AsyncConTCP().execute("mov,0,3");
+            new AsyncConTCP().execute("move,0,3");
     }
     public void Rmove(){
         if (Attackable)
-            new AsyncConTCP ().execute ("mov,1,3");
+            new AsyncConTCP ().execute ("move,1,3");
     }
     public void Umove(){
         if (Attackable)
-            new AsyncConTCP ().execute ("mov,2,3");
+            new AsyncConTCP ().execute ("move,2,3");
     }
     public void Dmove(){
         if (Attackable)
-            new AsyncConTCP ().execute ("mov,3,3");
+            new AsyncConTCP ().execute ("move,3,3");
     }
     public void DLmove(){
         if (Attackable)
-            new AsyncConTCP ().execute ("mov,4,3");
+            new AsyncConTCP ().execute ("move,4,3");
     }
     public void DRmove(){
         if (Attackable)
-            new AsyncConTCP ().execute ("mov,5,3");
+            new AsyncConTCP ().execute ("move,5,3");
     }
     public void ULmove(){
         if (Attackable)
-            new AsyncConTCP ().execute ("mov,6,3");
+            new AsyncConTCP ().execute ("move,6,3");
     }
     public void URmove(){
         if (Attackable)
-            new AsyncConTCP ().execute ("mov,7,3");
+            new AsyncConTCP ().execute ("move,7,3");
     }
 
     //Map初始化
@@ -346,6 +346,12 @@ public class ClientGameControl extends AppCompatActivity {
                 role_pic[i][j][2]=role_pic[i][j][0];
             }
         }
+        tmp=BitmapFactory.decodeResource(this.getResources(),R.drawable.tombstone).copy(Bitmap.Config.ARGB_4444, true);
+        matrix=new Matrix();
+        matrix.postScale(((float)100/tmp.getWidth()), ((float)120/tmp.getHeight()));//人物宽高
+        grave = Bitmap.createBitmap(tmp, 0, 0,tmp.getWidth(),tmp.getHeight(),matrix,true);
+        tmp.recycle();
+        tmp=null;
 
         //Attackpic load
         attack_pic = new Bitmap[1][5];
@@ -401,6 +407,11 @@ public class ClientGameControl extends AppCompatActivity {
             for (int i=0;i<map.livingrole.size();i++) {
                 r = map.livingrole.get(i);
 
+                if (!Data.playerLocation.containsKey(r.name)) {
+                    map.livingrole.remove(r);
+                    continue;
+                }
+
                 r.lifevalue = Objects.requireNonNull (Data.playerLocation.get (r.name))[1];
                 check_alive(r);
 
@@ -426,6 +437,7 @@ public class ClientGameControl extends AppCompatActivity {
     private SurfaceHolder sfh;
     private Draw draw;
     private Bitmap background;
+    private Bitmap grave;
     private Bitmap hole;
     private Bitmap[][][] role_pic;//所有角色图的Bitmap点阵,第一层为角色，第二层为方向，第三层为动作
     private Bitmap[][] attack_pic;//所有攻击效果的点阵图，第一层为特效，第二层为效果帧
@@ -484,6 +496,10 @@ public class ClientGameControl extends AppCompatActivity {
                                 continue;
                             }
                             c.drawText(r.name,center_location[0] - location[0] + r.location[0]+48, center_location[1] - location[1] + r.location[1],p);
+                            if (r.lifevalue<=0){
+                                c.drawBitmap(grave,center_location[0] - location[0] + r.location[0], center_location[1] - location[1] + r.location[1], p);
+                                continue;
+                            }
                             if (r.walk_mov==-1) {
                                 c.drawBitmap (role_pic[r.id % 100][r.direction][0], center_location[0] - location[0] + r.location[0], center_location[1] - location[1] + r.location[1], p);
                             } else{
@@ -549,7 +565,7 @@ public class ClientGameControl extends AppCompatActivity {
         if (r.id==myrole.id && r.lifevalue<=0) {
             isend=true;
 
-            black_layer.setColorFilter(Color.WHITE,PorterDuff.Mode.SRC);
+            black_layer.setColorFilter(Color.WHITE,PorterDuff.Mode.SRC_IN);
             black_layer.setVisibility(View.VISIBLE);
             ImageView my_pic=findViewById(R.id.res_mine);
             switch (myrole.id%100) {
