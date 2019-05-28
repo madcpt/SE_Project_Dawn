@@ -30,6 +30,10 @@ Please log bugs under [Issues](<https://github.com/madcpt/SE_Project_Dawn/issues
 - [Yuting Lan](https://github.com/YutLan)
 - Jianzhen Cao
 
+## Development Log
+
+See: [devlog.md](./devlog.md)
+
 ## Disclaimer
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
 INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 

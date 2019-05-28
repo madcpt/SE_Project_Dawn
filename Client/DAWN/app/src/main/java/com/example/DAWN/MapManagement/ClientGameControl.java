@@ -11,7 +11,6 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
-import android.graphics.Shader;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,7 +18,6 @@ import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -29,15 +27,14 @@ import android.widget.TextView;
 
 import com.example.DAWN.CommonService.Data;
 import com.example.DAWN.CommonService.ClientComContext;
-import com.example.DAWN.CommonService.ClientComTCP;
-import com.example.DAWN.CommonService.ClientComUDP;
+import com.example.DAWN.CommonService.ClientComStrategyTCP;
+import com.example.DAWN.CommonService.ClientComStrategyUDP;
 import com.example.DAWN.R;
 import com.example.DAWN.RoleManagement.MyRole;
 import com.example.DAWN.RoleManagement.Role_simple;
 import com.example.DAWN.UI.CreateRoom;
 import com.example.DAWN.UI.RockerView;
 
-import java.sql.Time;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -67,13 +64,14 @@ public class ClientGameControl extends AppCompatActivity {
     private MyRole myrole;
     int vision=30;//视野范围
     int pre_vision;
+    int velocity = 1;
 
 
     //AsyncTask for TCP-client.
     static class AsyncConTCP extends AsyncTask<String ,Void, Void>{
         @Override
         protected Void doInBackground(String... meg) {
-            ClientComContext context = new ClientComContext (new ClientComTCP ()) {
+            ClientComContext context = new ClientComContext (new ClientComStrategyTCP ()) {
             };
             context.executeStrategy (meg[0]);
             return null;
@@ -84,7 +82,7 @@ public class ClientGameControl extends AppCompatActivity {
     public static class AsyncConUDP extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(String... msg) {
-            ClientComContext context = new ClientComContext (new ClientComUDP ());
+            ClientComContext context = new ClientComContext (new ClientComStrategyUDP ());
             context.executeStrategy (msg[0]);
             return null;
         }
@@ -249,40 +247,40 @@ public class ClientGameControl extends AppCompatActivity {
     }
     //实现移动
     public void Stopmove(){
-        new AsyncConTCP ().execute ("stop");
+        new AsyncConTCP ().execute ("stp");
     }
 //    感觉停止可以不需要
     public void Lmove(){
         if (Attackable)
-            new AsyncConTCP().execute("move,0,3");
+            new AsyncConTCP().execute("mov,0,1");
     }
     public void Rmove(){
         if (Attackable)
-            new AsyncConTCP ().execute ("move,1,3");
+            new AsyncConTCP ().execute ("mov,1,1");
     }
     public void Umove(){
         if (Attackable)
-            new AsyncConTCP ().execute ("move,2,3");
+            new AsyncConTCP ().execute ("mov,2,1");
     }
     public void Dmove(){
         if (Attackable)
-            new AsyncConTCP ().execute ("move,3,3");
+            new AsyncConTCP ().execute ("mov,3,1");
     }
     public void DLmove(){
         if (Attackable)
-            new AsyncConTCP ().execute ("move,4,3");
+            new AsyncConTCP ().execute ("mov,4,1");
     }
     public void DRmove(){
         if (Attackable)
-            new AsyncConTCP ().execute ("move,5,3");
+            new AsyncConTCP ().execute ("mov,5,1");
     }
     public void ULmove(){
         if (Attackable)
-            new AsyncConTCP ().execute ("move,6,3");
+            new AsyncConTCP ().execute ("mov,6,1");
     }
     public void URmove(){
         if (Attackable)
-            new AsyncConTCP ().execute ("move,7,3");
+            new AsyncConTCP ().execute ("mov,7,1");
     }
 
     //Map初始化
