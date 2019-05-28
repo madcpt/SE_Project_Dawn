@@ -187,7 +187,7 @@ public class ClientGameControl extends AppCompatActivity {
             e.printStackTrace ();
         }
 
-        myrole=new MyRole((Objects.requireNonNull (Data.playerLocation.get (Data.LOCAL_IP)))[0], Data.LOCAL_IP);
+        myrole=new MyRole((Objects.requireNonNull (Data.playerLocation.get (Data.LOCAL_IP)))[0], Data.LOCAL_IP,10);
 
         //对摇杆位置改变进行监听
 //        当前模式：方向有改变时回调；8个方向

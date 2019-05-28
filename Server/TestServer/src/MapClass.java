@@ -3,7 +3,6 @@ import java.util.Random;
 
 
 
-
 public class MapClass {
 
     Random rand=new Random();
@@ -11,6 +10,7 @@ public class MapClass {
     public static int size =100;
 
     public Vector<Prop> proplist;
+    private Prop prop_sample;
    // public Vector<> rankrecord;
     public int[][] m;
 
@@ -129,10 +129,25 @@ public class MapClass {
                 case  '\n' : row=0;col++;
             }
         }
-
-        for (int i = 0; i <0; i++) { //构造prop的，暂无
-
+        int proptype;
+        int[] proposition = new int[2];
+        int x,y;
+        for (int i = 0; i <100; i++) { //构造prop的，测试生成100个
+            proptype = rand.nextInt(4);
+            prop_sample = new Prop(i,proptype);
+            do {
+                x = rand.nextInt(13200) + 900;
+                y = rand.nextInt(13200) + 900;
+            }while(!is_valid(x,y));
+            proposition[0] = x;
+            proposition[1] = y;
+            prop_sample.setPropposition(proposition);
         }
+    }
+
+
+    private boolean is_valid(int x,int y){
+        return (m[y/unit][x/unit]==0);
     }
 
 
