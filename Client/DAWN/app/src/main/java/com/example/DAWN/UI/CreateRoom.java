@@ -239,12 +239,12 @@ public class CreateRoom extends AppCompatActivity {
         System.out.println("RoomContain");
         System.out.println(rc);
 
-        if (rc<1 || rc>4)
+        if (rc<=1 || rc>4)
         {
             makeText(this, getString(R.string.roomcontain_notvalid), Toast.LENGTH_SHORT).show();
             return false;
         }
-        else if (ID<=0 || ID>=9999)
+        else if (ID<=0 || ID>99999)
         {
             makeText(this, getString(R.string.roomID_notvalid), Toast.LENGTH_SHORT).show();
             return false;
