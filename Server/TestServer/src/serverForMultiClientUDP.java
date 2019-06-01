@@ -34,7 +34,7 @@ public class serverForMultiClientUDP implements Runnable{
 
         while(true){
             // Receive
-            byte[] bytes = new byte[1024];
+            byte[] bytes = new byte[256];
             DatagramPacket data = new DatagramPacket(bytes, bytes.length);
             ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
             ObjectOutputStream objectStream = new ObjectOutputStream(byteArrayStream);

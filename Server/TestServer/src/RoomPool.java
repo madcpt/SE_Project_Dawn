@@ -19,7 +19,9 @@ public class RoomPool {
         disPlayAllRoom();
     }
     public void joinRoom(String pureIP, String roomID) {
-        RoomList.get(roomID).addPlayer(pureIP);
+        if(RoomList.containsKey(roomID)) {
+            RoomList.get(roomID).addPlayer(pureIP);
+        }
     }
     public void disPlayAllRoom(){
         for(String ID : RoomList.keySet()){

@@ -37,14 +37,15 @@ public class Data {
     public static boolean AttackCollisionDetect(int x1, int y1, int x2, int y2){
         int h = Colli.getCollision_height();
         int w = Colli.getCollision_width();
+        System.out.println("atk_colli " + x1 +","+","+y1 +","+ x2 +","+ y2 + "," +( x2 > x1 - w && x2 < x1 + w && y2 > y1 - h && y2 < y1 + h ));
         return ( x2 > x1 - w && x2 < x1 + w && y2 > y1 - h && y2 < y1 + h );
     }
 
     public static void Attack(String pureIP, String damage){
         int dama = Integer.valueOf(damage);
         int dire = playerLocation.get(pureIP)[4];
-        int x = playerLocation.get(pureIP)[2];
-        int y = playerLocation.get(pureIP)[3];
+        int y = playerLocation.get(pureIP)[2];
+        int x = playerLocation.get(pureIP)[3];
         switch (dire){
             case 0:
                 x += Colli.getCollision_width();
@@ -62,10 +63,10 @@ public class Data {
         playerLocation.get(pureIP)[6] = 1;
         System.out.println("attack_mov " + playerLocation.get(pureIP)[6]);
         for(String ID : playerLocation.keySet()){
-            if(ID == pureIP){
+            if(ID.equals(pureIP)){
                 continue;
             }
-            if(AttackCollisionDetect(x,y,playerLocation.get(ID)[2],playerLocation.get(ID)[3])){
+            if(AttackCollisionDetect(x,y,playerLocation.get(ID)[3],playerLocation.get(ID)[2])){
                 playerLocation.get(ID)[1] -= dama;
             }
         }
