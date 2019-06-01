@@ -404,15 +404,12 @@ public class ClientGameControl extends AppCompatActivity {
             Role_simple r;
             for (int i=0;i<map.livingrole.size();i++) {
                 r = map.livingrole.get(i);
-
                 if (!Data.playerLocation.containsKey(r.name)) {
                     map.livingrole.remove(r);
                     continue;
                 }
-
                 r.lifevalue = Objects.requireNonNull (Data.playerLocation.get (r.name))[1];
                 check_alive(r);
-
                 r.location[0] = Objects.requireNonNull (Data.playerLocation.get (r.name))[2];
                 r.location[1] = Objects.requireNonNull (Data.playerLocation.get (r.name))[3];
                 r.direction = Objects.requireNonNull (Data.playerLocation.get (r.name))[4];
@@ -422,9 +419,8 @@ public class ClientGameControl extends AppCompatActivity {
                     case -1: r.attack_mov=-1; break;
                     case 1: if (r.attack_mov==-1) {r.attack_mov = 1;} break;
                 }
-
-                System.out.println ("OTHER111 " + map.livingrole.size () + Arrays.toString (r.location));
-                System.out.println (Arrays.toString (Data.playerLocation.get (r.name)));
+//                System.out.println ("OTHER111 " + map.livingrole.size () + Arrays.toString (r.location));
+//                System.out.println (Arrays.toString (Data.playerLocation.get (r.name)));
             }
         }
     };
