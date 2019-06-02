@@ -46,7 +46,7 @@ class ClientForUDP {
 
             // Receive
 
-            System.out.println ("RECEIVE1112");
+            System.out.println ("Waiting1112");
             client.receive(receivePacket);
             System.out.println ("RECEIVE1113");
 
