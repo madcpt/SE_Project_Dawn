@@ -1,12 +1,14 @@
 import numpy as np
 import cv2
 
-a=np.zeros((100,100))
+height = 20
+
+a=np.zeros((height,height))
 
 with open("map.txt") as file:
-    for i in range(100):
+    for i in range(height):
         b=file.readline()
-        for j in range(100):
+        for j in range(height):
             a[i][j]=int(b[j])
 print(a)
 
@@ -47,30 +49,30 @@ tmp3=np.vstack((tree[25:50,25:50],grass[0:25,0:25]))
 rdcorner=np.hstack((np.vstack((tmp1,tmp2)),tmp3))
 
 rows=[]
-for i in range(100):
+for i in range(height):
     cols=[]
-    for j in range(100):
+    for j in range(height):
         if a[i][j]==0:
             tmp=grass
         else:
-            if a[i-1][j]==1 and a[i][j-1]==1 and a[(i+1)%100][j]==1 and a[i][(j+1)%100]==1:
+            if a[i-1][j]==1 and a[i][j-1]==1 and a[(i+1)%height][j]==1 and a[i][(j+1)%height]==1:
                 tmp=full_forest
-            elif a[i-1][j]==1 and a[i][(j+1)%100]==1 and a[(i+1)%100][j]==0 and a[i][j-1]==0:
+            elif a[i-1][j]==1 and a[i][(j+1)%height]==1 and a[(i+1)%height][j]==0 and a[i][j-1]==0:
                 tmp=ldcorner
-            elif a[i-1][j]==1 and a[i][j-1]==1 and a[(i+1)%100][j]==0 and a[i][(j+1)%100]==0:
+            elif a[i-1][j]==1 and a[i][j-1]==1 and a[(i+1)%height][j]==0 and a[i][(j+1)%height]==0:
                 tmp=rdcorner
-            elif a[(i+1)%100][j]==1 and a[i][j-1]==1 and a[i-1][j]==0 and a[i][(j+1)%100]==0:
+            elif a[(i+1)%height][j]==1 and a[i][j-1]==1 and a[i-1][j]==0 and a[i][(j+1)%height]==0:
                 tmp=rucorner
-            elif a[(i+1)%100][j]==1 and a[i][(j+1)%100]==1 and a[(i-1)][j]==0 and a[i][j-1]==0:
+            elif a[(i+1)%height][j]==1 and a[i][(j+1)%height]==1 and a[(i-1)][j]==0 and a[i][j-1]==0:
                 tmp=lucorner
 
             elif a[i-1][j]==0:
                 tmp=upside
-            elif a[(i+1)%100][j]==0:
+            elif a[(i+1)%height][j]==0:
                 tmp=downside
             elif a[i][j-1]==0:
                 tmp=leftside
-            elif a[i][(j+1)%100]==0:
+            elif a[i][(j+1)%height]==0:
                 tmp=rightside
             else:
                 tmp=tree
