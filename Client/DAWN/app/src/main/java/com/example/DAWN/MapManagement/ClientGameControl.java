@@ -21,8 +21,6 @@ import android.util.DisplayMetrics;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.DAWN.CommonService.Data;
@@ -46,7 +44,6 @@ public class ClientGameControl extends AppCompatActivity {
 
     private RockerView mRockerView;
     private TextView testtxt ;
-    private ImageView black_layer;
 
 
     //屏幕左上角为{0,0}，我的角色的绝对位置为{860,0}，相对（地图）位置为{x,y}
@@ -223,8 +220,6 @@ public class ClientGameControl extends AppCompatActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
-        black_layer=findViewById(R.id.black_layer);
-        black_layer.setVisibility(View.GONE);
     }
 
     public void TAttack(View view){
@@ -571,28 +566,24 @@ public class ClientGameControl extends AppCompatActivity {
     void check_alive(Role_simple r){
         if (r.id==myrole.id && r.lifevalue<=0) {
             isend=true;
+            Intent it_res = new Intent (this, ShowRes.class);    //切换User Activity至Login Activity
+            Bundle bundle=new Bundle();
+            bundle.putString("name", myrole.name);
+            bundle.putInt("roleID",myrole.id);
+            bundle.putInt("rank",1);
+            bundle.putInt("killing",0);
+            bundle.putString("killedby","LYT");//也可以传被杀的id
+            it_res.putExtras(bundle);
+            startActivity (it_res);
 
-            black_layer.setColorFilter(Color.WHITE,PorterDuff.Mode.SRC_IN);
-            black_layer.setVisibility(View.VISIBLE);
-            ImageView my_pic=findViewById(R.id.res_mine);
-            switch (myrole.id%100) {
-                case 0:my_pic.setImageResource(R.drawable.role0); break;
-            }
-            my_pic.setVisibility(View.VISIBLE);
-            TextView score_board=findViewById(R.id.score_board);
-            score_board.setText("Name:"+myrole.name+"\nRank:"+"1"+"\nScore:"+String.valueOf(vision));
-            score_board.setVisibility(View.VISIBLE);
-            Button ret=findViewById(R.id.Return);
-            ret.setVisibility(View.VISIBLE);
         }
     }
 
-    public void finish(View v){
-        new AsyncConTCP().execute("delete,"+Data.myRoom.RoomID);
-        Intent intent = new Intent(this, CreateRoom.class);
-        startActivity(intent);
-
-    }
+//    public void finish(View v){
+//        new AsyncConTCP().execute("delete,"+Data.myRoom.RoomID);
+//        Intent intent = new Intent(this, CreateRoom.class);
+//        startActivity(intent);
+//    }
     //析构
     protected void onDestroy() {
         handlerInfo.removeCallbacks(runnableInfo);

@@ -8,4 +8,6 @@
     <color name="trans_black">#66000000</color>
     <color name="abutton_pressed">#8D8888</color>
     <color name="abutton">#C7C7C7</color>
+    <color name="wood">#F1EAB3</color>
+
 </resources>
