@@ -393,7 +393,7 @@ public class ClientGameControl extends AppCompatActivity {
                     location = new int[]{0, 0};
                 }
                 testtxt.setText(Arrays.toString(location));
-                handlerUDP.postDelayed(this, 20);// 刷新间隔(ms)
+                handlerUDP.postDelayed(this, 30);// 刷新间隔(ms)
             }
         }
     };
@@ -550,7 +550,7 @@ public class ClientGameControl extends AppCompatActivity {
                         p.setXfermode(null);
                         c.restore();
                     }
-                    Thread.sleep(20);
+                    Thread.sleep(30);
 
                 } catch (Exception e) {
                     e.printStackTrace();
