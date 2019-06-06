@@ -11,11 +11,13 @@
         android:id="@+id/res_back"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/grassland"
+        android:background="@drawable/res_back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@android:color/transparent" />
 
     <Button
@@ -35,19 +37,34 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.908"
+        app:layout_constraintHorizontal_bias="0.986"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.902" />
+        app:layout_constraintVertical_bias="0.975" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/scoreboard"
         android:layout_width="260dp"
         android:layout_height="171dp"
-        android:layout_marginStart="344dp"
-        android:layout_marginLeft="344dp"
-        android:layout_marginBottom="156dp"
+        android:layout_marginStart="332dp"
+        android:layout_marginLeft="332dp"
+        android:layout_marginBottom="104dp"
         android:text="TextView"
+        android:textAllCaps="false"
+        android:textColor="@color/wood"
+        android:textSize="25sp"
+        android:textStyle="bold|italic"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/myrank"
+        android:layout_width="190dp"
+        android:layout_height="223dp"
+        android:layout_marginStart="84dp"
+        android:layout_marginLeft="84dp"
+        android:layout_marginBottom="76dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>
