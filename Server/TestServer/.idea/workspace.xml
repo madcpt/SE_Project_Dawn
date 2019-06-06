@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+<<<<<<< HEAD
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
       <artifact name="DawnServer:jar" />
@@ -9,11 +10,18 @@
     <list default="true" id="df1a5a11-26d0-4b73-9610-c617c902b4b9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/out/artifacts/DawnServer_jar/DawnServer.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/DawnServer_jar/DawnServer.jar" afterDir="false" />
     </list>
+=======
+  <component name="ChangeListManager">
+    <list default="true" id="8bae7ced-d67a-403e-9a4f-006bbefc459a" name="Default Changelist" comment="" />
+    <ignored path="$PROJECT_DIR$/out/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+>>>>>>> 8781797a2620506cf1f3ec7ecebda4deccd0b049
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+<<<<<<< HEAD
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
@@ -122,14 +130,36 @@
         </entry>
       </file>
     </leaf>
+=======
+  <component name="FUSProjectUsageTrigger">
+    <session id="263691167">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.31" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+    </session>
+>>>>>>> 8781797a2620506cf1f3ec7ecebda4deccd0b049
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
+<<<<<<< HEAD
+=======
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="217" />
+    <option name="y" value="-14" />
+    <option name="width" value="1153" />
+    <option name="height" value="788" />
+  </component>
+>>>>>>> 8781797a2620506cf1f3ec7ecebda4deccd0b049
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
+<<<<<<< HEAD
     <panes>
       <pane id="Scope" />
       <pane id="ProjectPane">
@@ -150,6 +180,9 @@
       </pane>
       <pane id="PackagesPane" />
     </panes>
+=======
+    <panes />
+>>>>>>> 8781797a2620506cf1f3ec7ecebda4deccd0b049
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -167,6 +200,7 @@
     <configuration />
   </component>
   <component name="TaskManager">
+<<<<<<< HEAD
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -218,5 +252,37 @@
         </state>
       </provider>
     </entry>
+=======
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8bae7ced-d67a-403e-9a4f-006bbefc459a" name="Default Changelist" comment="" />
+      <created>1559374237451</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1559374237451</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <layout>
+      <window_info id="Project" />
+      <window_info id="Structure" side_tool="true" />
+      <window_info id="Image Layers" />
+      <window_info id="Designer" />
+      <window_info id="Capture Tool" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info id="Captures" order="0" weight="0.25" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="TODO" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="right" id="Capture Analysis" />
+      <window_info anchor="right" id="Theme Preview" />
+      <window_info anchor="right" id="Palette&#9;" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+>>>>>>> 8781797a2620506cf1f3ec7ecebda4deccd0b049
   </component>
 </project>
