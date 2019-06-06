@@ -182,7 +182,7 @@ public class ClientGameControl extends AppCompatActivity {
             e.printStackTrace ();
         }
 
-        myrole=new MyRole((Objects.requireNonNull (Data.playerLocation.get (Data.LOCAL_IP)))[0], Data.LOCAL_IP);
+        myrole=new MyRole((Objects.requireNonNull (Data.playerLocation.get (Data.LOCAL_IP)))[0], Data.LOCAL_IP,10);
 
         //对摇杆位置改变进行监听
 //        当前模式：方向有改变时回调；8个方向
@@ -307,19 +307,29 @@ public class ClientGameControl extends AppCompatActivity {
 
 
         //for drawing;
+        System.out.print ("Begin-drawing ");
         Bitmap tmp = BitmapFactory.decodeResource(this.getResources(),R.drawable.blackblock).copy(Bitmap.Config.ARGB_4444, true);
+        System.out.print ("decode-completed ");
         Matrix matrix=new Matrix();
         matrix.postScale(((float)vision*30/tmp.getWidth()), ((float)vision*30/tmp.getHeight()));
         hole = Bitmap.createBitmap(tmp, 0, 0,tmp.getWidth(),tmp.getHeight(),matrix,true);
         tmp.recycle();
-        tmp=null;
+        System.out.print ("start-iterate\n");
 
-        tmp=BitmapFactory.decodeResource(this.getResources(),R.drawable.map).copy(Bitmap.Config.ARGB_4444, true);
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inJustDecodeBounds = false;
+        opts.inPreferredConfig = Bitmap.Config.RGB_565;
+        opts.inDither = true;
+
+        tmp=BitmapFactory.decodeResource(this.getResources(),R.drawable.map, opts).copy(Bitmap.Config.RGB_565, true);
+        if (tmp != null)
+            System.out.println ("SIZEOFMAP: " + tmp.getByteCount ());
         matrix=new Matrix();
         matrix.postScale(((float)map.unit*map.size/tmp.getWidth()), ((float)map.unit*map.size/tmp.getHeight()));
-        background = Bitmap.createBitmap(tmp, 0, 0,tmp.getWidth(),tmp.getHeight(),matrix,true);
+
+        background = Bitmap.createBitmap(tmp, 0, 0,tmp.getWidth(),tmp.getHeight(),null,true);
         tmp.recycle();
-        tmp=null;
+
         //Rolepic load
         role_pic = new Bitmap[2][4][4];//人物数，方向数，每个方向动作帧数
         Resources res=getResources();
@@ -378,7 +388,7 @@ public class ClientGameControl extends AppCompatActivity {
                     location = new int[]{0, 0};
                 }
                 testtxt.setText(Arrays.toString(location));
-                handlerUDP.postDelayed(this, 20);// 刷新间隔(ms)
+                handlerUDP.postDelayed(this, 30);// 刷新间隔(ms)
             }
         }
     };
@@ -535,7 +545,7 @@ public class ClientGameControl extends AppCompatActivity {
                         p.setXfermode(null);
                         c.restore();
                     }
-                    Thread.sleep(20);
+                    Thread.sleep(30);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -544,8 +554,11 @@ public class ClientGameControl extends AppCompatActivity {
                         holder.unlockCanvasAndPost(c);
                     }
                 }
-
-
+                try {
+                    Thread.sleep (10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace ();
+                }
             }
         }
     }
@@ -573,7 +586,8 @@ public class ClientGameControl extends AppCompatActivity {
 //    }
     //析构
     protected void onDestroy() {
-        handlerInfo.removeCallbacks(runnableUDP);
+        handlerInfo.removeCallbacks(runnableInfo);
+        handlerUDP.removeCallbacks(runnableUDP);
         super.onDestroy();
     }
 }

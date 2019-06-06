@@ -36,7 +36,7 @@ public class CreateRoom extends AppCompatActivity {
     static class AsyncConTCP extends AsyncTask<String ,Void, Void> {
         @Override
         protected Void doInBackground(String... meg) {
-            ThreadForTCP R1 = new ThreadForTCP ( "Thread-Create-Room");
+            ThreadForTCP R1 = new ThreadForTCP ( "Thread-TCP-Create-Room");
             R1.start(meg[0]);
             return null;
         }
@@ -57,7 +57,8 @@ public class CreateRoom extends AppCompatActivity {
         System.out.println ((Data.roomListStr == null) + "TRUE111");
 //        Data.getStatus();
 
-        while(Data.roomListStr == null){
+        boolean stop = false;
+        while(Data.roomListStr == null && !stop ){
             System.out.println ("room111");
             new AsyncConUDP ().execute ("ask_room!");
             try {

@@ -10,14 +10,15 @@ public class MyRole {
         public int attack;
         public int speed;
         public Vector<Prop> bag;
+        public int capacity;
         public Prop weapon;
         public Prop shoe;
 
 
-        public MyRole(int i, String n){
+        public MyRole(int i, String n,int c){
             id=i;
             name=n;
-
+            capacity = c;
             bag=new Vector<Prop>();
 
             switch (id%100){
