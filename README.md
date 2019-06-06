@@ -25,7 +25,7 @@ Please log bugs under [Issues](<https://github.com/madcpt/SE_Project_Dawn/issues
 ## Developers
 
 - [Zihan Xu](https://github.com/madcpt)
-- [Yuchen Yang](https://github.com/Achronferry)
+- [Chenyu Yang](https://github.com/Achronferry)
 - [Yi Kuang](https://github.com/Schemeer)
 - [Yuting Lan](https://github.com/YutLan)
 - Jianzhen Cao
