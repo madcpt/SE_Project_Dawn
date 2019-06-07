@@ -3,7 +3,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-//要存的东西 ：ID life location[0] location[1] direction walk_mov attack_mov
+//要存的东西 ：ID life location[0] location[1] direction walk_mov attack_mov use_mov bag_used props[0..7]
 public class Data {
     public static Long delay;
     public static String Server;
@@ -105,7 +105,6 @@ public class Data {
 //        playerLocation.get(pureIP)[3] += Math.sin(radians) * velocity;
     }
 
-
     public void setValue() {
         System.out.println("SETTING VALUE");
         delay = 0L;
@@ -121,8 +120,9 @@ public class Data {
     public void addPlayer(String pureIP, int[] lt) {
         playerLocation.put(pureIP, lt);
     }
+
     public void newPlayer(String pureIP, int id, String name) {
-        int[] new_rl = new int[7];
+        int[] new_rl = new int[16];
         new_rl[0]=id;
         new_rl[1]=100;
         do {
@@ -130,11 +130,13 @@ public class Data {
             new_rl[3]=rand.nextInt(WholeMap.unit*WholeMap.size);
 
         }while (WholeMap.m[new_rl[3]/WholeMap.unit][new_rl[2]/WholeMap.unit]!=0);
-        new_rl[4]=3; new_rl[5]=-1; new_rl[6]=-1;
+        new_rl[4]=3; new_rl[5]=-1; new_rl[6]=-1; new_rl[7] = -1;
+        new_rl[8] = 0; // empty bag
+        for (int i = 9;i < 17;++i){
+            new_rl[i] = -1; // no prop
+        }
         addPlayer(pureIP,new_rl);
     }
-
-
 
     public static void Lmove(String pureIP, int velocity) {
 //        location[0]=location[0]-3;
@@ -265,7 +267,32 @@ public class Data {
 //        direction = 3;
     }
 
+    public static void Use(String pureIP){
+        int i = 12;
+        int propid;
+        for
+        playerLocation.get(pureIP)[7] = 1;
+    }
 
+    public static void Use_Stop(String pureIP){
+        playerLocation.get(pureIP)[7] = -1;
+    }
+
+    public static void Use_Finish(String pureIP) {
+        playerLocation.get(pureIP)[7] = -1;
+        int i = 12;
+        int propid;
+        for (; i < 17; ++i) {
+            if (playerLocation.get(pureIP)[i] == -1) {
+                break;
+            }
+        }
+        propid = playerLocation.get(pureIP)[i - 1];
+        playerLocation.get(pureIP)[i - 1] = -1; //fresh bag;
+        playerLocation.get(pureIP)[8] -= 1;  //bag_used - 1
+        playerLocation.get(pureIP)[1] = Math.min(playerLocation.get(pureIP)[1] + WholeMap.proplist.elementAt(propid).getValue(),100);
+        WholeMap.proplist.elementAt(propid).UnUseable(); // set it unuseable
+    }
     public static Long getDelay() {
         return delay;
     }

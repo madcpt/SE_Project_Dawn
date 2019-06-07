@@ -133,7 +133,7 @@ public class MapClass {
         int[] proposition = new int[2];
         int x,y;
         for (int i = 0; i <30; i++) { //构造prop的，测试生成30个
-            proptype = rand.nextInt(4);
+            proptype = i % 4;
             prop_sample = new Prop(i,proptype);
             do {
                 x = rand.nextInt(13200) + 900;
@@ -142,9 +142,8 @@ public class MapClass {
             proposition[0] = x;
             proposition[1] = y;
             prop_sample.setPropposition(proposition);
-            proplist.add(prop_sample);
+            proplist.add(i,prop_sample);
         }
-
 
     }
 
