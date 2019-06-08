@@ -75,6 +75,10 @@ public class serverForMultiClientTCP extends ServerSocket {
                         break;
                     case "use_fin":
                         Data.Use_Finish(pureIP);
+                        break;
+                    case "pik":
+                        Data.Pick(pureIP);
+                        break;
                     case "init" :
                         serverGameControl.addPlayer(pureIP,Integer.parseInt(myList.get(3)),pureIP);
                         Data.roomList.RoomList.get(myList.get(2)).prepareOne(pureIP);

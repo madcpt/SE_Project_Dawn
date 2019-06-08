@@ -564,7 +564,7 @@ public class ClientGameControl extends AppCompatActivity {
                             // 检测是否为本机
                             if(Data.LOCAL_IP.equals(r.name)) {
                                 // 检测背包中有无药品
-                                boolean flag = true;
+                                boolean flag = (r.lifevalue != 100);
                                 for (int prop:r.props) {
                                     if(prop!=-1 && prop % 4 == 0){
                                         UseButton.setClickable(true);

@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Random;
 
 //要存的东西 ：ID life location[0] location[1] direction walk_mov attack_mov use_mov bag_used props[0..7]
+//props 是一个双向栈，前两位存鞋和武器，剩下5位存药和火炬，药从前往后，火炬从后往前
 public class Data {
     public static Long delay;
     public static String Server;
@@ -267,10 +268,55 @@ public class Data {
 //        direction = 3;
     }
 
+    private static boolean Pickable(int [] tmpLoc, Prop prop){
+        int x = prop.getPropposition()[0], y = prop.getPropposition()[1];
+        boolean flag1 = (x != -1 && y != -1 && prop.isUseable() && tmpLoc[8] < 8 && // 未被他人拾取且尚未被使用且人物有背包
+                x > tmpLoc[2] - Colli.getCollision_width() && x < tmpLoc[2] + 2 * Colli.getCollision_width() && // 横向在人物一个身位以内
+                y > tmpLoc[3] - Colli.getCollision_height() && y < tmpLoc[3] + 2 * Colli.getCollision_height() // 纵向在人物一个身位以内
+        );
+        boolean flag2 = ((prop.getType() == 1 || prop.getType() == 2) && tmpLoc[8 + prop.getType()] == -1); //若为鞋子或武器，检查9.10号位中是否有东西
+        return (flag1 && flag2);
+    }
+
+    public static void Pick(String pureIP){
+        int[] tmpLoc = playerLocation.get(pureIP);
+        for (Prop prop:WholeMap.proplist) {
+            if(Pickable(tmpLoc,prop)){
+                int [] propp = new int[2];
+                propp[0] = -1; propp[1] = -1;
+                prop.setPropposition(propp);
+                propp = null;
+                tmpLoc[8] += 1;
+                switch (prop.getType()){
+                    case 0:
+                        for(int i = 11;i<17;++i){
+                            if (tmpLoc[i]==-1){
+                                tmpLoc[i] = prop.getId();
+                                break;
+                            }
+                        }
+                        break;
+                    case 1:
+                        tmpLoc[9] = prop.getId();
+                        break;
+                    case 2:
+                        tmpLoc[10] = prop.getId();
+                        break;
+                    case 3:
+                        for (int i = 16;i>10;--i){
+                            if(tmpLoc[i]==-1){
+                                tmpLoc[i] = prop.getId();
+                                break;
+                            }
+                        }
+                        break;
+                }
+            }
+        }
+        playerLocation.put(pureIP,tmpLoc);
+    }
+
     public static void Use(String pureIP){
-        int i = 12;
-        int propid;
-        for
         playerLocation.get(pureIP)[7] = 1;
     }
 
@@ -279,19 +325,21 @@ public class Data {
     }
 
     public static void Use_Finish(String pureIP) {
-        playerLocation.get(pureIP)[7] = -1;
+        int[] tmpLoc = playerLocation.get(pureIP);
+        tmpLoc[7] = -1;
         int i = 12;
         int propid;
         for (; i < 17; ++i) {
-            if (playerLocation.get(pureIP)[i] == -1) {
+            if (tmpLoc[i] == -1) {
                 break;
             }
         }
-        propid = playerLocation.get(pureIP)[i - 1];
-        playerLocation.get(pureIP)[i - 1] = -1; //fresh bag;
-        playerLocation.get(pureIP)[8] -= 1;  //bag_used - 1
-        playerLocation.get(pureIP)[1] = Math.min(playerLocation.get(pureIP)[1] + WholeMap.proplist.elementAt(propid).getValue(),100);
+        propid = tmpLoc[i - 1];
+        tmpLoc[i - 1] = -1; //fresh bag;
+        tmpLoc[8] -= 1;  //bag_used - 1
+        tmpLoc[1] = Math.min(tmpLoc[1] + WholeMap.proplist.elementAt(propid).getValue(),100);
         WholeMap.proplist.elementAt(propid).UnUseable(); // set it unuseable
+        playerLocation.put(pureIP,tmpLoc);
     }
     public static Long getDelay() {
         return delay;
