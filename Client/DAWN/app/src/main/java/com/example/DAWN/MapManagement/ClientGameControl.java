@@ -1,6 +1,7 @@
 package com.example.DAWN.MapManagement;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -23,6 +24,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.DAWN.CommonService.Configuration;
 import com.example.DAWN.CommonService.Data;
 import com.example.DAWN.CommonService.ClientComContext;
 import com.example.DAWN.CommonService.ClientComStrategyTCP;
@@ -325,7 +327,7 @@ public class ClientGameControl extends AppCompatActivity {
         if (tmp != null)
             System.out.println ("SIZEOFMAP: " + tmp.getByteCount ());
         matrix=new Matrix();
-        matrix.postScale(((float)map.unit*map.size/tmp.getWidth()), ((float)map.unit*map.size/tmp.getHeight()));
+        matrix.postScale(((float) Map.unit * Map.size /tmp.getWidth()), ((float) Map.unit * Map.size /tmp.getHeight()));
 
         background = Bitmap.createBitmap(tmp, 0, 0,tmp.getWidth(),tmp.getHeight(),null,true);
         tmp.recycle();
@@ -380,15 +382,8 @@ public class ClientGameControl extends AppCompatActivity {
             if (!isend) {
                 new AsyncConUDP().execute("location!");
                 System.out.println(Data.playerLocation + "PLAYER111");
-                if (Data.playerLocation != null && Data.playerLocation.containsKey(Data.LOCAL_IP)) {
-                    System.out.println(location[0] + "," + location[1] + "LOCATION111");
-                    location[0] = Objects.requireNonNull(Data.playerLocation.get(Data.LOCAL_IP))[2];
-                    location[1] = Objects.requireNonNull(Data.playerLocation.get(Data.LOCAL_IP))[3];
-                } else {
-                    location = new int[]{0, 0};
-                }
                 testtxt.setText(Arrays.toString(location));
-                handlerUDP.postDelayed(this, 30);// 刷新间隔(ms)
+                handlerUDP.postDelayed(this, Configuration.ClientGameControlComRate);// 刷新间隔(ms)
             }
         }
     };
@@ -401,11 +396,25 @@ public class ClientGameControl extends AppCompatActivity {
         public void run() {
             if (!isend) {
                 this.update();
-                handlerInfo.postDelayed(this, 20);// 刷新间隔(ms)
+                handlerInfo.postDelayed(this, Configuration.ClientGameControlMapRate);// 刷新间隔(ms)
+            }
+        }
+        @TargetApi(Build.VERSION_CODES.KITKAT)
+        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+        void updateMapLocation(){
+            if (Data.playerLocation != null) {
+                if (Data.playerLocation.containsKey(Data.LOCAL_IP)) {
+                    System.out.println (location[0] + "," + location[1] + "LOCATION111");
+                    location[0] = Objects.requireNonNull (Data.playerLocation.get (Data.LOCAL_IP))[2];
+                    location[1] = Objects.requireNonNull (Data.playerLocation.get (Data.LOCAL_IP))[3];
+                }
+            } else {
+                location = new int[]{0, 0};
             }
         }
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         void update() {
+            updateMapLocation ();
             Role_simple r;
             for (int i=0;i<map.livingrole.size();i++) {
                 r = map.livingrole.get(i);
@@ -491,6 +500,7 @@ public class ClientGameControl extends AppCompatActivity {
 
                         for (int i=0;i<map.livingrole.size();i++) {
                             r = map.livingrole.get(i);
+                            System.out.println ("CheckLocation: " + Arrays.toString (r.location) + " " + Arrays.toString (location));
                             if (Math.abs(r.location[0] - location[0]) > vision * 20 || Math.abs(r.location[1] - location[1]) > vision * 20) {
                                 continue;
                             }
@@ -545,7 +555,7 @@ public class ClientGameControl extends AppCompatActivity {
                         p.setXfermode(null);
                         c.restore();
                     }
-                    Thread.sleep(30);
+//                    Thread.sleep(30);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -555,7 +565,7 @@ public class ClientGameControl extends AppCompatActivity {
                     }
                 }
                 try {
-                    Thread.sleep (10);
+                    Thread.sleep (100);
                 } catch (InterruptedException e) {
                     e.printStackTrace ();
                 }

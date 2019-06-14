@@ -1,3 +1,5 @@
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+
 import java.util.Vector;
 import java.util.Random;
 
@@ -167,7 +169,7 @@ public class MapClass {
 
 
     private boolean is_valid(int x,int y){
-        return (m[y/unit][x/unit]==0);
+        return (m[y/unit/size][x/unit/size]==0);
     }
 
 
