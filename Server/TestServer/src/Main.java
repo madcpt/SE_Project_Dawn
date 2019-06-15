@@ -4,16 +4,21 @@ public class Main {
     static class TCPThread extends Thread{
         private  Thread t;
         serverForMultiClientTCP TCP;
-        public TCPThread() throws IOException {
+        serverGameControl serverGameControl;
+
+        public TCPThread(serverGameControl serverGameControl) throws IOException {
             TCP = new serverForMultiClientTCP(66);
+            this.serverGameControl = serverGameControl;
         }
+
         public void run(){
             try {
-                TCP.startTCP();
+                TCP.startTCP(serverGameControl);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+
         public void start () {
             System.out.println("Starting " );
             if (t == null) {
@@ -25,12 +30,15 @@ public class Main {
     static class UDPThread extends Thread{
         private Thread t;
         serverForMultiClientUDP UDP;
-        public UDPThread() {
+        serverGameControl serverGameControl;
+
+        public UDPThread(serverGameControl serverGameControl) {
             UDP = new serverForMultiClientUDP();
+            this.serverGameControl = serverGameControl;
         }
         public void run(){
             try {
-                UDP.startUDP();
+                UDP.startUDP(serverGameControl);
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (Exception e) {
@@ -50,8 +58,10 @@ public class Main {
         Data dataclass = new Data();
         dataclass.setValue();
 
-        TCPThread a = new TCPThread();
-        UDPThread b = new UDPThread();
+        serverGameControl serverGameControl = new serverGameControl();
+
+        TCPThread a = new TCPThread(serverGameControl);
+        UDPThread b = new UDPThread(serverGameControl);
         System.out.println("Starting Server");
         a.start();
         b.start();
