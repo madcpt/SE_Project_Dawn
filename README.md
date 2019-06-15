@@ -28,7 +28,7 @@ Please log bugs under [Issues](<https://github.com/madcpt/SE_Project_Dawn/issues
 - [Chenyu Yang](https://github.com/Achronferry)
 - [Yi Kuang](https://github.com/Schemeer)
 - [Yuting Lan](https://github.com/YutLan)
-- Jianzhen Cao
+- [Jianzhen Cao](https://github.com/FY98)
 
 ## Development Log
 
