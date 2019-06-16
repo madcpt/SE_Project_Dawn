@@ -124,4 +124,24 @@ public class RoomPool {
         }
         return null;
     }
+
+    void useProp(String pureIP, String roomID) {
+        roomList.get(roomID).useProp(pureIP);
+    }
+
+    void pickProp(String pureIP, String roomID) {
+        roomList.get(roomID).pickProp(pureIP);
+    }
+
+    void useStop(String pureIP, String roomID) {
+        roomList.get(roomID).Use_Stop((pureIP));
+    }
+
+    void useFinish(String pureIP, String roomID) {
+        roomList.get(roomID).Use_Finish(pureIP);
+    }
+
+    Vector<Integer> getInitProp(String roomID) {
+        return roomList.get(roomID).getInitProp();
+    }
 }

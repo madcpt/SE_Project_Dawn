@@ -1,6 +1,7 @@
 import java.io.*;
 import java.net.*;
 import java.util.Arrays;
+import java.util.Vector;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -63,12 +64,24 @@ public class serverForMultiClientUDP implements Runnable{
                     break;
                 }
 
+                case "get_prop":{
+                    Vector<Integer> tmp = serverGameControl.getInitPropList(pureIP);
+//                    objectStream.writeObject(2);
+                    objectStream.writeObject(tmp);
+
+
+                    System.out.println((tmp));
+                    break;
+                }
+
                 case "room_info":{
                     System.out.println(inputMes[0]);
                     if(inputMes[1].equals("null")) {
                         System.out.println("room_info: null");
                         break;
                     }
+                    serverGameControl.disPlayAllRoom();
+                    System.out.println("Look Up Room: " + serverGameControl.findRoom(inputMes[1]));
 //                    objectStream.writeObject(Data.roomList.RoomList.get(inputMes[1]).memberList);
                     objectStream.writeObject(serverGameControl.getMemberFromRoom(inputMes[1]));
                     System.out.println(serverGameControl.getMemberFromRoom(inputMes[1]));
@@ -107,6 +120,7 @@ public class serverForMultiClientUDP implements Runnable{
                     objectStream.writeObject(room_cnt);
                     break;
                 }
+
 
                 default:
                     objectStream.writeObject(serverGameControl.getUpdateList(pureIP));

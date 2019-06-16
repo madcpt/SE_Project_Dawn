@@ -294,6 +294,8 @@ public class ClientGameControl extends AppCompatActivity {
             TimeUnit.SECONDS.sleep(1);
         }
 
+        new AsyncConUDP ().execute ("get_prop!");
+
         for (String playerIP : Data.playerLocation.keySet ()){
             System.out.println ("INFO111" + Arrays.toString (Data.playerLocation.get (playerIP)));
             Role_simple test_r1=new Role_simple((Objects.requireNonNull (Data.playerLocation.get (playerIP)))[0], playerIP);

@@ -1,5 +1,6 @@
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
+import java.beans.IntrospectionException;
 import java.util.Vector;
 import java.util.Random;
 
@@ -8,8 +9,10 @@ import java.util.Random;
 public class MapClass {
 
     Random rand=new Random();
-    public static int unit =150;
-    public static int size =20;
+    static int unit =150;
+    static int size =20;
+    private static int border = 2;
+    private int sizeOfProp = 20;
 
     public Vector<Prop> proplist;
     private Prop prop_sample;
@@ -154,25 +157,40 @@ public class MapClass {
         int proptype;
         int[] proposition = new int[2];
         int x,y;
-        for (int i = 0; i <100; i++) { //构造prop的，测试生成100个
+        for (int i = 0; i <sizeOfProp; i++) { //构造prop的，测试生成100个
             proptype = rand.nextInt(4);
+            System.out.println(1);
             prop_sample = new Prop(i,proptype);
+            System.out.println(2);
             do {
-                x = rand.nextInt(13200) + 900;
-                y = rand.nextInt(13200) + 900;
+                System.out.print("set");
+                x = rand.nextInt(unit * (size - 2 * border)) + unit * border;
+                y = rand.nextInt(unit * (size - 2 * border)) + unit * border;
             }while(!is_valid(x,y));
+            System.out.println(3);
             proposition[0] = x;
             proposition[1] = y;
+            System.out.println(4);
             prop_sample.setPropposition(proposition);
+            System.out.println(5);
+            proplist.add(i, prop_sample);
+            System.out.println(6);
         }
     }
 
 
     private boolean is_valid(int x,int y){
-        return (m[y/unit/size][x/unit/size]==0);
+        return (m[y/unit][x/unit]==0);
     }
 
 
-
-
+    Vector<Integer> getPropList() {
+        Vector<Integer> tmp = new Vector<>();
+        int count = 0;
+        for (Prop prop: proplist){
+            tmp.addAll(prop.getPropPara());
+            count += 1;
+        }
+        return tmp;
+    }
 }

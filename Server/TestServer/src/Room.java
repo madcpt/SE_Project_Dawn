@@ -255,5 +255,83 @@ public class Room {
         }
         return tmp.size();
     }
+
+    void useProp(String pureIP) {
+        playerLocation.get(pureIP)[7] = 1;
+    }
+
+    void pickProp(String pureIP) {
+        int[] tmpLoc = playerLocation.get(pureIP);
+        for (Prop prop:WholeMap.proplist) {
+            if(isPickable(tmpLoc,prop)){
+                int [] propp = new int[2];
+                propp[0] = -1; propp[1] = -1;
+                prop.setPropposition(propp);
+                propp = null;
+                tmpLoc[8] += 1;
+                switch (prop.getType()){
+                    case 0:
+                        for(int i = 11;i<17;++i){
+                            if (tmpLoc[i]==-1){
+                                tmpLoc[i] = prop.getId();
+                                break;
+                            }
+                        }
+                        break;
+                    case 1:
+                        tmpLoc[9] = prop.getId();
+                        break;
+                    case 2:
+                        tmpLoc[10] = prop.getId();
+                        break;
+                    case 3:
+                        for (int i = 16;i>10;--i){
+                            if(tmpLoc[i]==-1){
+                                tmpLoc[i] = prop.getId();
+                                break;
+                            }
+                        }
+                        break;
+                }
+            }
+        }
+        playerLocation.put(pureIP,tmpLoc);
+    }
+
+    void Use_Stop(String pureIP){
+        playerLocation.get(pureIP)[7] = -1;
+    }
+
+    void Use_Finish(String pureIP) {
+        int[] tmpLoc = playerLocation.get(pureIP);
+        tmpLoc[7] = -1;
+        int i = 12;
+        int propid;
+        for (; i < 17; ++i) {
+            if (tmpLoc[i] == -1) {
+                break;
+            }
+        }
+        propid = tmpLoc[i - 1];
+        tmpLoc[i - 1] = -1; //fresh bag;
+        tmpLoc[8] -= 1;  //bag_used - 1
+        tmpLoc[1] = Math.min(tmpLoc[1] + WholeMap.proplist.elementAt(propid).getValue(),100);
+        WholeMap.proplist.elementAt(propid).UnUseable(); // set it unuseable
+        playerLocation.put(pureIP,tmpLoc);
+    }
+
+    private boolean isPickable(int[] tmpLoc, Prop prop) {
+        int x = prop.getPropposition()[0], y = prop.getPropposition()[1];
+        boolean flag1 = (x != -1 && y != -1 && prop.isUseable() && tmpLoc[8] < 8 && // 未被他人拾取且尚未被使用且人物有背包
+                x > tmpLoc[2] - Colli.getCollision_width() && x < tmpLoc[2] + 2 * Colli.getCollision_width() && // 横向在人物一个身位以内
+                y > tmpLoc[3] - Colli.getCollision_height() && y < tmpLoc[3] + 2 * Colli.getCollision_height() // 纵向在人物一个身位以内
+        );
+        boolean flag2 = ((prop.getType() == 1 || prop.getType() == 2) && tmpLoc[8 + prop.getType()] == -1); //若为鞋子或武器，检查9.10号位中是否有东西
+        return (flag1 && flag2);
+    }
+
+    Vector<Integer> getInitProp() {
+        return WholeMap.getPropList();
+    }
 }
 

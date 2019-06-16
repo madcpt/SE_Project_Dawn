@@ -1,6 +1,8 @@
 import java.io.IOException;
+import java.util.stream.StreamSupport;
 
 public class Main {
+
     static class TCPThread extends Thread{
         private  Thread t;
         serverForMultiClientTCP TCP;
@@ -55,14 +57,17 @@ public class Main {
     }
 
     public static void main(String[] args) throws Exception {
-        Data dataclass = new Data();
-        dataclass.setValue();
+        System.out.println("Initializing Server.");
+        Data.setValue();
 
-        serverGameControl serverGameControl = new serverGameControl();
+        System.out.println("configuration completed.");
 
-        TCPThread a = new TCPThread(serverGameControl);
-        UDPThread b = new UDPThread(serverGameControl);
-        System.out.println("Starting Server");
+        System.out.println("Game Service Started.");
+
+        TCPThread a = new TCPThread(Data.serverGameControl);
+        UDPThread b = new UDPThread(Data.serverGameControl);
+
+        System.out.println("Net Service Started.");
         a.start();
         b.start();
 

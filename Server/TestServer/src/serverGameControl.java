@@ -8,6 +8,7 @@ class serverGameControl {
     private RoomPool roomList;
 
     serverGameControl(){
+        System.out.println("Creating ServerGameControl");
         playerList = new ArrayList<>();
         roomList = new RoomPool();
     }
@@ -95,5 +96,34 @@ class serverGameControl {
 
     Map<String, int[]> getUpdateList(String pureIP) {
         return roomList.getUpdateReport(pureIP);
+    }
+
+    void Use(String pureIP) {
+        String roomID =findRoomOfPlayer((pureIP));
+        roomList.useProp(pureIP, roomID);
+    }
+
+    void Pick(String pureIP) {
+        String roomID =findRoomOfPlayer((pureIP));
+        roomList.pickProp(pureIP, roomID);
+    }
+
+    void Use_Stop(String pureIP) {
+        String roomID =findRoomOfPlayer((pureIP));
+        roomList.useStop(pureIP, roomID);
+    }
+
+    void Use_Finish(String pureIP) {
+        String roomID =findRoomOfPlayer((pureIP));
+        roomList.useFinish(pureIP, roomID);
+    }
+
+     Vector<Integer> getInitPropList(String pureIP) {
+        String roomID = findRoomOfPlayer(pureIP);
+        return roomList.getInitProp(roomID);
+    }
+
+    String findRoom(String roomID) {
+        return roomList.findRoom(roomID);
     }
 }

@@ -95,6 +95,8 @@ public class serverForMultiClientTCP extends ServerSocket {
                         serverGameControl.removePlayer(pureIP);
                         serverGameControl.createRoom(pureIP, myList.get(2), Integer.parseInt(myList.get(3)));
                         //para: (pureIP roomID capacity)
+                        System.out.println("Display Server Rooms:");
+                        serverGameControl.disPlayAllRoom();
                         break;
                     }
 
@@ -121,6 +123,26 @@ public class serverForMultiClientTCP extends ServerSocket {
                         out.writeUTF("hello");
 //                        byte[] bytes = "Hell ".getBytes();
 //                        out.write(bytes);
+                    }
+
+                    case "use": {
+                        serverGameControl.Use(pureIP);
+                        break;
+                    }
+
+                    case "use_stp": {
+                        serverGameControl.Use_Stop(pureIP);
+                        break;
+                    }
+
+                    case "use_fin":{
+                        serverGameControl.Use_Finish(pureIP);
+                        break;
+                    }
+
+                    case "pik": {
+                        serverGameControl.Pick(pureIP);
+                        break;
                     }
 
                 }

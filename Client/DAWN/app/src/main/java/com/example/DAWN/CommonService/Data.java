@@ -16,6 +16,7 @@ public class Data {
     public static Room myRoom;
     public static String myRoomID;
     public static Map<String, Boolean> accountStatus;
+    public static boolean getInitProp;
 
     public Data(){
     }
@@ -26,6 +27,7 @@ public class Data {
         Server="192.168.137.1";
         port = 66;
         accountStatus = new HashMap<> ();
+        getInitProp = false;
 
     }
 

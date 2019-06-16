@@ -14,6 +14,8 @@ public class Data {
     private static Collision Colli = new Collision(120,100);
     public static RoomPool roomList;
     public static DatabaseAdapter database;
+    static public serverGameControl serverGameControl;
+
     int livePlayer;
 
     Data() {
@@ -97,7 +99,7 @@ public class Data {
     }
 
 
-    public void setValue() {
+    public static void setValue() {
         System.out.println("SETTING VALUE");
         delay = 0L;
 //        Server = "39.105.27.108";
@@ -106,6 +108,7 @@ public class Data {
         playerLocation = new HashMap<>();
         roomList = new RoomPool();
         database=new DatabaseAdapter();
+        serverGameControl = new serverGameControl();
     }
 
     private static void addPlayer(String pureIP, int[] lt) {

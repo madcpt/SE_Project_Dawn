@@ -1,3 +1,6 @@
+import org.omg.CORBA.INTERNAL;
+
+import java.util.Vector;
 
 public class Prop {
     private int id;
@@ -43,8 +46,21 @@ public class Prop {
         this.propposition = new int[size];
         System.arraycopy(propposition,0,this.propposition,0,size);
     }
+    public void UnUseable(){
+        useable = false;
+    }
 
     public int[] getPropposition() {
         return propposition;
+    }
+
+    Vector<Integer> getPropPara() {
+        Vector<Integer> tmp = new Vector<>();
+        tmp.add(id);
+        tmp.add(type);
+        tmp.add(value);
+        tmp.add(propposition[0]);
+        tmp.add(propposition[1]);
+        return tmp;
     }
 }
