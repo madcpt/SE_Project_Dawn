@@ -270,10 +270,7 @@ public class Room {
         int[] tmpLoc = playerLocation.get(pureIP);
         for (Prop prop:WholeMap.proplist) {
             if(isPickable(tmpLoc,prop)){
-                int [] propp = new int[2];
-                propp[0] = -1; propp[1] = -1;
-                prop.setPropposition(propp);
-                propp = null;
+                prop.UnPickable();
                 tmpLoc[8] += 1;
                 switch (prop.getType()){
                     case 0:
@@ -322,13 +319,12 @@ public class Room {
         tmpLoc[i - 1] = -1; //fresh bag;
         tmpLoc[8] -= 1;  //bag_used - 1
         tmpLoc[1] = Math.min(tmpLoc[1] + WholeMap.proplist.elementAt(propid).getValue(),100);
-        WholeMap.proplist.elementAt(propid).UnUseable(); // set it unuseable
         playerLocation.put(pureIP,tmpLoc);
     }
 
     private boolean isPickable(int[] tmpLoc, Prop prop) {
         int x = prop.getPropposition()[0], y = prop.getPropposition()[1];
-        boolean flag1 = (x != -1 && y != -1 && prop.isUseable() && tmpLoc[8] < 8 && // 未被他人拾取且尚未被使用且人物有背包
+        boolean flag1 = (prop.isPickable() && tmpLoc[8] < 8 && // 未被他人拾取且人物有背包
                 x > tmpLoc[2] - Colli.getCollision_width() && x < tmpLoc[2] + 2 * Colli.getCollision_width() && // 横向在人物一个身位以内
                 y > tmpLoc[3] - Colli.getCollision_height() && y < tmpLoc[3] + 2 * Colli.getCollision_height() // 纵向在人物一个身位以内
         );

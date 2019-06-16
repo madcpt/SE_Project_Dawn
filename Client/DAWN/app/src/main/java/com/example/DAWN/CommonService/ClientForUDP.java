@@ -1,5 +1,6 @@
 package com.example.DAWN.CommonService;
 
+import com.example.DAWN.MapManagement.Prop;
 import com.example.DAWN.RoomManagement.Room;
 
 import java.io.ByteArrayInputStream;
@@ -64,7 +65,7 @@ class ClientForUDP {
                     System.out.println ("receive111" + playerLocation);
 
                     for(String a : playerLocation.keySet ()){
-                        System.out.println ("int111 "+ playerLocation.get (a)[1]);
+                        System.out.println ("int111 "+ Arrays.toString(playerLocation.get(a)));
                     }
                     Data.playerLocation = playerLocation;
                     System.out.println(Data.playerLocation + " RECEIVING");
@@ -78,8 +79,19 @@ class ClientForUDP {
 
                     Vector<Integer> propList = (Vector<Integer>) objectStream.readObject ();
 //                    //
-                    Data.propList = propList;
+                    Data.propInit = propList;
+
                     System.out.println ("Prop List: " +  propList);
+
+                    if(Data.propList == null){
+                        Data.propList = new Vector<Prop>();
+                        Prop propsample;
+                        for(int i = 0;i < 20; ++i){
+                            propsample = new Prop(propList.get(i),propList.get(i+1),propList.get(i+3),propList.get(i+4));
+                            Data.propList.add(i,propsample);
+                        }
+                    }
+
                     break;
 
                 case "ask_room":

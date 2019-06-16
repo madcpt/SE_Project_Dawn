@@ -12,7 +12,6 @@ public class Map {
     public static int size =20;
 
     public volatile Vector<Role_simple> livingrole;
-    public Vector<Prop> proplist;
     public int[][] m;
 
 
@@ -20,7 +19,6 @@ public class Map {
     public Map() {
 
         livingrole = new Vector<Role_simple>();
-        proplist = new Vector<Prop>();
 
     }
 

@@ -1,5 +1,6 @@
 package com.example.DAWN.CommonService;
 
+import com.example.DAWN.MapManagement.Prop;
 import com.example.DAWN.RoomManagement.Room;
 
 import java.util.HashMap;
@@ -8,7 +9,7 @@ import java.util.Vector;
 
 public class Data {
     public static String LOCAL_IP;
-    public static Vector<Integer> propList;
+    public static Vector<Integer> propInit;
     private static Long delay;
     static String Server;
     static int port;
@@ -18,6 +19,7 @@ public class Data {
     public static String myRoomID;
     public static Map<String, Boolean> accountStatus;
     public static boolean getInitProp;
+    public static Vector<Prop> propList;
 
     public Data(){
     }
@@ -30,8 +32,8 @@ public class Data {
         port = 66;
         accountStatus = new HashMap<> ();
         getInitProp = false;
-        propList = new Vector<> ();
-        propList.add (-1);
+        propInit = new Vector<> ();
+        propInit.add (-1);
 
     }
 
