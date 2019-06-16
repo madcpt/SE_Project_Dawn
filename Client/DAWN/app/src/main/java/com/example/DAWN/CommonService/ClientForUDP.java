@@ -13,16 +13,29 @@ import java.net.InetSocketAddress;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Vector;
+/**
+* @version : 2.0
+* @author : Zihan Xu, Yi Kuang, Chenyu Yang
+* @classname : ClientForTCP
+* @description : The client class for TCP.
+*/
 
 class ClientForUDP {
 
     ClientForUDP(){
     }
 
+/**
+* @version : 2.0
+* @author : Zihan Xu, Yi Kuang, Chenyu Yang
+* @methodname : testCon
+* @description : The client class for UDP
+* @param : msg the message to send such as requests for props and so on.
+*/
     void testCon(String msg) {
         try {
-            byte[] requestBytes = new byte[2048];
-            byte[] ReceiveBytes = new byte[2048];
+            byte[] requestBytes = new byte[1024];
+            byte[] ReceiveBytes = new byte[1024];
             DatagramPacket requestPacket = new DatagramPacket(requestBytes, requestBytes.length);
             DatagramPacket receivePacket = new DatagramPacket(ReceiveBytes,ReceiveBytes.length);
 
@@ -65,7 +78,7 @@ class ClientForUDP {
                     System.out.println ("receive111" + playerLocation);
 
                     for(String a : playerLocation.keySet ()){
-                        System.out.println ("int111 "+ Arrays.toString(playerLocation.get(a)));
+                        System.out.println ("int111 "+ playerLocation.get (a)[1]);
                     }
                     Data.playerLocation = playerLocation;
                     System.out.println(Data.playerLocation + " RECEIVING");
@@ -75,14 +88,13 @@ class ClientForUDP {
                     System.out.println ("Get Prop: ");
 
 //                    Map<String, int[]> playerLocation1 = (Map<String, int[]>) objectStream.readObject();
-//                    int propList = (int) objectStream.readObject ();
+//
+//                    System.out.println ("receive111" + playerLocation1);
 
+//                    int propList = (int) objectStream.readObject ();
                     Vector<Integer> propList = (Vector<Integer>) objectStream.readObject ();
 //                    //
-                    Data.propInit = propList;
-
                     System.out.println ("Prop List: " +  propList);
-
                     if(Data.propList == null){
                         Data.propList = new Vector<Prop>();
                         Prop propsample;
@@ -91,7 +103,6 @@ class ClientForUDP {
                             Data.propList.add(i/5,propsample);
                         }
                     }
-
                     break;
 
                 case "ask_room":

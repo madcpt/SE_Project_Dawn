@@ -6,6 +6,12 @@ import com.example.DAWN.RoomManagement.Room;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
+/**
+* @version : 1.0
+* @author : Zihan Xu, Yuting Lan
+* @classname : Data
+* @description : This class is wrap some parameters such as room id and so on.
+*/
 
 public class Data {
     public static String LOCAL_IP;
@@ -23,6 +29,13 @@ public class Data {
 
     public Data(){
     }
+    
+/**
+* @version : 1.0
+* @author : Zihan Xu, Yuting Lan
+* @methodname : setValue
+* @description : to set some server parameters and initiate some role parameters.
+*/
     public static void setValue() {
         LOCAL_IP = "/0.0.0.0"; //TODO
         delay = 0L;
