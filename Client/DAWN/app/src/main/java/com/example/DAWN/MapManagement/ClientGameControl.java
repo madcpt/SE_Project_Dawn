@@ -1,6 +1,7 @@
 package com.example.DAWN.MapManagement;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -21,8 +22,11 @@ import android.util.DisplayMetrics;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.DAWN.CommonService.Configuration;
 import com.example.DAWN.CommonService.Data;
 import com.example.DAWN.CommonService.ClientComContext;
 import com.example.DAWN.CommonService.ClientComStrategyTCP;
@@ -32,18 +36,24 @@ import com.example.DAWN.RoleManagement.MyRole;
 import com.example.DAWN.RoleManagement.Role_simple;
 import com.example.DAWN.UI.CreateRoom;
 import com.example.DAWN.UI.RockerView;
+import com.example.DAWN.UserManament.User;
 
+import java.sql.Time;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import static com.example.DAWN.UI.RockerView.DirectionMode.DIRECTION_8;
 
+
 public class ClientGameControl extends AppCompatActivity {
     Intent intent = getIntent();
 
     private RockerView mRockerView;
     private TextView testtxt ;
+    private ImageView black_layer;
+    private Button UseButton;
+
 
 
     //屏幕左上角为{0,0}，我的角色的绝对位置为{860,0}，相对（地图）位置为{x,y}
@@ -53,6 +63,7 @@ public class ClientGameControl extends AppCompatActivity {
 
     private volatile boolean isend;
     private volatile boolean Attackable;
+    private volatile boolean Usable;
     private volatile int[] location={0,0}; //当前位置
     int[] center_location;
 
@@ -76,6 +87,12 @@ public class ClientGameControl extends AppCompatActivity {
     }
 
     // AsyncTask for UDP-Client
+/**
+* @version : 3.0
+* @author : Zihan Xu, Yi Kuang, Chenyu Yang, Jianzhen Cao
+* @classname : ClientGameControl
+* @description : This class is to implement some functions such as move, attack and so on.
+*/
     public static class AsyncConUDP extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(String... msg) {
@@ -85,7 +102,7 @@ public class ClientGameControl extends AppCompatActivity {
         }
     }
 
-
+//Move thread
     class ThreadMove extends Thread {
         private Thread t;
         private String threadName;
@@ -162,7 +179,9 @@ public class ClientGameControl extends AppCompatActivity {
 
         isend = false;
         Attackable = true;
+        Usable = true;
 
+        UseButton = findViewById(R.id.Ubutton);
         mRockerView = findViewById(R.id.my_rocker);
         testtxt= findViewById(R.id.Fortest);
         testtxt.setText("loading... ");
@@ -182,7 +201,7 @@ public class ClientGameControl extends AppCompatActivity {
             e.printStackTrace ();
         }
 
-        myrole=new MyRole((Objects.requireNonNull (Data.playerLocation.get (Data.LOCAL_IP)))[0], Data.LOCAL_IP,10);
+        myrole=new MyRole((Objects.requireNonNull (Data.playerLocation.get (Data.LOCAL_IP)))[0], Data.LOCAL_IP,8); //the capacity of bag is 8
 
         //对摇杆位置改变进行监听
 //        当前模式：方向有改变时回调；8个方向
@@ -222,13 +241,56 @@ public class ClientGameControl extends AppCompatActivity {
         }
     }
 
+    public void TPick(View view){
+        if(!isend){
+            Pick();
+        }
+    }
+
+    public void TUse(View view){
+        if(!isend){
+            if(Usable) {
+                Use();
+            }
+            else{
+                StopUse();
+            }
+        }
+    }
+
     public void TAttack(View view){
         if (!isend) {
             System.out.println("Attackable " + Attackable);
+            if(!Usable){
+                StopUse();
+            }
             if (Attackable) {
                 Attack();
             }
         }
+    }
+
+    public void Use(){
+
+        Usable = false;
+        UseButton.setText("Stop");
+        new AsyncConTCP().execute("use");
+    }
+
+    public void StopUse(){
+        Usable = true;
+        UseButton.setText(" ");
+        new AsyncConTCP().execute("use_stp");
+    }
+
+    public void UseFinish(){
+        Usable = true;
+        UseButton.setText(" ");
+        new AsyncConTCP().execute("use_fin");
+    }
+
+    public void Pick(){
+        new AsyncConTCP().execute("pik");
     }
 
 //    实现攻击
@@ -244,7 +306,7 @@ public class ClientGameControl extends AppCompatActivity {
     public void Stopmove(){
         new AsyncConTCP ().execute ("stp");
     }
-//    感觉停止可以不需要
+
     public void Lmove(){
         if (Attackable)
             new AsyncConTCP().execute("mov,0,1");
@@ -286,11 +348,17 @@ public class ClientGameControl extends AppCompatActivity {
         //仅供测试
         map=new Map();
 
+        while(Data.propInit.get (0) == -1) {
+            new AsyncConUDP ().execute ("get_prop!");
+            TimeUnit.SECONDS.sleep (1);
+        }
+
         while(Data.playerLocation == null){
             System.out.println ("get111");
             new AsyncConUDP ().execute ("location!");
             TimeUnit.SECONDS.sleep(1);
         }
+
 
         for (String playerIP : Data.playerLocation.keySet ()){
             System.out.println ("INFO111" + Arrays.toString (Data.playerLocation.get (playerIP)));
@@ -300,6 +368,9 @@ public class ClientGameControl extends AppCompatActivity {
             test_r1.direction = Objects.requireNonNull (Data.playerLocation.get (playerIP))[4];
             test_r1.walk_mov = Objects.requireNonNull (Data.playerLocation.get (playerIP))[5];
             test_r1.attack_mov = Objects.requireNonNull (Data.playerLocation.get (playerIP))[6];
+            test_r1.use_mov = Objects.requireNonNull (Data.playerLocation.get (playerIP))[7];
+            test_r1.bag_used = Objects.requireNonNull(Data.playerLocation.get(playerIP))[8];
+            System.arraycopy(test_r1.props,0,Objects.requireNonNull(Data.playerLocation.get(playerIP)),9,8);
             map.livingrole.add(test_r1);
 
         }
@@ -325,7 +396,7 @@ public class ClientGameControl extends AppCompatActivity {
         if (tmp != null)
             System.out.println ("SIZEOFMAP: " + tmp.getByteCount ());
         matrix=new Matrix();
-        matrix.postScale(((float)map.unit*map.size/tmp.getWidth()), ((float)map.unit*map.size/tmp.getHeight()));
+        matrix.postScale(((float) Map.unit * Map.size /tmp.getWidth()), ((float) Map.unit * Map.size /tmp.getHeight()));
 
         background = Bitmap.createBitmap(tmp, 0, 0,tmp.getWidth(),tmp.getHeight(),null,true);
         tmp.recycle();
@@ -363,12 +434,39 @@ public class ClientGameControl extends AppCompatActivity {
                 fname = "a_" + Integer.toString(i) + "_" + Integer.toString(j);
                 tmp = BitmapFactory.decodeResource(this.getResources(),res.getIdentifier(fname,"drawable", getPackageName())).copy(Bitmap.Config.ARGB_4444,true);
                 matrix=new Matrix();
-                matrix.postScale(((float)100/tmp.getWidth()), ((float)120/tmp.getHeight()));//人物宽高
+                matrix.postScale(((float)100/tmp.getWidth()), ((float)120/tmp.getHeight()));//攻击图片宽高
                 attack_pic[i][j] = Bitmap.createBitmap(tmp, 0, 0,tmp.getWidth(),tmp.getHeight(),matrix,true);
                 tmp.recycle();
+                tmp=null;
             }
         }
 
+        //Usepic load
+        use_pic = new Bitmap[18];
+        for(int i = 0; i < 18 ; ++i){
+            fname = "u_" + Integer.toString(i);
+            tmp = BitmapFactory.decodeResource(this.getResources(),res.getIdentifier(fname,"drawable", getPackageName())).copy(Bitmap.Config.ARGB_4444,true);
+            matrix = new Matrix();
+            matrix.postScale(((float)100/tmp.getWidth()), ((float)120/tmp.getHeight()));//进度条图片宽高
+            use_pic[i] = Bitmap.createBitmap(tmp, 0, 0,tmp.getWidth(),tmp.getHeight(),matrix,true);
+            tmp.recycle();
+            tmp = null;
+        }
+
+        //Proppic load
+        prop_pic = new Bitmap[4];
+        for(int i = 0;i < 4; ++i){
+            fname = "p_" + Integer.toString(i);
+            tmp = BitmapFactory.decodeResource(this.getResources(),res.getIdentifier(fname, "drawable", getPackageName())).copy(Bitmap.Config.ARGB_4444, true);
+            matrix = new Matrix();
+            matrix.postScale(((float)100/tmp.getWidth()), ((float)120/tmp.getHeight()));//道具图片宽高
+            prop_pic[i] = Bitmap.createBitmap(tmp, 0, 0, tmp.getWidth(),tmp.getHeight(),matrix,true);
+            tmp.recycle();
+            tmp = null;
+        }
+
+        black_layer=findViewById(R.id.black_layer);
+        black_layer.setVisibility(View.GONE);
     }
 
 
@@ -380,15 +478,8 @@ public class ClientGameControl extends AppCompatActivity {
             if (!isend) {
                 new AsyncConUDP().execute("location!");
                 System.out.println(Data.playerLocation + "PLAYER111");
-                if (Data.playerLocation != null && Data.playerLocation.containsKey(Data.LOCAL_IP)) {
-                    System.out.println(location[0] + "," + location[1] + "LOCATION111");
-                    location[0] = Objects.requireNonNull(Data.playerLocation.get(Data.LOCAL_IP))[2];
-                    location[1] = Objects.requireNonNull(Data.playerLocation.get(Data.LOCAL_IP))[3];
-                } else {
-                    location = new int[]{0, 0};
-                }
                 testtxt.setText(Arrays.toString(location));
-                handlerUDP.postDelayed(this, 30);// 刷新间隔(ms)
+                handlerUDP.postDelayed(this, Configuration.ClientGameControlComRate);// 刷新间隔(ms)
             }
         }
     };
@@ -401,11 +492,25 @@ public class ClientGameControl extends AppCompatActivity {
         public void run() {
             if (!isend) {
                 this.update();
-                handlerInfo.postDelayed(this, 20);// 刷新间隔(ms)
+                handlerInfo.postDelayed(this, Configuration.ClientGameControlMapRate);// 刷新间隔(ms)
+            }
+        }
+        @TargetApi(Build.VERSION_CODES.KITKAT)
+        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+        void updateMapLocation(){
+            if (Data.playerLocation != null) {
+                if (Data.playerLocation.containsKey(Data.LOCAL_IP)) {
+                    System.out.println (location[0] + "," + location[1] + "LOCATION111");
+                    location[0] = Objects.requireNonNull (Data.playerLocation.get (Data.LOCAL_IP))[2];
+                    location[1] = Objects.requireNonNull (Data.playerLocation.get (Data.LOCAL_IP))[3];
+                }
+            } else {
+                location = new int[]{0, 0};
             }
         }
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         void update() {
+            updateMapLocation ();
             Role_simple r;
             for (int i=0;i<map.livingrole.size();i++) {
                 r = map.livingrole.get(i);
@@ -424,8 +529,14 @@ public class ClientGameControl extends AppCompatActivity {
                     case -1: r.attack_mov=-1; break;
                     case 1: if (r.attack_mov==-1) {r.attack_mov = 1;} break;
                 }
-//                System.out.println ("OTHER111 " + map.livingrole.size () + Arrays.toString (r.location));
-//                System.out.println (Arrays.toString (Data.playerLocation.get (r.name)));
+                switch (Objects.requireNonNull (Data.playerLocation.get (r.name))[7]){
+                    case -1: r.use_mov=-1; break;
+                    case 1: if (r.use_mov==-1) {r.use_mov = 1;} break;
+                }
+                r.bag_used = Objects.requireNonNull(Data.playerLocation.get(r.name))[8];
+                System.arraycopy(r.props,0,Objects.requireNonNull(Data.playerLocation.get(r.name)),9,8);
+                System.out.println ("OTHER111 " + map.livingrole.size () + Arrays.toString (r.location));
+                System.out.println (Arrays.toString (Data.playerLocation.get (r.name)));
             }
         }
     };
@@ -440,6 +551,8 @@ public class ClientGameControl extends AppCompatActivity {
     private Bitmap hole;
     private Bitmap[][][] role_pic;//所有角色图的Bitmap点阵,第一层为角色，第二层为方向，第三层为动作
     private Bitmap[][] attack_pic;//所有攻击效果的点阵图，第一层为特效，第二层为效果帧
+    private Bitmap[]    use_pic;//所有角色使用道具的进度条
+    private Bitmap[]    prop_pic;//道具图片
     class MyCallBack implements SurfaceHolder.Callback {
         @Override
         //当SurfaceView的视图发生改变，比如横竖屏切换时，这个方法被调用
@@ -489,8 +602,33 @@ public class ClientGameControl extends AppCompatActivity {
                         c.drawColor(Color.WHITE);
                         c.drawBitmap(background, center_location[0] - location[0], center_location[1] - location[1], p);
 
+                        System.out.println("prop capacity" + Data.propList.capacity());
+
+                        for (Prop prop:Data.propList) {
+                            System.out.println ("proptype " + prop.getType () + " propid " + prop.getId ());
+                            c.drawBitmap(prop_pic[prop.getType()],center_location[0] - location[0] + prop.getPropposition()[0],center_location[1] - location[1] + prop.getPropposition()[1],p);
+                        }
+
                         for (int i=0;i<map.livingrole.size();i++) {
                             r = map.livingrole.get(i);
+                            // 判断使用按键是否可点击
+                            // 检测是否为本机
+                            if(Data.LOCAL_IP.equals(r.name)) {
+                                // 检测背包中有无药品
+                                boolean flag1 = (r.lifevalue == 100),flag2 = true;
+                                for (int prop:r.props) {
+                                    if(prop!=-1 && prop % 4 == 0){
+                                        UseButton.setClickable(true);
+                                        flag2 = false;
+                                        break;
+                                    }
+                                }
+                                if (flag1 || flag2){
+                                    UseButton.setClickable(false);
+                                }
+                            }
+
+                            System.out.println ("CheckLocation: " + Arrays.toString (r.location) + " " + Arrays.toString (location));
                             if (Math.abs(r.location[0] - location[0]) > vision * 20 || Math.abs(r.location[1] - location[1]) > vision * 20) {
                                 continue;
                             }
@@ -527,7 +665,15 @@ public class ClientGameControl extends AppCompatActivity {
                                     StopAttack();
                                 }
                             }
+                            if (r.use_mov!=-1) {
+                                c.drawBitmap (use_pic[r.use_mov/2], center_location[0] - location[0] + r.location[0], center_location[1] - location[1] + r.location[1] + 40 , p);
+                                r.use_mov = (r.use_mov >= 35)? (-1) : (r.use_mov + 1);
+                                if(r.use_mov == -1 && Data.LOCAL_IP.equals(r.name)) {
+                                    UseFinish();
+                                }
+                            }
                         }
+
                         //画黑雾
                         c.saveLayer(0, 0, (center_location[0]+50)*2+1, (center_location[1]+60)*2+1, p, Canvas.ALL_SAVE_FLAG);//保存上一层
                         p.setColor(Color.BLACK);
@@ -545,7 +691,7 @@ public class ClientGameControl extends AppCompatActivity {
                         p.setXfermode(null);
                         c.restore();
                     }
-                    Thread.sleep(30);
+//                    Thread.sleep(30);
 
                 } catch (Exception e) {
                     e.printStackTrace();
