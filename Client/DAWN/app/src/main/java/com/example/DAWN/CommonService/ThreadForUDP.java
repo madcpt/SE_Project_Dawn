@@ -10,7 +10,7 @@ public class ThreadForUDP implements Runnable {
     public ThreadForUDP(String name) {
         threadCnt += 1;
         threadName = name;
-//        System.out.println("Creating " +  threadName );
+        System.out.println("Creating " +  threadName );
         client = new ClientForUDP ();
     }
     public void run() {
@@ -19,7 +19,7 @@ public class ThreadForUDP implements Runnable {
             for(int i = 1; i > 0; i--) {
 //                System.out.println("Thread: " + threadName + ", " + i);
                 client.testCon(msg);
-                Thread.sleep(10);
+                Thread.sleep(100);
             }
         }catch (InterruptedException e) {
 //            System.out.println("Thread " +  threadName + " interrupted.");
@@ -29,7 +29,7 @@ public class ThreadForUDP implements Runnable {
 
     public void start (String msg) {
         this.msg = msg;
-//        System.out.println("Starting " +  threadName );
+        System.out.println("StartingUDP:" +  threadName );
         if (t == null) {
             t = new Thread ( this, threadName);
             t.start ();

@@ -9,7 +9,7 @@ import java.util.Vector;
 
 public class Map {
     public static int unit =150;
-    public static int size =100;
+    public static int size =20;
 
     public volatile Vector<Role_simple> livingrole;
     public Vector<Prop> proplist;
