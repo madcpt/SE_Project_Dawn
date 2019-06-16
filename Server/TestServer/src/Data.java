@@ -26,7 +26,7 @@ public class Data {
     }
 
 
-    public void setValue() {
+    public static void setValue() {
         System.out.println("SETTING VALUE");
         delay = 0L;
 //        Server = "39.105.27.108";

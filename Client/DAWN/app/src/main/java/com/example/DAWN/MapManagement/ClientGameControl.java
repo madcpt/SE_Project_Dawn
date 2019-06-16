@@ -38,11 +38,13 @@ import com.example.DAWN.UI.CreateRoom;
 import com.example.DAWN.UI.RockerView;
 import com.example.DAWN.UserManament.User;
 
+import java.sql.Time;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import static com.example.DAWN.UI.RockerView.DirectionMode.DIRECTION_8;
+
 
 public class ClientGameControl extends AppCompatActivity {
     Intent intent = getIntent();
@@ -85,6 +87,12 @@ public class ClientGameControl extends AppCompatActivity {
     }
 
     // AsyncTask for UDP-Client
+/**
+* @version : 3.0
+* @author : Zihan Xu, Yi Kuang, Chenyu Yang, Jianzhen Cao
+* @classname : ClientGameControl
+* @description : This class is to implement some functions such as move, attack and so on.
+*/
     public static class AsyncConUDP extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(String... msg) {
@@ -94,7 +102,7 @@ public class ClientGameControl extends AppCompatActivity {
         }
     }
 
-
+//Move thread
     class ThreadMove extends Thread {
         private Thread t;
         private String threadName;
@@ -340,13 +348,17 @@ public class ClientGameControl extends AppCompatActivity {
         //仅供测试
         map=new Map();
 
+        while(Data.propInit.get (0) == -1) {
+            new AsyncConUDP ().execute ("get_prop!");
+            TimeUnit.SECONDS.sleep (1);
+        }
+
         while(Data.playerLocation == null){
             System.out.println ("get111");
             new AsyncConUDP ().execute ("location!");
             TimeUnit.SECONDS.sleep(1);
         }
 
-        new AsyncConUDP ().execute ("get_prop!");
 
         for (String playerIP : Data.playerLocation.keySet ()){
             System.out.println ("INFO111" + Arrays.toString (Data.playerLocation.get (playerIP)));
@@ -593,6 +605,7 @@ public class ClientGameControl extends AppCompatActivity {
                         System.out.println("prop capacity" + Data.propList.capacity());
 
                         for (Prop prop:Data.propList) {
+                            System.out.println ("proptype " + prop.getType () + " propid " + prop.getId ());
                             c.drawBitmap(prop_pic[prop.getType()],center_location[0] - location[0] + prop.getPropposition()[0],center_location[1] - location[1] + prop.getPropposition()[1],p);
                         }
 
@@ -602,15 +615,15 @@ public class ClientGameControl extends AppCompatActivity {
                             // 检测是否为本机
                             if(Data.LOCAL_IP.equals(r.name)) {
                                 // 检测背包中有无药品
-                                boolean flag = (r.lifevalue != 100);
+                                boolean flag1 = (r.lifevalue == 100),flag2 = true;
                                 for (int prop:r.props) {
                                     if(prop!=-1 && prop % 4 == 0){
                                         UseButton.setClickable(true);
-                                        flag = false;
+                                        flag2 = false;
                                         break;
                                     }
                                 }
-                                if (flag){
+                                if (flag1 || flag2){
                                     UseButton.setClickable(false);
                                 }
                             }
@@ -688,7 +701,7 @@ public class ClientGameControl extends AppCompatActivity {
                     }
                 }
                 try {
-                    Thread.sleep (100);
+                    Thread.sleep (10);
                 } catch (InterruptedException e) {
                     e.printStackTrace ();
                 }
