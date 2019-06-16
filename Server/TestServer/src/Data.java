@@ -10,12 +10,14 @@ public class Data {
     public static String Server;
     public static int port;
     public static Map<String, int[]> playerLocation;
-    public int direction;
     public static MapClass WholeMap;
-    public Random rand;
+    private static Random rand;
     private static Collision Colli = new Collision(120,100);
     public static RoomPool roomList;
     public static DatabaseAdapter database;
+    static public serverGameControl serverGameControl;
+
+    int livePlayer;
 
     Data() {
         WholeMap = new MapClass();
@@ -26,12 +28,6 @@ public class Data {
     public static boolean MoveCollisionDetect(int x, int y) {
         int h = Colli.getCollision_height();
         int w = Colli.getCollision_width();
-        //return true if it's invalid to move
-//        System.out.println("x,y: "+ WholeMap.m[ y / WholeMap.unit][ x / WholeMap.unit ]);
-//        System.out.println("x + w,y: "+ WholeMap.m[ y / WholeMap.unit][ ( x + w ) / WholeMap.unit ]);
-//        System.out.println("x,y + h: "+ WholeMap.m[ ( y + h ) / WholeMap.unit][ x / WholeMap.unit ]);
-//        System.out.println("x + w,y + h: "+ WholeMap.m[ ( y + h ) / WholeMap.unit][ ( x + w ) / WholeMap.unit ]);
-//        System.out.println(( WholeMap.m[ y / WholeMap.unit][ x / WholeMap.unit ] == 1 ) || ( WholeMap.m[ ( y + h ) / WholeMap.unit][ ( x + w ) / WholeMap.unit ] == 1 ) || ( WholeMap.m[ y / WholeMap.unit][ ( x + w ) / WholeMap.unit ] == 1 ) || ( WholeMap.m[ ( y + h ) / WholeMap.unit][ x / WholeMap.unit ] == 1 ));
         return ( ( WholeMap.m[ y / WholeMap.unit][ x / WholeMap.unit ] == 1 ) || ( WholeMap.m[ ( y + h ) / WholeMap.unit][ ( x + w ) / WholeMap.unit ] == 1 ) || ( WholeMap.m[ y / WholeMap.unit][ ( x + w ) / WholeMap.unit ] == 1 ) || ( WholeMap.m[ ( y + h ) / WholeMap.unit][ x / WholeMap.unit ] == 1 ));
     }
 
@@ -101,9 +97,6 @@ public class Data {
                 break;
 
     }
-//        double radians = Math.toRadians(degree);
-//        playerLocation.get(pureIP)[2] += Math.cos(radians) * velocity;
-//        playerLocation.get(pureIP)[3] += Math.sin(radians) * velocity;
     }
 
     public void setValue() {
@@ -113,12 +106,12 @@ public class Data {
         Server = "192.168.137.1";
         port = 66;
         playerLocation = new HashMap<>();
-        direction = 0;
         roomList = new RoomPool();
         database=new DatabaseAdapter();
+        serverGameControl = new serverGameControl();
     }
 
-    public void addPlayer(String pureIP, int[] lt) {
+    private static void addPlayer(String pureIP, int[] lt) {
         playerLocation.put(pureIP, lt);
     }
 
@@ -138,8 +131,8 @@ public class Data {
         }
         addPlayer(pureIP,new_rl);
     }
-
     public static void Lmove(String pureIP, int velocity) {
+
 //        location[0]=location[0]-3;
         playerLocation.get(pureIP)[2] -= 3 * velocity;
         playerLocation.get(pureIP)[4] = 2;
@@ -369,5 +362,9 @@ public class Data {
         int[] tmpLoc = playerLocation.get(pureIP);
         tmpLoc[6]=-1;
         playerLocation.put(pureIP,tmpLoc);
+    }
+
+    static void killPlayer(String pureIP){
+
     }
 }

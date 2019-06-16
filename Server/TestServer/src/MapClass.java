@@ -1,3 +1,6 @@
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+
+import java.beans.IntrospectionException;
 import java.util.Vector;
 import java.util.Random;
 
@@ -6,8 +9,10 @@ import java.util.Random;
 public class MapClass {
 
     Random rand=new Random();
-    public static int unit =150;
-    public static int size =20;
+    static int unit =150;
+    static int size =20;
+    private static int border = 2;
+    private int sizeOfProp = 20;
 
     public Vector<Prop> proplist;
     private Prop prop_sample;
@@ -156,13 +161,15 @@ public class MapClass {
             proptype = i % 4;
             prop_sample = new Prop(i,proptype);
             do {
-                x = rand.nextInt(13200) + 900;
-                y = rand.nextInt(13200) + 900;
+                System.out.print("set");
+                x = rand.nextInt(unit * (size - 2 * border)) + unit * border;
+                y = rand.nextInt(unit * (size - 2 * border)) + unit * border;
             }while(!is_valid(x,y));
             proposition[0] = x;
             proposition[1] = y;
             prop_sample.setPropposition(proposition);
             proplist.add(i,prop_sample);
+
         }
 
     }
@@ -173,6 +180,13 @@ public class MapClass {
     }
 
 
-
-
+    Vector<Integer> getPropList() {
+        Vector<Integer> tmp = new Vector<>();
+        int count = 0;
+        for (Prop prop: proplist){
+            tmp.addAll(prop.getPropPara());
+            count += 1;
+        }
+        return tmp;
+    }
 }
