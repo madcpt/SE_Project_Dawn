@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Vector;
 /**
 * @version : 2.0
-* @author : Zihan Xu
+* @author : Zihan Xu, Yi Kuang, Chenyu Yang
 * @classname : ClientForTCP
 * @description : The client class for TCP.
 */
@@ -26,7 +26,7 @@ class ClientForUDP {
 
 /**
 * @version : 2.0
-* @author : Zihan Xu
+* @author : Zihan Xu, Yi Kuang, Chenyu Yang
 * @methodname : testCon
 * @description : The client class for UDP
 * @param : msg the message to send such as requests for props and so on.
