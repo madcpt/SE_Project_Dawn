@@ -28,19 +28,25 @@ public class Room {
     }
 
     public void addPlayer(String pureIP) {
-        int[] playerInformation = new int[7];
+        int[] playerInformation = new int[17];
         // ID life location[0] location[1] direction walk_mov attack_mov
 
-        playerInformation[0]=1000   ; // tmp for ID
-        playerInformation[1]=100;
+        playerInformation[0]=100   ; // tmp for ID
+        playerInformation[1]=100; // life
         do {
             playerInformation[2]=rand.nextInt(MapClass.unit * MapClass.size);
             playerInformation[3]=rand.nextInt(MapClass.unit * MapClass.size);
 
         }while (WholeMap.m[playerInformation[3]/ MapClass.unit][playerInformation[2]/ MapClass.unit]!=0);
+        // x, y
         playerInformation[4]=3;
         playerInformation[5]=-1;
         playerInformation[6]=-1;
+        playerInformation[7]=-1; // use_mov
+        playerInformation[8]=0; // empty bag
+        for (int i = 9;i < 17;++i){
+            playerInformation[i] = -1; // no prop
+        }
 
         playerLocation.put(pureIP, playerInformation);
         playerPool.put(pureIP, 0); // Set initial status to unprepared
@@ -264,10 +270,7 @@ public class Room {
         int[] tmpLoc = playerLocation.get(pureIP);
         for (Prop prop:WholeMap.proplist) {
             if(isPickable(tmpLoc,prop)){
-                int [] propp = new int[2];
-                propp[0] = -1; propp[1] = -1;
-                prop.setPropposition(propp);
-                propp = null;
+                prop.UnPickable();
                 tmpLoc[8] += 1;
                 switch (prop.getType()){
                     case 0:
@@ -316,13 +319,12 @@ public class Room {
         tmpLoc[i - 1] = -1; //fresh bag;
         tmpLoc[8] -= 1;  //bag_used - 1
         tmpLoc[1] = Math.min(tmpLoc[1] + WholeMap.proplist.elementAt(propid).getValue(),100);
-        WholeMap.proplist.elementAt(propid).UnUseable(); // set it unuseable
         playerLocation.put(pureIP,tmpLoc);
     }
 
     private boolean isPickable(int[] tmpLoc, Prop prop) {
         int x = prop.getPropposition()[0], y = prop.getPropposition()[1];
-        boolean flag1 = (x != -1 && y != -1 && prop.isUseable() && tmpLoc[8] < 8 && // 未被他人拾取且尚未被使用且人物有背包
+        boolean flag1 = (prop.isPickable() && tmpLoc[8] < 8 && // 未被他人拾取且人物有背包
                 x > tmpLoc[2] - Colli.getCollision_width() && x < tmpLoc[2] + 2 * Colli.getCollision_width() && // 横向在人物一个身位以内
                 y > tmpLoc[3] - Colli.getCollision_height() && y < tmpLoc[3] + 2 * Colli.getCollision_height() // 纵向在人物一个身位以内
         );

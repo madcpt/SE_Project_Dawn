@@ -1,5 +1,6 @@
 package com.example.DAWN.CommonService;
 
+import com.example.DAWN.MapManagement.Prop;
 import com.example.DAWN.RoomManagement.Room;
 
 import java.io.ByteArrayInputStream;
@@ -12,16 +13,29 @@ import java.net.InetSocketAddress;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Vector;
+/**
+* @version : 2.0
+* @author : Zihan Xu, Yi Kuang, Chenyu Yang
+* @classname : ClientForTCP
+* @description : The client class for TCP.
+*/
 
 class ClientForUDP {
 
     ClientForUDP(){
     }
 
+/**
+* @version : 2.0
+* @author : Zihan Xu, Yi Kuang, Chenyu Yang
+* @methodname : testCon
+* @description : The client class for UDP
+* @param : msg the message to send such as requests for props and so on.
+*/
     void testCon(String msg) {
         try {
-            byte[] requestBytes = new byte[1024];
-            byte[] ReceiveBytes = new byte[1024];
+            byte[] requestBytes = new byte[128];
+            byte[] ReceiveBytes = new byte[2048];
             DatagramPacket requestPacket = new DatagramPacket(requestBytes, requestBytes.length);
             DatagramPacket receivePacket = new DatagramPacket(ReceiveBytes,ReceiveBytes.length);
 
@@ -79,8 +93,17 @@ class ClientForUDP {
 
 //                    int propList = (int) objectStream.readObject ();
                     Vector<Integer> propList = (Vector<Integer>) objectStream.readObject ();
+                    Data.propInit = propList;
 //                    //
                     System.out.println ("Prop List: " +  propList);
+                    if(Data.propList == null){
+                        Data.propList = new Vector<Prop>();
+                        Prop propsample;
+                        for(int i = 0;i < 100; i+=5){
+                            propsample = new Prop(propList.get(i),propList.get(i+1),propList.get(i+3),propList.get(i+4));
+                            Data.propList.add(i/5,propsample);
+                        }
+                    }
                     break;
 
                 case "ask_room":
