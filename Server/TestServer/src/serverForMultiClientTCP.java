@@ -77,7 +77,7 @@ public class serverForMultiClientTCP extends ServerSocket {
                         serverGameControl.attackStop(pureIP);
                         break;
                     }
-
+                    
                     case "init" :{
                         // Actually prepare.
                         // para: pureIP, roomID, id(little)

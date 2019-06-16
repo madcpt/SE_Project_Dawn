@@ -7,18 +7,18 @@ public class Prop {
     private int type; //0-medicine; 1-shoe; 2-weapon; 3-torch;
     private int value;
     private int[] propposition;
-    private boolean useable;
+    private boolean pickable;
 
-    private static final int THERAPEUTIC_DOSE = 30;
+    private static final int MEDICINE = 30;
     private static final int SPEED_UP = 1;
     private static final int DAMAGE = 10;
     private static final int VISION_UP = 10;
     public Prop(int ID, int t){
         id = ID;
         type = t;
-        useable = true;
+        pickable = true;
         switch(type){
-            case 0: value = THERAPEUTIC_DOSE;break;
+            case 0: value = MEDICINE;break;
             case 1: value = SPEED_UP;break;
             case 2: value = DAMAGE;break;
             case 3: value = VISION_UP;break;
@@ -37,8 +37,8 @@ public class Prop {
         return value;
     }
 
-    public boolean isUseable() {
-        return useable;
+    public boolean isPickable() {
+        return pickable;
     }
 
     public void setPropposition(int[] propposition) {
@@ -46,8 +46,8 @@ public class Prop {
         this.propposition = new int[size];
         System.arraycopy(propposition,0,this.propposition,0,size);
     }
-    public void UnUseable(){
-        useable = false;
+    public void UnPickable(){
+        pickable = false;
     }
 
     public int[] getPropposition() {
