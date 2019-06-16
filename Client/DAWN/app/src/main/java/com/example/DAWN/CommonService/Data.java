@@ -26,8 +26,8 @@ public class Data {
     public static void setValue() {
         LOCAL_IP = "/0.0.0.0"; //TODO
         delay = 0L;
-        Server = "39.105.27.108";
-//        Server="192.168.137.1";
+//        Server = "39.105.27.108";
+        Server="192.168.137.1";
 //        Server="59.78.18.69";
         port = 66;
         accountStatus = new HashMap<> ();

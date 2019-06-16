@@ -341,7 +341,7 @@ public class ClientGameControl extends AppCompatActivity {
         //仅供测试
         map=new Map();
 
-        while(Data.propList.get (0) == -1) {
+        while(Data.propInit.get (0) == -1) {
             new AsyncConUDP ().execute ("get_prop!");
             TimeUnit.SECONDS.sleep (1);
         }
@@ -598,6 +598,7 @@ public class ClientGameControl extends AppCompatActivity {
                         System.out.println("prop capacity" + Data.propList.capacity());
 
                         for (Prop prop:Data.propList) {
+                            System.out.println ("proptype " + prop.getType () + " propid " + prop.getId ());
                             c.drawBitmap(prop_pic[prop.getType()],center_location[0] - location[0] + prop.getPropposition()[0],center_location[1] - location[1] + prop.getPropposition()[1],p);
                         }
 
@@ -607,15 +608,15 @@ public class ClientGameControl extends AppCompatActivity {
                             // 检测是否为本机
                             if(Data.LOCAL_IP.equals(r.name)) {
                                 // 检测背包中有无药品
-                                boolean flag = (r.lifevalue != 100);
+                                boolean flag1 = (r.lifevalue == 100),flag2 = true;
                                 for (int prop:r.props) {
                                     if(prop!=-1 && prop % 4 == 0){
                                         UseButton.setClickable(true);
-                                        flag = false;
+                                        flag2 = false;
                                         break;
                                     }
                                 }
-                                if (flag){
+                                if (flag1 || flag2){
                                     UseButton.setClickable(false);
                                 }
                             }

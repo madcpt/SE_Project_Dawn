@@ -86,9 +86,9 @@ class ClientForUDP {
                     if(Data.propList == null){
                         Data.propList = new Vector<Prop>();
                         Prop propsample;
-                        for(int i = 0;i < 20; ++i){
+                        for(int i = 0;i < 100; i+=5){
                             propsample = new Prop(propList.get(i),propList.get(i+1),propList.get(i+3),propList.get(i+4));
-                            Data.propList.add(i,propsample);
+                            Data.propList.add(i/5,propsample);
                         }
                     }
 
