@@ -20,8 +20,8 @@ class ClientForUDP {
 
     void testCon(String msg) {
         try {
-            byte[] requestBytes = new byte[1024];
-            byte[] ReceiveBytes = new byte[1024];
+            byte[] requestBytes = new byte[2048];
+            byte[] ReceiveBytes = new byte[2048];
             DatagramPacket requestPacket = new DatagramPacket(requestBytes, requestBytes.length);
             DatagramPacket receivePacket = new DatagramPacket(ReceiveBytes,ReceiveBytes.length);
 
@@ -74,12 +74,11 @@ class ClientForUDP {
                     System.out.println ("Get Prop: ");
 
 //                    Map<String, int[]> playerLocation1 = (Map<String, int[]>) objectStream.readObject();
-//
-//                    System.out.println ("receive111" + playerLocation1);
-
 //                    int propList = (int) objectStream.readObject ();
+
                     Vector<Integer> propList = (Vector<Integer>) objectStream.readObject ();
 //                    //
+                    Data.propList = propList;
                     System.out.println ("Prop List: " +  propList);
                     break;
 

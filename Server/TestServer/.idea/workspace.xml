@@ -1,7 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="DawnServer:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="9d19d082-5461-40ef-8a95-2fce63e5c86a" name="Default Changelist" comment="" />
+    <list default="true" id="9d19d082-5461-40ef-8a95-2fce63e5c86a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/CommonService/ClientForUDP.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/CommonService/ClientForUDP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/CommonService/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/CommonService/Data.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/MapManagement/ClientGameControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/DAWN/app/src/main/java/com/example/DAWN/MapManagement/ClientGameControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/DawnServer/Main$TCPThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DawnServer/Main$TCPThread.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/DawnServer/Main$UDPThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DawnServer/Main$UDPThread.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/DawnServer/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DawnServer/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/DawnServer/MapClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DawnServer/MapClass.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/DawnServer/serverForMultiClientTCP$CreateServerThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DawnServer/serverForMultiClientTCP$CreateServerThread.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/DawnServer/serverForMultiClientTCP.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DawnServer/serverForMultiClientTCP.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/DawnServer/serverForMultiClientUDP.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DawnServer/serverForMultiClientUDP.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MapClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MapClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/serverForMultiClientTCP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/serverForMultiClientTCP.java" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,15 +34,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Data.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="943">
-              <caret line="110" column="52" selection-start-line="110" selection-start-column="52" selection-end-line="110" selection-end-column="52" />
+            <state relative-caret-position="189">
+              <caret line="42" column="13" selection-start-line="42" selection-start-column="13" selection-end-line="42" selection-end-column="13" />
               <folding>
                 <element signature="method#MoveCollisionDetect#0;class#Data#0" />
                 <element signature="method#AttackCollisionDetect#0;class#Data#0" />
-                <element signature="method#Attack#0;class#Data#0" />
                 <element signature="e#1814#2195#0" />
                 <element signature="e#2362#2609#1" />
                 <element signature="e#2397#2438#1" />
@@ -31,7 +50,6 @@
                 <element signature="e#2720#3460#0" />
                 <element signature="method#newPlayer#0;class#Data#0" />
                 <element signature="e#4039#4181#1" />
-                <element signature="method#Lmove#0;class#Data#0" />
                 <element signature="e#4668#4737#1" />
                 <element signature="e#4824#4911#0" />
                 <element signature="method#Rmove#0;class#Data#0" />
@@ -59,7 +77,6 @@
                 <element signature="e#8988#9024#0" />
                 <element signature="e#9347#9474#1" />
                 <element signature="e#9475#9527#0" />
-                <element signature="method#mov_stop#0;class#Data#0" />
                 <element signature="method#att_stop#0;class#Data#0" />
                 <element signature="method#killPlayer#0;class#Data#0" />
               </folding>
@@ -70,10 +87,9 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Room.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="138">
-              <caret line="333" column="29" lean-forward="true" selection-start-line="333" selection-start-column="24" selection-end-line="333" selection-end-column="35" />
+            <state relative-caret-position="63">
+              <caret line="3" column="22" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
               <folding>
-                <element signature="method#addPlayer#0;class#Room#0" />
                 <element signature="e#999#1167#1" />
                 <element signature="n#!!block;n#containsPlayer#0;n#Room#0" />
                 <element signature="n#!!block;n#removePlayer#0;n#Room#0" />
@@ -124,7 +140,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Prop.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
+            <state relative-caret-position="55">
               <caret line="56" column="28" selection-start-line="56" selection-start-column="28" selection-end-line="56" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -140,8 +156,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MapClass.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="311">
-              <caret line="193" column="19" lean-forward="true" selection-start-line="193" selection-start-column="19" selection-end-line="193" selection-end-column="19" />
+            <state relative-caret-position="1334">
+              <caret line="175" column="31" selection-start-line="175" selection-start-column="31" selection-end-line="175" selection-end-column="31" />
               <folding>
                 <element signature="e#419#456#0" />
                 <element signature="e#14718#14719#0" expanded="true" />
@@ -154,15 +170,22 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/serverForMultiClientTCP.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="54">
-              <caret line="52" column="40" selection-start-line="52" selection-start-column="40" selection-end-line="52" selection-end-column="40" />
+            <state relative-caret-position="-22">
+              <caret line="141" column="29" selection-start-line="141" selection-start-column="29" selection-end-line="141" selection-end-column="29" />
               <folding>
-                <element signature="e#1900#2064#1" />
-                <element signature="e#2098#2212#1" />
-                <element signature="e#2246#2427#1" />
-                <element signature="e#2464#2629#1" />
-                <element signature="e#2664#3100#1" />
                 <element signature="e#3231#3368#1" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Main.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="230">
+              <caret line="56" column="15" selection-start-line="56" selection-start-column="15" selection-end-line="56" selection-end-column="15" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -171,7 +194,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/playground.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="46">
+            <state relative-caret-position="42">
               <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
             </state>
           </provider>
@@ -180,7 +203,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/RoomPool.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="139">
+            <state relative-caret-position="7">
               <caret line="144" column="44" selection-start-line="144" selection-start-column="44" selection-end-line="144" selection-end-column="44" />
               <folding>
                 <element signature="method#RoomPool#0;class#RoomPool#0" />
@@ -214,8 +237,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/serverGameControl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="299">
-              <caret line="122" column="28" lean-forward="true" selection-start-line="122" selection-start-column="28" selection-end-line="122" selection-end-column="28" />
+            <state relative-caret-position="189">
+              <caret line="9" column="4" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="4" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#addPlayer#0;class#serverGameControl#0" />
@@ -235,25 +258,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/serverForMultiClientUDP.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="123">
-              <caret line="69" column="48" selection-start-line="69" selection-start-column="48" selection-end-line="69" selection-end-column="48" />
+            <state relative-caret-position="93">
+              <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
               <folding>
                 <element signature="n#!!block;n#serverForMultiClientUDP#0;n#serverForMultiClientUDP#0" />
                 <element signature="method#run#0;class#serverForMultiClientUDP#0" />
                 <element signature="e#563#604#0" />
                 <element signature="e#623#667#0" />
-                <element signature="e#1644#1918#1" />
                 <element signature="e#1955#2018#0" />
+                <element signature="e#2778#2895#1" />
                 <element signature="e#3261#3802#1" />
                 <element signature="e#3473#3616#1" />
                 <element signature="e#3622#3694#1" />
                 <element signature="e#3834#4173#1" />
-                <element signature="e#4207#4809#1" />
                 <element signature="e#4255#4348#0" />
-                <element signature="method#startUDP#0;class#serverForMultiClientUDP#0" />
               </folding>
             </state>
           </provider>
@@ -275,8 +296,10 @@
       <find>atk</find>
       <find>ServerGame</find>
       <find>ServerGame1</find>
-      <find>20</find>
       <find>Look Up</find>
+      <find>prop</find>
+      <find>location</find>
+      <find>20</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -288,21 +311,22 @@
         <option value="$PROJECT_DIR$/src/RoomStatus.java" />
         <option value="$PROJECT_DIR$/src/RoomData.java" />
         <option value="$PROJECT_DIR$/src/Data.java" />
-        <option value="$PROJECT_DIR$/src/Main.java" />
-        <option value="$PROJECT_DIR$/src/serverForMultiClientTCP.java" />
         <option value="$PROJECT_DIR$/src/serverGameControl.java" />
         <option value="$PROJECT_DIR$/src/RoomPool.java" />
-        <option value="$PROJECT_DIR$/src/Room.java" />
-        <option value="$PROJECT_DIR$/src/MapClass.java" />
         <option value="$PROJECT_DIR$/src/Prop.java" />
+        <option value="$PROJECT_DIR$/src/MapClass.java" />
+        <option value="$PROJECT_DIR$/src/Main.java" />
+        <option value="$PROJECT_DIR$/src/serverForMultiClientTCP.java" />
         <option value="$PROJECT_DIR$/src/serverForMultiClientUDP.java" />
+        <option value="$PROJECT_DIR$/src/Room.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="952" />
-    <option name="width" value="977" />
-    <option name="height" value="1038" />
+    <option name="x" value="-6" />
+    <option name="y" value="2" />
+    <option name="width" value="1546" />
+    <option name="height" value="828" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -375,10 +399,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23892617" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18976545" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -387,8 +411,8 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.44192636" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.41386783" />
+      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.3997833" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -448,75 +472,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/playground.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
+        <state relative-caret-position="42">
           <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Data.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="943">
-          <caret line="110" column="52" selection-start-line="110" selection-start-column="52" selection-end-line="110" selection-end-column="52" />
-          <folding>
-            <element signature="method#MoveCollisionDetect#0;class#Data#0" />
-            <element signature="method#AttackCollisionDetect#0;class#Data#0" />
-            <element signature="method#Attack#0;class#Data#0" />
-            <element signature="e#1814#2195#0" />
-            <element signature="e#2362#2609#1" />
-            <element signature="e#2397#2438#1" />
-            <element signature="e#2533#2599#1" />
-            <element signature="method#moveDegree#0;class#Data#0" />
-            <element signature="e#2720#3460#0" />
-            <element signature="method#newPlayer#0;class#Data#0" />
-            <element signature="e#4039#4181#1" />
-            <element signature="method#Lmove#0;class#Data#0" />
-            <element signature="e#4668#4737#1" />
-            <element signature="e#4824#4911#0" />
-            <element signature="method#Rmove#0;class#Data#0" />
-            <element signature="e#5393#5462#1" />
-            <element signature="e#5463#5515#0" />
-            <element signature="method#Umove#0;class#Data#0" />
-            <element signature="e#5950#6019#1" />
-            <element signature="e#6020#6072#0" />
-            <element signature="method#Dmove#0;class#Data#0" />
-            <element signature="e#6507#6576#1" />
-            <element signature="e#6577#6629#0" />
-            <element signature="method#DLmove#0;class#Data#0" />
-            <element signature="e#6795#6831#0" />
-            <element signature="e#7154#7281#1" />
-            <element signature="e#7282#7334#0" />
-            <element signature="method#DRmove#0;class#Data#0" />
-            <element signature="e#7526#7562#0" />
-            <element signature="e#7885#8012#1" />
-            <element signature="e#8013#8065#0" />
-            <element signature="method#ULmove#0;class#Data#0" />
-            <element signature="e#8257#8293#0" />
-            <element signature="e#8616#8743#1" />
-            <element signature="e#8744#8796#0" />
-            <element signature="method#URmove#0;class#Data#0" />
-            <element signature="e#8988#9024#0" />
-            <element signature="e#9347#9474#1" />
-            <element signature="e#9475#9527#0" />
-            <element signature="method#mov_stop#0;class#Data#0" />
-            <element signature="method#att_stop#0;class#Data#0" />
-            <element signature="method#killPlayer#0;class#Data#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="66" column="57" selection-start-line="66" selection-start-column="57" selection-end-line="66" selection-end-column="57" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/RoomPool.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
+        <state relative-caret-position="7">
           <caret line="144" column="44" selection-start-line="144" selection-start-column="44" selection-end-line="144" selection-end-column="44" />
           <folding>
             <element signature="method#RoomPool#0;class#RoomPool#0" />
@@ -546,12 +509,89 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Prop.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="55">
+          <caret line="56" column="28" selection-start-line="56" selection-start-column="28" selection-end-line="56" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#Prop#0;class#Prop#0" />
+            <element signature="e#482#676#0" />
+            <element signature="method#setPropposition#0;class#Prop#0" />
+            <element signature="n#!!block;n#UnUseable#0;n#Prop#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/serverGameControl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="9" column="4" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="4" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#addPlayer#0;class#serverGameControl#0" />
+            <element signature="e#675#676#0" expanded="true" />
+            <element signature="e#731#732#0" expanded="true" />
+            <element signature="e#1160#1161#0" expanded="true" />
+            <element signature="e#1208#1209#0" expanded="true" />
+            <element signature="method#attackStop#0;class#serverGameControl#0" />
+            <element signature="method#attack#0;class#serverGameControl#0" />
+            <element signature="method#moveDegree#0;class#serverGameControl#0" />
+            <element signature="e#2583#2584#0" expanded="true" />
+            <element signature="e#2638#2639#0" expanded="true" />
+            <element signature="e#3361#3362#0" expanded="true" />
+            <element signature="e#3395#3396#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/serverForMultiClientTCP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-22">
+          <caret line="141" column="29" selection-start-line="141" selection-start-column="29" selection-end-line="141" selection-end-column="29" />
+          <folding>
+            <element signature="e#3231#3368#1" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/serverForMultiClientUDP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="93">
+          <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
+          <folding>
+            <element signature="n#!!block;n#serverForMultiClientUDP#0;n#serverForMultiClientUDP#0" />
+            <element signature="method#run#0;class#serverForMultiClientUDP#0" />
+            <element signature="e#563#604#0" />
+            <element signature="e#623#667#0" />
+            <element signature="e#1955#2018#0" />
+            <element signature="e#2778#2895#1" />
+            <element signature="e#3261#3802#1" />
+            <element signature="e#3473#3616#1" />
+            <element signature="e#3622#3694#1" />
+            <element signature="e#3834#4173#1" />
+            <element signature="e#4255#4348#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MapClass.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1334">
+          <caret line="175" column="31" selection-start-line="175" selection-start-column="31" selection-end-line="175" selection-end-column="31" />
+          <folding>
+            <element signature="e#419#456#0" />
+            <element signature="e#14718#14719#0" expanded="true" />
+            <element signature="e#14773#14774#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Room.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="333" column="29" lean-forward="true" selection-start-line="333" selection-start-column="24" selection-end-line="333" selection-end-column="35" />
+        <state relative-caret-position="63">
+          <caret line="3" column="22" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
           <folding>
-            <element signature="method#addPlayer#0;class#Room#0" />
             <element signature="e#999#1167#1" />
             <element signature="n#!!block;n#containsPlayer#0;n#Room#0" />
             <element signature="n#!!block;n#removePlayer#0;n#Room#0" />
@@ -598,87 +638,60 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Prop.java">
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="56" column="28" selection-start-line="56" selection-start-column="28" selection-end-line="56" selection-end-column="28" />
+        <state relative-caret-position="230">
+          <caret line="56" column="15" selection-start-line="56" selection-start-column="15" selection-end-line="56" selection-end-column="15" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#Prop#0;class#Prop#0" />
-            <element signature="e#482#676#0" />
-            <element signature="method#setPropposition#0;class#Prop#0" />
-            <element signature="n#!!block;n#UnUseable#0;n#Prop#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MapClass.java">
+    <entry file="file://$PROJECT_DIR$/src/Data.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="193" column="19" lean-forward="true" selection-start-line="193" selection-start-column="19" selection-end-line="193" selection-end-column="19" />
+        <state relative-caret-position="189">
+          <caret line="42" column="13" selection-start-line="42" selection-start-column="13" selection-end-line="42" selection-end-column="13" />
           <folding>
-            <element signature="e#419#456#0" />
-            <element signature="e#14718#14719#0" expanded="true" />
-            <element signature="e#14773#14774#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/serverForMultiClientTCP.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="52" column="40" selection-start-line="52" selection-start-column="40" selection-end-line="52" selection-end-column="40" />
-          <folding>
-            <element signature="e#1900#2064#1" />
-            <element signature="e#2098#2212#1" />
-            <element signature="e#2246#2427#1" />
-            <element signature="e#2464#2629#1" />
-            <element signature="e#2664#3100#1" />
-            <element signature="e#3231#3368#1" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/serverGameControl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="122" column="28" lean-forward="true" selection-start-line="122" selection-start-column="28" selection-end-line="122" selection-end-column="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#addPlayer#0;class#serverGameControl#0" />
-            <element signature="e#675#676#0" expanded="true" />
-            <element signature="e#731#732#0" expanded="true" />
-            <element signature="e#1160#1161#0" expanded="true" />
-            <element signature="e#1208#1209#0" expanded="true" />
-            <element signature="method#attackStop#0;class#serverGameControl#0" />
-            <element signature="method#attack#0;class#serverGameControl#0" />
-            <element signature="method#moveDegree#0;class#serverGameControl#0" />
-            <element signature="e#2583#2584#0" expanded="true" />
-            <element signature="e#2638#2639#0" expanded="true" />
-            <element signature="e#3361#3362#0" expanded="true" />
-            <element signature="e#3395#3396#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/serverForMultiClientUDP.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="69" column="48" selection-start-line="69" selection-start-column="48" selection-end-line="69" selection-end-column="48" />
-          <folding>
-            <element signature="n#!!block;n#serverForMultiClientUDP#0;n#serverForMultiClientUDP#0" />
-            <element signature="method#run#0;class#serverForMultiClientUDP#0" />
-            <element signature="e#563#604#0" />
-            <element signature="e#623#667#0" />
-            <element signature="e#1644#1918#1" />
-            <element signature="e#1955#2018#0" />
-            <element signature="e#3261#3802#1" />
-            <element signature="e#3473#3616#1" />
-            <element signature="e#3622#3694#1" />
-            <element signature="e#3834#4173#1" />
-            <element signature="e#4207#4809#1" />
-            <element signature="e#4255#4348#0" />
-            <element signature="method#startUDP#0;class#serverForMultiClientUDP#0" />
+            <element signature="method#MoveCollisionDetect#0;class#Data#0" />
+            <element signature="method#AttackCollisionDetect#0;class#Data#0" />
+            <element signature="e#1814#2195#0" />
+            <element signature="e#2362#2609#1" />
+            <element signature="e#2397#2438#1" />
+            <element signature="e#2533#2599#1" />
+            <element signature="method#moveDegree#0;class#Data#0" />
+            <element signature="e#2720#3460#0" />
+            <element signature="method#newPlayer#0;class#Data#0" />
+            <element signature="e#4039#4181#1" />
+            <element signature="e#4668#4737#1" />
+            <element signature="e#4824#4911#0" />
+            <element signature="method#Rmove#0;class#Data#0" />
+            <element signature="e#5393#5462#1" />
+            <element signature="e#5463#5515#0" />
+            <element signature="method#Umove#0;class#Data#0" />
+            <element signature="e#5950#6019#1" />
+            <element signature="e#6020#6072#0" />
+            <element signature="method#Dmove#0;class#Data#0" />
+            <element signature="e#6507#6576#1" />
+            <element signature="e#6577#6629#0" />
+            <element signature="method#DLmove#0;class#Data#0" />
+            <element signature="e#6795#6831#0" />
+            <element signature="e#7154#7281#1" />
+            <element signature="e#7282#7334#0" />
+            <element signature="method#DRmove#0;class#Data#0" />
+            <element signature="e#7526#7562#0" />
+            <element signature="e#7885#8012#1" />
+            <element signature="e#8013#8065#0" />
+            <element signature="method#ULmove#0;class#Data#0" />
+            <element signature="e#8257#8293#0" />
+            <element signature="e#8616#8743#1" />
+            <element signature="e#8744#8796#0" />
+            <element signature="method#URmove#0;class#Data#0" />
+            <element signature="e#8988#9024#0" />
+            <element signature="e#9347#9474#1" />
+            <element signature="e#9475#9527#0" />
+            <element signature="method#att_stop#0;class#Data#0" />
+            <element signature="method#killPlayer#0;class#Data#0" />
           </folding>
         </state>
       </provider>

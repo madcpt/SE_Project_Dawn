@@ -35,6 +35,7 @@ import com.example.DAWN.RoleManagement.Role_simple;
 import com.example.DAWN.UI.CreateRoom;
 import com.example.DAWN.UI.RockerView;
 
+import java.sql.Time;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -288,13 +289,17 @@ public class ClientGameControl extends AppCompatActivity {
         //仅供测试
         map=new Map();
 
+        while(Data.propList.get (0) == -1) {
+            new AsyncConUDP ().execute ("get_prop!");
+            TimeUnit.SECONDS.sleep (1);
+        }
+
         while(Data.playerLocation == null){
             System.out.println ("get111");
             new AsyncConUDP ().execute ("location!");
             TimeUnit.SECONDS.sleep(1);
         }
 
-        new AsyncConUDP ().execute ("get_prop!");
 
         for (String playerIP : Data.playerLocation.keySet ()){
             System.out.println ("INFO111" + Arrays.toString (Data.playerLocation.get (playerIP)));

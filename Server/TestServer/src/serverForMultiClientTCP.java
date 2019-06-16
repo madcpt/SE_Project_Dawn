@@ -8,14 +8,12 @@ import java.util.List;
 
 
 public class serverForMultiClientTCP extends ServerSocket {
-    private serverGameControl serverGameControl;
 
     public serverForMultiClientTCP(int SERVER_PORT)throws IOException {
         super(SERVER_PORT);
     }
 
-    public void runThread(serverGameControl serverGameControl)throws IOException {
-        this.serverGameControl = serverGameControl;
+    public void runThread()throws IOException {
         try {
             while (true) {
 //                System.out.println("waiting");
@@ -57,31 +55,31 @@ public class serverForMultiClientTCP extends ServerSocket {
                 String pureIP = myList.get(0).split(":")[0];
                 switch (String.valueOf(myList.get(1))){
                     case "mov":{
-                        serverGameControl.moveDegree(pureIP, myList.get(2), Integer.parseInt(myList.get(3)));
+                        Data.serverGameControl.moveDegree(pureIP, myList.get(2), Integer.parseInt(myList.get(3)));
                         break;
                     }
 
                     case "stp": {
-                        serverGameControl.mov_stop(pureIP);
+                        Data.serverGameControl.mov_stop(pureIP);
                         break;
                     }
 
                     case "atk": {
                         // para: 1->pureIP, 2->damage
-                        serverGameControl.attack(pureIP, myList.get(2));
+                        Data.serverGameControl.attack(pureIP, myList.get(2));
                         break;
                     }
 
                     case "atk_stp":{
 //                        Data.att_stop(pureIP);
-                        serverGameControl.attackStop(pureIP);
+                        Data.serverGameControl.attackStop(pureIP);
                         break;
                     }
 
                     case "init" :{
                         // Actually prepare.
                         // para: pureIP, roomID, id(little)
-                        serverGameControl.getPrepared(pureIP,myList.get(2));
+                        Data.serverGameControl.getPrepared(pureIP,myList.get(2));
 //                        Data.roomList.RoomList.get(myList.get(2)).prepareOne(pureIP);
 //                        System.out.println(Data.roomList.RoomList.get(myList.get(2)).prepareList.toString());
                         break;
@@ -92,11 +90,11 @@ public class serverForMultiClientTCP extends ServerSocket {
                             System.out.println("Error for Creating room");
                             break;
                         }
-                        serverGameControl.removePlayer(pureIP);
-                        serverGameControl.createRoom(pureIP, myList.get(2), Integer.parseInt(myList.get(3)));
+                        Data.serverGameControl.removePlayer(pureIP);
+                        Data.serverGameControl.createRoom(pureIP, myList.get(2), Integer.parseInt(myList.get(3)));
                         //para: (pureIP roomID capacity)
                         System.out.println("Display Server Rooms:");
-                        serverGameControl.disPlayAllRoom();
+                        Data.serverGameControl.disPlayAllRoom();
                         break;
                     }
 
@@ -107,14 +105,14 @@ public class serverForMultiClientTCP extends ServerSocket {
                         }
 
                         // Implementation of new Room class;
-                        serverGameControl.removePlayer(pureIP);
-                        serverGameControl.joinRoom(pureIP, myList.get(2));
-                        serverGameControl.disPlayAllRoom();
+                        Data.serverGameControl.removePlayer(pureIP);
+                        Data.serverGameControl.joinRoom(pureIP, myList.get(2));
+                        Data.serverGameControl.disPlayAllRoom();
                         break;
                     }
 
                     case "delete":{
-                        serverGameControl.removePlayer(pureIP);
+                        Data.serverGameControl.removePlayer(pureIP);
                         break;
                     }
 
@@ -126,22 +124,22 @@ public class serverForMultiClientTCP extends ServerSocket {
                     }
 
                     case "use": {
-                        serverGameControl.Use(pureIP);
+                        Data.serverGameControl.Use(pureIP);
                         break;
                     }
 
                     case "use_stp": {
-                        serverGameControl.Use_Stop(pureIP);
+                        Data.serverGameControl.Use_Stop(pureIP);
                         break;
                     }
 
                     case "use_fin":{
-                        serverGameControl.Use_Finish(pureIP);
+                        Data.serverGameControl.Use_Finish(pureIP);
                         break;
                     }
 
                     case "pik": {
-                        serverGameControl.Pick(pureIP);
+                        Data.serverGameControl.Pick(pureIP);
                         break;
                     }
 
@@ -154,9 +152,9 @@ public class serverForMultiClientTCP extends ServerSocket {
         }
     }
 
-    public void startTCP(serverGameControl serverGameControl)throws IOException {
+    public void startTCP()throws IOException {
 //        serverForMultiClientTCP a = new serverForMultiClientTCP(66);
-        runThread(serverGameControl);
+        runThread();
     }
 }
 
