@@ -1,4 +1,11 @@
 package com.example.DAWN.CommonService;
+/**
+* @version : 1.0
+* @author : Zihan Xu
+* @classname : ClientComStrategyTCP
+* @description : Concrete TCP strategy class.This class is used to
+tansmit data which varies not very frequently such as map etc.
+*/
 
 public class ClientComStrategyTCP implements ClientComStrategy {
     @Override
