@@ -1,4 +1,10 @@
 package com.example.DAWN.CommonService;
+/**
+* @version : 1.0
+* @author : Zihan Xu
+* @classname : ThreadForTCP
+* @description : To create new threads and run them.
+*/
 
 public class ThreadForTCP implements Runnable {
     private Thread t;
