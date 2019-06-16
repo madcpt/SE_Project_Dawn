@@ -219,9 +219,13 @@ public class RoomPage extends AppCompatActivity {
 
             switch (v.getId()) {
                 case R.id.Prepare:
+                    Data.roleID = count % 2;
+                    player.Account = Data.playerID * 100 + Data.roleID;
+                    System.out.println ("PlayerID: " + Data.playerID + " " + Data.roleID);
+                    Data.completeID = player.Account;
                     System.out.println("prepared");
-                    //向服务器传递flag,id
-                    new AsyncConTCP ().execute ("init," + Data.myRoomID + "," + player.Account);
+                    // TODO 向服务器传递flag,id
+                    new AsyncConTCP ().execute ("init," + Data.myRoomID  + "," + Data.roleID);
 
                     //PrepareSequence=第几个好的，从服务器接受
 
@@ -247,7 +251,9 @@ public class RoomPage extends AppCompatActivity {
                     break;
 
                 case R.id.Confirmchoice:
-                    //向服务器提交RoleID,更新界面，并且停止更改
+                    Data.roleID = count % 2;
+                    // TODO 向服务器提交RoleID,更新界面，并且停止更改
+
                     System.out.println("SelectConfirm");
                     roomPrepare.setClickable(false);
                     roomSelectRole.setClickable(false);

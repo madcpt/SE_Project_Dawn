@@ -144,4 +144,8 @@ public class RoomPool {
     Vector<Integer> getInitProp(String roomID) {
         return roomList.get(roomID).getInitProp();
     }
+
+    void setRoleType(String roomID, String pureIP, String s) {
+        roomList.get(roomID).setRoleType(pureIP, Integer.parseInt(s));
+    }
 }

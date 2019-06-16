@@ -40,11 +40,12 @@ public class serverForMultiClientUDP implements Runnable{
             server.receive(data);
             String [] inputMes = new String(data.getData()).split("!");
 //            System.out.println(new String(data.getData()));
-            System.out.println(Arrays.toString(inputMes));
-            String pureIP = String.valueOf(data.getSocketAddress()).split(":")[0];
-            switch (inputMes[0]){
+            System.out.println("inputString:" + Arrays.toString(inputMes));
+//            String pureIP = String.valueOf(data.getSocketAddress()).split(":")[0];
+            String pureIP = String.valueOf(Integer.parseInt(inputMes[0]));
+            switch (inputMes[1]){
                 case "ask_room": {
-                    System.out.println(inputMes[0]);
+                    System.out.println(inputMes[1]);
                     System.out.println(Data.serverGameControl.getChooseRoomList().toString());
                     objectStream.writeObject(Data.serverGameControl.getChooseRoomList());
                     break;
@@ -71,24 +72,24 @@ public class serverForMultiClientUDP implements Runnable{
                 }
 
                 case "room_info":{
-                    System.out.println(inputMes[0]);
-                    if(inputMes[1].equals("null")) {
+                    System.out.println(inputMes[1]);
+                    if(inputMes[2].equals("null")) {
                         System.out.println("room_info: null");
                         break;
                     }
                     Data.serverGameControl.disPlayAllRoom();
-                    System.out.println("Look Up Room: " + Data.serverGameControl.findRoom(inputMes[1]));
+                    System.out.println("Look Up Room: " + Data.serverGameControl.findRoom(inputMes[2]));
 //                    objectStream.writeObject(Data.roomList.RoomList.get(inputMes[1]).memberList);
-                    objectStream.writeObject(Data.serverGameControl.getMemberFromRoom(inputMes[1]));
-                    System.out.println(Data.serverGameControl.getMemberFromRoom(inputMes[1]));
+                    objectStream.writeObject(Data.serverGameControl.getMemberFromRoom(inputMes[2]));
+                    System.out.println(Data.serverGameControl.getMemberFromRoom(inputMes[2]));
                     break;
                 }
 
                 case "register": {
-                    System.out.println("Register Request From Client:" + inputMes[1] + "," + inputMes[2]);
+                    System.out.println("Register Request From Client:" + inputMes[2] + "," + inputMes[3]);
                     boolean isRegisterValid;
-                    if (Data.database.check(inputMes[1])) {
-                        Data.database.update(inputMes[1], inputMes[2]);
+                    if (Data.database.check(inputMes[2])) {
+                        Data.database.update(inputMes[2], inputMes[3]);
                         isRegisterValid = true;
                     } else {
                         isRegisterValid = false;
@@ -99,13 +100,14 @@ public class serverForMultiClientUDP implements Runnable{
 
                 case "login": {
                     boolean isLoginValid;
-                    System.out.println("Login Request From Client:" + inputMes[1] + "," + inputMes[2]);
-                    isLoginValid = Data.database.checkvalid(inputMes[1], inputMes[2]);
+                    System.out.println("Login Request From Client:" + inputMes[2] + "," + inputMes[3]);
+                    isLoginValid = Data.database.checkvalid(inputMes[2], inputMes[3]);
                     objectStream.writeObject(isLoginValid);
                     break;
                 }
 
                 case "room_cnt":{
+                    Data.serverGameControl.disPlayAllRoom();
                     int [] room_cnt = {4, 2};
 //                    System.out.println(Data.roomList.RoomList.get(inputMes[1]).memberList);
 //                    System.out.println(Data.roomList.RoomList.get(inputMes[1]).prepareList);

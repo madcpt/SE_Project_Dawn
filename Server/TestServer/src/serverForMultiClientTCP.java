@@ -49,10 +49,12 @@ public class serverForMultiClientTCP extends ServerSocket {
                 DataOutputStream out = new DataOutputStream(outToServer);
 
                 String inputString = in.readUTF();
-                System.out.println(inputString);
+                System.out.println("inputString:" + inputString);
 
                 List<String> myList = new ArrayList<>(Arrays.asList(inputString.split(",")));
-                String pureIP = myList.get(0).split(":")[0];
+//                String pureIP = myList.get(0).split(":")[0];
+//                String pureIP = String.valueOf(client.getRemoteSocketAddress()).split(":")[0];
+                String pureIP = String.valueOf(Integer.parseInt(myList.get(0)));
                 switch (String.valueOf(myList.get(1))){
                     case "mov":{
                         Data.serverGameControl.moveDegree(pureIP, myList.get(2), Integer.parseInt(myList.get(3)));
@@ -80,6 +82,7 @@ public class serverForMultiClientTCP extends ServerSocket {
                         // Actually prepare.
                         // para: pureIP, roomID, id(little)
                         Data.serverGameControl.getPrepared(pureIP,myList.get(2));
+                        Data.serverGameControl.setRoleType(pureIP, myList.get(3));
 //                        Data.roomList.RoomList.get(myList.get(2)).prepareOne(pureIP);
 //                        System.out.println(Data.roomList.RoomList.get(myList.get(2)).prepareList.toString());
                         break;
