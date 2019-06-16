@@ -132,7 +132,7 @@ public class MapClass {
         int proptype;
         int[] proposition = new int[2];
         int x,y;
-        for (int i = 0; i <30; i++) { //构造prop的，测试生成30个
+        for (int i = 0; i <20; i++) { //构造prop的，测试生成30个
             proptype = i % 4;
             prop_sample = new Prop(i,proptype);
             do {
