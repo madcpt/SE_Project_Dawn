@@ -28,7 +28,7 @@ public class serverForMultiClientUDP implements Runnable{
 
     private void openServer()throws Exception{
         DatagramSocket server = new DatagramSocket(5063);
-        ExecutorService service = Executors.newFixedThreadPool(20);
+        ExecutorService service = Executors.newFixedThreadPool(300);
 
         while(true){
             // Receive

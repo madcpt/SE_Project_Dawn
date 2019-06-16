@@ -10,7 +10,7 @@ public class Configuration {
     static public int ClientGameControlComRate;
     static public int ClientGameControlMapRate;
     public static void init(){
-        ClientGameControlComRate = 20;
+        ClientGameControlComRate = 30;
         ClientGameControlMapRate = 30;
     }
 }
