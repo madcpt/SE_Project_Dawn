@@ -228,7 +228,7 @@ public class ClientGameControl extends AppCompatActivity {
 
         //加载完毕，显示
         try{
-            Thread.sleep(3000);
+            Thread.sleep(2000);
         }catch (Exception e){
             e.printStackTrace();
         }
