@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.Vector;
 /**
-* @version : 1.0
+* @version : 2.0
 * @author : Zihan Xu
 * @classname : ClientForTCP
 * @description : The client class for TCP.
@@ -25,7 +25,7 @@ class ClientForUDP {
     }
 
 /**
-* @version : 1.0
+* @version : 2.0
 * @author : Zihan Xu
 * @methodname : testCon
 * @description : The client class for UDP
