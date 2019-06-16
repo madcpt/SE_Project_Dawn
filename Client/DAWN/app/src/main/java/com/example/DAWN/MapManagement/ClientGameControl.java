@@ -45,6 +45,7 @@ import java.util.concurrent.TimeUnit;
 
 import static com.example.DAWN.UI.RockerView.DirectionMode.DIRECTION_8;
 
+
 public class ClientGameControl extends AppCompatActivity {
     Intent intent = getIntent();
 
@@ -86,6 +87,12 @@ public class ClientGameControl extends AppCompatActivity {
     }
 
     // AsyncTask for UDP-Client
+/**
+* @version : 3.0
+* @author : Zihan Xu, Yi Kuang, Chenyu Yang, Jianzhen Cao
+* @classname : ClientGameControl
+* @description : This class is to implement some functions such as move, attack and so on.
+*/
     public static class AsyncConUDP extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(String... msg) {
@@ -95,7 +102,7 @@ public class ClientGameControl extends AppCompatActivity {
         }
     }
 
-
+//Move thread
     class ThreadMove extends Thread {
         private Thread t;
         private String threadName;
@@ -228,7 +235,7 @@ public class ClientGameControl extends AppCompatActivity {
 
         //加载完毕，显示
         try{
-            Thread.sleep(2000);
+            Thread.sleep(3000);
         }catch (Exception e){
             e.printStackTrace();
         }
