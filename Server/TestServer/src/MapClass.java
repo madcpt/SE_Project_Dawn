@@ -157,18 +157,17 @@ public class MapClass {
         int proptype;
         int[] proposition = new int[2];
         int x,y;
-        for (int i = 0; i <20; i++) { //构造prop的，测试生成30个
+        for (int i = 0; i <sizeOfProp; i++) { //构造prop的，测试生成30个
             proptype = i % 4;
             prop_sample = new Prop(i,proptype);
             do {
-                System.out.print("set");
                 x = rand.nextInt(unit * (size - 2 * border)) + unit * border;
                 y = rand.nextInt(unit * (size - 2 * border)) + unit * border;
             }while(!is_valid(x,y));
             proposition[0] = x;
             proposition[1] = y;
             prop_sample.setPropposition(proposition);
-            proplist.add(i,prop_sample);
+            proplist.add(i, prop_sample);
         }
 
     }

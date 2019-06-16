@@ -28,19 +28,25 @@ public class Room {
     }
 
     public void addPlayer(String pureIP) {
-        int[] playerInformation = new int[7];
+        int[] playerInformation = new int[17];
         // ID life location[0] location[1] direction walk_mov attack_mov
 
-        playerInformation[0]=1000   ; // tmp for ID
-        playerInformation[1]=100;
+        playerInformation[0]=100   ; // tmp for ID
+        playerInformation[1]=100; // life
         do {
             playerInformation[2]=rand.nextInt(MapClass.unit * MapClass.size);
             playerInformation[3]=rand.nextInt(MapClass.unit * MapClass.size);
 
         }while (WholeMap.m[playerInformation[3]/ MapClass.unit][playerInformation[2]/ MapClass.unit]!=0);
+        // x, y
         playerInformation[4]=3;
         playerInformation[5]=-1;
         playerInformation[6]=-1;
+        playerInformation[7]=-1; // use_mov
+        playerInformation[8]=0; // empty bag
+        for (int i = 9;i < 17;++i){
+            playerInformation[i] = -1; // no prop
+        }
 
         playerLocation.put(pureIP, playerInformation);
         playerPool.put(pureIP, 0); // Set initial status to unprepared

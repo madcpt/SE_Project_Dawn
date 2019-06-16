@@ -7,7 +7,6 @@ import java.util.concurrent.Executors;
 
 
 public class serverForMultiClientUDP implements Runnable{
-    private serverGameControl serverGameControl;
 
     private DatagramPacket data;
     public serverForMultiClientUDP(DatagramPacket data){
@@ -27,8 +26,7 @@ public class serverForMultiClientUDP implements Runnable{
         }
     }
 
-    private void openServer(serverGameControl serverGameControl)throws Exception{
-        this.serverGameControl = serverGameControl;
+    private void openServer()throws Exception{
         DatagramSocket server = new DatagramSocket(5063);
         ExecutorService service = Executors.newFixedThreadPool(300);
 
@@ -47,8 +45,8 @@ public class serverForMultiClientUDP implements Runnable{
             switch (inputMes[0]){
                 case "ask_room": {
                     System.out.println(inputMes[0]);
-                    System.out.println(serverGameControl.getChooseRoomList().toString());
-                    objectStream.writeObject(serverGameControl.getChooseRoomList());
+                    System.out.println(Data.serverGameControl.getChooseRoomList().toString());
+                    objectStream.writeObject(Data.serverGameControl.getChooseRoomList());
                     break;
                 }
 
@@ -57,20 +55,18 @@ public class serverForMultiClientUDP implements Runnable{
 //                    System.out.println(data.getAddress());
 //                    System.out.println(Arrays.toString(Data.getUpdateList().get(data.getAddress())));
 //                    System.out.println(Data.getUpdateList().containsKey(data.getAddress()));
-                    for(String i : serverGameControl.getUpdateList(pureIP).keySet()){
-                        System.out.println(i + " " + Arrays.toString(serverGameControl.getUpdateList(pureIP).get(i)));
+                    for(String i : Data.serverGameControl.getUpdateList(pureIP).keySet()){
+                        System.out.println(i + " " + Arrays.toString(Data.serverGameControl.getUpdateList(pureIP).get(i)));
                     }
-                    objectStream.writeObject(serverGameControl.getUpdateList(pureIP));
+                    objectStream.writeObject(Data.serverGameControl.getUpdateList(pureIP));
                     break;
                 }
 
                 case "get_prop":{
-                    Vector<Integer> tmp = serverGameControl.getInitPropList(pureIP);
+                    Vector<Integer> tmp = Data.serverGameControl.getInitPropList(pureIP);
 //                    objectStream.writeObject(2);
                     objectStream.writeObject(tmp);
-
-
-                    System.out.println((tmp));
+                    System.out.println("prop:" + tmp);
                     break;
                 }
 
@@ -80,11 +76,11 @@ public class serverForMultiClientUDP implements Runnable{
                         System.out.println("room_info: null");
                         break;
                     }
-                    serverGameControl.disPlayAllRoom();
-                    System.out.println("Look Up Room: " + serverGameControl.findRoom(inputMes[1]));
+                    Data.serverGameControl.disPlayAllRoom();
+                    System.out.println("Look Up Room: " + Data.serverGameControl.findRoom(inputMes[1]));
 //                    objectStream.writeObject(Data.roomList.RoomList.get(inputMes[1]).memberList);
-                    objectStream.writeObject(serverGameControl.getMemberFromRoom(inputMes[1]));
-                    System.out.println(serverGameControl.getMemberFromRoom(inputMes[1]));
+                    objectStream.writeObject(Data.serverGameControl.getMemberFromRoom(inputMes[1]));
+                    System.out.println(Data.serverGameControl.getMemberFromRoom(inputMes[1]));
                     break;
                 }
 
@@ -113,8 +109,8 @@ public class serverForMultiClientUDP implements Runnable{
                     int [] room_cnt = {4, 2};
 //                    System.out.println(Data.roomList.RoomList.get(inputMes[1]).memberList);
 //                    System.out.println(Data.roomList.RoomList.get(inputMes[1]).prepareList);
-                    room_cnt[0] = serverGameControl.getMemberCount(pureIP);
-                    room_cnt[1] = serverGameControl.getPrepareCount(pureIP);
+                    room_cnt[0] = Data.serverGameControl.getMemberCount(pureIP);
+                    room_cnt[1] = Data.serverGameControl.getPrepareCount(pureIP);
 
                     System.out.println("Check Room From Client: " + pureIP + " " + Arrays.toString(room_cnt));
                     objectStream.writeObject(room_cnt);
@@ -123,7 +119,7 @@ public class serverForMultiClientUDP implements Runnable{
 
 
                 default:
-                    objectStream.writeObject(serverGameControl.getUpdateList(pureIP));
+                    objectStream.writeObject(Data.serverGameControl.getUpdateList(pureIP));
                     break;
             }
 
@@ -140,9 +136,9 @@ public class serverForMultiClientUDP implements Runnable{
         }
     }
 
-    void startUDP(serverGameControl serverGameControl) throws Exception{
+    void startUDP() throws Exception{
         System.out.println("Starting Service...");
         // Data dataclass = new Data();
-        openServer(serverGameControl);
+        openServer();
     }
 }

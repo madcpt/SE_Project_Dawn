@@ -5,7 +5,12 @@ import java.net.*;
 import java.io.*;
 
 //import static com.example.DAWN.CommonService.ClientForUDP.dataclass;
-
+/**
+* @version : 1.0
+* @author : Zihan Xu
+* @classname : ClientForTCP
+* @description : The client class for TCP.
+*/
 
 public class ClientForTCP
 {
@@ -20,7 +25,13 @@ public class ClientForTCP
         Data.port = port;
     }
 
-
+/**
+* @version : 1.0
+* @author : Zihan Xu
+* @methodname : sendMessage
+* @description : This method is to send a message to server through TCP
+* @param : meg the message to send from client
+*/
     void sendMessage(String meg)
     {
         try
