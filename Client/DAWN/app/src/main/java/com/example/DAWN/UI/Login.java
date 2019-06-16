@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.DAWN.CommonService.Configuration;
 import com.example.DAWN.CommonService.Data;
 import com.example.DAWN.CommonService.ThreadForUDP;
 import com.example.DAWN.R;
@@ -67,6 +68,7 @@ public class Login extends Activity {                 //登录界面活动
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Data.setValue ();
+        Configuration.init();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
