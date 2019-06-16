@@ -22,6 +22,8 @@ import android.util.DisplayMetrics;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.DAWN.CommonService.Configuration;
@@ -296,7 +298,7 @@ public class ClientGameControl extends AppCompatActivity {
     public void Stopmove(){
         new AsyncConTCP ().execute ("stp");
     }
-//    感觉停止可以不需要
+
     public void Lmove(){
         if (Attackable)
             new AsyncConTCP().execute("mov,0,1");
@@ -439,6 +441,20 @@ public class ClientGameControl extends AppCompatActivity {
             tmp = null;
         }
 
+        //Proppic load
+        prop_pic = new Bitmap[4];
+        for(int i = 0;i < 4; ++i){
+            fname = "p_" + Integer.toString(i);
+            tmp = BitmapFactory.decodeResource(this.getResources(),res.getIdentifier(fname, "drawable", getPackageName())).copy(Bitmap.Config.ARGB_4444, true);
+            matrix = new Matrix();
+            matrix.postScale(((float)100/tmp.getWidth()), ((float)120/tmp.getHeight()));//道具图片宽高
+            prop_pic[i] = Bitmap.createBitmap(tmp, 0, 0, tmp.getWidth(),tmp.getHeight(),matrix,true);
+            tmp.recycle();
+            tmp = null;
+        }
+
+        black_layer=findViewById(R.id.black_layer);
+        black_layer.setVisibility(View.GONE);
     }
 
 
@@ -524,6 +540,7 @@ public class ClientGameControl extends AppCompatActivity {
     private Bitmap[][][] role_pic;//所有角色图的Bitmap点阵,第一层为角色，第二层为方向，第三层为动作
     private Bitmap[][] attack_pic;//所有攻击效果的点阵图，第一层为特效，第二层为效果帧
     private Bitmap[]    use_pic;//所有角色使用道具的进度条
+    private Bitmap[]    prop_pic;//道具图片
     class MyCallBack implements SurfaceHolder.Callback {
         @Override
         //当SurfaceView的视图发生改变，比如横竖屏切换时，这个方法被调用
@@ -572,6 +589,12 @@ public class ClientGameControl extends AppCompatActivity {
                         //执行具体的绘制操作
                         c.drawColor(Color.WHITE);
                         c.drawBitmap(background, center_location[0] - location[0], center_location[1] - location[1], p);
+
+                        System.out.println("prop capacity" + Data.propList.capacity());
+
+                        for (Prop prop:Data.propList) {
+                            c.drawBitmap(prop_pic[prop.getType()],center_location[0] - location[0] + prop.getPropposition()[0],center_location[1] - location[1] + prop.getPropposition()[1],p);
+                        }
 
                         for (int i=0;i<map.livingrole.size();i++) {
                             r = map.livingrole.get(i);
@@ -637,6 +660,7 @@ public class ClientGameControl extends AppCompatActivity {
                                 }
                             }
                         }
+
                         //画黑雾
                         c.saveLayer(0, 0, (center_location[0]+50)*2+1, (center_location[1]+60)*2+1, p, Canvas.ALL_SAVE_FLAG);//保存上一层
                         p.setColor(Color.BLACK);

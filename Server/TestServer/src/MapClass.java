@@ -169,7 +169,6 @@ public class MapClass {
             proposition[1] = y;
             prop_sample.setPropposition(proposition);
             proplist.add(i,prop_sample);
-
         }
 
     }
