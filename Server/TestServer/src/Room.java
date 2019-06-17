@@ -40,7 +40,8 @@ public class Room {
             playerInformation[2]=rand.nextInt(MapClass.unit * MapClass.size);
             playerInformation[3]=rand.nextInt(MapClass.unit * MapClass.size);
 
-        }while (WholeMap.m[playerInformation[3]/ MapClass.unit][playerInformation[2]/ MapClass.unit]!=0);
+        }while (WholeMap.m[playerInformation[3]/ MapClass.unit][playerInformation[2]/ MapClass.unit]!=0
+                && WholeMap.m[(playerInformation[3]+120)/ MapClass.unit][(playerInformation[2]+100)/ MapClass.unit]!=0);
         // x, y
         playerInformation[4]=3;
         playerInformation[5]=-1;
@@ -181,78 +182,78 @@ public class Room {
     }
 
     private void Lmove(String pureIP, int velocity) {
-        playerLocation.get(pureIP)[2] -= 3 * velocity;
+        playerLocation.get(pureIP)[2] -= velocity;
         playerLocation.get(pureIP)[4] = 2;
         playerLocation.get(pureIP)[5] = 1;
         if(MoveCollisionDetect(playerLocation.get(pureIP)[2], playerLocation.get(pureIP)[3])){
-            playerLocation.get(pureIP)[2] += 3* velocity;
+            playerLocation.get(pureIP)[2] += velocity;
         }
     }
 
     private void Rmove(String pureIP, int velocity) {
-        playerLocation.get(pureIP)[2] += 3* velocity;
+        playerLocation.get(pureIP)[2] += velocity;
         playerLocation.get(pureIP)[4] = 0;
         playerLocation.get(pureIP)[5] = 1;
         if(MoveCollisionDetect(playerLocation.get(pureIP)[2], playerLocation.get(pureIP)[3])){
-            playerLocation.get(pureIP)[2] -= 3* velocity;
+            playerLocation.get(pureIP)[2] -= velocity;
         }
     }
 
     private void Umove(String pureIP, int velocity) {
-        playerLocation.get(pureIP)[3] -= 3* velocity;
+        playerLocation.get(pureIP)[3] -= velocity;
         playerLocation.get(pureIP)[4] = 1;
         playerLocation.get(pureIP)[5] = 1;
         if(MoveCollisionDetect(playerLocation.get(pureIP)[2], playerLocation.get(pureIP)[3])){
-            playerLocation.get(pureIP)[3] += 3* velocity;
+            playerLocation.get(pureIP)[3] += velocity;
         }
     }
 
     private void Dmove(String pureIP, int velocity) {
-        playerLocation.get(pureIP)[3] += 3* velocity;
+        playerLocation.get(pureIP)[3] += velocity;
         playerLocation.get(pureIP)[4] = 3;
         playerLocation.get(pureIP)[5] = 1;
         if(MoveCollisionDetect(playerLocation.get(pureIP)[2], playerLocation.get(pureIP)[3])){
-            playerLocation.get(pureIP)[3] -= 3* velocity;
+            playerLocation.get(pureIP)[3] -= velocity;
         }
     }
 
     private void DLmove(String pureIP, int velocity) {
-        playerLocation.get(pureIP)[2] -= 2* velocity;
-        playerLocation.get(pureIP)[3] += 2* velocity;
+        playerLocation.get(pureIP)[2] -= velocity/2;
+        playerLocation.get(pureIP)[3] += velocity/2;
         playerLocation.get(pureIP)[5] = 1;
         if(MoveCollisionDetect(playerLocation.get(pureIP)[2], playerLocation.get(pureIP)[3])){
-            playerLocation.get(pureIP)[2] += 2* velocity;
-            playerLocation.get(pureIP)[3] -= 2* velocity;
+            playerLocation.get(pureIP)[2] +=  velocity/2;
+            playerLocation.get(pureIP)[3] -=  velocity/2;
         }
     }
 
     private void DRmove(String pureIP, int velocity) {
-        playerLocation.get(pureIP)[2] += 2* velocity;
-        playerLocation.get(pureIP)[3] += 2* velocity;
+        playerLocation.get(pureIP)[2] += velocity/2;
+        playerLocation.get(pureIP)[3] += velocity/2;
         playerLocation.get(pureIP)[5] = 1;
         if(MoveCollisionDetect(playerLocation.get(pureIP)[2], playerLocation.get(pureIP)[3])){
-            playerLocation.get(pureIP)[2] -= 2* velocity;
-            playerLocation.get(pureIP)[3] -= 2* velocity;
+            playerLocation.get(pureIP)[2] -= velocity/2;
+            playerLocation.get(pureIP)[3] -= velocity/2;
         }
     }
 
     private void ULmove(String pureIP, int velocity) {
-        playerLocation.get(pureIP)[2] -= 2* velocity;
-        playerLocation.get(pureIP)[3] -= 2* velocity;
+        playerLocation.get(pureIP)[2] -= velocity/2;
+        playerLocation.get(pureIP)[3] -= velocity/2;
         playerLocation.get(pureIP)[5] = 1;
         if(MoveCollisionDetect(playerLocation.get(pureIP)[2], playerLocation.get(pureIP)[3])){
-            playerLocation.get(pureIP)[2] += 2* velocity;
-            playerLocation.get(pureIP)[3] += 2* velocity;
+            playerLocation.get(pureIP)[2] += velocity/2;
+            playerLocation.get(pureIP)[3] += velocity/2;
         }
     }
 
     private void URmove(String pureIP, int velocity) {
-        playerLocation.get(pureIP)[2] += 2* velocity;
-        playerLocation.get(pureIP)[3] -= 2* velocity;
+        playerLocation.get(pureIP)[2] += velocity/2;
+        playerLocation.get(pureIP)[3] -= velocity/2;
         playerLocation.get(pureIP)[5] = 1;
         if(MoveCollisionDetect(playerLocation.get(pureIP)[2], playerLocation.get(pureIP)[3])){
-            playerLocation.get(pureIP)[2] -= 2* velocity;
-            playerLocation.get(pureIP)[3] += 2* velocity;
+            playerLocation.get(pureIP)[2] -= velocity/2;
+            playerLocation.get(pureIP)[3] += velocity/2;
         }
     }
 

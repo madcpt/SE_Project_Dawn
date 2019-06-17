@@ -26,6 +26,7 @@ import java.util.concurrent.TimeUnit;
 //简陋版
 public class RoomPage extends AppCompatActivity {
     static int count=0;
+    static int count1=0;
     Player player=new Player();
 
     //含有room.id用来区别room;
@@ -37,6 +38,9 @@ public class RoomPage extends AppCompatActivity {
     TextView AC2;
     TextView AC3;
     TextView AC4;
+   //roleArray -1没进入,0,1 roletype, 2 准备好了
+
+    int roleArray[]={1,0,1,0};
 
     public RoomPage() throws IOException {
     }
@@ -64,6 +68,7 @@ public class RoomPage extends AppCompatActivity {
     static boolean stop = false;
 
     //房间准备刷新(UDP)
+    //roletype[4]
     private Handler handlerUDP = new Handler();
     private Runnable runnableUDP = new Runnable() {
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -84,41 +89,132 @@ public class RoomPage extends AppCompatActivity {
                 System.out.println ("From Server: Room_cnt111" + Arrays.toString (Data.myRoom.roomPrepareCnt));
 
                 int rc = Data.myRoom.roomPrepareCnt[0]; //room-capacity
-                if(rc == 1){
-                    prepareImage4.setImageResource (R.drawable.white);
-                    prepareImage3.setImageResource (R.drawable.white);
-                    prepareImage2.setImageResource (R.drawable.white);
-                    prepareImage1.setImageResource (R.drawable.r_0_3_0);
-                    AC1.setText ("1");
-                    AC2.setText ("");
-                    AC3.setText ("");
-                    AC4.setText ("");
+                 if(rc == 1){
+                   // prepareImage4.setImageResource (R.drawable.white);
+                    //prepareImage3.setImageResource (R.drawable.white);
+                    //prepareImage2.setImageResource (R.drawable.white);
+                /*    if (roleArray[0]==0) {
+                        prepareImage1.setImageResource(R.drawable.r_0_3_0);
+                        AC1.setText("1");
+                    }
+                    else if(roleArray[0]==1) {
+                        prepareImage1.setImageResource(R.drawable.r_1_3_0);
+                        AC1.setText("1");
+                    }
+                    else if(roleArray[0]==2)
+                        prepareImage1.setImageResource (R.drawable.prepare);
+                    else if(roleArray[0]==-1)
+                        System.out.println("None");
+
+
+
+
+
+                    if (roleArray[1]==0) {
+                        prepareImage2.setImageResource(R.drawable.r_0_3_0);
+                        AC2.setText("2");
+                    }
+                    else if(roleArray[1]==1) {
+                        prepareImage2.setImageResource(R.drawable.r_1_3_0);
+                        AC2.setText("2");
+                    }
+                    else if(roleArray[1]==2)
+                        prepareImage2.setImageResource (R.drawable.prepare);
+                    else if(roleArray[1]==-1)
+                        System.out.println("None");
+
+
+
+                    if (roleArray[2]==0) {
+                        prepareImage3.setImageResource(R.drawable.r_0_3_0);
+                        AC3.setText("3");
+                    }
+                    else if(roleArray[2]==1) {
+                        prepareImage3.setImageResource(R.drawable.r_1_3_0);
+                        AC3.setText("3");
+                    }
+                    else if(roleArray[2]==2)
+                        prepareImage3.setImageResource (R.drawable.prepare);
+                    else if(roleArray[2]==-1)
+                        System.out.println("None");
+
+
+
+
+                    if (roleArray[3]==0) {
+                        prepareImage4.setImageResource(R.drawable.r_0_3_0);
+                        AC4.setText("4");
+                    }
+                    else if(roleArray[3]==1) {
+                        prepareImage4.setImageResource(R.drawable.r_1_3_0);
+                        AC4.setText("4");
+                    }
+                    else if(roleArray[3]==2)
+                        prepareImage4.setImageResource (R.drawable.prepare);
+                    else if(roleArray[3]==-1)
+                        System.out.println("None");*/
+                     if (roleArray[0]==0)
+                         prepareImage1.setImageResource(R.drawable.r_0_3_0);
+
+                     else
+                         prepareImage1.setImageResource(R.drawable.r_1_3_0);
+                         AC1.setText("1");
+
+
+
                 }
                 if (rc == 2) {
-                    prepareImage4.setImageResource (R.drawable.white);
-                    prepareImage3.setImageResource (R.drawable.white);
-                    prepareImage2.setImageResource (R.drawable.r_0_3_0);
-                    prepareImage1.setImageResource (R.drawable.r_0_3_0);
+                    //prepareImage4.setImageResource (R.drawable.white);
+                   // prepareImage3.setImageResource (R.drawable.white);
+                    if (roleArray[0]==0)
+                        prepareImage2.setImageResource (R.drawable.r_0_3_0);
+                    else
+                        prepareImage2.setImageResource (R.drawable.r_1_3_0);
+                    if (roleArray[1]==0)
+                        prepareImage1.setImageResource (R.drawable.r_0_3_0);
+                    else
+                        prepareImage1.setImageResource (R.drawable.r_1_3_0);
                     AC1.setText ("1");
                     AC2.setText ("2");
                     AC3.setText ("");
                     AC4.setText ("");
                 }
                 if (rc == 3) {
-                    prepareImage4.setImageResource (R.drawable.white);
-                    prepareImage3.setImageResource (R.drawable.r_0_3_0);
-                    prepareImage2.setImageResource (R.drawable.r_0_3_0);
-                    prepareImage1.setImageResource (R.drawable.r_0_3_0);
+                    //prepareImage4.setImageResource (R.drawable.white);
+                    if (roleArray[0]==0)
+                        prepareImage3.setImageResource (R.drawable.r_0_3_0);
+                    else
+                        prepareImage3.setImageResource (R.drawable.r_1_3_0);
+                    if (roleArray[1]==0)
+                        prepareImage2.setImageResource (R.drawable.r_0_3_0);
+                    else
+                        prepareImage2.setImageResource (R.drawable.r_1_3_0);
+                    if (roleArray[2]==0)
+                        prepareImage1.setImageResource (R.drawable.r_0_3_0);
+                    else
+                        prepareImage1.setImageResource (R.drawable.r_1_3_0);
                     AC1.setText ("1");
                     AC2.setText ("2");
                     AC3.setText ("3");
                     AC4.setText ("");
                 }
                 if (rc == 4) {
-                    prepareImage4.setImageResource (R.drawable.r_0_3_0);
-                    prepareImage3.setImageResource (R.drawable.r_0_3_0);
-                    prepareImage2.setImageResource (R.drawable.r_0_3_0);
-                    prepareImage1.setImageResource (R.drawable.r_0_3_0);
+                    if (roleArray[0]==0)
+                        prepareImage4.setImageResource (R.drawable.r_0_3_0);
+                    else
+                        prepareImage4.setImageResource (R.drawable.r_1_3_0);
+                    if (roleArray[1]==0)
+                        prepareImage3.setImageResource (R.drawable.r_0_3_0);
+                    else
+                        prepareImage3.setImageResource (R.drawable.r_1_3_0);
+                    if (roleArray[2]==0)
+                        prepareImage2.setImageResource (R.drawable.r_0_3_0);
+                    else
+                        prepareImage2.setImageResource (R.drawable.r_1_3_0);
+                    if (roleArray[3]==0)
+                        prepareImage1.setImageResource (R.drawable.r_0_3_0);
+                    else
+                        prepareImage1.setImageResource (R.drawable.r_1_3_0);
 
                     AC1.setText ("1");
                     AC2.setText ("2");
@@ -185,7 +281,7 @@ public class RoomPage extends AppCompatActivity {
         setContentView(R.layout.room_page);
 
         ImageView image=findViewById(R.id.RoleView);
-        image.setImageResource(R.drawable.r_0_2_0);
+        image.setImageResource(R.drawable.r_0_3_0);
         //通过id找到相应的控件 并且设置监听
 
         roomPrepare=findViewById(R.id.Prepare);
@@ -241,7 +337,7 @@ public class RoomPage extends AppCompatActivity {
                             image.setImageResource(R.drawable.r_1_3_0);
                             break;
                         case 1:
-                            image.setImageResource(R.drawable.r_0_2_0);
+                            image.setImageResource(R.drawable.r_0_3_0);
                             break;
                             //角色
 
@@ -253,10 +349,12 @@ public class RoomPage extends AppCompatActivity {
                 case R.id.Confirmchoice:
                     Data.roleID = count % 2;
                     // TODO 向服务器提交RoleID,更新界面，并且停止更改
-
+                    count1=(count1+1)%2;
                     System.out.println("SelectConfirm");
-                    roomPrepare.setClickable(false);
-                    roomSelectRole.setClickable(false);
+                    if(count1==1)
+                        roomSelectRole.setClickable(false);
+                    else
+                        roomSelectRole.setClickable(true);
                     break;
                 case R.id.StartGame:
                     //CheckPrepare;
