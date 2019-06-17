@@ -540,22 +540,7 @@ public class ClientGameControl extends AppCompatActivity {
     }
 
     //调整血条大小
-    private Handler handlerHP = new Handler();
-    private Runnable runnableHP = new Runnable() {
-        private int Currentsize;
-        public void setSize(int s){
-            Currentsize=s;
-        }
-        public void run() {
-            if (!isend) {
-                HP_value.setText(String.valueOf(Currentsize));
 
-                Matrix matrix=new Matrix();
-                matrix.postScale(((float)Currentsize/HPbar_size[1]),1);
-                HPbar.setImageBitmap(Bitmap.createBitmap(blood, 0, 0,blood.getWidth(),blood.getHeight(),matrix,true));
-            }
-        }
-    };
 
     //位置刷新UDP
     private Handler handlerUDP = new Handler();
@@ -603,14 +588,16 @@ public class ClientGameControl extends AppCompatActivity {
         void update() throws InterruptedException {
             updateMapLocation ();
             Role_simple r;
+            int m;
             for (int i=0;i<map.livingrole.size();i++) {
                 r = map.livingrole.get(i);
                 if (!Data.playerLocation.containsKey(String.valueOf (r.name))) {
                     map.livingrole.remove(r);
                     continue;
                 }
+                m=r.lifevalue;
                 r.lifevalue = Objects.requireNonNull (Data.playerLocation.get (String.valueOf (r.name)))[1];
-                check_alive(r);
+                check_alive(r,m);
                 r.location[0] = Objects.requireNonNull (Data.playerLocation.get (String.valueOf (r.name)))[2];
                 r.location[1] = Objects.requireNonNull (Data.playerLocation.get (String.valueOf (r.name)))[3];
                 r.direction = Objects.requireNonNull (Data.playerLocation.get (String.valueOf (r.name)))[4];
@@ -836,51 +823,62 @@ public class ClientGameControl extends AppCompatActivity {
         }
     }
 
-    void check_alive(Role_simple r) throws InterruptedException {
+    void check_alive(Role_simple r,int m) throws InterruptedException {
         if (r.id != myrole.id && r.lifevalue > 0){
             Data.chickenDinner = false;
         }
-        if ((r.id == myrole.id && r.lifevalue <= 0) || (r.id == myrole.id && Data.chickenDinner)) {
-            isend=true;
-            TimeUnit.MILLISECONDS.sleep (1000);
-
-            while(Data.killBoard==null){
+        if (r.id == myrole.id) {
+            if ((r.lifevalue <= 0) || (r.id == myrole.id && Data.chickenDinner)) {
+                isend=true;
                 TimeUnit.MILLISECONDS.sleep (1000);
-                new AsyncConUDP ().execute ("kill_res!");
-            }
-            System.out.println ("Here is kill-board: " + Data.killBoard.toString ());
 
-            Intent it_res = new Intent (this, ShowRes.class);    //切换User Activity至Login Activity
-            Bundle bundle=new Bundle();
-            bundle.putString("name", String.valueOf (myrole.name));
-            bundle.putInt("roleID",myrole.id);
-            int rank = 1;
-            for (int i = 0; i < Data.killBoard.size (); i++){
-                if (Data.killBoard.get (Data.killBoard.size ()-i-1)[1] == myrole.name){
-                    rank = i+2;
-                    break;
+                while(Data.killBoard==null){
+                    TimeUnit.MILLISECONDS.sleep (1000);
+                    new AsyncConUDP ().execute ("kill_res!");
                 }
-            }
-            bundle.putInt("rank",rank);
-            int killingCnt = 0;
-            for (int i = 0; i < Data.killBoard.size (); i++){
-                if (Data.killBoard.get (i)[0] == myrole.name){
-                    killingCnt += 1;
+                System.out.println ("Here is kill-board: " + Data.killBoard.toString ());
+
+                Intent it_res = new Intent (this, ShowRes.class);    //切换User Activity至Login Activity
+                Bundle bundle=new Bundle();
+                bundle.putString("name", String.valueOf (myrole.name));
+                bundle.putInt("roleID",myrole.id);
+                int rank = 1;
+                for (int i = 0; i < Data.killBoard.size (); i++){
+                    if (Data.killBoard.get (Data.killBoard.size ()-i-1)[1] == myrole.name){
+                        rank = i+2;
+                        break;
+                    }
                 }
-            }
-            bundle.putInt("killing",killingCnt);
-            for (int i = 0; i < Data.killBoard.size (); i++){
-                if (Data.killBoard.get (i)[1] == myrole.name){
-                    bundle.putString("killedby", String.valueOf (Data.killBoard.get (i)[0]));//也可以传被杀的id
-                    break;
-                }else{
-                    bundle.putString("killedby", "Nobody");//也可以传被杀的id
+                bundle.putInt("rank",rank);
+                int killingCnt = 0;
+                for (int i = 0; i < Data.killBoard.size (); i++){
+                    if (Data.killBoard.get (i)[0] == myrole.name){
+                        killingCnt += 1;
+                    }
                 }
+                bundle.putInt("killing",killingCnt);
+                for (int i = 0; i < Data.killBoard.size (); i++){
+                    if (Data.killBoard.get (i)[1] == myrole.name){
+                        bundle.putString("killedby", String.valueOf (Data.killBoard.get (i)[0]));//也可以传被杀的id
+                        break;
+                    }else{
+                        bundle.putString("killedby", "Nobody");//也可以传被杀的id
+                    }
+                }
+                it_res.putExtras(bundle);
+                startActivity (it_res);
+
             }
-            it_res.putExtras(bundle);
-            startActivity (it_res);
+            if (r.lifevalue!=m){
+                HP_value.setText(String.valueOf(Currentsize));
+
+                Matrix matrix=new Matrix();
+                matrix.postScale(((float)Currentsize/100),1);
+                HPbar.setImageBitmap(Bitmap.createBitmap(blood, 0, 0,blood.getWidth(),blood.getHeight(),matrix,true));
+            }
 
         }
+
         if (r.id == myrole.id) Data.chickenDinner = true;
     }
 
