@@ -126,4 +126,9 @@ class serverGameControl {
     String findRoom(String roomID) {
         return roomList.findRoom(roomID);
     }
+
+    void setRoleType(String pureIP, String s) {
+        String roomID = findRoomOfPlayer(pureIP);
+        roomList.setRoleType(roomID, pureIP, s);
+    }
 }

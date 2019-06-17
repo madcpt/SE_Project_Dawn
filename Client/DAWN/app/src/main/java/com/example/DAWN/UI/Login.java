@@ -156,6 +156,8 @@ public class Login extends Activity {                 //登录界面活动
 
             if(sendLogin (userName, userPwd)){
                 System.out.println ("Login Succeed");
+                Data.playerID = Integer.parseInt (userName);
+                Data.completeID =Data.playerID * 100 + Data.roleID;
 //                UserData mUser = new UserData(userName, userPwd);
 //                System.out.println(mUser);
 //                mUserDataManager.openDataBase();

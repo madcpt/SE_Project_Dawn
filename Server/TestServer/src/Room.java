@@ -27,11 +27,11 @@ public class Room {
         this.capacity = capacity;
     }
 
-    public void addPlayer(String pureIP) {
-        int[] playerInformation = new int[17];
+    public void addPlayer(String completeID) {
+        int[] playerInformation = new int[18];
         // ID life location[0] location[1] direction walk_mov attack_mov
 
-        playerInformation[0]=100   ; // tmp for ID
+        playerInformation[0]= Integer.parseInt(completeID); // tmp for ID
         playerInformation[1]=100; // life
         do {
             playerInformation[2]=rand.nextInt(MapClass.unit * MapClass.size);
@@ -47,9 +47,10 @@ public class Room {
         for (int i = 9;i < 17;++i){
             playerInformation[i] = -1; // no prop
         }
+        playerInformation[17] = 0; // role type
 
-        playerLocation.put(pureIP, playerInformation);
-        playerPool.put(pureIP, 0); // Set initial status to unprepared
+        playerLocation.put(completeID, playerInformation);
+        playerPool.put(completeID, 0); // Set initial status to unprepared
         livePlayer += 1;
     }
 
@@ -74,7 +75,7 @@ public class Room {
         return ( x2 > x1 - w && x2 < x1 + w && y2 > y1 - h && y2 < y1 + h );
     }
 
-    public boolean getPrepared(String pureIP){
+    boolean getPrepared(String pureIP){
         if (playerPool.containsKey(pureIP)) {
             playerPool.put(pureIP, 1);
             return true;
@@ -334,6 +335,12 @@ public class Room {
 
     Vector<Integer> getInitProp() {
         return WholeMap.getPropList();
+    }
+
+    void setRoleType(String pureIP, int parseInt) {
+        int[] tmpLoc = playerLocation.get(pureIP);
+        tmpLoc[17] = parseInt;
+        playerLocation.put(pureIP, tmpLoc);
     }
 }
 
