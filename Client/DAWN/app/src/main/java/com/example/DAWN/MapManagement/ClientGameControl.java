@@ -51,7 +51,6 @@ public class ClientGameControl extends AppCompatActivity {
 
     private RockerView mRockerView;
     private TextView testtxt ;
-    private ImageView black_layer;
     private Button UseButton;
 
 
@@ -201,7 +200,8 @@ public class ClientGameControl extends AppCompatActivity {
             e.printStackTrace ();
         }
 
-        myrole=new MyRole((Objects.requireNonNull (Data.playerLocation.get (Data.LOCAL_IP)))[0], Data.LOCAL_IP,8); //the capacity of bag is 8
+        System.out.println ("Output PlayerLocationSet: " + Data.playerLocation.keySet () + " " + Arrays.toString (Data.playerLocation.get (Data.playerID)));
+        myrole=new MyRole((Objects.requireNonNull (Data.playerLocation.get (String.valueOf (Data.playerID))))[0], Data.playerID,8); //the capacity of bag is 8
 
         //对摇杆位置改变进行监听
 //        当前模式：方向有改变时回调；8个方向
@@ -357,11 +357,16 @@ public class ClientGameControl extends AppCompatActivity {
             System.out.println ("get111");
             new AsyncConUDP ().execute ("location!");
             TimeUnit.SECONDS.sleep(1);
+            System.out.println ("Output MapInitSet: " + Data.playerLocation.keySet () + " " + Arrays.toString (Data.playerLocation.get (String.valueOf (Data.playerID))));
+
         }
 
 
         for (String playerIP : Data.playerLocation.keySet ()){
-            System.out.println ("INFO111" + Arrays.toString (Data.playerLocation.get (playerIP)));
+//            int completeID = Integer.parseInt (playerIP)*100 + Objects.requireNonNull (Data.playerLocation.get (playerIP))[17];
+//            String name = String.valueOf (completeID);
+            System.out.println ("INFO111 " + playerIP + " " + Arrays.toString (Data.playerLocation.get (playerIP)));
+
             Role_simple test_r1=new Role_simple((Objects.requireNonNull (Data.playerLocation.get (playerIP)))[0], playerIP);
             test_r1.location[0] =  Objects.requireNonNull (Data.playerLocation.get (playerIP))[2];
             test_r1.location[1] =  Objects.requireNonNull (Data.playerLocation.get (playerIP))[3];
@@ -370,6 +375,7 @@ public class ClientGameControl extends AppCompatActivity {
             test_r1.attack_mov = Objects.requireNonNull (Data.playerLocation.get (playerIP))[6];
             test_r1.use_mov = Objects.requireNonNull (Data.playerLocation.get (playerIP))[7];
             test_r1.bag_used = Objects.requireNonNull(Data.playerLocation.get(playerIP))[8];
+            test_r1.roleType = Objects.requireNonNull (Data.playerLocation.get (playerIP))[17];
             System.arraycopy(test_r1.props,0,Objects.requireNonNull(Data.playerLocation.get(playerIP)),9,8);
             map.livingrole.add(test_r1);
 
@@ -405,7 +411,7 @@ public class ClientGameControl extends AppCompatActivity {
         role_pic = new Bitmap[2][4][4];//人物数，方向数，每个方向动作帧数
         Resources res=getResources();
         String fname;
-        for (int i=0;i<1;i++){
+        for (int i=0;i<2;i++){
             for (int j=0;j<4;j++){
                 for (int k=0;k<3;k++){
                     fname="r_"+Integer.toString(i)+"_"+Integer.toString(j)+"_"+Integer.toString(k);
@@ -465,8 +471,6 @@ public class ClientGameControl extends AppCompatActivity {
             tmp = null;
         }
 
-        black_layer=findViewById(R.id.black_layer);
-        black_layer.setVisibility(View.GONE);
     }
 
 
@@ -499,10 +503,10 @@ public class ClientGameControl extends AppCompatActivity {
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         void updateMapLocation(){
             if (Data.playerLocation != null) {
-                if (Data.playerLocation.containsKey(Data.LOCAL_IP)) {
+                if (Data.playerLocation.containsKey(String.valueOf (Data.playerID))) {
                     System.out.println (location[0] + "," + location[1] + "LOCATION111");
-                    location[0] = Objects.requireNonNull (Data.playerLocation.get (Data.LOCAL_IP))[2];
-                    location[1] = Objects.requireNonNull (Data.playerLocation.get (Data.LOCAL_IP))[3];
+                    location[0] = Objects.requireNonNull (Data.playerLocation.get (String.valueOf (Data.playerID)))[2];
+                    location[1] = Objects.requireNonNull (Data.playerLocation.get (String.valueOf (Data.playerID)))[3];
                 }
             } else {
                 location = new int[]{0, 0};
@@ -514,29 +518,29 @@ public class ClientGameControl extends AppCompatActivity {
             Role_simple r;
             for (int i=0;i<map.livingrole.size();i++) {
                 r = map.livingrole.get(i);
-                if (!Data.playerLocation.containsKey(r.name)) {
+                if (!Data.playerLocation.containsKey(String.valueOf (r.name))) {
                     map.livingrole.remove(r);
                     continue;
                 }
-                r.lifevalue = Objects.requireNonNull (Data.playerLocation.get (r.name))[1];
+                r.lifevalue = Objects.requireNonNull (Data.playerLocation.get (String.valueOf (r.name)))[1];
                 check_alive(r);
-                r.location[0] = Objects.requireNonNull (Data.playerLocation.get (r.name))[2];
-                r.location[1] = Objects.requireNonNull (Data.playerLocation.get (r.name))[3];
-                r.direction = Objects.requireNonNull (Data.playerLocation.get (r.name))[4];
-                if (r.walk_mov*Objects.requireNonNull (Data.playerLocation.get (r.name))[5]<0)
-                {r.walk_mov = Objects.requireNonNull (Data.playerLocation.get (r.name))[5];}
-                switch (Objects.requireNonNull (Data.playerLocation.get (r.name))[6]){
+                r.location[0] = Objects.requireNonNull (Data.playerLocation.get (String.valueOf (r.name)))[2];
+                r.location[1] = Objects.requireNonNull (Data.playerLocation.get (String.valueOf (r.name)))[3];
+                r.direction = Objects.requireNonNull (Data.playerLocation.get (String.valueOf (r.name)))[4];
+                if (r.walk_mov*Objects.requireNonNull (Data.playerLocation.get (String.valueOf (r.name)))[5]<0)
+                {r.walk_mov = Objects.requireNonNull (Data.playerLocation.get (String.valueOf (r.name)))[5];}
+                switch (Objects.requireNonNull (Data.playerLocation.get (String.valueOf (r.name)))[6]){
                     case -1: r.attack_mov=-1; break;
                     case 1: if (r.attack_mov==-1) {r.attack_mov = 1;} break;
                 }
-                switch (Objects.requireNonNull (Data.playerLocation.get (r.name))[7]){
+                switch (Objects.requireNonNull (Data.playerLocation.get (String.valueOf (r.name)))[7]){
                     case -1: r.use_mov=-1; break;
                     case 1: if (r.use_mov==-1) {r.use_mov = 1;} break;
                 }
-                r.bag_used = Objects.requireNonNull(Data.playerLocation.get(r.name))[8];
-                System.arraycopy(r.props,0,Objects.requireNonNull(Data.playerLocation.get(r.name)),9,8);
+                r.bag_used = Objects.requireNonNull(Data.playerLocation.get(String.valueOf (r.name)))[8];
+                System.arraycopy(r.props,0,Objects.requireNonNull(Data.playerLocation.get(String.valueOf (r.name))),9,8);
                 System.out.println ("OTHER111 " + map.livingrole.size () + Arrays.toString (r.location));
-                System.out.println (Arrays.toString (Data.playerLocation.get (r.name)));
+                System.out.println (Arrays.toString (Data.playerLocation.get (String.valueOf (r.name))));
             }
         }
     };
@@ -576,11 +580,13 @@ public class ClientGameControl extends AppCompatActivity {
     }
 
     class Draw extends Thread {
+        private int prop_wave;
         private SurfaceHolder holder;
         public boolean isRun ;
         private Canvas c;
         public Draw(SurfaceHolder holder){
             this.holder =holder;
+            prop_wave=0;
             isRun = true;
         }
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -604,16 +610,20 @@ public class ClientGameControl extends AppCompatActivity {
 
                         System.out.println("prop capacity" + Data.propList.capacity());
 
+                        prop_wave=(prop_wave+2)%20;
                         for (Prop prop:Data.propList) {
+                            if (Math.abs(prop.getPropposition()[0] - location[0]) > vision * 20 || Math.abs(prop.getPropposition()[1] - location[1]) > vision * 20) {
+                                continue;
+                            }
                             System.out.println ("proptype " + prop.getType () + " propid " + prop.getId ());
-                            c.drawBitmap(prop_pic[prop.getType()],center_location[0] - location[0] + prop.getPropposition()[0],center_location[1] - location[1] + prop.getPropposition()[1],p);
+                            c.drawBitmap(prop_pic[prop.getType()],center_location[0] - location[0] + prop.getPropposition()[0],center_location[1] - location[1] + prop.getPropposition()[1]+prop_wave+(20-2*prop_wave)*(prop_wave/11),p);
                         }
 
                         for (int i=0;i<map.livingrole.size();i++) {
                             r = map.livingrole.get(i);
                             // 判断使用按键是否可点击
                             // 检测是否为本机
-                            if(Data.LOCAL_IP.equals(r.name)) {
+                            if(Data.playerID == Integer.parseInt (String.valueOf (r.name))) {
                                 // 检测背包中有无药品
                                 boolean flag1 = (r.lifevalue == 100),flag2 = true;
                                 for (int prop:r.props) {
@@ -632,15 +642,15 @@ public class ClientGameControl extends AppCompatActivity {
                             if (Math.abs(r.location[0] - location[0]) > vision * 20 || Math.abs(r.location[1] - location[1]) > vision * 20) {
                                 continue;
                             }
-                            c.drawText(r.name,center_location[0] - location[0] + r.location[0]+48, center_location[1] - location[1] + r.location[1],p);
+                            c.drawText(String.valueOf (r.name),center_location[0] - location[0] + r.location[0]+48, center_location[1] - location[1] + r.location[1],p);
                             if (r.lifevalue<=0){
                                 c.drawBitmap(grave,center_location[0] - location[0] + r.location[0], center_location[1] - location[1] + r.location[1], p);
                                 continue;
                             }
                             if (r.walk_mov==-1) {
-                                c.drawBitmap (role_pic[r.id % 100][r.direction][0], center_location[0] - location[0] + r.location[0], center_location[1] - location[1] + r.location[1], p);
+                                c.drawBitmap (role_pic[r.roleType][r.direction][0], center_location[0] - location[0] + r.location[0], center_location[1] - location[1] + r.location[1], p);
                             } else{
-                                c.drawBitmap(role_pic[r.id%100][r.direction][r.walk_mov/4],center_location[0] - location[0]+r.location[0],center_location[1] - location[1]+r.location[1],p);
+                                c.drawBitmap(role_pic[r.roleType][r.direction][r.walk_mov/4],center_location[0] - location[0]+r.location[0],center_location[1] - location[1]+r.location[1],p);
                                 r.walk_mov=(r.walk_mov+1)%16;//每个动作循环的帧数
                             }
                             System.out.println("attack_mov " + r.attack_mov);
@@ -661,14 +671,14 @@ public class ClientGameControl extends AppCompatActivity {
                                 }
                                 r.attack_mov = (r.attack_mov >= 14 )?  (-1) : (r.attack_mov + 1);
                                 System.out.println("attack_mov " + r.attack_mov);
-                                if (r.attack_mov == -1 && Data.LOCAL_IP.equals(r.name)) {
+                                if (r.attack_mov == -1 && Data.playerID == r.name) {
                                     StopAttack();
                                 }
                             }
                             if (r.use_mov!=-1) {
                                 c.drawBitmap (use_pic[r.use_mov/2], center_location[0] - location[0] + r.location[0], center_location[1] - location[1] + r.location[1] + 40 , p);
                                 r.use_mov = (r.use_mov >= 35)? (-1) : (r.use_mov + 1);
-                                if(r.use_mov == -1 && Data.LOCAL_IP.equals(r.name)) {
+                                if(r.use_mov == -1 && Data.playerID == r.name) {
                                     UseFinish();
                                 }
                             }
@@ -714,7 +724,7 @@ public class ClientGameControl extends AppCompatActivity {
             isend=true;
             Intent it_res = new Intent (this, ShowRes.class);    //切换User Activity至Login Activity
             Bundle bundle=new Bundle();
-            bundle.putString("name", myrole.name);
+            bundle.putString("name", String.valueOf (myrole.name));
             bundle.putInt("roleID",myrole.id);
             bundle.putInt("rank",1);
             bundle.putInt("killing",0);
