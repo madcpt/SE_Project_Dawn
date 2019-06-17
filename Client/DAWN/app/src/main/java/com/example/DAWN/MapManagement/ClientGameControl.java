@@ -308,36 +308,68 @@ public class ClientGameControl extends AppCompatActivity {
     }
 
     public void Lmove(){
+        int speed = 1;
+        if(myrole.shoe!=null){
+            speed += 1;
+        }
         if (Attackable)
-            new AsyncConTCP().execute("mov,0,1");
+            new AsyncConTCP().execute("mov,0,"+ String.valueOf(speed));
     }
     public void Rmove(){
+        int speed = 1;
+        if(myrole.shoe!=null){
+            speed += 1;
+        }
         if (Attackable)
-            new AsyncConTCP ().execute ("mov,1,1");
+            new AsyncConTCP().execute("mov,1,"+ String.valueOf(speed));
     }
     public void Umove(){
+        int speed = 1;
+        if(myrole.shoe!=null){
+            speed += 1;
+        }
         if (Attackable)
-            new AsyncConTCP ().execute ("mov,2,1");
+            new AsyncConTCP().execute("mov,2,"+ String.valueOf(speed));
     }
     public void Dmove(){
+        int speed = 1;
+        if(myrole.shoe!=null){
+            speed += 1;
+        }
         if (Attackable)
-            new AsyncConTCP ().execute ("mov,3,1");
+            new AsyncConTCP().execute("mov,3,"+ String.valueOf(speed));
     }
     public void DLmove(){
+        int speed = 1;
+        if(myrole.shoe!=null){
+            speed += 1;
+        }
         if (Attackable)
-            new AsyncConTCP ().execute ("mov,4,1");
+            new AsyncConTCP().execute("mov,4,"+ String.valueOf(speed));
     }
     public void DRmove(){
+        int speed = 1;
+        if(myrole.shoe!=null){
+            speed += 1;
+        }
         if (Attackable)
-            new AsyncConTCP ().execute ("mov,5,1");
+            new AsyncConTCP().execute("mov,5,"+ String.valueOf(speed));
     }
     public void ULmove(){
+        int speed = 1;
+        if(myrole.shoe!=null){
+            speed += 1;
+        }
         if (Attackable)
-            new AsyncConTCP ().execute ("mov,6,1");
+            new AsyncConTCP().execute("mov,6,"+ String.valueOf(speed));
     }
     public void URmove(){
+        int speed = 1;
+        if(myrole.shoe!=null){
+            speed += 1;
+        }
         if (Attackable)
-            new AsyncConTCP ().execute ("mov,7,1");
+            new AsyncConTCP().execute("mov,7,"+ String.valueOf(speed));
     }
 
     //Map初始化
@@ -615,13 +647,15 @@ public class ClientGameControl extends AppCompatActivity {
                             if (Math.abs(prop.getPropposition()[0] - location[0]) > vision * 20 || Math.abs(prop.getPropposition()[1] - location[1]) > vision * 20) {
                                 continue;
                             }
+                            if(!Data.pickableList.get(prop.getId())){
+                                continue;
+                            }
                             System.out.println ("proptype " + prop.getType () + " propid " + prop.getId ());
                             c.drawBitmap(prop_pic[prop.getType()],center_location[0] - location[0] + prop.getPropposition()[0],center_location[1] - location[1] + prop.getPropposition()[1]+prop_wave+(20-2*prop_wave)*(prop_wave/11),p);
                         }
 
                         for (int i=0;i<map.livingrole.size();i++) {
                             r = map.livingrole.get(i);
-                            // 判断使用按键是否可点击
                             // 检测是否为本机
                             if(Data.playerID == Integer.parseInt (String.valueOf (r.name))) {
                                 // 检测背包中有无药品
@@ -633,9 +667,19 @@ public class ClientGameControl extends AppCompatActivity {
                                         break;
                                     }
                                 }
+                                // 判断使用按键是否可点击
                                 if (flag1 || flag2){
                                     UseButton.setClickable(false);
                                 }
+                                //检测是否有鞋
+                                if (r.props[0]!=-1){
+                                    myrole.shoe = Data.propList.get(r.props[0]);
+                                }
+                                //检测是否有武器
+                                if (r.props[1]!=-1){
+                                    myrole.weapon = Data.propList.get(r.props[1]);
+                                }
+
                             }
 
                             System.out.println ("CheckLocation: " + Arrays.toString (r.location) + " " + Arrays.toString (location));
