@@ -40,7 +40,7 @@ public class RoomPage extends AppCompatActivity {
     TextView AC4;
    //roleArray -1没进入,0,1 roletype, 2 准备好了
 
-    int roleArray[]={1,1,1,1};
+    int roleArray[]={1,0,1,0};
 
     public RoomPage() throws IOException {
     }
@@ -89,11 +89,11 @@ public class RoomPage extends AppCompatActivity {
                 System.out.println ("From Server: Room_cnt111" + Arrays.toString (Data.myRoom.roomPrepareCnt));
 
                 int rc = Data.myRoom.roomPrepareCnt[0]; //room-capacity
-                if(rc >= 1){
+                 if(rc == 1){
                    // prepareImage4.setImageResource (R.drawable.white);
                     //prepareImage3.setImageResource (R.drawable.white);
                     //prepareImage2.setImageResource (R.drawable.white);
-                    if (roleArray[0]==0) {
+                /*    if (roleArray[0]==0) {
                         prepareImage1.setImageResource(R.drawable.r_0_3_0);
                         AC1.setText("1");
                     }
@@ -152,22 +152,28 @@ public class RoomPage extends AppCompatActivity {
                     else if(roleArray[3]==2)
                         prepareImage4.setImageResource (R.drawable.prepare);
                     else if(roleArray[3]==-1)
-                        System.out.println("None");
+                        System.out.println("None");*/
+                     if (roleArray[0]==0)
+                         prepareImage1.setImageResource(R.drawable.r_0_3_0);
+
+                     else
+                         prepareImage1.setImageResource(R.drawable.r_1_3_0);
+                         AC1.setText("1");
 
 
 
                 }
-                //if (rc == 2) {
+                if (rc == 2) {
                     //prepareImage4.setImageResource (R.drawable.white);
                    // prepareImage3.setImageResource (R.drawable.white);
-                   /* if (roleArray[0]==0)
+                    if (roleArray[0]==0)
                         prepareImage2.setImageResource (R.drawable.r_0_3_0);
                     else
                         prepareImage2.setImageResource (R.drawable.r_1_3_0);
                     if (roleArray[1]==0)
                         prepareImage1.setImageResource (R.drawable.r_0_3_0);
                     else
-                        prepareImage1.setImageResource (R.drawable.r_1_3_0);/
+                        prepareImage1.setImageResource (R.drawable.r_1_3_0);
                     AC1.setText ("1");
                     AC2.setText ("2");
                     AC3.setText ("");
@@ -177,13 +183,13 @@ public class RoomPage extends AppCompatActivity {
                     //prepareImage4.setImageResource (R.drawable.white);
                     if (roleArray[0]==0)
                         prepareImage3.setImageResource (R.drawable.r_0_3_0);
-                    else  if
+                    else
                         prepareImage3.setImageResource (R.drawable.r_1_3_0);
-                    if (roleArray[0]==0)
+                    if (roleArray[1]==0)
                         prepareImage2.setImageResource (R.drawable.r_0_3_0);
                     else
                         prepareImage2.setImageResource (R.drawable.r_1_3_0);
-                    if (roleArray[1]==0)
+                    if (roleArray[2]==0)
                         prepareImage1.setImageResource (R.drawable.r_0_3_0);
                     else
                         prepareImage1.setImageResource (R.drawable.r_1_3_0);
@@ -197,15 +203,15 @@ public class RoomPage extends AppCompatActivity {
                         prepareImage4.setImageResource (R.drawable.r_0_3_0);
                     else
                         prepareImage4.setImageResource (R.drawable.r_1_3_0);
-                    if (roleArray[0]==0)
+                    if (roleArray[1]==0)
                         prepareImage3.setImageResource (R.drawable.r_0_3_0);
                     else
                         prepareImage3.setImageResource (R.drawable.r_1_3_0);
-                    if (roleArray[0]==0)
+                    if (roleArray[2]==0)
                         prepareImage2.setImageResource (R.drawable.r_0_3_0);
                     else
                         prepareImage2.setImageResource (R.drawable.r_1_3_0);
-                    if (roleArray[1]==0)
+                    if (roleArray[3]==0)
                         prepareImage1.setImageResource (R.drawable.r_0_3_0);
                     else
                         prepareImage1.setImageResource (R.drawable.r_1_3_0);
@@ -214,10 +220,10 @@ public class RoomPage extends AppCompatActivity {
                     AC2.setText ("2");
                     AC3.setText ("3");
                     AC4.setText ("4");
-                }*/
+                }
 
                 int prepareCount = Data.myRoom.roomPrepareCnt[1];
-              /*  switch (prepareCount) {
+                switch (prepareCount) {
                     case 1:
                         prepareImage1.setImageResource (R.drawable.prepare);
 //                        prepareImage2.setImageResource (R.drawable.r_0_3_0);
@@ -242,7 +248,7 @@ public class RoomPage extends AppCompatActivity {
                         prepareImage3.setImageResource (R.drawable.prepare);
                         prepareImage4.setImageResource (R.drawable.prepare);
                         break;
-                }*/
+                }
                 if (prepareCount == rc) {
                     stop = true;
                     Intent intent = new Intent (RoomPage.this, MainActivity.class);
