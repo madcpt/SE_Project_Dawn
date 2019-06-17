@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Room {
@@ -287,6 +288,7 @@ public class Room {
             if(isPickable(tmpLoc,prop)){
                 prop.UnPickable();
                 tmpLoc[8] += 1;
+                System.out.println("ID " + pureIP + " proptype " + prop.getType());
                 switch (prop.getType()){
                     case 0:
                         for(int i = 11;i<17;++i){
@@ -313,6 +315,7 @@ public class Room {
                 }
             }
         }
+        System.out.println("temLoc " + Arrays.toString(tmpLoc));
         playerLocation.put(pureIP,tmpLoc);
     }
 
@@ -344,7 +347,8 @@ public class Room {
                 y > tmpLoc[3] - Colli.getCollision_height() && y < tmpLoc[3] + 2 * Colli.getCollision_height() // 纵向在人物一个身位以内
         );
         boolean flag2 = ((prop.getType() == 1 || prop.getType() == 2) && tmpLoc[8 + prop.getType()] == -1); //若为鞋子或武器，检查9.10号位中是否有东西
-        return (flag1 && flag2);
+        boolean flag3 = prop.getType() == 0 || prop.getType() == 3;
+        return (flag1 && (flag2||flag3));
     }
 
     Vector<Integer> getInitProp() {

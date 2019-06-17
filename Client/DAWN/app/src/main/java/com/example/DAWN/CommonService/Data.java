@@ -58,6 +58,7 @@ public class Data {
         roleID = 0;
         playerID = 0;
         chickenDinner = false;
+        playerLocation = new HashMap();
 
     }
 
