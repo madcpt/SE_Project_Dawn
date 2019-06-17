@@ -51,7 +51,6 @@ public class ClientGameControl extends AppCompatActivity {
 
     private RockerView mRockerView;
     private TextView testtxt ;
-    private ImageView black_layer;
     private Button UseButton;
 
 
@@ -472,8 +471,6 @@ public class ClientGameControl extends AppCompatActivity {
             tmp = null;
         }
 
-        black_layer=findViewById(R.id.black_layer);
-        black_layer.setVisibility(View.GONE);
     }
 
 
@@ -583,11 +580,13 @@ public class ClientGameControl extends AppCompatActivity {
     }
 
     class Draw extends Thread {
+        private int prop_wave;
         private SurfaceHolder holder;
         public boolean isRun ;
         private Canvas c;
         public Draw(SurfaceHolder holder){
             this.holder =holder;
+            prop_wave=0;
             isRun = true;
         }
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -611,9 +610,13 @@ public class ClientGameControl extends AppCompatActivity {
 
                         System.out.println("prop capacity" + Data.propList.capacity());
 
+                        prop_wave=(prop_wave+2)%20;
                         for (Prop prop:Data.propList) {
+                            if (Math.abs(prop.getPropposition()[0] - location[0]) > vision * 20 || Math.abs(prop.getPropposition()[1] - location[1]) > vision * 20) {
+                                continue;
+                            }
                             System.out.println ("proptype " + prop.getType () + " propid " + prop.getId ());
-                            c.drawBitmap(prop_pic[prop.getType()],center_location[0] - location[0] + prop.getPropposition()[0],center_location[1] - location[1] + prop.getPropposition()[1],p);
+                            c.drawBitmap(prop_pic[prop.getType()],center_location[0] - location[0] + prop.getPropposition()[0],center_location[1] - location[1] + prop.getPropposition()[1]+prop_wave+(20-2*prop_wave)*(prop_wave/11),p);
                         }
 
                         for (int i=0;i<map.livingrole.size();i++) {
