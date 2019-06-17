@@ -17,6 +17,7 @@ public class Data {
     public static String LOCAL_IP;
     public static Vector<Integer> propInit;
     public static int roleID;
+    public static Vector<int[]> killBoard;
     private static Long delay;
     static String Server;
     static int port;
@@ -29,7 +30,9 @@ public class Data {
     public static Vector<Prop> propList;
     public static int playerID;
     public static int completeID;
+    public static boolean chickenDinner;
     public static Vector<Boolean> pickableList;
+    
 
     public Data(){
     }
@@ -53,6 +56,7 @@ public class Data {
         propInit.add (-1);
         roleID = 0;
         playerID = 0;
+        chickenDinner = false;
 
     }
 

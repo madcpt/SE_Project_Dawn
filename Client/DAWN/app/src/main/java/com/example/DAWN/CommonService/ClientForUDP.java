@@ -149,7 +149,11 @@ void testCon(String msg) {
                     Data.myRoom.roomPrepareCnt = room_cnt;
                     System.out.println ("From Server: Room_cnt: " + Arrays.toString (room_cnt));
                     break;
-
+                case "kill_res":
+                    Vector<int[]> kill_res = (Vector<int[]>) objectStream.readObject ();
+                    System.out.println ("Receive kill-board: " + kill_res);
+                    Data.killBoard = kill_res;
+                    break;
 
 
             }

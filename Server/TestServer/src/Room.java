@@ -6,6 +6,7 @@ public class Room {
 
     private Map<String, int[]> playerLocation;
     private HashMap<String, Integer> playerPool; // Integer: 0->unprepared, 1->prepared
+    private Vector<int [] > killBoard;
 
     private MapClass WholeMap;
     private Random rand;
@@ -20,6 +21,7 @@ public class Room {
         playerLocation = new HashMap<>();
         playerPool = new HashMap<>();
         Colli = new Collision(120,100);
+        killBoard = new Vector<>();
 
         this.livePlayer = 0;
         this.owner = pureIP;
@@ -27,7 +29,7 @@ public class Room {
         this.capacity = capacity;
     }
 
-    public void addPlayer(String completeID) {
+    void addPlayer(String completeID) {
         int[] playerInformation = new int[18];
         // ID life location[0] location[1] direction walk_mov attack_mov
 
@@ -58,7 +60,7 @@ public class Room {
         return playerPool.containsKey(pureIP);
     }
 
-    public void removePlayer(String pureIP){
+    void removePlayer(String pureIP){
         playerLocation.remove(pureIP);
     }
 
@@ -110,11 +112,21 @@ public class Room {
             }
             if(AttackCollisionDetect(x,y,playerLocation.get(ID)[3],playerLocation.get(ID)[2])){
                 playerLocation.get(ID)[1] -= dama;
+                if(playerLocation.get(ID)[1] <= 0){
+                    aKillB(pureIP, ID);
+                }
             }
         }
     }
 
-    public void moveDegree(String pureIP, String degree, int velocity) {
+    private void aKillB(String pureIP, String id) {
+        int [] tmp = new int[2];
+        tmp[0] = Integer.parseInt(pureIP);
+        tmp[1] = Integer.parseInt(id);
+        killBoard.add(tmp);
+    }
+
+    void moveDegree(String pureIP, String degree, int velocity) {
         switch (degree){
             case "0":
                 Lmove(pureIP, velocity);
@@ -148,7 +160,7 @@ public class Room {
         return playerLocation;
     }
 
-    public void mov_stop(String pureIP) {
+    void mov_stop(String pureIP) {
         int[] tmpLoc = playerLocation.get(pureIP);
         tmpLoc[5]=-1;
         playerLocation.put(pureIP,tmpLoc);
@@ -341,6 +353,10 @@ public class Room {
         int[] tmpLoc = playerLocation.get(pureIP);
         tmpLoc[17] = parseInt;
         playerLocation.put(pureIP, tmpLoc);
+    }
+
+    Vector getKillBoard() {
+        return killBoard;
     }
 }
 

@@ -23,20 +23,17 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.DAWN.CommonService.Configuration;
-import com.example.DAWN.CommonService.Data;
 import com.example.DAWN.CommonService.ClientComContext;
 import com.example.DAWN.CommonService.ClientComStrategyTCP;
 import com.example.DAWN.CommonService.ClientComStrategyUDP;
+import com.example.DAWN.CommonService.Configuration;
+import com.example.DAWN.CommonService.Data;
 import com.example.DAWN.R;
 import com.example.DAWN.RoleManagement.MyRole;
 import com.example.DAWN.RoleManagement.Role_simple;
-import com.example.DAWN.UI.CreateRoom;
 import com.example.DAWN.UI.RockerView;
-import com.example.DAWN.UserManament.User;
 
 import java.sql.Time;
 import java.util.Arrays;
@@ -300,7 +297,11 @@ public class ClientGameControl extends AppCompatActivity {
     }
     public void Attack(){
         Attackable = false;
-        new AsyncConTCP().execute ("atk,100,0");
+        int damage = 20;
+        if (myrole.weapon!=null){
+            damage += 10;
+        }
+        new AsyncConTCP().execute ("atk,"+ damage +",0");
     }
     //实现移动
     public void Stopmove(){
@@ -313,7 +314,7 @@ public class ClientGameControl extends AppCompatActivity {
             speed += 1;
         }
         if (Attackable)
-            new AsyncConTCP().execute("mov,0,"+ String.valueOf(speed));
+            new AsyncConTCP().execute("mov,0,"+ speed);
     }
     public void Rmove(){
         int speed = 1;
@@ -321,7 +322,7 @@ public class ClientGameControl extends AppCompatActivity {
             speed += 1;
         }
         if (Attackable)
-            new AsyncConTCP().execute("mov,1,"+ String.valueOf(speed));
+            new AsyncConTCP().execute("mov,1,"+ speed);
     }
     public void Umove(){
         int speed = 1;
@@ -329,7 +330,7 @@ public class ClientGameControl extends AppCompatActivity {
             speed += 1;
         }
         if (Attackable)
-            new AsyncConTCP().execute("mov,2,"+ String.valueOf(speed));
+            new AsyncConTCP().execute("mov,2,"+ speed);
     }
     public void Dmove(){
         int speed = 1;
@@ -337,7 +338,7 @@ public class ClientGameControl extends AppCompatActivity {
             speed += 1;
         }
         if (Attackable)
-            new AsyncConTCP().execute("mov,3,"+ String.valueOf(speed));
+            new AsyncConTCP().execute("mov,3,"+ speed);
     }
     public void DLmove(){
         int speed = 1;
@@ -345,7 +346,7 @@ public class ClientGameControl extends AppCompatActivity {
             speed += 1;
         }
         if (Attackable)
-            new AsyncConTCP().execute("mov,4,"+ String.valueOf(speed));
+            new AsyncConTCP().execute("mov,4,"+ speed);
     }
     public void DRmove(){
         int speed = 1;
@@ -353,7 +354,7 @@ public class ClientGameControl extends AppCompatActivity {
             speed += 1;
         }
         if (Attackable)
-            new AsyncConTCP().execute("mov,5,"+ String.valueOf(speed));
+            new AsyncConTCP().execute("mov,5,"+ speed);
     }
     public void ULmove(){
         int speed = 1;
@@ -361,7 +362,7 @@ public class ClientGameControl extends AppCompatActivity {
             speed += 1;
         }
         if (Attackable)
-            new AsyncConTCP().execute("mov,6,"+ String.valueOf(speed));
+            new AsyncConTCP().execute("mov,6,"+ speed);
     }
     public void URmove(){
         int speed = 1;
@@ -369,7 +370,7 @@ public class ClientGameControl extends AppCompatActivity {
             speed += 1;
         }
         if (Attackable)
-            new AsyncConTCP().execute("mov,7,"+ String.valueOf(speed));
+            new AsyncConTCP().execute("mov,7,"+ speed);
     }
 
     //Map初始化
@@ -527,7 +528,11 @@ public class ClientGameControl extends AppCompatActivity {
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         public void run() {
             if (!isend) {
-                this.update();
+                try {
+                    this.update();
+                } catch (InterruptedException e) {
+                    e.printStackTrace ();
+                }
                 handlerInfo.postDelayed(this, Configuration.ClientGameControlMapRate);// 刷新间隔(ms)
             }
         }
@@ -545,7 +550,7 @@ public class ClientGameControl extends AppCompatActivity {
             }
         }
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-        void update() {
+        void update() throws InterruptedException {
             updateMapLocation ();
             Role_simple r;
             for (int i=0;i<map.livingrole.size();i++) {
@@ -647,9 +652,9 @@ public class ClientGameControl extends AppCompatActivity {
                             if (Math.abs(prop.getPropposition()[0] - location[0]) > vision * 20 || Math.abs(prop.getPropposition()[1] - location[1]) > vision * 20) {
                                 continue;
                             }
-                            if(!Data.pickableList.get(prop.getId())){
-                                continue;
-                            }
+//                            if(!Data.pickableList.get(prop.getId())){
+//                                continue;
+//                            }
                             System.out.println ("proptype " + prop.getType () + " propid " + prop.getId ());
                             c.drawBitmap(prop_pic[prop.getType()],center_location[0] - location[0] + prop.getPropposition()[0],center_location[1] - location[1] + prop.getPropposition()[1]+prop_wave+(20-2*prop_wave)*(prop_wave/11),p);
                         }
@@ -671,14 +676,17 @@ public class ClientGameControl extends AppCompatActivity {
                                 if (flag1 || flag2){
                                     UseButton.setClickable(false);
                                 }
+                                System.out.println ("pre");
                                 //检测是否有鞋
                                 if (r.props[0]!=-1){
-                                    myrole.shoe = Data.propList.get(r.props[0]);
+                                    myrole.shoe = new Prop (1,1,0,0);
                                 }
+                                System.out.println ("mid");
                                 //检测是否有武器
                                 if (r.props[1]!=-1){
-                                    myrole.weapon = Data.propList.get(r.props[1]);
+                                    myrole.weapon = new Prop (2,2,0,0);
                                 }
+                                System.out.println ("end");
 
                             }
 
@@ -763,20 +771,52 @@ public class ClientGameControl extends AppCompatActivity {
         }
     }
 
-    void check_alive(Role_simple r){
-        if (r.id==myrole.id && r.lifevalue<=0) {
+    void check_alive(Role_simple r) throws InterruptedException {
+        if (r.id != myrole.id && r.lifevalue > 0){
+            Data.chickenDinner = false;
+        }
+        if ((r.id == myrole.id && r.lifevalue <= 0) || (r.id == myrole.id && Data.chickenDinner)) {
             isend=true;
+            TimeUnit.MILLISECONDS.sleep (1000);
+
+            while(Data.killBoard==null){
+                TimeUnit.MILLISECONDS.sleep (1000);
+                new AsyncConUDP ().execute ("kill_res!");
+            }
+            System.out.println ("Here is kill-board: " + Data.killBoard.toString ());
+
             Intent it_res = new Intent (this, ShowRes.class);    //切换User Activity至Login Activity
             Bundle bundle=new Bundle();
             bundle.putString("name", String.valueOf (myrole.name));
             bundle.putInt("roleID",myrole.id);
-            bundle.putInt("rank",1);
-            bundle.putInt("killing",0);
-            bundle.putString("killedby","LYT");//也可以传被杀的id
+            int rank = 1;
+            for (int i = 0; i < Data.killBoard.size (); i++){
+                if (Data.killBoard.get (Data.killBoard.size ()-i-1)[1] == myrole.name){
+                    rank = i+2;
+                    break;
+                }
+            }
+            bundle.putInt("rank",rank);
+            int killingCnt = 0;
+            for (int i = 0; i < Data.killBoard.size (); i++){
+                if (Data.killBoard.get (i)[0] == myrole.name){
+                    killingCnt += 1;
+                }
+            }
+            bundle.putInt("killing",killingCnt);
+            for (int i = 0; i < Data.killBoard.size (); i++){
+                if (Data.killBoard.get (i)[1] == myrole.name){
+                    bundle.putString("killedby", String.valueOf (Data.killBoard.get (i)[0]));//也可以传被杀的id
+                    break;
+                }else{
+                    bundle.putString("killedby", "Nobody");//也可以传被杀的id
+                }
+            }
             it_res.putExtras(bundle);
             startActivity (it_res);
 
         }
+        if (r.id == myrole.id) Data.chickenDinner = true;
     }
 
 //    public void finish(View v){
