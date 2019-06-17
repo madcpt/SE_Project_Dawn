@@ -25,11 +25,11 @@ public class MyRole {
                 //不同角色特性
                 case 0:
                     attack = 45;
-                    speed = 3 ;
+                    speed = 6 ;
                     break;
                 case 1:
                     attack = 25 ;
-                    speed = 5 ;
+                    speed = 4 ;
                     break;
             }
 
