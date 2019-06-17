@@ -29,6 +29,7 @@ public class Data {
     public static Vector<Prop> propList;
     public static int playerID;
     public static int completeID;
+    public static Vector<Boolean> pickableList;
 
     public Data(){
     }
