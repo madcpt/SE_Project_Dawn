@@ -99,7 +99,7 @@ void testCon(String msg) {
                             tmp.put (a, Objects.requireNonNull (playerLocation.get (a)));
                         }
                     }
-                    Data.playerLocation.putAll(playerLocation) ;
+                    Data.playerLocation = tmp ;
 //                    Data.completeID = Objects.requireNonNull (playerLocation.get (Data.playerID))[0] * 100 + Objects.requireNonNull (playerLocation.get (Data.playerID))[17];
 
 //                    System.out.println ("Output LocationInitSet: " + Data.playerLocation.keySet () + " " + Data.playerID + " " + Arrays.toString (Data.playerLocation.get (Data.playerID)));
