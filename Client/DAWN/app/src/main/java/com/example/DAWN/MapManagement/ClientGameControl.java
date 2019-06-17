@@ -707,7 +707,6 @@ public class ClientGameControl extends AppCompatActivity {
                                 exp_order=(exp_order >= 24 )?  (-1) : (r.attack_mov + 1);
                             }
 
-
                             if (r.attack_mov!=-1) {
                                 switch(r.direction){
                                     case 0:
