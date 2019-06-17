@@ -37,7 +37,8 @@ public class Room {
             playerInformation[2]=rand.nextInt(MapClass.unit * MapClass.size);
             playerInformation[3]=rand.nextInt(MapClass.unit * MapClass.size);
 
-        }while (WholeMap.m[playerInformation[3]/ MapClass.unit][playerInformation[2]/ MapClass.unit]!=0);
+        }while (WholeMap.m[playerInformation[3]/ MapClass.unit][playerInformation[2]/ MapClass.unit]!=0
+                && WholeMap.m[(playerInformation[3]+120)/ MapClass.unit][(playerInformation[2]+100)/ MapClass.unit]!=0);
         // x, y
         playerInformation[4]=3;
         playerInformation[5]=-1;
