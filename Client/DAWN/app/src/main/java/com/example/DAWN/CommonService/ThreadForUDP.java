@@ -1,4 +1,8 @@
 package com.example.DAWN.CommonService;
+
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+
 /**
 * @version : 1.0
 * @author : Zihan Xu
@@ -19,6 +23,7 @@ public class ThreadForUDP implements Runnable {
         System.out.println("Creating " +  threadName );
         client = new ClientForUDP ();
     }
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void run() {
 //        System.out.println("Running " +  threadName );
         try {

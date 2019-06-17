@@ -7,6 +7,7 @@ public class Room {
     private Map<String, int[]> playerLocation;
     private HashMap<String, Integer> playerPool; // Integer: 0->unprepared, 1->prepared
     private Vector<int [] > killBoard;
+    private Vector<Boolean> pickableList;
 
     private MapClass WholeMap;
     private Random rand;
@@ -22,6 +23,7 @@ public class Room {
         playerPool = new HashMap<>();
         Colli = new Collision(120,100);
         killBoard = new Vector<>();
+        pickableList = WholeMap.getPickableList();
 
         this.livePlayer = 0;
         this.owner = pureIP;
@@ -157,6 +159,31 @@ public class Room {
     }
 
     Map<String, int[]> getUpdateList() {
+        Map<String, int[]> tmp = new HashMap<>();
+        for (String i: playerLocation.keySet()){
+            tmp.put(i, playerLocation.get(i));
+        }
+        int [] pickInt = new int[20];
+        for (int i = 0; i < pickableList.size(); i++){
+            if(pickableList.get(i)) pickInt[i] = 1;
+            else pickInt[i] = 0;
+        }
+        tmp.put("prop", pickInt);
+
+        return tmp;
+    }
+    Map<String, int[]> getUpdateList2() {
+//        Map<String, int[]> tmp = new HashMap<>();
+//        for (String i: playerLocation.keySet()){
+//            tmp.put(i, playerLocation.get(i));
+//        }
+//        int [] pickInt = new int[20];
+//        for (int i = 0; i < pickableList.size(); i++){
+//            if(pickableList.get(i)) pickInt[i] = 1;
+//            else pickInt[i] = 0;
+//        }
+//        tmp.put("prop", pickInt);
+
         return playerLocation;
     }
 
@@ -281,9 +308,12 @@ public class Room {
 
     void pickProp(String pureIP) {
         int[] tmpLoc = playerLocation.get(pureIP);
+        int cnt = -1;
         for (Prop prop:WholeMap.proplist) {
+            cnt += 1;
             if(isPickable(tmpLoc,prop)){
                 prop.UnPickable();
+                pickableList.set(cnt, false);
                 tmpLoc[8] += 1;
                 switch (prop.getType()){
                     case 0:
@@ -357,6 +387,10 @@ public class Room {
 
     Vector getKillBoard() {
         return killBoard;
+    }
+
+    Vector getPickableList() {
+        return pickableList;
     }
 }
 

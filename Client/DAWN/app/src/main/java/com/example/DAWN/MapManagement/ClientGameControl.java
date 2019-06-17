@@ -223,6 +223,7 @@ public class ClientGameControl extends AppCompatActivity {
 
         handlerUDP.postDelayed(runnableUDP, 1000);//等1s后开始刷新位置UDP
         handlerInfo.postDelayed(runnableInfo, 1000);//等1s后开始刷新位置UDP
+//        handlerProp.postDelayed(runnableProp, 1000);//等1s后开始刷新位置UDP
 
 
         scr = findViewById(R.id.background) ;
@@ -386,7 +387,7 @@ public class ClientGameControl extends AppCompatActivity {
             TimeUnit.SECONDS.sleep (1);
         }
 
-        while(Data.playerLocation == null){
+        while(Data.playerLocation.size () == 0){
             System.out.println ("get111");
             new AsyncConUDP ().execute ("location!");
             TimeUnit.SECONDS.sleep(1);
@@ -417,9 +418,9 @@ public class ClientGameControl extends AppCompatActivity {
 
 
         //for drawing;
-        System.out.print ("Begin-drawing ");
+        System.out.println ("Begin-drawing ");
         Bitmap tmp = BitmapFactory.decodeResource(this.getResources(),R.drawable.blackblock).copy(Bitmap.Config.ARGB_4444, true);
-        System.out.print ("decode-completed ");
+        System.out.println ("decode-completed ");
         Matrix matrix=new Matrix();
         matrix.postScale(((float)vision*30/tmp.getWidth()), ((float)vision*30/tmp.getHeight()));
         hole = Bitmap.createBitmap(tmp, 0, 0,tmp.getWidth(),tmp.getHeight(),matrix,true);
@@ -521,6 +522,18 @@ public class ClientGameControl extends AppCompatActivity {
         }
     };
 
+    // prop 更新
+//    private Handler handlerProp = new Handler();
+//    private Runnable runnableProp = new Runnable() {
+//        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+//        public void run() {
+//            if (!isend) {
+//                new AsyncConUDP().execute("pick_list!");
+//                handlerUDP.postDelayed(this, Configuration.ClientGameControlPropRate);// 刷新间隔(ms)
+//            }
+//        }
+//    };
+
 
     //信息刷新fs
     private Handler handlerInfo = new Handler();
@@ -533,6 +546,7 @@ public class ClientGameControl extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace ();
                 }
+                handlerInfo.postDelayed(this, Configuration.ClientGameControlMapRate);// 刷新间隔(ms)
                 handlerInfo.postDelayed(this, Configuration.ClientGameControlMapRate);// 刷新间隔(ms)
             }
         }
@@ -645,10 +659,12 @@ public class ClientGameControl extends AppCompatActivity {
                         c.drawColor(Color.WHITE);
                         c.drawBitmap(background, center_location[0] - location[0], center_location[1] - location[1], p);
 
-                        System.out.println("prop capacity" + Data.propList.capacity());
+//                        System.out.println("prop capacity" + Data.propList.capacity());
 
                         prop_wave=(prop_wave+2)%20;
                         for (Prop prop:Data.propList) {
+//                            System.out.println ("prop " + 1 + " " + prop.getId ());
+//                            System.out.println ("prop " + Data.pickableList.toString ());
                             if (Math.abs(prop.getPropposition()[0] - location[0]) > vision * 20 || Math.abs(prop.getPropposition()[1] - location[1]) > vision * 20) {
                                 continue;
                             }
@@ -656,9 +672,10 @@ public class ClientGameControl extends AppCompatActivity {
 //                                continue;
 //                            }
                             System.out.println ("proptype " + prop.getType () + " propid " + prop.getId ());
+
                             c.drawBitmap(prop_pic[prop.getType()],center_location[0] - location[0] + prop.getPropposition()[0],center_location[1] - location[1] + prop.getPropposition()[1]+prop_wave+(20-2*prop_wave)*(prop_wave/11),p);
                         }
-
+//                        System.out.println ("prop Out");
                         for (int i=0;i<map.livingrole.size();i++) {
                             r = map.livingrole.get(i);
                             // 检测是否为本机

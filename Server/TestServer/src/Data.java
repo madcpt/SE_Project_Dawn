@@ -9,7 +9,7 @@ public class Data {
     public static Long delay;
     public static String Server;
     public static int port;
-    public static Map<String, int[]> playerLocation;
+    public static HashMap<String, int[]> playerLocation;
     public static MapClass WholeMap;
     private static Random rand;
     private static Collision Colli = new Collision(120, 100);

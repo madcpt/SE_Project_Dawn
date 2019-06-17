@@ -9,8 +9,11 @@ package com.example.DAWN.CommonService;
 public class Configuration {
     static public int ClientGameControlComRate;
     static public int ClientGameControlMapRate;
+    static public int ClientGameControlPropRate;
     public static void init(){
         ClientGameControlComRate = 30;
         ClientGameControlMapRate = 30;
+        ClientGameControlPropRate = 30;
     }
+
 }
