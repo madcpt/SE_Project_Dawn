@@ -6,7 +6,7 @@ import java.util.Vector;
 
 public class MyRole {
         public int id;
-        public String name;
+        public int name;
         public int attack;
         public int speed;
         public Vector<Prop> bag;
@@ -15,7 +15,7 @@ public class MyRole {
         public Prop shoe;
 
 
-        public MyRole(int i, String n,int c){
+        public MyRole(int i, int n, int c){
             id=i;
             name=n;
             capacity = c;

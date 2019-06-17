@@ -1,6 +1,8 @@
 package com.example.DAWN.CommonService;
 
 
+import android.app.admin.DeviceAdminInfo;
+
 import java.net.*;
 import java.io.*;
 
@@ -41,9 +43,11 @@ public class ClientForTCP
             System.out.println("Remote IP: " + client.getRemoteSocketAddress());
 
             long startTime = System.currentTimeMillis();
+
             OutputStream outToServer = client.getOutputStream();
             DataOutputStream out = new DataOutputStream(outToServer);
-            out.writeUTF(client.getLocalSocketAddress() + "," + meg);
+            out.writeUTF( Data.playerID+ "," + meg);
+
             if(Data.LOCAL_IP.equals ("/0.0.0.0")){
                 Data.LOCAL_IP = String.valueOf (client.getLocalAddress ());
             }
