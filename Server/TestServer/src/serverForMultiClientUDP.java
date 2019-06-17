@@ -119,6 +119,11 @@ public class serverForMultiClientUDP implements Runnable{
                     break;
                 }
 
+                case "kill_res":{
+                    Vector tmp = new Vector();
+                    tmp = Data.serverGameControl.getKillBoard(pureIP);
+                }
+
 
                 default:
                     objectStream.writeObject(Data.serverGameControl.getUpdateList(pureIP));

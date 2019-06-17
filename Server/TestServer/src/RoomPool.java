@@ -148,4 +148,8 @@ public class RoomPool {
     void setRoleType(String roomID, String pureIP, String s) {
         roomList.get(roomID).setRoleType(pureIP, Integer.parseInt(s));
     }
+
+    Vector getKillBoard(String roomIDOfPlayer) {
+        return roomList.get(roomIDOfPlayer).getKillBoard();
+    }
 }

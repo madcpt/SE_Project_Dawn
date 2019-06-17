@@ -13,6 +13,11 @@ class serverGameControl {
         roomList = new RoomPool();
     }
 
+    Vector getKillBoard(String pureIP) {
+        String roomIDOfPlayer = findRoomOfPlayer(pureIP);
+        return roomList.getKillBoard(roomIDOfPlayer);
+    }
+
     Vector<String> getChooseRoomList() {
         return roomList.getChooseRoomList();
     }

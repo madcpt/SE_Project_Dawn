@@ -23,22 +23,18 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.DAWN.CommonService.Configuration;
-import com.example.DAWN.CommonService.Data;
 import com.example.DAWN.CommonService.ClientComContext;
 import com.example.DAWN.CommonService.ClientComStrategyTCP;
 import com.example.DAWN.CommonService.ClientComStrategyUDP;
+import com.example.DAWN.CommonService.Configuration;
+import com.example.DAWN.CommonService.Data;
 import com.example.DAWN.R;
 import com.example.DAWN.RoleManagement.MyRole;
 import com.example.DAWN.RoleManagement.Role_simple;
-import com.example.DAWN.UI.CreateRoom;
 import com.example.DAWN.UI.RockerView;
-import com.example.DAWN.UserManament.User;
 
-import java.sql.Time;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
