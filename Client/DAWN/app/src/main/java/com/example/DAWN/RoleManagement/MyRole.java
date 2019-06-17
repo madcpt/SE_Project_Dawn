@@ -23,6 +23,14 @@ public class MyRole {
 
             switch (id%100){
                 //不同角色特性
+                case 0:
+                    attack = 45;
+                    speed = 3 ;
+                    break;
+                case 1:
+                    attack = 25 ;
+                    speed = 5 ;
+                    break;
             }
 
         }
