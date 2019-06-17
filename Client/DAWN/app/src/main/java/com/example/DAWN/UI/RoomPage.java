@@ -234,7 +234,7 @@ public class RoomPage extends AppCompatActivity {
                     ImageView image=findViewById(R.id.RoleView);
                     switch(count%2) {
                         case 0:
-                            image.setImageResource(R.drawable.role0);
+                            image.setImageResource(R.drawable.r_1_3_0);
                             break;
                         case 1:
                             image.setImageResource(R.drawable.r_0_2_0);

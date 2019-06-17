@@ -405,7 +405,7 @@ public class ClientGameControl extends AppCompatActivity {
         role_pic = new Bitmap[2][4][4];//人物数，方向数，每个方向动作帧数
         Resources res=getResources();
         String fname;
-        for (int i=0;i<1;i++){
+        for (int i=0;i<2;i++){
             for (int j=0;j<4;j++){
                 for (int k=0;k<3;k++){
                     fname="r_"+Integer.toString(i)+"_"+Integer.toString(j)+"_"+Integer.toString(k);
