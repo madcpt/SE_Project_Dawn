@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#1B76D2</color>
+    <color name="colorAccent">#000000</color>
+    <color name="trans_blue">#BF89B6FB</color>
+    <color name="black_overlay">#66000000</color>
+    <color name="trans_black">#66000000</color>
+    <color name="abutton_pressed">#8D8888</color>
+    <color name="abutton">#C7C7C7</color>
+    <color name="ubutton_edge">#4B4B4B</color>
+    <color name="wood">#F1EAB3</color>
+
+</resources>
