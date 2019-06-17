@@ -54,6 +54,10 @@ public class ClientGameControl extends AppCompatActivity {
     private Button UseButton;
 
 
+    //血条显示
+    private ImageView HPbar;
+    private int[] HPbar_size;
+    private TextView HP_value;
 
     //屏幕左上角为{0,0}，我的角色的绝对位置为{860,0}，相对（地图）位置为{x,y}
     //则地图相对位置为{-x,-y}，绝对位置{860-x,0-y}
@@ -182,6 +186,14 @@ public class ClientGameControl extends AppCompatActivity {
 
         UseButton = findViewById(R.id.Ubutton);
         mRockerView = findViewById(R.id.my_rocker);
+
+        HPbar=findViewById(R.id.HP);
+        HPbar_size = new int[2];
+        HPbar_size[0]=HPbar.getMeasuredHeight()/2;
+        HPbar_size[1]=HPbar.getMeasuredWidth();
+        HP_value = findViewById(R.id.life_value);
+
+
         testtxt= findViewById(R.id.Fortest);
         testtxt.setText("loading... ");
         testtxt.setText(Arrays.toString(location));
@@ -396,9 +408,16 @@ public class ClientGameControl extends AppCompatActivity {
             System.out.println ("SIZEOFMAP: " + tmp.getByteCount ());
         matrix=new Matrix();
         matrix.postScale(((float) Map.unit * Map.size /tmp.getWidth()), ((float) Map.unit * Map.size /tmp.getHeight()));
-
         background = Bitmap.createBitmap(tmp, 0, 0,tmp.getWidth(),tmp.getHeight(),null,true);
         tmp.recycle();
+
+        //血条 load
+        tmp=BitmapFactory.decodeResource(this.getResources(),R.drawable.blood, opts).copy(Bitmap.Config.RGB_565, true);
+        matrix=new Matrix();
+        matrix.postScale(((float) HPbar_size[1]/tmp.getWidth()), ((float) HPbar_size[0]/tmp.getHeight()));
+        blood = Bitmap.createBitmap(tmp, 0, 0,tmp.getWidth(),tmp.getHeight(),null,true);
+        tmp.recycle();
+        HPbar.setImageBitmap(blood);
 
         //Rolepic load
         role_pic = new Bitmap[2][4][4];//人物数，方向数，每个方向动作帧数
@@ -466,6 +485,23 @@ public class ClientGameControl extends AppCompatActivity {
 
     }
 
+    //调整血条大小
+    private Handler handlerHP = new Handler();
+    private Runnable runnableHP = new Runnable() {
+        private int Currentsize;
+        public void setSize(int s){
+            Currentsize=s;
+        }
+        public void run() {
+            if (!isend) {
+                HP_value.setText(String.valueOf(Currentsize));
+
+                Matrix matrix=new Matrix();
+                matrix.postScale(((float)Currentsize/HPbar_size[1]),1);
+                HPbar.setImageBitmap(Bitmap.createBitmap(blood, 0, 0,blood.getWidth(),blood.getHeight(),matrix,true));
+            }
+        }
+    };
 
     //位置刷新UDP
     private Handler handlerUDP = new Handler();
@@ -543,6 +579,7 @@ public class ClientGameControl extends AppCompatActivity {
     private SurfaceView scr;
     private SurfaceHolder sfh;
     private Draw draw;
+    private Bitmap blood;
     private Bitmap background;
     private Bitmap grave;
     private Bitmap hole;
