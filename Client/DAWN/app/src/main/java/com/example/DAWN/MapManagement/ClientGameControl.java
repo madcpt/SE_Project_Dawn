@@ -23,20 +23,17 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.DAWN.CommonService.Configuration;
-import com.example.DAWN.CommonService.Data;
 import com.example.DAWN.CommonService.ClientComContext;
 import com.example.DAWN.CommonService.ClientComStrategyTCP;
 import com.example.DAWN.CommonService.ClientComStrategyUDP;
+import com.example.DAWN.CommonService.Configuration;
+import com.example.DAWN.CommonService.Data;
 import com.example.DAWN.R;
 import com.example.DAWN.RoleManagement.MyRole;
 import com.example.DAWN.RoleManagement.Role_simple;
-import com.example.DAWN.UI.CreateRoom;
 import com.example.DAWN.UI.RockerView;
-import com.example.DAWN.UserManament.User;
 
 import java.sql.Time;
 import java.util.Arrays;
@@ -212,7 +209,8 @@ public class ClientGameControl extends AppCompatActivity {
             e.printStackTrace ();
         }
 
-        myrole=new MyRole((Objects.requireNonNull (Data.playerLocation.get (Data.LOCAL_IP)))[0], Data.LOCAL_IP,8); //the capacity of bag is 8
+        System.out.println ("Output PlayerLocationSet: " + Data.playerLocation.keySet () + " " + Arrays.toString (Data.playerLocation.get (Data.playerID)));
+        myrole=new MyRole((Objects.requireNonNull (Data.playerLocation.get (String.valueOf (Data.playerID))))[0], Data.playerID,8); //the capacity of bag is 8
 
         //对摇杆位置改变进行监听
 //        当前模式：方向有改变时回调；8个方向
@@ -311,7 +309,11 @@ public class ClientGameControl extends AppCompatActivity {
     }
     public void Attack(){
         Attackable = false;
-        new AsyncConTCP().execute ("atk,100,0");
+        int damage = 20;
+        if (myrole.weapon!=null){
+            damage += 10;
+        }
+        new AsyncConTCP().execute ("atk,"+ damage +",0");
     }
     //实现移动
     public void Stopmove(){
@@ -319,36 +321,68 @@ public class ClientGameControl extends AppCompatActivity {
     }
 
     public void Lmove(){
+        int speed = 1;
+        if(myrole.shoe!=null){
+            speed += 1;
+        }
         if (Attackable)
-            new AsyncConTCP().execute("mov,0,1");
+            new AsyncConTCP().execute("mov,0,"+ speed);
     }
     public void Rmove(){
+        int speed = 1;
+        if(myrole.shoe!=null){
+            speed += 1;
+        }
         if (Attackable)
-            new AsyncConTCP ().execute ("mov,1,1");
+            new AsyncConTCP().execute("mov,1,"+ speed);
     }
     public void Umove(){
+        int speed = 1;
+        if(myrole.shoe!=null){
+            speed += 1;
+        }
         if (Attackable)
-            new AsyncConTCP ().execute ("mov,2,1");
+            new AsyncConTCP().execute("mov,2,"+ speed);
     }
     public void Dmove(){
+        int speed = 1;
+        if(myrole.shoe!=null){
+            speed += 1;
+        }
         if (Attackable)
-            new AsyncConTCP ().execute ("mov,3,1");
+            new AsyncConTCP().execute("mov,3,"+ speed);
     }
     public void DLmove(){
+        int speed = 1;
+        if(myrole.shoe!=null){
+            speed += 1;
+        }
         if (Attackable)
-            new AsyncConTCP ().execute ("mov,4,1");
+            new AsyncConTCP().execute("mov,4,"+ speed);
     }
     public void DRmove(){
+        int speed = 1;
+        if(myrole.shoe!=null){
+            speed += 1;
+        }
         if (Attackable)
-            new AsyncConTCP ().execute ("mov,5,1");
+            new AsyncConTCP().execute("mov,5,"+ speed);
     }
     public void ULmove(){
+        int speed = 1;
+        if(myrole.shoe!=null){
+            speed += 1;
+        }
         if (Attackable)
-            new AsyncConTCP ().execute ("mov,6,1");
+            new AsyncConTCP().execute("mov,6,"+ speed);
     }
     public void URmove(){
+        int speed = 1;
+        if(myrole.shoe!=null){
+            speed += 1;
+        }
         if (Attackable)
-            new AsyncConTCP ().execute ("mov,7,1");
+            new AsyncConTCP().execute("mov,7,"+ speed);
     }
 
     //Map初始化
@@ -368,11 +402,16 @@ public class ClientGameControl extends AppCompatActivity {
             System.out.println ("get111");
             new AsyncConUDP ().execute ("location!");
             TimeUnit.SECONDS.sleep(1);
+            System.out.println ("Output MapInitSet: " + Data.playerLocation.keySet () + " " + Arrays.toString (Data.playerLocation.get (String.valueOf (Data.playerID))));
+
         }
 
 
         for (String playerIP : Data.playerLocation.keySet ()){
-            System.out.println ("INFO111" + Arrays.toString (Data.playerLocation.get (playerIP)));
+//            int completeID = Integer.parseInt (playerIP)*100 + Objects.requireNonNull (Data.playerLocation.get (playerIP))[17];
+//            String name = String.valueOf (completeID);
+            System.out.println ("INFO111 " + playerIP + " " + Arrays.toString (Data.playerLocation.get (playerIP)));
+
             Role_simple test_r1=new Role_simple((Objects.requireNonNull (Data.playerLocation.get (playerIP)))[0], playerIP);
             test_r1.location[0] =  Objects.requireNonNull (Data.playerLocation.get (playerIP))[2];
             test_r1.location[1] =  Objects.requireNonNull (Data.playerLocation.get (playerIP))[3];
@@ -381,6 +420,7 @@ public class ClientGameControl extends AppCompatActivity {
             test_r1.attack_mov = Objects.requireNonNull (Data.playerLocation.get (playerIP))[6];
             test_r1.use_mov = Objects.requireNonNull (Data.playerLocation.get (playerIP))[7];
             test_r1.bag_used = Objects.requireNonNull(Data.playerLocation.get(playerIP))[8];
+            test_r1.roleType = Objects.requireNonNull (Data.playerLocation.get (playerIP))[17];
             System.arraycopy(test_r1.props,0,Objects.requireNonNull(Data.playerLocation.get(playerIP)),9,8);
             map.livingrole.add(test_r1);
 
@@ -538,7 +578,11 @@ public class ClientGameControl extends AppCompatActivity {
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         public void run() {
             if (!isend) {
-                this.update();
+                try {
+                    this.update();
+                } catch (InterruptedException e) {
+                    e.printStackTrace ();
+                }
                 handlerInfo.postDelayed(this, Configuration.ClientGameControlMapRate);// 刷新间隔(ms)
             }
         }
@@ -546,44 +590,44 @@ public class ClientGameControl extends AppCompatActivity {
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         void updateMapLocation(){
             if (Data.playerLocation != null) {
-                if (Data.playerLocation.containsKey(Data.LOCAL_IP)) {
+                if (Data.playerLocation.containsKey(String.valueOf (Data.playerID))) {
                     System.out.println (location[0] + "," + location[1] + "LOCATION111");
-                    location[0] = Objects.requireNonNull (Data.playerLocation.get (Data.LOCAL_IP))[2];
-                    location[1] = Objects.requireNonNull (Data.playerLocation.get (Data.LOCAL_IP))[3];
+                    location[0] = Objects.requireNonNull (Data.playerLocation.get (String.valueOf (Data.playerID)))[2];
+                    location[1] = Objects.requireNonNull (Data.playerLocation.get (String.valueOf (Data.playerID)))[3];
                 }
             } else {
                 location = new int[]{0, 0};
             }
         }
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-        void update() {
+        void update() throws InterruptedException {
             updateMapLocation ();
             Role_simple r;
             for (int i=0;i<map.livingrole.size();i++) {
                 r = map.livingrole.get(i);
-                if (!Data.playerLocation.containsKey(r.name)) {
+                if (!Data.playerLocation.containsKey(String.valueOf (r.name))) {
                     map.livingrole.remove(r);
                     continue;
                 }
-                r.lifevalue = Objects.requireNonNull (Data.playerLocation.get (r.name))[1];
+                r.lifevalue = Objects.requireNonNull (Data.playerLocation.get (String.valueOf (r.name)))[1];
                 check_alive(r);
-                r.location[0] = Objects.requireNonNull (Data.playerLocation.get (r.name))[2];
-                r.location[1] = Objects.requireNonNull (Data.playerLocation.get (r.name))[3];
-                r.direction = Objects.requireNonNull (Data.playerLocation.get (r.name))[4];
-                if (r.walk_mov*Objects.requireNonNull (Data.playerLocation.get (r.name))[5]<0)
-                {r.walk_mov = Objects.requireNonNull (Data.playerLocation.get (r.name))[5];}
-                switch (Objects.requireNonNull (Data.playerLocation.get (r.name))[6]){
+                r.location[0] = Objects.requireNonNull (Data.playerLocation.get (String.valueOf (r.name)))[2];
+                r.location[1] = Objects.requireNonNull (Data.playerLocation.get (String.valueOf (r.name)))[3];
+                r.direction = Objects.requireNonNull (Data.playerLocation.get (String.valueOf (r.name)))[4];
+                if (r.walk_mov*Objects.requireNonNull (Data.playerLocation.get (String.valueOf (r.name)))[5]<0)
+                {r.walk_mov = Objects.requireNonNull (Data.playerLocation.get (String.valueOf (r.name)))[5];}
+                switch (Objects.requireNonNull (Data.playerLocation.get (String.valueOf (r.name)))[6]){
                     case -1: r.attack_mov=-1; break;
                     case 1: if (r.attack_mov==-1) {r.attack_mov = 1;} break;
                 }
-                switch (Objects.requireNonNull (Data.playerLocation.get (r.name))[7]){
+                switch (Objects.requireNonNull (Data.playerLocation.get (String.valueOf (r.name)))[7]){
                     case -1: r.use_mov=-1; break;
                     case 1: if (r.use_mov==-1) {r.use_mov = 1;} break;
                 }
-                r.bag_used = Objects.requireNonNull(Data.playerLocation.get(r.name))[8];
-                System.arraycopy(r.props,0,Objects.requireNonNull(Data.playerLocation.get(r.name)),9,8);
+                r.bag_used = Objects.requireNonNull(Data.playerLocation.get(String.valueOf (r.name)))[8];
+                System.arraycopy(r.props,0,Objects.requireNonNull(Data.playerLocation.get(String.valueOf (r.name))),9,8);
                 System.out.println ("OTHER111 " + map.livingrole.size () + Arrays.toString (r.location));
-                System.out.println (Arrays.toString (Data.playerLocation.get (r.name)));
+                System.out.println (Arrays.toString (Data.playerLocation.get (String.valueOf (r.name))));
             }
         }
     };
@@ -662,15 +706,17 @@ public class ClientGameControl extends AppCompatActivity {
                             if (Math.abs(prop.getPropposition()[0] - location[0]) > vision * 20 || Math.abs(prop.getPropposition()[1] - location[1]) > vision * 20) {
                                 continue;
                             }
+                            if(!Data.pickableList.get(prop.getId())){
+                                continue;
+                            }
                             System.out.println ("proptype " + prop.getType () + " propid " + prop.getId ());
                             c.drawBitmap(prop_pic[prop.getType()],center_location[0] - location[0] + prop.getPropposition()[0],center_location[1] - location[1] + prop.getPropposition()[1]+prop_wave+(20-2*prop_wave)*(prop_wave/11),p);
                         }
 
                         for (int i=0;i<map.livingrole.size();i++) {
                             r = map.livingrole.get(i);
-                            // 判断使用按键是否可点击
                             // 检测是否为本机
-                            if(Data.LOCAL_IP.equals(r.name)) {
+                            if(Data.playerID == Integer.parseInt (String.valueOf (r.name))) {
                                 // 检测背包中有无药品
                                 boolean flag1 = (r.lifevalue == 100),flag2 = true;
                                 for (int prop:r.props) {
@@ -680,24 +726,37 @@ public class ClientGameControl extends AppCompatActivity {
                                         break;
                                     }
                                 }
+                                // 判断使用按键是否可点击
                                 if (flag1 || flag2){
                                     UseButton.setClickable(false);
                                 }
+                                System.out.println ("pre");
+                                //检测是否有鞋
+                                if (r.props[0]!=-1){
+                                    myrole.shoe = new Prop (1,1,0,0);
+                                }
+                                System.out.println ("mid");
+                                //检测是否有武器
+                                if (r.props[1]!=-1){
+                                    myrole.weapon = new Prop (2,2,0,0);
+                                }
+                                System.out.println ("end");
+
                             }
 
                             System.out.println ("CheckLocation: " + Arrays.toString (r.location) + " " + Arrays.toString (location));
                             if (Math.abs(r.location[0] - location[0]) > vision * 20 || Math.abs(r.location[1] - location[1]) > vision * 20) {
                                 continue;
                             }
-                            c.drawText(r.name,center_location[0] - location[0] + r.location[0]+48, center_location[1] - location[1] + r.location[1],p);
+                            c.drawText(String.valueOf (r.name),center_location[0] - location[0] + r.location[0]+48, center_location[1] - location[1] + r.location[1],p);
                             if (r.lifevalue<=0){
                                 c.drawBitmap(grave,center_location[0] - location[0] + r.location[0], center_location[1] - location[1] + r.location[1], p);
                                 continue;
                             }
                             if (r.walk_mov==-1) {
-                                c.drawBitmap (role_pic[r.id % 100][r.direction][0], center_location[0] - location[0] + r.location[0], center_location[1] - location[1] + r.location[1], p);
+                                c.drawBitmap (role_pic[r.roleType][r.direction][0], center_location[0] - location[0] + r.location[0], center_location[1] - location[1] + r.location[1], p);
                             } else{
-                                c.drawBitmap(role_pic[r.id%100][r.direction][r.walk_mov/4],center_location[0] - location[0]+r.location[0],center_location[1] - location[1]+r.location[1],p);
+                                c.drawBitmap(role_pic[r.roleType][r.direction][r.walk_mov/4],center_location[0] - location[0]+r.location[0],center_location[1] - location[1]+r.location[1],p);
                                 r.walk_mov=(r.walk_mov+1)%16;//每个动作循环的帧数
                             }
                             System.out.println("attack_mov " + r.attack_mov);
@@ -724,14 +783,14 @@ public class ClientGameControl extends AppCompatActivity {
                                 }
                                 r.attack_mov = (r.attack_mov >= 14 )?  (-1) : (r.attack_mov + 1);
                                 System.out.println("attack_mov " + r.attack_mov);
-                                if (r.attack_mov == -1 && Data.LOCAL_IP.equals(r.name)) {
+                                if (r.attack_mov == -1 && Data.playerID == r.name) {
                                     StopAttack();
                                 }
                             }
                             if (r.use_mov!=-1) {
                                 c.drawBitmap (use_pic[r.use_mov/2], center_location[0] - location[0] + r.location[0], center_location[1] - location[1] + r.location[1] + 40 , p);
                                 r.use_mov = (r.use_mov >= 35)? (-1) : (r.use_mov + 1);
-                                if(r.use_mov == -1 && Data.LOCAL_IP.equals(r.name)) {
+                                if(r.use_mov == -1 && Data.playerID == r.name) {
                                     UseFinish();
                                 }
                             }
@@ -771,27 +830,58 @@ public class ClientGameControl extends AppCompatActivity {
             }
         }
     }
-
     public void show_exp(View v){
         if (exp_order == -1){
             exp_order = 0;
         }
     }
 
-    void check_alive(Role_simple r){
-        if (r.id==myrole.id && r.lifevalue<=0) {
+    void check_alive(Role_simple r) throws InterruptedException {
+        if (r.id != myrole.id && r.lifevalue > 0){
+            Data.chickenDinner = false;
+        }
+        if ((r.id == myrole.id && r.lifevalue <= 0) || (r.id == myrole.id && Data.chickenDinner)) {
             isend=true;
+            TimeUnit.MILLISECONDS.sleep (1000);
+
+            while(Data.killBoard==null){
+                TimeUnit.MILLISECONDS.sleep (1000);
+                new AsyncConUDP ().execute ("kill_res!");
+            }
+            System.out.println ("Here is kill-board: " + Data.killBoard.toString ());
+
             Intent it_res = new Intent (this, ShowRes.class);    //切换User Activity至Login Activity
             Bundle bundle=new Bundle();
-            bundle.putString("name", myrole.name);
+            bundle.putString("name", String.valueOf (myrole.name));
             bundle.putInt("roleID",myrole.id);
-            bundle.putInt("rank",1);
-            bundle.putInt("killing",0);
-            bundle.putString("killedby","LYT");//也可以传被杀的id
+            int rank = 1;
+            for (int i = 0; i < Data.killBoard.size (); i++){
+                if (Data.killBoard.get (Data.killBoard.size ()-i-1)[1] == myrole.name){
+                    rank = i+2;
+                    break;
+                }
+            }
+            bundle.putInt("rank",rank);
+            int killingCnt = 0;
+            for (int i = 0; i < Data.killBoard.size (); i++){
+                if (Data.killBoard.get (i)[0] == myrole.name){
+                    killingCnt += 1;
+                }
+            }
+            bundle.putInt("killing",killingCnt);
+            for (int i = 0; i < Data.killBoard.size (); i++){
+                if (Data.killBoard.get (i)[1] == myrole.name){
+                    bundle.putString("killedby", String.valueOf (Data.killBoard.get (i)[0]));//也可以传被杀的id
+                    break;
+                }else{
+                    bundle.putString("killedby", "Nobody");//也可以传被杀的id
+                }
+            }
             it_res.putExtras(bundle);
             startActivity (it_res);
 
         }
+        if (r.id == myrole.id) Data.chickenDinner = true;
     }
 
 //    public void finish(View v){

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bkg"
 
     tools:context=".UI.CreateRoom">
 
@@ -13,7 +14,6 @@
         android:layout_height="408dp"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
-        android:background="@drawable/shape_cornel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/constraintLayout2"
         app:layout_constraintHorizontal_bias="1.0"
@@ -27,8 +27,9 @@
             android:layout_marginTop="38dp"
             android:layout_marginEnd="39dp"
             android:layout_marginRight="39dp"
-            android:background="@drawable/button_style"
+            android:background="@drawable/editstyle"
             android:text="CreateRoom"
+            android:textColor="#ffffff"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,21 +41,27 @@
             android:layout_marginEnd="36dp"
             android:layout_marginRight="36dp"
             android:ems="10"
+            android:textColor="#ffffff"
             android:hint="Please input the RoomContain"
             android:inputType="text"
+            android:textColorHint="#ffffffff"
+            android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/RoomID" />
 
         <EditText
             android:id="@+id/RoomID"
             android:layout_width="300dp"
-            android:layout_height="60dp"
+            android:layout_height="43dp"
             android:layout_marginTop="44dp"
             android:layout_marginEnd="36dp"
             android:layout_marginRight="36dp"
             android:ems="10"
+            android:textColor="#ffffff"
             android:hint="Please input the RoomID"
             android:inputType="text"
+            android:textColorHint="#ffffffff"
+            android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/CreateRoom" />
 
@@ -68,7 +75,6 @@
 
         android:layout_marginEnd="3dp"
         android:layout_marginRight="3dp"
-        android:background="@drawable/shape_cornel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -81,20 +87,24 @@
             android:layout_marginTop="38dp"
             android:layout_marginEnd="41dp"
             android:layout_marginRight="41dp"
-            android:background="@drawable/button_style"
+            android:background="@drawable/editstyle"
             android:text="JoinRoom"
+            android:textColor="#ffffff"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
 
         <Spinner
             android:id="@+id/RoomList"
-            android:layout_width="217dp"
-            android:layout_height="31dp"
+            android:layout_width="210dp"
+            android:layout_height="49dp"
             android:layout_marginTop="37dp"
             android:layout_marginEnd="43dp"
             android:layout_marginRight="43dp"
             android:layout_marginBottom="250dp"
+            android:background="@drawable/editstyle"
+            android:outlineAmbientShadowColor="#ffffffff"
+            android:outlineSpotShadowColor="@android:color/holo_orange_dark"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/JoinRoom" />

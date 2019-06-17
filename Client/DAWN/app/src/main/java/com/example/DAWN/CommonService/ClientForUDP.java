@@ -1,5 +1,8 @@
 package com.example.DAWN.CommonService;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+
 import com.example.DAWN.MapManagement.Prop;
 import com.example.DAWN.RoomManagement.Room;
 
@@ -12,6 +15,8 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.HashMap;
+import java.util.Objects;
 import java.util.Vector;
 /**
 * @version : 2.0
@@ -32,10 +37,11 @@ class ClientForUDP {
 * @description : The client class for UDP
 * @param : msg the message to send such as requests for props and so on.
 */
-    void testCon(String msg) {
+@RequiresApi(api = Build.VERSION_CODES.KITKAT)
+void testCon(String msg) {
         try {
             byte[] requestBytes = new byte[128];
-            byte[] ReceiveBytes = new byte[2048];
+            byte[] ReceiveBytes = new byte[20480];
             DatagramPacket requestPacket = new DatagramPacket(requestBytes, requestBytes.length);
             DatagramPacket receivePacket = new DatagramPacket(ReceiveBytes,ReceiveBytes.length);
 
@@ -47,10 +53,12 @@ class ClientForUDP {
 //                client.setSoTimeout (100);
                 client.bind(new InetSocketAddress (5062));
             }
+
             // Request
             requestPacket.setPort(5063);
             requestPacket.setAddress(InetAddress.getByName (Data.Server));
-            requestPacket.setData ((msg + "!").getBytes ());
+            // TODO
+            requestPacket.setData ((Data.playerID + "!" + msg + "!").getBytes ());
 
             long startTime = System.currentTimeMillis();
             client.send(requestPacket);
@@ -71,18 +79,33 @@ class ClientForUDP {
             String[] meslist = msg.split ("!");
             System.out.println (meslist);
             switch (meslist[0]){
-                case "location":
+                case "location":{
                     System.out.println ("receive111-Starting");
-                    Map<String, int[]> playerLocation = (Map<String, int[]>) objectStream.readObject();
-
+                    HashMap<String, int[]> playerLocation = (HashMap<String, int[]>) objectStream.readObject();
+                    HashMap<String, int[]> tmp = new HashMap<>();
                     System.out.println ("receive111" + playerLocation);
 
                     for(String a : playerLocation.keySet ()){
-                        System.out.println ("int111 "+ playerLocation.get (a)[1]);
+                        System.out.println ("int111 " + a + " " + Arrays.toString (playerLocation.get (a)));
+                        if (a.equals ("prop")) {
+                            System.out.println ("int111222 detect prop");
+                            Vector <Boolean> tmp2 = new Vector<> ();
+                            for (int i = 0; i < Objects.requireNonNull (playerLocation.get (a)).length; i++){
+                                if (Objects.requireNonNull (playerLocation.get (a))[i] == 1) tmp2.add (true);
+                                else tmp2.add (false);
+                            }
+                            Data.pickableList = tmp2;
+                        }else {
+                            tmp.put (a, Objects.requireNonNull (playerLocation.get (a)));
+                        }
                     }
-                    Data.playerLocation = playerLocation;
-                    System.out.println(Data.playerLocation + " RECEIVING");
+                    Data.playerLocation = tmp ;
+//                    Data.completeID = Objects.requireNonNull (playerLocation.get (Data.playerID))[0] * 100 + Objects.requireNonNull (playerLocation.get (Data.playerID))[17];
+
+//                    System.out.println ("Output LocationInitSet: " + Data.playerLocation.keySet () + " " + Data.playerID + " " + Arrays.toString (Data.playerLocation.get (Data.playerID)));
+//                    System.out.println ("Output LocationInitSet: " + playerLocation.keySet () + " " + Data.playerID + " " + Arrays.toString (playerLocation.get (Data.playerID)));
                     break;
+                }
 
                 case "get_prop":
                     System.out.println ("Get Prop: ");
@@ -116,7 +139,7 @@ class ClientForUDP {
                 case "room_info":
                     Vector<String> memberList = (Vector<String>) objectStream.readObject ();
                     if(Data.myRoom == null) {
-                        Data.myRoom = new Room (meslist[1], memberList);
+                        Data.myRoom = new   Room (meslist[1], memberList);
                         System.out.println ("ROOM111" + memberList);
                     }
                     break;
@@ -138,7 +161,11 @@ class ClientForUDP {
                     Data.myRoom.roomPrepareCnt = room_cnt;
                     System.out.println ("From Server: Room_cnt: " + Arrays.toString (room_cnt));
                     break;
-
+                case "kill_res":
+                    Vector<int[]> kill_res = (Vector<int[]>) objectStream.readObject ();
+                    System.out.println ("Receive kill-board: " + kill_res);
+                    Data.killBoard = kill_res;
+                    break;
 
 
             }

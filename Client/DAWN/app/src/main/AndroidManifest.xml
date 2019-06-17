@@ -17,7 +17,8 @@
             android:name=".MapManagement.ShowRes"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_show_res"
-            android:theme="@style/FullscreenTheme"></activity>
+            android:theme="@style/FullscreenTheme"
+            android:screenOrientation="landscape"></activity>
         <activity
             android:name=".UI.CreateRoom"
             android:screenOrientation="landscape" />

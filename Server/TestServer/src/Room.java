@@ -4,8 +4,9 @@ public class Room {
     private String owner;
     private String roomID;
 
-    private Map<String, int[]> playerLocation;
+    private HashMap<String, int[]> playerLocation;
     private HashMap<String, Integer> playerPool; // Integer: 0->unprepared, 1->prepared
+    private Vector<int [] > killBoard;
 
     private MapClass WholeMap;
     private Random rand;
@@ -20,6 +21,7 @@ public class Room {
         playerLocation = new HashMap<>();
         playerPool = new HashMap<>();
         Colli = new Collision(120,100);
+        killBoard = new Vector<>();
 
         this.livePlayer = 0;
         this.owner = pureIP;
@@ -27,11 +29,11 @@ public class Room {
         this.capacity = capacity;
     }
 
-    public void addPlayer(String pureIP) {
-        int[] playerInformation = new int[17];
+    void addPlayer(String completeID) {
+        int[] playerInformation = new int[18];
         // ID life location[0] location[1] direction walk_mov attack_mov
 
-        playerInformation[0]=100   ; // tmp for ID
+        playerInformation[0]= Integer.parseInt(completeID); // tmp for ID
         playerInformation[1]=100; // life
         do {
             playerInformation[2]=rand.nextInt(MapClass.unit * MapClass.size);
@@ -48,9 +50,10 @@ public class Room {
         for (int i = 9;i < 17;++i){
             playerInformation[i] = -1; // no prop
         }
+        playerInformation[17] = 0; // role type
 
-        playerLocation.put(pureIP, playerInformation);
-        playerPool.put(pureIP, 0); // Set initial status to unprepared
+        playerLocation.put(completeID, playerInformation);
+        playerPool.put(completeID, 0); // Set initial status to unprepared
         livePlayer += 1;
     }
 
@@ -58,7 +61,7 @@ public class Room {
         return playerPool.containsKey(pureIP);
     }
 
-    public void removePlayer(String pureIP){
+    void removePlayer(String pureIP){
         playerLocation.remove(pureIP);
     }
 
@@ -75,7 +78,7 @@ public class Room {
         return ( x2 > x1 - w && x2 < x1 + w && y2 > y1 - h && y2 < y1 + h );
     }
 
-    public boolean getPrepared(String pureIP){
+    boolean getPrepared(String pureIP){
         if (playerPool.containsKey(pureIP)) {
             playerPool.put(pureIP, 1);
             return true;
@@ -110,11 +113,21 @@ public class Room {
             }
             if(AttackCollisionDetect(x,y,playerLocation.get(ID)[3],playerLocation.get(ID)[2])){
                 playerLocation.get(ID)[1] -= dama;
+                if(playerLocation.get(ID)[1] <= 0){
+                    aKillB(pureIP, ID);
+                }
             }
         }
     }
 
-    public void moveDegree(String pureIP, String degree, int velocity) {
+    private void aKillB(String pureIP, String id) {
+        int [] tmp = new int[2];
+        tmp[0] = Integer.parseInt(pureIP);
+        tmp[1] = Integer.parseInt(id);
+        killBoard.add(tmp);
+    }
+
+    void moveDegree(String pureIP, String degree, int velocity) {
         switch (degree){
             case "0":
                 Lmove(pureIP, velocity);
@@ -144,11 +157,13 @@ public class Room {
         }
     }
 
-    Map<String, int[]> getUpdateList() {
-        return playerLocation;
+    HashMap<String, int[]> getUpdateList() {
+        HashMap<String, int[]> tmp = new HashMap<>(playerLocation);
+        tmp.put("prop", WholeMap.getPropStatus());
+        return tmp;
     }
 
-    public void mov_stop(String pureIP) {
+    void mov_stop(String pureIP) {
         int[] tmpLoc = playerLocation.get(pureIP);
         tmpLoc[5]=-1;
         playerLocation.put(pureIP,tmpLoc);
@@ -335,6 +350,16 @@ public class Room {
 
     Vector<Integer> getInitProp() {
         return WholeMap.getPropList();
+    }
+
+    void setRoleType(String pureIP, int parseInt) {
+        int[] tmpLoc = playerLocation.get(pureIP);
+        tmpLoc[17] = parseInt;
+        playerLocation.put(pureIP, tmpLoc);
+    }
+
+    Vector getKillBoard() {
+        return killBoard;
     }
 }
 

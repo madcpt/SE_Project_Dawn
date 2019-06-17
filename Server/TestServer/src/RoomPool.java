@@ -113,11 +113,11 @@ public class RoomPool {
         return 0;
     }
 
-    Map<String,int[]> getUpdateReport(String pureIP) {
+    HashMap<String,int[]> getUpdateReport(String pureIP) {
         String roomID = findRoom(pureIP);
-        disPlayAllRoom();
-        System.out.println(pureIP);
-        System.out.println(roomID);
+//        disPlayAllRoom();
+//        System.out.println(pureIP);
+//        System.out.println(roomID);
         if (roomList.containsKey(roomID)){
             System.out.println("Room found");
             return roomList.get(roomID).getUpdateList();
@@ -143,5 +143,13 @@ public class RoomPool {
 
     Vector<Integer> getInitProp(String roomID) {
         return roomList.get(roomID).getInitProp();
+    }
+
+    void setRoleType(String roomID, String pureIP, String s) {
+        roomList.get(roomID).setRoleType(pureIP, Integer.parseInt(s));
+    }
+
+    Vector getKillBoard(String roomIDOfPlayer) {
+        return roomList.get(roomIDOfPlayer).getKillBoard();
     }
 }

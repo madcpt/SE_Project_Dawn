@@ -187,4 +187,13 @@ public class MapClass {
         }
         return tmp;
     }
+
+    int[] getPropStatus() {
+        int [] tmp = new int[20];
+        for (int i = 0; i < proplist.size(); i++){
+            if(proplist.get(i).isPickable()) tmp[i] = 1;
+            else tmp[i] = 0;
+        }
+        return tmp;
+    }
 }
