@@ -6,7 +6,7 @@ import java.util.Random;
 
 
 
-public class MapClass {
+class MapClass {
 
     Random rand=new Random();
     static int unit =150;
@@ -14,12 +14,12 @@ public class MapClass {
     private static int border = 2;
     private int sizeOfProp = 20;
 
-    public Vector<Prop> proplist;
+    Vector<Prop> proplist;
     private Prop prop_sample;
    // public Vector<> rankrecord;
-    public int[][] m;
+   int[][] m;
 
-    public MapClass () {
+    MapClass() {
 
         proplist = new Vector<Prop>();
      //   rankrecord = new Vector<Role>();
@@ -183,6 +183,17 @@ public class MapClass {
         int count = 0;
         for (Prop prop: proplist){
             tmp.addAll(prop.getPropPara());
+            count += 1;
+        }
+        return tmp;
+    }
+
+    Vector<Boolean> getPickableList() {
+        Vector<Boolean> tmp = new Vector<>();
+        int count = 0;
+        for (Prop prop: proplist){
+//            tmp.addAll(prop.getPropPara());
+            tmp.add(prop.isPickable());
             count += 1;
         }
         return tmp;

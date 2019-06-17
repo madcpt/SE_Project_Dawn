@@ -124,6 +124,17 @@ public class RoomPool {
         }
         return null;
     }
+    Map<String,int[]> getUpdateReport2(String pureIP) {
+        String roomID = findRoom(pureIP);
+//        disPlayAllRoom();
+//        System.out.println(pureIP);
+//        System.out.println(roomID);
+        if (roomList.containsKey(roomID)){
+//            System.out.println("Room found");
+            return roomList.get(roomID).getUpdateList2();
+        }
+        return null;
+    }
 
     void useProp(String pureIP, String roomID) {
         roomList.get(roomID).useProp(pureIP);
@@ -151,5 +162,9 @@ public class RoomPool {
 
     Vector getKillBoard(String roomIDOfPlayer) {
         return roomList.get(roomIDOfPlayer).getKillBoard();
+    }
+
+    Vector<Boolean> getPickableList(String roomID) {
+        return roomList.get(roomID).getPickableList();
     }
 }

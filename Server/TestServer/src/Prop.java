@@ -2,7 +2,7 @@ import org.omg.CORBA.INTERNAL;
 
 import java.util.Vector;
 
-public class Prop {
+class Prop {
     private int id;
     private int type; //0-medicine; 1-shoe; 2-weapon; 3-torch;
     private int value;
@@ -13,7 +13,8 @@ public class Prop {
     private static final int SPEED_UP = 1;
     private static final int DAMAGE = 10;
     private static final int VISION_UP = 10;
-    public Prop(int ID, int t){
+
+    Prop(int ID, int t){
         id = ID;
         type = t;
         pickable = true;
@@ -25,32 +26,32 @@ public class Prop {
         }
     };
 
-    public int getId() {
+    int getId() {
         return id;
     }
 
-    public int getType() {
+    int getType() {
         return type;
     }
 
-    public int getValue() {
+    int getValue() {
         return value;
     }
 
-    public boolean isPickable() {
+    boolean isPickable() {
         return pickable;
     }
 
-    public void setPropposition(int[] propposition) {
+    void setPropposition(int[] propposition) {
         int size = propposition.length;
         this.propposition = new int[size];
         System.arraycopy(propposition,0,this.propposition,0,size);
     }
-    public void UnPickable(){
+    void UnPickable(){
         pickable = false;
     }
 
-    public int[] getPropposition() {
+    int[] getPropposition() {
         return propposition;
     }
 

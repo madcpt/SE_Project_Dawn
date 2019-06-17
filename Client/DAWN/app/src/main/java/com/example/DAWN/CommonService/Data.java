@@ -21,7 +21,7 @@ public class Data {
     private static Long delay;
     static String Server;
     static int port;
-    public static Map<String, int[]> playerLocation;
+    public static HashMap<String, int[]> playerLocation;
     public static Vector<String> roomListStr;
     public static Room myRoom;
     public static String myRoomID;
@@ -32,7 +32,7 @@ public class Data {
     public static int completeID;
     public static boolean chickenDinner;
     public static Vector<Boolean> pickableList;
-    
+
 
     public Data(){
     }
@@ -57,7 +57,11 @@ public class Data {
         roleID = 0;
         playerID = 0;
         chickenDinner = false;
-
+        pickableList = new Vector<Boolean> ();
+        playerLocation = new HashMap<> ();
+        for(int i = 0;i < 20;i++){
+            pickableList.add (true);
+        }
     }
 
     public static Long getDelay() {
@@ -77,4 +81,5 @@ public class Data {
     public static void getStatus() {
         System.out.println ("STATUS111: " + LOCAL_IP + Server + port);
     }
+
 }

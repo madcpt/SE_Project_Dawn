@@ -40,7 +40,7 @@ public class serverForMultiClientUDP implements Runnable{
             server.receive(data);
             String [] inputMes = new String(data.getData()).split("!");
 //            System.out.println(new String(data.getData()));
-            System.out.println("inputString:" + Arrays.toString(inputMes));
+                System.out.println("inputString:" + Arrays.toString(inputMes));
 //            String pureIP = String.valueOf(data.getSocketAddress()).split(":")[0];
             String pureIP = String.valueOf(Integer.parseInt(inputMes[0]));
             switch (inputMes[1]){
@@ -59,7 +59,8 @@ public class serverForMultiClientUDP implements Runnable{
                     for(String i : Data.serverGameControl.getUpdateList(pureIP).keySet()){
                         System.out.println(i + " " + Arrays.toString(Data.serverGameControl.getUpdateList(pureIP).get(i)));
                     }
-                    objectStream.writeObject(Data.serverGameControl.getUpdateList(pureIP));
+//                    objectStream.writeObject(Data.serverGameControl.getUpdateList(pureIP));
+                    objectStream.writeObject(Data.serverGameControl.getUpdateList2(pureIP));
                     break;
                 }
 
@@ -124,6 +125,12 @@ public class serverForMultiClientUDP implements Runnable{
                     tmp = Data.serverGameControl.getKillBoard(pureIP);
                     System.out.println("Get kill-board: " + tmp);
                     objectStream.writeObject(tmp);
+                }
+
+                case "pick_list":{
+                    Vector<Boolean> tmp = Data.serverGameControl.getPickableList(pureIP);
+                    System.out.println("Get pick-list " +  tmp);
+                    objectStream.writeObject(133);
                 }
 
 

@@ -102,6 +102,9 @@ class serverGameControl {
     Map<String, int[]> getUpdateList(String pureIP) {
         return roomList.getUpdateReport(pureIP);
     }
+    Map<String, int[]> getUpdateList2(String pureIP) {
+        return roomList.getUpdateReport2(pureIP);
+    }
 
     void Use(String pureIP) {
         String roomID =findRoomOfPlayer((pureIP));
@@ -135,5 +138,10 @@ class serverGameControl {
     void setRoleType(String pureIP, String s) {
         String roomID = findRoomOfPlayer(pureIP);
         roomList.setRoleType(roomID, pureIP, s);
+    }
+
+    Vector<Boolean> getPickableList(String pureIP) {
+        String roomID = findRoomOfPlayer(pureIP);
+        return roomList.getPickableList(roomID);
     }
 }

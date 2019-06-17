@@ -14,6 +14,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Vector;
@@ -80,14 +81,32 @@ void testCon(String msg) {
             switch (meslist[0]){
                 case "location":{
                     System.out.println ("receive111-Starting");
-                    Map<String, int[]> playerLocation = (Map<String, int[]>) objectStream.readObject();
-
+                    HashMap<String, int[]> playerLocation = (HashMap<String, int[]>) objectStream.readObject();
+                    HashMap<String, int[]> tmp = new HashMap<> ();
                     System.out.println ("receive111" + playerLocation);
 
                     for(String a : playerLocation.keySet ()){
                         System.out.println ("int111 " + a + " " + Arrays.toString (playerLocation.get (a)));
+                        if (a.equals ("prop")) {
+                            System.out.println ("int111222 detect prop");
+                            Vector <Boolean> tmp2 = new Vector<> ();
+                            for (int i = 0; i < Objects.requireNonNull (playerLocation.get (a)).length; i++){
+                                if (Objects.requireNonNull (playerLocation.get (a))[i] == 1) tmp2.add (true);
+                                else tmp2.add (false);
+                            }
+//                            playerLocation.remove (a);
+//                            Data.pickableList = tmp2;
+                        }else {
+                            tmp.put (a, Objects.requireNonNull (playerLocation.get (a)));
+                        }
                     }
-                    Data.playerLocation = playerLocation;
+                    for (String a : playerLocation.keySet ()){
+                        System.out.println ("int111222 " + a + " " + Arrays.toString (playerLocation.get (a)));
+                    }
+                    System.out.println ("int111222");
+//                    Data.playerLocation = playerLocation;
+                    Data.playerLocation.putAll(playerLocation) ;
+
 //                    Data.completeID = Objects.requireNonNull (playerLocation.get (Data.playerID))[0] * 100 + Objects.requireNonNull (playerLocation.get (Data.playerID))[17];
 
 //                    System.out.println ("Output LocationInitSet: " + Data.playerLocation.keySet () + " " + Data.playerID + " " + Arrays.toString (Data.playerLocation.get (Data.playerID)));
@@ -115,6 +134,7 @@ void testCon(String msg) {
                             Data.propList.add(i/5,propsample);
                         }
                     }
+                    System.out.println ("Prop Out");
                     break;
 
                 case "ask_room":
@@ -154,6 +174,11 @@ void testCon(String msg) {
                     System.out.println ("Receive kill-board: " + kill_res);
                     Data.killBoard = kill_res;
                     break;
+                case "pick_list":
+//                    Vector<Boolean> prop_list = (Vector<Boolean>) objectStream.readObject ();
+                    Vector<Boolean> prop_list = (Vector<Boolean>) objectStream.readObject ();
+                    System.out.println ("Receive prop-list: " + prop_list);
+                    Data.pickableList = prop_list;
 
 
             }

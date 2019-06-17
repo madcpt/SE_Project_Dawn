@@ -49,9 +49,11 @@ public class serverForMultiClientTCP extends ServerSocket {
                 DataOutputStream out = new DataOutputStream(outToServer);
 
                 String inputString = in.readUTF();
-                System.out.println("inputString:" + inputString);
 
                 List<String> myList = new ArrayList<>(Arrays.asList(inputString.split(",")));
+                if(!String.valueOf(myList.get(1)).equals("stp"))
+
+                    System.out.println("inputString:" + inputString);
 //                String pureIP = myList.get(0).split(":")[0];
 //                String pureIP = String.valueOf(client.getRemoteSocketAddress()).split(":")[0];
                 String pureIP = String.valueOf(Integer.parseInt(myList.get(0)));
