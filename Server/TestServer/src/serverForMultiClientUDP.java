@@ -120,8 +120,10 @@ public class serverForMultiClientUDP implements Runnable{
                 }
 
                 case "kill_res":{
-                    Vector tmp = new Vector();
+                    Vector tmp;
                     tmp = Data.serverGameControl.getKillBoard(pureIP);
+                    System.out.println("Get kill-board: " + tmp);
+                    objectStream.writeObject(tmp);
                 }
 
 

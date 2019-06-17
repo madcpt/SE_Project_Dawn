@@ -35,6 +35,7 @@ import com.example.DAWN.RoleManagement.MyRole;
 import com.example.DAWN.RoleManagement.Role_simple;
 import com.example.DAWN.UI.RockerView;
 
+import java.sql.Time;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -491,7 +492,11 @@ public class ClientGameControl extends AppCompatActivity {
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         public void run() {
             if (!isend) {
-                this.update();
+                try {
+                    this.update();
+                } catch (InterruptedException e) {
+                    e.printStackTrace ();
+                }
                 handlerInfo.postDelayed(this, Configuration.ClientGameControlMapRate);// 刷新间隔(ms)
             }
         }
@@ -509,7 +514,7 @@ public class ClientGameControl extends AppCompatActivity {
             }
         }
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-        void update() {
+        void update() throws InterruptedException {
             updateMapLocation ();
             Role_simple r;
             for (int i=0;i<map.livingrole.size();i++) {
@@ -715,20 +720,50 @@ public class ClientGameControl extends AppCompatActivity {
         }
     }
 
-    void check_alive(Role_simple r){
-        if (r.id==myrole.id && r.lifevalue<=0) {
+    void check_alive(Role_simple r) throws InterruptedException {
+        if (r.id != myrole.id && r.lifevalue > 0){
+            Data.chickenDinner = false;
+        }
+        if ((r.id == myrole.id && r.lifevalue <= 0) || (r.id == myrole.id && Data.chickenDinner)) {
             isend=true;
+            while(Data.killBoard==null){
+                new AsyncConUDP ().execute ("kill_res!");
+                TimeUnit.MILLISECONDS.sleep (1000);
+            }
+            System.out.println ("Here is kill-board: " + Data.killBoard.toString ());
+
             Intent it_res = new Intent (this, ShowRes.class);    //切换User Activity至Login Activity
             Bundle bundle=new Bundle();
             bundle.putString("name", String.valueOf (myrole.name));
             bundle.putInt("roleID",myrole.id);
-            bundle.putInt("rank",1);
-            bundle.putInt("killing",0);
-            bundle.putString("killedby","LYT");//也可以传被杀的id
+            int rank = 1;
+            for (int i = 0; i < Data.killBoard.size (); i++){
+                if (Data.killBoard.get (Data.killBoard.size ()-i-1)[1] == myrole.name){
+                    rank = i+2;
+                    break;
+                }
+            }
+            bundle.putInt("rank",rank);
+            int killingCnt = 0;
+            for (int i = 0; i < Data.killBoard.size (); i++){
+                if (Data.killBoard.get (i)[0] == myrole.name){
+                    killingCnt += 1;
+                }
+            }
+            bundle.putInt("killing",killingCnt);
+            for (int i = 0; i < Data.killBoard.size (); i++){
+                if (Data.killBoard.get (i)[1] == myrole.name){
+                    bundle.putString("killedby", String.valueOf (Data.killBoard.get (i)[0]));//也可以传被杀的id
+                    break;
+                }else{
+                    bundle.putString("killedby", "Nobody");//也可以传被杀的id
+                }
+            }
             it_res.putExtras(bundle);
             startActivity (it_res);
 
         }
+        if (r.id == myrole.id) Data.chickenDinner = true;
     }
 
 //    public void finish(View v){
