@@ -31,6 +31,8 @@ public class Data {
     public static int playerID;
     public static int completeID;
     public static boolean chickenDinner;
+    public static Vector<Boolean> pickableList;
+    
 
     public Data(){
     }
