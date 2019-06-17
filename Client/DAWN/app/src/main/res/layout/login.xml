@@ -7,6 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/bkg1"
     tools:context="com.example.DAWN.UI.Login">
 
     <RelativeLayout
@@ -26,9 +27,8 @@
             android:layout_marginTop="18dp"
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
-            android:background="@drawable/button_style"
-            android:text="注册"
-            android:textColor="#888888"
+            android:background="@drawable/editstyle"            android:text="注册"
+            android:textColor="#ffffff"
             android:textSize="20dp" />
         <!--在该元素的下方-->
         android:layout_alignParentLeft="true"
@@ -41,10 +41,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/login_edit_pwd"
             android:layout_alignParentStart="true"
-            android:background="@drawable/button_style"
             android:layout_alignParentLeft="true"
             android:layout_alignParentEnd="true"
-
+            android:background="@drawable/editstyle"
             android:layout_alignParentRight="true"
             android:layout_marginStart="0dp"
             android:layout_marginLeft="0dp"
@@ -53,7 +52,7 @@
             android:layout_marginRight="0dp"
             android:onClick="finish_login"
             android:text="@string/login"
-            android:textColor="#888888"
+            android:textColor="#ffffff"
             android:textSize="20dp" />
 
         <ImageView
@@ -71,7 +70,7 @@
             android:layout_marginTop="-20dp"
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
-            android:background="#FFFFFF" />
+            android:background="@drawable/editstyle" />
 
         <EditText
             android:id="@+id/login_edit_pwd"
@@ -83,7 +82,10 @@
             android:drawableLeft="@android:drawable/ic_lock_idle_lock"
             android:ems="10"
             android:hint="请输入您的密码"
-            android:inputType="textPassword" />
+            android:textColor="#ffffff"
+            android:inputType="textPassword"
+            android:textStyle="italic"
+            android:textColorHint="#ffffff"/>
 
         <EditText
             android:id="@+id/login_edit_account"
@@ -95,7 +97,10 @@
             android:layout_marginTop="20dp"
             android:drawableLeft="@android:drawable/ic_menu_myplaces"
             android:hint="请输入您的用户名"
-            android:inputType="textPersonName" />
+            android:textColor="#ffffff"
+            android:inputType="textPersonName"
+            android:textStyle="italic"
+            android:textColorHint="#ffffff"/>
 
         <Button
             android:id="@+id/login_btn_cancle"
@@ -120,6 +125,7 @@
             android:layout_width="100dp"
             android:layout_height="20dp"
             android:text="记住密码"
+            android:textColor="#ffffff"
             android:id="@+id/Login_Remember"
             android:layout_below="@+id/login_edit_pwd"
             android:layout_alignParentLeft="true"

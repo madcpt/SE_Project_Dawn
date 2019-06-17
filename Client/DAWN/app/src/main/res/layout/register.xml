@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/timg"
     tools:context="com.example.DAWN.UI.Register">
 
     <RelativeLayout
@@ -40,6 +41,7 @@
         <EditText
 
             android:id="@+id/resetpwd_edit_name"
+            android:background="@drawable/editstyle"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_below="@+id/logoforRe"
@@ -50,6 +52,9 @@
             android:layout_marginTop="25dp"
             android:drawableLeft="@android:drawable/ic_menu_myplaces"
             android:hint="请输入您的用户名"
+            android:textColor="#ffffff"
+            android:textColorHint="#ffffff"
+            android:textStyle="italic"
             android:inputType="textPersonName" />
 
         <!--
@@ -75,6 +80,10 @@
             android:drawableLeft="@android:drawable/ic_lock_idle_lock"
             android:ems="10"
             android:hint="请输入您的密码"
+            android:textColor="#ffffff"
+            android:textStyle="italic"
+            android:textColorHint="#ffffff"
+            android:background="@drawable/editstyle"
             android:inputType="textPassword" />
 
         <Button
@@ -85,13 +94,14 @@
             android:layout_marginLeft="18dp"
             android:layout_marginTop="49dp"
             android:layout_toRightOf="@id/resetpwd_edit_pwd_new"
-            android:background="@drawable/button_style"
+            android:background="@drawable/editstyle"
             android:text="取消"
-            android:textColor="#888888"
+
             android:textSize="20dp" />
 
         <EditText
             android:id="@+id/resetpwd_edit_pwd_new"
+            android:background="@drawable/editstyle"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_below="@+id/resetpwd_edit_pwd_old"
@@ -99,6 +109,9 @@
             android:drawableLeft="@android:drawable/ic_lock_idle_lock"
             android:ems="10"
             android:hint="请确认您的密码"
+            android:textColor="#ffffff"
+            android:textColorHint="#ffffff"
+            android:textStyle="italic"
             android:inputType="textPassword" />
 
         <Button
@@ -109,9 +122,10 @@
             android:layout_marginLeft="18dp"
             android:layout_marginTop="39dp"
             android:layout_toRightOf="@id/resetpwd_edit_pwd_old"
-            android:background="@drawable/button_style"
+            android:background="@drawable/editstyle"
+
             android:text="确定"
-            android:textColor="#888888"
+
             android:textSize="20dp" />
 
     </RelativeLayout>

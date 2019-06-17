@@ -21,6 +21,8 @@ public class Register extends AppCompatActivity {
     private EditText mAccount;                        //用户名编辑
     private EditText mPwd;                            //密码编辑
     private EditText mPwdCheck;                       //密码编辑
+    //mAccount.setBackgroundColor(Color.argb(255, 0, 255, 0));
+
     private Button mSureButton;                       //确定按钮
     private Button mCancelButton;                     //取消按钮
     private UserDataManager mUserDataManager;         //用户数据管理类
