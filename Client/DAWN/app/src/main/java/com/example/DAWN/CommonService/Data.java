@@ -21,7 +21,7 @@ public class Data {
     private static Long delay;
     static String Server;
     static int port;
-    public static Map<String, int[]> playerLocation;
+    public static HashMap<String, int[]> playerLocation;
     public static Vector<String> roomListStr;
     public static Room myRoom;
     public static String myRoomID;
@@ -50,6 +50,7 @@ public class Data {
         Server="192.168.137.1";
 //        Server="59.78.18.69";
         port = 66;
+        pickableList = new Vector<Boolean>();
         accountStatus = new HashMap<> ();
         getInitProp = false;
         propInit = new Vector<> ();

@@ -652,9 +652,9 @@ public class ClientGameControl extends AppCompatActivity {
                             if (Math.abs(prop.getPropposition()[0] - location[0]) > vision * 20 || Math.abs(prop.getPropposition()[1] - location[1]) > vision * 20) {
                                 continue;
                             }
-//                            if(!Data.pickableList.get(prop.getId())){
-//                                continue;
-//                            }
+                            if(!Data.pickableList.get(prop.getId())){
+                                continue;
+                            }
                             System.out.println ("proptype " + prop.getType () + " propid " + prop.getId ());
                             c.drawBitmap(prop_pic[prop.getType()],center_location[0] - location[0] + prop.getPropposition()[0],center_location[1] - location[1] + prop.getPropposition()[1]+prop_wave+(20-2*prop_wave)*(prop_wave/11),p);
                         }

@@ -15,6 +15,7 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.Vector;
 /**
@@ -80,14 +81,25 @@ void testCon(String msg) {
             switch (meslist[0]){
                 case "location":{
                     System.out.println ("receive111-Starting");
-                    Map<String, int[]> playerLocation = (Map<String, int[]>) objectStream.readObject();
-
+                    HashMap<String, int[]> playerLocation = (HashMap<String, int[]>) objectStream.readObject();
+                    HashMap<String, int[]> tmp = new HashMap<>();
                     System.out.println ("receive111" + playerLocation);
 
                     for(String a : playerLocation.keySet ()){
                         System.out.println ("int111 " + a + " " + Arrays.toString (playerLocation.get (a)));
+                        if (a.equals ("prop")) {
+                            System.out.println ("int111222 detect prop");
+                            Vector <Boolean> tmp2 = new Vector<> ();
+                            for (int i = 0; i < Objects.requireNonNull (playerLocation.get (a)).length; i++){
+                                if (Objects.requireNonNull (playerLocation.get (a))[i] == 1) tmp2.add (true);
+                                else tmp2.add (false);
+                            }
+                            Data.pickableList = tmp2;
+                        }else {
+                            tmp.put (a, Objects.requireNonNull (playerLocation.get (a)));
+                        }
                     }
-                    Data.playerLocation = playerLocation;
+                    Data.playerLocation.putAll(playerLocation) ;
 //                    Data.completeID = Objects.requireNonNull (playerLocation.get (Data.playerID))[0] * 100 + Objects.requireNonNull (playerLocation.get (Data.playerID))[17];
 
 //                    System.out.println ("Output LocationInitSet: " + Data.playerLocation.keySet () + " " + Data.playerID + " " + Arrays.toString (Data.playerLocation.get (Data.playerID)));
