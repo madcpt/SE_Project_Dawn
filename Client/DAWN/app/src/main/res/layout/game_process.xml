@@ -79,6 +79,18 @@
         app:layout_constraintVertical_bias="0.853" />
 
     <Button
+        android:id="@+id/button2"
+        android:layout_width="68dp"
+        android:layout_height="58dp"
+        android:layout_marginStart="208dp"
+        android:layout_marginLeft="208dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/exp_0"
+        android:onClick="show_exp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
         android:id="@+id/Pbutton"
         style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
         android:layout_width="71dp"

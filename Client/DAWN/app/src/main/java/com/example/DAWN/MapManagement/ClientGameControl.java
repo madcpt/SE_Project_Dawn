@@ -459,6 +459,20 @@ public class ClientGameControl extends AppCompatActivity {
             }
         }
 
+        //expression load
+        exp_pic = new Bitmap[1][4];
+        for(int i = 0;i < 1;++i){
+            for(int j = 0;j < 4;++j){
+                fname = "exp_" + Integer.toString(j);
+                tmp = BitmapFactory.decodeResource(this.getResources(),res.getIdentifier(fname,"drawable", getPackageName())).copy(Bitmap.Config.ARGB_4444,true);
+                matrix=new Matrix();
+                matrix.postScale(((float)60/tmp.getWidth()), ((float)60/tmp.getHeight()));//表情宽高
+                exp_pic[i][j] = Bitmap.createBitmap(tmp, 0, 0,tmp.getWidth(),tmp.getHeight(),matrix,true);
+                tmp.recycle();
+                tmp=null;
+            }
+        }
+
         //Usepic load
         use_pic = new Bitmap[18];
         for(int i = 0; i < 18 ; ++i){
@@ -587,6 +601,8 @@ public class ClientGameControl extends AppCompatActivity {
     private Bitmap[][] attack_pic;//所有攻击效果的点阵图，第一层为特效，第二层为效果帧
     private Bitmap[]    use_pic;//所有角色使用道具的进度条
     private Bitmap[]    prop_pic;//道具图片
+    private int exp_order;
+    private  Bitmap [][]exp_pic;
     class MyCallBack implements SurfaceHolder.Callback {
         @Override
         //当SurfaceView的视图发生改变，比如横竖屏切换时，这个方法被调用
@@ -595,6 +611,7 @@ public class ClientGameControl extends AppCompatActivity {
         //当SurfaceView被创建的时候被调用
         public void surfaceCreated(SurfaceHolder holder) {
             draw.isRun = true;
+            exp_order = -1;
             pre_vision=vision;
             draw.start();
 
@@ -684,6 +701,13 @@ public class ClientGameControl extends AppCompatActivity {
                                 r.walk_mov=(r.walk_mov+1)%16;//每个动作循环的帧数
                             }
                             System.out.println("attack_mov " + r.attack_mov);
+
+                            if (exp_order!=-1){
+                                c.drawBitmap(exp_pic[0][exp_order/3+(exp_order/12)*(7-2*exp_order/3)],center_location[0]+100,center_location[1],p);
+                                exp_order=(exp_order >= 24 )?  (-1) : (r.attack_mov + 1);
+                            }
+
+
                             if (r.attack_mov!=-1) {
                                 switch(r.direction){
                                     case 0:
@@ -746,6 +770,12 @@ public class ClientGameControl extends AppCompatActivity {
                     e.printStackTrace ();
                 }
             }
+        }
+    }
+
+    public void show_exp(View v){
+        if (exp_order == -1){
+            exp_order = 0;
         }
     }
 
