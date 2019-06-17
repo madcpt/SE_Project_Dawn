@@ -57,7 +57,7 @@ public class serverForMultiClientUDP implements Runnable{
 //                    System.out.println(Arrays.toString(Data.getUpdateList().get(data.getAddress())));
 //                    System.out.println(Data.getUpdateList().containsKey(data.getAddress()));
                     for(String i : Data.serverGameControl.getUpdateList(pureIP).keySet()){
-                        System.out.println(i + " " + Arrays.toString(Data.serverGameControl.getUpdateList(pureIP).get(i)));
+                        System.out.println("location: " + i + " " + Arrays.toString(Data.serverGameControl.getUpdateList(pureIP).get(i)));
                     }
                     objectStream.writeObject(Data.serverGameControl.getUpdateList(pureIP));
                     break;

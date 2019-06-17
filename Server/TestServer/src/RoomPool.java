@@ -113,11 +113,11 @@ public class RoomPool {
         return 0;
     }
 
-    Map<String,int[]> getUpdateReport(String pureIP) {
+    HashMap<String,int[]> getUpdateReport(String pureIP) {
         String roomID = findRoom(pureIP);
-        disPlayAllRoom();
-        System.out.println(pureIP);
-        System.out.println(roomID);
+//        disPlayAllRoom();
+//        System.out.println(pureIP);
+//        System.out.println(roomID);
         if (roomList.containsKey(roomID)){
             System.out.println("Room found");
             return roomList.get(roomID).getUpdateList();

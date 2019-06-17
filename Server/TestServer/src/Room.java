@@ -4,7 +4,7 @@ public class Room {
     private String owner;
     private String roomID;
 
-    private Map<String, int[]> playerLocation;
+    private HashMap<String, int[]> playerLocation;
     private HashMap<String, Integer> playerPool; // Integer: 0->unprepared, 1->prepared
     private Vector<int [] > killBoard;
 
@@ -156,8 +156,10 @@ public class Room {
         }
     }
 
-    Map<String, int[]> getUpdateList() {
-        return playerLocation;
+    HashMap<String, int[]> getUpdateList() {
+        HashMap<String, int[]> tmp = new HashMap<>(playerLocation);
+        tmp.put("prop", WholeMap.getPropStatus());
+        return tmp;
     }
 
     void mov_stop(String pureIP) {
