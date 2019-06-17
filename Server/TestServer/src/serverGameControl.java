@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
+import java.util.*;
 
 class serverGameControl {
     private List<String> playerList;
@@ -11,6 +8,11 @@ class serverGameControl {
         System.out.println("Creating ServerGameControl");
         playerList = new ArrayList<>();
         roomList = new RoomPool();
+    }
+
+    Vector getKillBoard(String pureIP) {
+        String roomIDOfPlayer = findRoomOfPlayer(pureIP);
+        return roomList.getKillBoard(roomIDOfPlayer);
     }
 
     Vector<String> getChooseRoomList() {
@@ -94,7 +96,7 @@ class serverGameControl {
         return  roomList.getPreparedCount(roomID);
     }
 
-    Map<String, int[]> getUpdateList(String pureIP) {
+    HashMap<String, int[]> getUpdateList(String pureIP) {
         return roomList.getUpdateReport(pureIP);
     }
 

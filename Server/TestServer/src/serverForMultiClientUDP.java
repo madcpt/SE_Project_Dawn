@@ -57,7 +57,7 @@ public class serverForMultiClientUDP implements Runnable{
 //                    System.out.println(Arrays.toString(Data.getUpdateList().get(data.getAddress())));
 //                    System.out.println(Data.getUpdateList().containsKey(data.getAddress()));
                     for(String i : Data.serverGameControl.getUpdateList(pureIP).keySet()){
-                        System.out.println(i + " " + Arrays.toString(Data.serverGameControl.getUpdateList(pureIP).get(i)));
+                        System.out.println("location: " + i + " " + Arrays.toString(Data.serverGameControl.getUpdateList(pureIP).get(i)));
                     }
                     objectStream.writeObject(Data.serverGameControl.getUpdateList(pureIP));
                     break;
@@ -117,6 +117,13 @@ public class serverForMultiClientUDP implements Runnable{
                     System.out.println("Check Room From Client: " + pureIP + " " + Arrays.toString(room_cnt));
                     objectStream.writeObject(room_cnt);
                     break;
+                }
+
+                case "kill_res":{
+                    Vector tmp;
+                    tmp = Data.serverGameControl.getKillBoard(pureIP);
+                    System.out.println("Get kill-board: " + tmp);
+                    objectStream.writeObject(tmp);
                 }
 
 

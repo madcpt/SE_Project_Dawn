@@ -20,6 +20,8 @@ public class MyRole {
             name=n;
             capacity = c;
             bag=new Vector<Prop>();
+            weapon = null;
+            shoe = null;
 
             switch (id%100){
                 //不同角色特性
