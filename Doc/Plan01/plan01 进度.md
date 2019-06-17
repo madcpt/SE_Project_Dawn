@@ -1,0 +1,28 @@
+- [ ] 可行性分析报告
+  - [x] introduction 曹 
+  - [x] Presupposition 曹  
+  - [x] Excising System Analysis 曹
+  - [x] proposed system 徐+况
+  - [x] alternative solution 蓝
+  - [ ]  Cost/Benefit Analysis 杨
+  - [x] Other Social Factor 蓝
+  - [x] Conclusion 蓝
+- [x] **项目开发计划（时间\花费计划+甘特图）徐**
+- [x] **风险列表 ：曹**
+- [x] **词汇表:  蓝**
+
+- [ ] 软件需求规约
+  - [ ] **introduction(编写目的等) 况**
+  - [ ] **existing system  况**
+  - [ ] proposed system
+    - [ ] **概述 功能需求 非功能需求 徐**
+    - [ ] 系统模型
+      - [x] **场景 曹**
+      - [ ] 用例信息
+      - [ ] 用例图
+      - [ ] **对象模型,（一个实体类图+总类图） 徐**
+      - [ ] 动态模型
+        - [ ] **契约 （对应每个用例） 杨+蓝**
+        - [ ] **系统消息顺序图（多图预警） 况**
+        - [ ] **状态图（几张小图） 杨**
+      - [ ] 用户界面（搁置）
