@@ -297,7 +297,11 @@ public class ClientGameControl extends AppCompatActivity {
     }
     public void Attack(){
         Attackable = false;
-        new AsyncConTCP().execute ("atk,100,0");
+        int damage = 20;
+        if (myrole.weapon!=null){
+            damage += 10;
+        }
+        new AsyncConTCP().execute ("atk,"+ damage +",0");
     }
     //实现移动
     public void Stopmove(){
@@ -310,7 +314,7 @@ public class ClientGameControl extends AppCompatActivity {
             speed += 1;
         }
         if (Attackable)
-            new AsyncConTCP().execute("mov,0,"+ String.valueOf(speed));
+            new AsyncConTCP().execute("mov,0,"+ speed);
     }
     public void Rmove(){
         int speed = 1;
@@ -318,7 +322,7 @@ public class ClientGameControl extends AppCompatActivity {
             speed += 1;
         }
         if (Attackable)
-            new AsyncConTCP().execute("mov,1,"+ String.valueOf(speed));
+            new AsyncConTCP().execute("mov,1,"+ speed);
     }
     public void Umove(){
         int speed = 1;
@@ -326,7 +330,7 @@ public class ClientGameControl extends AppCompatActivity {
             speed += 1;
         }
         if (Attackable)
-            new AsyncConTCP().execute("mov,2,"+ String.valueOf(speed));
+            new AsyncConTCP().execute("mov,2,"+ speed);
     }
     public void Dmove(){
         int speed = 1;
@@ -334,7 +338,7 @@ public class ClientGameControl extends AppCompatActivity {
             speed += 1;
         }
         if (Attackable)
-            new AsyncConTCP().execute("mov,3,"+ String.valueOf(speed));
+            new AsyncConTCP().execute("mov,3,"+ speed);
     }
     public void DLmove(){
         int speed = 1;
@@ -342,7 +346,7 @@ public class ClientGameControl extends AppCompatActivity {
             speed += 1;
         }
         if (Attackable)
-            new AsyncConTCP().execute("mov,4,"+ String.valueOf(speed));
+            new AsyncConTCP().execute("mov,4,"+ speed);
     }
     public void DRmove(){
         int speed = 1;
@@ -350,7 +354,7 @@ public class ClientGameControl extends AppCompatActivity {
             speed += 1;
         }
         if (Attackable)
-            new AsyncConTCP().execute("mov,5,"+ String.valueOf(speed));
+            new AsyncConTCP().execute("mov,5,"+ speed);
     }
     public void ULmove(){
         int speed = 1;
@@ -358,7 +362,7 @@ public class ClientGameControl extends AppCompatActivity {
             speed += 1;
         }
         if (Attackable)
-            new AsyncConTCP().execute("mov,6,"+ String.valueOf(speed));
+            new AsyncConTCP().execute("mov,6,"+ speed);
     }
     public void URmove(){
         int speed = 1;
@@ -366,7 +370,7 @@ public class ClientGameControl extends AppCompatActivity {
             speed += 1;
         }
         if (Attackable)
-            new AsyncConTCP().execute("mov,7,"+ String.valueOf(speed));
+            new AsyncConTCP().execute("mov,7,"+ speed);
     }
 
     //Map初始化
@@ -648,9 +652,9 @@ public class ClientGameControl extends AppCompatActivity {
                             if (Math.abs(prop.getPropposition()[0] - location[0]) > vision * 20 || Math.abs(prop.getPropposition()[1] - location[1]) > vision * 20) {
                                 continue;
                             }
-                            if(!Data.pickableList.get(prop.getId())){
-                                continue;
-                            }
+//                            if(!Data.pickableList.get(prop.getId())){
+//                                continue;
+//                            }
                             System.out.println ("proptype " + prop.getType () + " propid " + prop.getId ());
                             c.drawBitmap(prop_pic[prop.getType()],center_location[0] - location[0] + prop.getPropposition()[0],center_location[1] - location[1] + prop.getPropposition()[1]+prop_wave+(20-2*prop_wave)*(prop_wave/11),p);
                         }
@@ -672,14 +676,17 @@ public class ClientGameControl extends AppCompatActivity {
                                 if (flag1 || flag2){
                                     UseButton.setClickable(false);
                                 }
+                                System.out.println ("pre");
                                 //检测是否有鞋
                                 if (r.props[0]!=-1){
-                                    myrole.shoe = Data.propList.get(r.props[0]);
+                                    myrole.shoe = new Prop (1,1,0,0);
                                 }
+                                System.out.println ("mid");
                                 //检测是否有武器
                                 if (r.props[1]!=-1){
-                                    myrole.weapon = Data.propList.get(r.props[1]);
+                                    myrole.weapon = new Prop (2,2,0,0);
                                 }
+                                System.out.println ("end");
 
                             }
 
