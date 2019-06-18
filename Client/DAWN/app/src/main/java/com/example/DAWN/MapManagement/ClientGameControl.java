@@ -89,7 +89,7 @@ public class ClientGameControl extends AppCompatActivity {
     // AsyncTask for UDP-Client
 /**
 * @version : 3.0
-* @author : Zihan Xu, Yi Kuang, Chenyu Yang, Jianzhen Cao
+* @author : Zihan Xu, Yi Kuang, Chenyu Yang
 * @classname : ClientGameControl
 * @description : This class is to implement some functions such as move, attack and so on.
 */
